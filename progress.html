@@ -180,12 +180,12 @@
     </div>
   </div>
 
-  <div class="phase pending">
-    <div class="check"></div>
+  <div class="phase done">
+    <div class="check">✓</div>
     <div class="phase-body">
       <div class="phase-title">Phase 10 — SEO + Performance + Mobile</div>
-      <div class="phase-desc">next/image، sitemap ديناميكي، Core Web Vitals، تجربة موبايل.</div>
-      <div class="skills">skills: nextjs-app-router-patterns · vercel-react-best-practices · performance</div>
+      <div class="phase-desc">لقينا وصلّحنا باج حقيقي شغال لايف: sitemap.ts وrobots.ts كانوا لسه بيكتبوا دومين وهمي من التمبلت (your-store.vercel.app) بدل الدومين الحقيقي — يعني الـ sitemap اللي بيتبعت لجوجل كان بيوريه دومين ميت من أول ما الموقع اتنشر. صلّحناه، وضفنا لل sitemap صفحات كانت ناقصة (/new، /used, /faq، /privacy، /returns، وصفحات الماركات). صلّحنا تحذير Next.js 16 (themeColor) كان بيظهر في كل صفحة. لقينا وصلّحنا مشكلة أداء حقيقية: 34 ملف منفصل كل واحد فيهم بيعمل @import مباشر لخط جوجل فونتس جوه الصفحة نفسها (بيبطّئ التحميل ومكرر 34 مرة) — استبدلناهم بـ link واحد في الـ layout الرئيسي. صلّحنا مقاس لمسة الأزرار في الهيدر وزرار المفضلة اللي كانوا أصغر من الحد الأدنى الموصى بيه (44px). اتأكدنا من عدم وجود مشاكل تمرير أفقي حقيقية على الموبايل في 7 صفحات رئيسية (عن طريق قياس دقيق للعناصر بعد ما أداة السكرين شوت في المتصفح بقت مش موثوقة في البيئة دي).</div>
+      <div class="skills">no design/animation skill — SEO/performance/accessibility engineering</div>
     </div>
   </div>
 
@@ -328,6 +328,22 @@
       </div>
       <div class="timeline-links">
         <a href="https://fady-delta.vercel.app/about" target="_blank">صفحة من نحن اللايف</a>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">2026-07-04</div>
+      <div class="timeline-title">Phase 10 — SEO + الأداء + الموبايل</div>
+      <div class="timeline-desc">
+        <strong>لقينا باج حقيقي شغال لايف من غير ما نستنى ندور عليه</strong>: sitemap.ts وrobots.ts كانوا بيستخدموا دومين وهمي من التمبلت الأصلي (your-store.vercel.app) بدل الدومين الحقيقي (fady-delta.vercel.app) — يعني أي محرك بحث حاول ياخد الـ sitemap بتاعنا كان بياخد رابط لموقع مش موجود من أول يوم نشرنا الموقع. صلّحناهم يقروا من env variable، وضفنا صفحات كانت ناقصة تمامًا من الـ sitemap (/new، /used، /faq، /privacy، /returns، وصفحات الماركات) وشلنا صفحات شخصية (السلة، المفضلة، تتبع الحجز) مالهاش قيمة SEO.
+        صلّحنا تحذير Next.js 16 كان بيظهر في كل صفحة (themeColor لازم ينقل لـ viewport export).
+        <strong>لقينا مشكلة أداء منتشرة في 34 ملف منفصل</strong>: كل صفحة كانت بتعمل @import لخط Tajawal جوّه الـ style tag بتاعها (بيبطّئ التحميل، ومكرر 34 مرة بدل مرة واحدة). استبدلناهم بـ link واحد محسّن (preconnect) في الـ layout الرئيسي، وشلنا الـ 34 سطر المكرر بعملية bulk واحدة (اختبرناها على ملف واحد الأول للتأكد).
+        صلّحنا زرارين كانوا أصغر من الحد الأدنى الموصى به للمس (44px): أيقونات الهيدر وزرار "أضف للمفضلة" في كروت السيارات — كانوا 32px.
+        اتأكدنا من عدم وجود مشاكل تمرير أفقي حقيقية على الموبايل في 7 صفحات (الرئيسية، used، new، cart، checkout، about، faq) بقياس دقيق للعناصر بعد ما أداة السكرين شوت بقت مش موثوقة في بيئة العمل دي.
+        <strong>Build محلي ناجح 100%</strong> وتم التحقق من النشر اللايف فعليًا (الديبلوي ده أخد وقت أطول من المعتاد — حوالي 10 دقايق — قبل ما يظهر فعليًا، اتأكدنا بفحص محتوى مميز للكوميت ده بالتحديد مش مجرد فحص الـ cache headers).
+      </div>
+      <div class="timeline-links">
+        <a href="https://fady-delta.vercel.app/sitemap.xml" target="_blank">sitemap.xml اللايف</a>
       </div>
     </div>
 
