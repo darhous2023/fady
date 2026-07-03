@@ -159,6 +159,38 @@ export const productImages = pgTable(
   ]
 ).enableRLS();
 
+export const product360Frames = pgTable(
+  "product_360_frames",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    product_id: uuid("product_id").notNull(),
+    sequence_index: integer("sequence_index").notNull().default(0),
+    url: text("url").notNull(),
+    created_at: timestamp("created_at", { withTimezone: true }).defaultNow(),
+  },
+  (table) => [
+    foreignKey({
+      columns: [table.product_id],
+      foreignColumns: [products.id],
+      name: "product_360_frames_product_id_fkey",
+    }).onDelete("cascade"),
+    index("idx_360_frames_product_id").on(table.product_id),
+    pgPolicy("Backend can manage 360 frames", {
+      as: "permissive",
+      for: "all",
+      to: "public",
+      using: sql`current_setting('request.jwt.claim.role', true) is null`,
+      withCheck: sql`current_setting('request.jwt.claim.role', true) is null`,
+    }),
+    pgPolicy("Anyone can view 360 frames", {
+      as: "permissive",
+      for: "select",
+      to: anonRole,
+      using: sql`true`,
+    }),
+  ]
+).enableRLS();
+
 // Zod schemas
 export const selectProductSchema = createSelectSchema(products, {
   price: z.coerce.number(),
@@ -197,12 +229,22 @@ export const insertImageSchema = createInsertSchema(productImages, {
   url: z.string().url(),
 }).omit({ id: true, created_at: true });
 
+export const select360FrameSchema = createSelectSchema(product360Frames, {
+  created_at: z.coerce.string(),
+});
+
+export const insert360FrameSchema = createInsertSchema(product360Frames, {
+  url: z.string().url(),
+}).omit({ id: true, created_at: true });
+
 export type Product = z.infer<typeof selectProductSchema>;
 export type InsertProduct = z.infer<typeof insertProductSchema>;
 export type UpdateProduct = z.infer<typeof updateProductSchema>;
 export type ProductVariant = z.infer<typeof selectVariantSchema>;
 export type InsertProductVariant = z.infer<typeof insertVariantSchema>;
 export type ProductImage = z.infer<typeof selectImageSchema>;
+export type Product360Frame = z.infer<typeof select360FrameSchema>;
+export type InsertProduct360Frame = z.infer<typeof insert360FrameSchema>;
 export type InsertProductImage = z.infer<typeof insertImageSchema>;
 export type QualityTier = z.infer<typeof QualityTierZod>;
 export type ProductStatus = z.infer<typeof ProductStatusZod>;

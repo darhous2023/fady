@@ -1,6 +1,6 @@
 {
-  "id": "47136f43-9c71-4116-b883-4cf8bbfe53d2",
-  "prevId": "1cd35cff-e112-4c17-81f6-2c2c31b87b93",
+  "id": "dff65d9f-e443-4d6a-bad5-f5a43bb2a62f",
+  "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -488,30 +488,6 @@
           "primaryKey": false,
           "notNull": false
         },
-        "avatar_url": {
-          "name": "avatar_url",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "instagram_url": {
-          "name": "instagram_url",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "facebook_url": {
-          "name": "facebook_url",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "tiktok_url": {
-          "name": "tiktok_url",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
         "created_at": {
           "name": "created_at",
           "type": "timestamp with time zone",
@@ -880,25 +856,13 @@
           "name": "governorate",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "address": {
           "name": "address",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
-        },
-        "preferred_date": {
-          "name": "preferred_date",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "branch": {
-          "name": "branch",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "subtotal": {
           "name": "subtotal",
@@ -1071,102 +1035,6 @@
           "value": "total >= 0"
         }
       },
-      "isRLSEnabled": true
-    },
-    "public.product_360_frames": {
-      "name": "product_360_frames",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "uuid",
-          "primaryKey": true,
-          "notNull": true,
-          "default": "gen_random_uuid()"
-        },
-        "product_id": {
-          "name": "product_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "sequence_index": {
-          "name": "sequence_index",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "default": 0
-        },
-        "url": {
-          "name": "url",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "now()"
-        }
-      },
-      "indexes": {
-        "idx_360_frames_product_id": {
-          "name": "idx_360_frames_product_id",
-          "columns": [
-            {
-              "expression": "product_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {
-        "product_360_frames_product_id_fkey": {
-          "name": "product_360_frames_product_id_fkey",
-          "tableFrom": "product_360_frames",
-          "tableTo": "products",
-          "columnsFrom": [
-            "product_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {
-        "Backend can manage 360 frames": {
-          "name": "Backend can manage 360 frames",
-          "as": "PERMISSIVE",
-          "for": "ALL",
-          "to": [
-            "public"
-          ],
-          "using": "current_setting('request.jwt.claim.role', true) is null",
-          "withCheck": "current_setting('request.jwt.claim.role', true) is null"
-        },
-        "Anyone can view 360 frames": {
-          "name": "Anyone can view 360 frames",
-          "as": "PERMISSIVE",
-          "for": "SELECT",
-          "to": [
-            "anon"
-          ],
-          "using": "true"
-        }
-      },
-      "checkConstraints": {},
       "isRLSEnabled": true
     },
     "public.product_images": {
@@ -1484,48 +1352,6 @@
           "primaryKey": false,
           "notNull": true,
           "default": "'draft'"
-        },
-        "make": {
-          "name": "make",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "model": {
-          "name": "model",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "year": {
-          "name": "year",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "mileage_km": {
-          "name": "mileage_km",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "transmission": {
-          "name": "transmission",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "fuel_type": {
-          "name": "fuel_type",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "body_type": {
-          "name": "body_type",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
         },
         "created_at": {
           "name": "created_at",

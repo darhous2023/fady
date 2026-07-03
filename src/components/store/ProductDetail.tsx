@@ -2,10 +2,13 @@
 
 import { useCallback, useEffect, useRef, useState } from "react"
 import Link from "next/link"
+import dynamic from "next/dynamic"
 import { toast } from "sonner"
 import { useCart } from "@/contexts/CartContext"
 import { saveRecentlyViewed } from "./RecentlyViewed"
 import RecentlyViewed from "./RecentlyViewed"
+
+const Product360Viewer = dynamic(() => import("./Product360Viewer"), { ssr: false })
 
 const WL_KEY = "elfady-wishlist"
 
@@ -39,13 +42,15 @@ interface ProductDetailProps {
     transmission?: string | null; fuel_type?: string | null; body_type?: string | null
   }
   images: { id: string; url: string; alt_ar: string | null; sort_order: number }[]
+  frames360?: { id: string; url: string; sequence_index: number }[]
   related?: RelatedProduct[]
   variants?: Variant[]
 }
 
 const TRANSMISSION_LABELS: Record<string, string> = { automatic: "أوتوماتيك", manual: "مانيوال" }
 
-export default function ProductDetail({ product, images, related = [], variants = [] }: ProductDetailProps) {
+export default function ProductDetail({ product, images, frames360 = [], related = [], variants = [] }: ProductDetailProps) {
+  const has360 = frames360.length > 1
   const [activeIdx, setActiveIdx] = useState(0)
   const [tilt, setTilt] = useState({ x: 0, y: 0, gx: 50, gy: 50 })
   const [hovered, setHovered] = useState(false)
@@ -182,6 +187,9 @@ export default function ProductDetail({ product, images, related = [], variants 
 
           {/* ── Left: Image gallery ── */}
           <div style={{ flex: "1 1 420px", minWidth: 320 }}>
+            {has360 ? (
+              <Product360Viewer frames={frames360} productName={product.name_ar} />
+            ) : (
             <div
               onMouseMove={onMove} onMouseEnter={onEnter} onMouseLeave={onLeave}
               style={{
@@ -232,6 +240,7 @@ export default function ProductDetail({ product, images, related = [], variants 
                 </>
               )}
             </div>
+            )}
 
             {images.length > 1 && (
               <div style={{ display: "flex", gap: 10, marginTop: 16, flexWrap: "wrap" }}>

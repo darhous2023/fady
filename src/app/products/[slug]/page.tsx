@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation"
 import type { Metadata } from "next"
 import { db } from "@/lib/db/drizzle/connection"
-import { products, productImages, categories, productVariants } from "@/lib/db/drizzle/schema"
+import { products, productImages, categories, productVariants, product360Frames } from "@/lib/db/drizzle/schema"
 import { eq, and, asc, ne } from "drizzle-orm"
 import ProductDetail from "@/components/store/ProductDetail"
 import ReviewsSection from "@/components/store/ReviewsSection"
@@ -70,11 +70,16 @@ export default async function ProductPage({ params }: Props) {
     compare_at_price: rows[0].compare_at_price ? Number(rows[0].compare_at_price) : null,
   }
 
-  const [imgs, relatedRows, variantRows] = await Promise.all([
+  const [imgs, frames360, relatedRows, variantRows] = await Promise.all([
     db.select({ id: productImages.id, url: productImages.url, alt_ar: productImages.alt_ar, sort_order: productImages.sort_order })
       .from(productImages)
       .where(eq(productImages.product_id, product.id))
       .orderBy(asc(productImages.sort_order)),
+
+    db.select({ id: product360Frames.id, url: product360Frames.url, sequence_index: product360Frames.sequence_index })
+      .from(product360Frames)
+      .where(eq(product360Frames.product_id, product.id))
+      .orderBy(asc(product360Frames.sequence_index)),
 
     product.category_id
       ? db.select({
@@ -127,6 +132,7 @@ export default async function ProductPage({ params }: Props) {
       <ProductDetail
         product={product}
         images={imgs}
+        frames360={frames360}
         related={relatedWithImages}
         variants={variantRows.map(v => ({ ...v, price_override: v.price_override ? Number(v.price_override) : null }))}
       />

@@ -193,6 +193,121 @@ function ImageManager({ productId }: { productId: string }) {
   );
 }
 
+// ── 360° frames manager (only shown when editing existing product) ───────────
+type Frame360Row = { id: string; url: string; sequence_index: number };
+
+function Frames360Manager({ productId }: { productId: string }) {
+  const [frames, setFrames]       = useState<Frame360Row[]>([]);
+  const [uploading, setUploading] = useState(false);
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  const load = useCallback(async () => {
+    const r = await fetch(`/api/admin/products/${productId}/360-frames`);
+    if (r.ok) setFrames(await r.json());
+  }, [productId]);
+
+  useEffect(() => { load(); }, [load]);
+
+  async function uploadFrames(files: FileList) {
+    setUploading(true);
+    let nextIndex = frames.length;
+    for (const file of Array.from(files)) {
+      const fd = new FormData();
+      fd.append("file", file);
+      const up = await fetch("/api/admin/upload", { method: "POST", body: fd });
+      const upData = await up.json();
+      if (!up.ok) { toast.error(upData.error || "فشل رفع إحدى الصور"); continue; }
+      await fetch(`/api/admin/products/${productId}/360-frames`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url: upData.url, sequence_index: nextIndex }),
+      });
+      nextIndex += 1;
+    }
+    setUploading(false);
+    toast.success("تم رفع صور الـ 360");
+    load();
+  }
+
+  async function move(idx: number, dir: -1 | 1) {
+    const target = idx + dir;
+    if (target < 0 || target >= frames.length) return;
+    const next = [...frames];
+    [next[idx], next[target]] = [next[target], next[idx]];
+    setFrames(next);
+    await fetch(`/api/admin/products/${productId}/360-frames`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ frames: next.map((f, i) => ({ id: f.id, sequence_index: i })) }),
+    });
+    load();
+  }
+
+  async function deleteFrame(frameId: string) {
+    if (!confirm("حذف هذه الصورة من طقم الـ 360؟")) return;
+    await fetch(`/api/admin/products/${productId}/360-frames`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ frame_id: frameId }),
+    });
+    toast.success("تم الحذف");
+    load();
+  }
+
+  return (
+    <div className="bg-[#0A0A0A] rounded-xl border border-[#9BA3AA]/10 p-6 space-y-5">
+      <div className="flex items-center justify-between border-b border-[#9BA3AA]/10 pb-3">
+        <h2 className="font-semibold text-[#F5EFE0]">عارض 360°</h2>
+        <span className="text-xs text-[#F5EFE0]/30">{frames.length} صورة</span>
+      </div>
+      <p className="text-xs text-[#F5EFE0]/40">
+        ارفع 12–36 صورة للسيارة مصوّرة بدورة كاملة حواليها (نفس المسافة والزاوية تقريبًا) — كل ما زاد عدد الصور، كل ما كان الدوران أنعم. لو مفيش صور هنا، هتظهر صفحة السيارة بمعرض الصور العادي بدل الـ 360.
+      </p>
+
+      {frames.length > 0 ? (
+        <div className="flex gap-3 flex-wrap">
+          {frames.map((f, i) => (
+            <div key={f.id} className="relative group" style={{ width: 88, height: 88 }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={f.url} alt={`frame ${i + 1}`} className="w-full h-full object-cover rounded-lg border border-[#9BA3AA]/15" />
+              <span className="absolute top-1 right-1 text-[9px] font-bold bg-[#9BA3AA] text-[#0A0A0A] px-1.5 py-0.5 rounded">
+                {i + 1}
+              </span>
+              <div className="absolute inset-0 bg-black/65 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center gap-1 rounded-lg transition-opacity">
+                <div className="flex gap-1">
+                  <button type="button" onClick={() => move(i, -1)} disabled={i === 0}
+                    className="text-[10px] px-1.5 py-0.5 rounded bg-white/10 text-[#F5EFE0] disabled:opacity-30">◀</button>
+                  <button type="button" onClick={() => move(i, 1)} disabled={i === frames.length - 1}
+                    className="text-[10px] px-1.5 py-0.5 rounded bg-white/10 text-[#F5EFE0] disabled:opacity-30">▶</button>
+                </div>
+                <button type="button" onClick={() => deleteFrame(f.id)} className="text-[10px] text-red-400 font-bold">حذف</button>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p className="text-sm text-[#F5EFE0]/30">لا توجد صور 360 حتى الآن</p>
+      )}
+
+      <div className="pt-2 border-t border-[#9BA3AA]/10">
+        <input ref={fileRef} type="file" accept="image/*" multiple className="hidden"
+          onChange={e => { const files = e.target.files; if (files && files.length) uploadFrames(files); e.target.value = ""; }}
+        />
+        <button type="button" disabled={uploading}
+          onClick={() => fileRef.current?.click()}
+          className="flex items-center gap-2 px-4 py-2 text-sm border border-[#9BA3AA]/25 text-[#9BA3AA] rounded-lg hover:bg-[#9BA3AA]/10 transition-colors disabled:opacity-50"
+        >
+          {uploading ? (
+            <><span className="inline-block w-3 h-3 border border-[#9BA3AA]/40 border-t-[#9BA3AA] rounded-full animate-spin"/>جاري رفع صور الـ 360...</>
+          ) : (
+            <><span>↑</span> رفع صور 360° (يمكن اختيار عدة صور مرة واحدة)</>
+          )}
+        </button>
+      </div>
+    </div>
+  );
+}
+
 // ── Variants manager ─────────────────────────────────────────────────────────
 type VariantRow = { id: string; color_ar: string | null; size: string | null; sku: string | null; stock: number; price_override: string | null }
 type NewVariant  = { color_ar: string; size: string; sku: string; stock: string; price_override: string }
@@ -540,6 +655,9 @@ export default function ProductForm({ categories, product }: { categories: Categ
 
       {/* Image manager — only when editing */}
       {isEdit && <ImageManager productId={product!.id} />}
+
+      {/* 360° frames manager — only when editing */}
+      {isEdit && <Frames360Manager productId={product!.id} />}
 
       {/* Variants manager — only when editing */}
       {isEdit && <VariantsManager productId={product!.id} />}

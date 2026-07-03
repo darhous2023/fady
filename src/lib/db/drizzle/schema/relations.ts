@@ -1,7 +1,7 @@
 import { relations } from "drizzle-orm";
 import { users } from "./users";
 import { categories } from "./categories";
-import { products, productVariants, productImages } from "./products";
+import { products, productVariants, productImages, product360Frames } from "./products";
 import { customers } from "./customers";
 import { orders, orderItems } from "./orders";
 import { cartItems } from "./cart";
@@ -24,6 +24,7 @@ export const productsRelations = relations(products, ({ one, many }) => ({
   }),
   variants: many(productVariants),
   images: many(productImages),
+  frames360: many(product360Frames),
   cartItems: many(cartItems),
   wishlistItems: many(wishlist),
   reviews: many(reviews),
@@ -48,6 +49,13 @@ export const productImagesRelations = relations(productImages, ({ one }) => ({
   variant: one(productVariants, {
     fields: [productImages.variant_id],
     references: [productVariants.id],
+  }),
+}));
+
+export const product360FramesRelations = relations(product360Frames, ({ one }) => ({
+  product: one(products, {
+    fields: [product360Frames.product_id],
+    references: [products.id],
   }),
 }));
 
