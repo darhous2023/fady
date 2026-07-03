@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>elfady — تتبّع خطة التنفيذ</title>
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --panel: #121212;
+    --border: #262626;
+    --text: #f2f2f2;
+    --muted: #9a9a9a;
+    --accent: #c9c9c9;
+    --done: #3ecf8e;
+    --pending: #444;
+    --now: #e0b84c;
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    margin: 0;
+    padding: 40px 20px 80px;
+    line-height: 1.7;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; }
+  header { text-align: center; margin-bottom: 48px; }
+  header h1 {
+    font-size: 32px; margin: 0 0 8px;
+    letter-spacing: 2px;
+  }
+  header p { color: var(--muted); margin: 0; font-size: 14px; }
+  h2 {
+    font-size: 18px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--accent); border-bottom: 1px solid var(--border);
+    padding-bottom: 12px; margin: 48px 0 20px;
+  }
+  .phase {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 10px; padding: 18px 22px; margin-bottom: 12px;
+    display: flex; align-items: flex-start; gap: 14px;
+  }
+  .phase.done { border-color: rgba(62,207,142,0.35); }
+  .phase.now { border-color: rgba(224,184,76,0.5); background: #161310; }
+  .check {
+    flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: bold; margin-top: 2px;
+  }
+  .done .check { background: var(--done); color: #062; }
+  .now .check { background: var(--now); color: #331; }
+  .pending .check { background: transparent; border: 2px solid var(--pending); color: transparent; }
+  .phase-body { flex: 1; }
+  .phase-title { font-weight: 700; font-size: 15px; }
+  .phase-desc { color: var(--muted); font-size: 13px; margin-top: 4px; }
+  .skills { display: inline-block; margin-top: 6px; font-size: 11px; color: #8ab4ff; }
+  .timeline-item {
+    border-right: 2px solid var(--border); padding: 4px 20px 20px 0; margin-right: 10px; position: relative;
+  }
+  .timeline-item::before {
+    content: ''; position: absolute; right: -6px; top: 6px;
+    width: 10px; height: 10px; border-radius: 50%; background: var(--done);
+  }
+  .timeline-date { font-size: 12px; color: var(--muted); }
+  .timeline-title { font-weight: 700; margin: 4px 0; }
+  .timeline-desc { font-size: 13px; color: #ccc; }
+  .timeline-links a { color: #8ab4ff; text-decoration: none; font-size: 12px; margin-left: 12px; }
+  footer { text-align: center; color: var(--muted); font-size: 12px; margin-top: 60px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>ELFADY</h1>
+    <p>خطة تحويل التمبلت إلى معرض سيارات — تتبّع التنفيذ المرحلي</p>
+  </header>
+
+  <h2>Checklist</h2>
+
+  <div class="phase done">
+    <div class="check">✓</div>
+    <div class="phase-body">
+      <div class="phase-title">Phase 0 — Audit &amp; Decision</div>
+      <div class="phase-desc">فحص التمبلت فعليًا من الكود، اختبار CarAPI/OneAutoAPI، اعتماد الخطة النهائية.</div>
+    </div>
+  </div>
+
+  <div class="phase done">
+    <div class="check">✓</div>
+    <div class="phase-body">
+      <div class="phase-title">Phase 1a — Push Baseline</div>
+      <div class="phase-desc">نسخ التمبلت الخام (287 ملف) بدون أي أسرار إلى github.com/darhous2023/fady.</div>
+    </div>
+  </div>
+
+  <div class="phase done">
+    <div class="check">✓</div>
+    <div class="phase-body">
+      <div class="phase-title">Phase 1b — Wire Infra</div>
+      <div class="phase-desc">migrations على Supabase + جداول better-auth + storage buckets + أدمن شغّال + كل env vars على Vercel + إصلاح framework detection + <strong>أول deploy لايف ناجح 200 OK</strong>.</div>
+    </div>
+  </div>
+
+  <div class="phase pending">
+    <div class="check"></div>
+    <div class="phase-body">
+      <div class="phase-title">Phase 2 — Identity &amp; Recolor</div>
+      <div class="phase-desc">design tokens + سكين Longbow لكل الستور فرونت + خطوط + إزالة ShahY + فوتر بلينكات elfady.</div>
+      <div class="skills">skills: frontend-design · ui-ux-pro-max · tailwind-design-system</div>
+    </div>
+  </div>
+
+  <div class="phase pending">
+    <div class="check"></div>
+    <div class="phase-body">
+      <div class="phase-title">Phase 3 — New Cars API Layer</div>
+      <div class="phase-desc">api/new-cars/* (CarAPI JWT + KV cache) + محاولة صور OneAutoAPI.</div>
+    </div>
+  </div>
+
+  <div class="phase pending">
+    <div class="check"></div>
+    <div class="phase-body">
+      <div class="phase-title">Phase 4 — Home + بوابتين</div>
+      <div class="phase-desc">Hero سينمائي + بوابتين + أقسام ثقة + كيف نعمل + CTA واتساب.</div>
+      <div class="skills">skills: framer-motion-animator · ui-animation · hyperframes-animation</div>
+    </div>
+  </div>
+
+  <div class="phase pending">
+    <div class="check"></div>
+    <div class="phase-body">
+      <div class="phase-title">Phase 5 — New Cars Gateway UI</div>
+      <div class="phase-desc">تصفح/فلترة بالماركة (زي كونتكت كار) + تفاصيل specs + زر واتساب "اسأل عن التوفر".</div>
+    </div>
+  </div>
+
+  <div class="phase pending">
+    <div class="check"></div>
+    <div class="phase-body">
+      <div class="phase-title">Phase 6 — Used Cars</div>
+      <div class="phase-desc">migration حقول السيارة + ProductForm (رفع صور من الجهاز) + /used بفلاتر + تفاصيل.</div>
+    </div>
+  </div>
+
+  <div class="phase pending">
+    <div class="check"></div>
+    <div class="phase-body">
+      <div class="phase-title">Phase 7 — 360 / Zoom Viewer</div>
+      <div class="phase-desc">جدول الإطارات + سكشن أدمن للرفع/الترتيب/الأرشفة + العارض + fallback عدسة تكبير.</div>
+      <div class="skills">skills: ui-animation (drag/gesture) · hyperframes-animation</div>
+    </div>
+  </div>
+
+  <div class="phase pending">
+    <div class="check"></div>
+    <div class="phase-body">
+      <div class="phase-title">Phase 8 — Booking Reframe</div>
+      <div class="phase-desc">cart/checkout/orders → حجز معاينة (UI + نموذج + أدمن).</div>
+    </div>
+  </div>
+
+  <div class="phase pending">
+    <div class="check"></div>
+    <div class="phase-body">
+      <div class="phase-title">Phase 9 — General Pages</div>
+      <div class="phase-desc">About/Contact/FAQ/Privacy/Terms بالهوية الجديدة.</div>
+    </div>
+  </div>
+
+  <div class="phase pending">
+    <div class="check"></div>
+    <div class="phase-body">
+      <div class="phase-title">Phase 10 — SEO + Performance + Mobile</div>
+      <div class="phase-desc">next/image، sitemap ديناميكي، Core Web Vitals، تجربة موبايل.</div>
+      <div class="skills">skills: nextjs-app-router-patterns · vercel-react-best-practices · performance</div>
+    </div>
+  </div>
+
+  <div class="phase pending">
+    <div class="check"></div>
+    <div class="phase-body">
+      <div class="phase-title">Phase 11 — Final QA</div>
+      <div class="phase-desc">اختبار حي شامل (بوابتين/360/واتساب/حجز/أدمن) + مراجعة RLS + handoff.</div>
+      <div class="skills">skills: accessibility</div>
+    </div>
+  </div>
+
+  <h2>Timeline</h2>
+  <div id="timeline">
+
+    <div class="timeline-item">
+      <div class="timeline-date">2026-07-03</div>
+      <div class="timeline-title">Phase 0 — Audit &amp; Decision</div>
+      <div class="timeline-desc">فحص Store-Master-Template فعليًا (clone + قراءة كود)، اختبار CarAPI (نجح: makes/models-v2/years/trims-v2 شغّالين)، اعتماد خطة Hybrid لتحويل التمبلت لمعرض سيارات elfady.</div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">2026-07-03</div>
+      <div class="timeline-title">Phase 1a — Push Baseline</div>
+      <div class="timeline-desc">نسخ التمبلت الخام إلى darhous2023/fady بدون أي أسرار (287 ملف) + .env.example.</div>
+      <div class="timeline-links">
+        <a href="https://github.com/darhous2023/fady/commit/b25b9b3" target="_blank">commit b25b9b3</a>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">2026-07-03</div>
+      <div class="timeline-title">Phase 1b — Wire Infra</div>
+      <div class="timeline-desc">
+        شغّلنا migrations على Supabase (كل الجداول)، واكتشفنا وصلّحنا باگ حقيقي موروث من التمبلت: جداول better-auth (session/account/verification) ماكانتش موجودة، وأعمدة user كانت snake_case لكن better-auth بيتوقعها camelCase — اتصلّحت في src/utils/auth.ts.
+        أنشأنا Supabase Storage buckets (products, banners)، وأول حساب أدمن (ahmeddarhous@gmail.com) واتأكدنا إن تسجيل الدخول شغّال فعليًا.
+        ضبطنا كل الـ 11 env var على مشروع Vercel عبر الـ API.
+        اكتشفنا مشكلة تانية: إعداد framework في مشروع Vercel كان null (Vercel مش متعرّف إن المشروع Next.js) فكل الـ routes كانت بترجع 404 — صلّحناها وعملنا redeploy.
+        <strong>النتيجة: fady-delta.vercel.app شغّال لايف 200 OK</strong> (الصفحة الرئيسية، /admin/login، /about، /faq، /api/store-config كلها بترجع 200).
+      </div>
+      <div class="timeline-links">
+        <a href="https://fady-delta.vercel.app" target="_blank">الموقع اللايف</a>
+        <a href="https://vercel.com/fady-7caa1c41/fady" target="_blank">Vercel project</a>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>elfady — progress log · يُحدَّث تلقائيًا بعد كل مرحلة</footer>
+</div>
+</body>
+</html>
