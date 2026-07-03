@@ -411,9 +411,9 @@ const PRICE_RANGES = [
   { key: "900k+", label: "أكثر من 900 ألف", min: 900000, max: Infinity },
 ]
 
-export default function ProductGrid({ initialProducts }: { initialProducts: StoreProduct[] }) {
+export default function ProductGrid({ initialProducts, initialCategory }: { initialProducts: StoreProduct[]; initialCategory?: string }) {
   const [products] = useState<StoreProduct[]>(initialProducts)
-  const [activeCategory, setActiveCategory] = useState("الكل")
+  const [activeCategory, setActiveCategory] = useState(initialCategory || "الكل")
   const [activeQuality, setActiveQuality] = useState("الكل")
   const [activePriceKey, setActivePriceKey] = useState("الكل")
 

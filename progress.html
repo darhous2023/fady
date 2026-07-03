@@ -128,12 +128,12 @@
     </div>
   </div>
 
-  <div class="phase pending">
-    <div class="check"></div>
+  <div class="phase done">
+    <div class="check">✓</div>
     <div class="phase-body">
-      <div class="phase-title">Phase 4 — Home + بوابتين</div>
-      <div class="phase-desc">Hero سينمائي + بوابتين + أقسام ثقة + كيف نعمل + CTA واتساب.</div>
-      <div class="skills">skills: framer-motion-animator · ui-animation · hyperframes-animation</div>
+      <div class="phase-title">Phase 4 — Home سينمائي + بوابتين + /new + /used</div>
+      <div class="phase-desc">راجعنا الموقع المرجعي فعليًا بالمتصفح (فيديو، خلفية رمادي→أسود، ماركيه متحرك، عناوين بوستر). Hero بفيديو خلفية حقيقي + بوابتين + شريط ماركات + عنوان فاصل ضخم + ركائز ثقة مرقّمة + قسم فيديو المعرض + طريقة العمل — كل المحتوى قابل للتعديل من <strong>/admin/home</strong> الجديدة. بنينا صفحتي /new (تصفح CarAPI حي) و/used (سيارات حقيقية) عشان زراير البوابتين تشتغل فعليًا.</div>
+      <div class="skills">skills used: frontend-design · ui-ux-pro-max · ui-animation · framer-motion-animator</div>
     </div>
   </div>
 
@@ -259,6 +259,25 @@
       </div>
       <div class="timeline-links">
         <a href="https://fady-delta.vercel.app" target="_blank">الموقع اللايف</a>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">2026-07-03</div>
+      <div class="timeline-title">Phase 4 — Home سينمائي بالكامل (مطابق للمرجع)</div>
+      <div class="timeline-desc">
+        راجعنا db-longbow.webflow.io فعليًا بالمتصفح (screenshots + قراءة الصفحة كاملة) — لقينا: فيديو خلفية حقيقي، انتقال خلفية رمادي استوديو→أسود، تمثال أرشر معدني، شريط صحافة، بطاقات فلسفة مرقّمة .01/.02، ماركيه نص متحرك لا نهائي، عناوين بوستر Bold ضخمة، نظام Typography 3 طبقات.
+        دوّرنا على فيديوهات سيارات حقيقية مجانية (Pexels License، تجاري) وتأكدنا إنها شغّالة فعليًا بـ curl قبل الاستخدام.
+        ثبّتنا framer-motion واستخدمناه لكل حركات الـ scroll-reveal (احترام prefers-reduced-motion).
+        بنينا صفحة أدمن جديدة كاملة <strong>/admin/home</strong> (24+ حقل: فيديو الهيرو، البوابتين، الماركيه، العنوان الفاصل، 3 ركائز ثقة، 3 خطوات عمل، فيديو المعرض) — كل حاجة بتتخزن في جدول settings وتتعدل فورًا بدون لمس الكود.
+        صفحة الهوم بقت: Hero فيديو + Marquee + بوابتين (جديدة/مستعملة) + شريط ماركات (من قاعدة البيانات) + عنوان فاصل + ركائز ثقة + معرض السيارات المستعملة + فيديو المعرض + طريقة العمل + تقييمات + فوتر.
+        بنينا /new (تصفح ماركات/موديلات حي من CarAPI + زر واتساب لكل موديل) و/used (كل السيارات المستعملة الحقيقية، بدعم فلترة بالماركة من الرابط) عشان زراير البوابتين تاخد لمكان حقيقي.
+        حذفنا HeroSection.tsx وCategoriesStrip.tsx القديمين (بقوا غير مستخدَمين بعد الاستبدال).
+        <strong>Build محلي ناجح 100%</strong> — كل الصفحات والـ routes الجديدة اتأكدت في الـ build output.
+      </div>
+      <div class="timeline-links">
+        <a href="https://fady-delta.vercel.app" target="_blank">الموقع اللايف</a>
+        <a href="https://db-longbow.webflow.io/" target="_blank">المرجع البصري</a>
       </div>
     </div>
 

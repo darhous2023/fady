@@ -6,8 +6,9 @@ import { useRouter } from "next/navigation";
 
 const NAV = [
   { href: "/admin/dashboard", label: "الداشبورد", icon: "📊" },
-  { href: "/admin/products", label: "المنتجات", icon: "📦" },
-  { href: "/admin/orders", label: "الطلبات", icon: "🧾" },
+  { href: "/admin/home", label: "محتوى الرئيسية", icon: "🏠" },
+  { href: "/admin/products", label: "السيارات", icon: "🚗" },
+  { href: "/admin/orders", label: "طلبات الحجز", icon: "🧾" },
   { href: "/admin/reviews", label: "التقييمات", icon: "⭐" },
   { href: "/admin/categories", label: "الأقسام", icon: "🏷️" },
   { href: "/admin/shipping", label: "الشحن", icon: "🚚" },
@@ -44,9 +45,9 @@ export default function AdminLayout({
         {/* Logo */}
         <div className="px-6 py-6 border-b border-[#C9A84C]/10">
           <span className="text-2xl font-black text-[#C9A84C] tracking-widest">
-            شاهي
+            ELFADY
           </span>
-          <p className="text-xs text-[#F5EFE0]/30 mt-1">لوحة الإدارة</p>
+          <p className="text-xs text-[#F5EFE0]/30 mt-1">لوحة إدارة المعرض</p>
         </div>
 
         {/* Nav */}
