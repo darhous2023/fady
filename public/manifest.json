@@ -1,0 +1,40 @@
+{
+  "name": "ShahY Store",
+  "short_name": "ShahY",
+  "description": "أرقى الإكسسوارات النسائية المستوردة — شنط، محافظ، وشوزات فاخرة",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0A0806",
+  "theme_color": "#C9A84C",
+  "orientation": "portrait-primary",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "categories": ["shopping", "lifestyle"],
+  "shortcuts": [
+    {
+      "name": "العروض",
+      "url": "/sale",
+      "description": "تصفّح آخر العروض والتخفيضات"
+    },
+    {
+      "name": "تتبّع طلبك",
+      "url": "/track",
+      "description": "تتبّع حالة طلبك الحالي"
+    }
+  ]
+}

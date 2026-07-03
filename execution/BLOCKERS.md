@@ -1,0 +1,6 @@
+# Blockers
+
+| ID | Blocker | Exact Cause | Work Completed Before Blocker | Required User Action | Safe Workaround | Tasks Affected | Status |
+|---|---|---|---|---|---|---|---|
+| B-001 | Lint remains non-passing | Existing React/Next lint rules report violations in guide and storefront components, including unescaped entities, page anchors, image usage, and React compiler rules. | Install, typecheck, production build, secret scan, ShahY-reference scan, documentation generation, and scripts. | None required for template handoff; future cleanup should fix rules without weakening lint. | Keep failures documented; do not disable lint globally. | Final acceptance lint item. | VERIFIED LIMITATION |
+| B-002 | Live production console/network audit incomplete | PowerShell smoke test against the original live site failed with a receive/TLS error; a separate web fetch confirmed homepage content but did not provide browser console/network diagnostics. | Safe read-only production homepage fetch and production documentation. | None unless full browser-console evidence is required immediately. | Use browser or Playwright read-only audit in a future pass. | Full live production audit depth. | VERIFIED LIMITATION |

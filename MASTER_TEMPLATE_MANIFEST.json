@@ -1,0 +1,35 @@
+{
+  "templateName": "Store Master Template",
+  "templateVersion": "0.1.0",
+  "sourceRepository": "https://github.com/Darhous/ShahY-Store",
+  "sourceCommitInspected": "25ed027",
+  "destinationRepository": "https://github.com/Darhous/Store-Master-Template",
+  "framework": "Next.js",
+  "packageManager": "npm",
+  "productionPlatform": "Vercel",
+  "databasePlatform": "Supabase Postgres",
+  "forbiddenProductionReferences": [
+    "pggmpvhyuxfetifzesws",
+    "https://shah-y-store.vercel.app/",
+    "https://github.com/Darhous/ShahY-Store"
+  ],
+  "validationCommands": [
+    "npm install",
+    "npm run lint",
+    "npm run typecheck",
+    "npm run build",
+    "powershell -ExecutionPolicy Bypass -File scripts/check-secrets.ps1",
+    "powershell -ExecutionPolicy Bypass -File scripts/check-shahy-references.ps1"
+  ],
+  "requiredDocumentation": [
+    "AGENTS.md",
+    "CLAUDE.md",
+    "PROMPT.md",
+    "PROJECT_CONTEXT.md",
+    "STORE_IDENTITY_TEMPLATE.md",
+    "README.md",
+    "تعليمات التشغيل.md"
+  ],
+  "lastAuditDate": "2026-06-29",
+  "lastValidationStatus": "partial-pass-build-typecheck-secret-reference-clean-lint-failing"
+}
