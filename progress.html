@@ -153,12 +153,12 @@
     </div>
   </div>
 
-  <div class="phase pending">
-    <div class="check"></div>
+  <div class="phase done">
+    <div class="check">✓</div>
     <div class="phase-body">
       <div class="phase-title">Phase 7 — 360 / Zoom Viewer</div>
-      <div class="phase-desc">جدول الإطارات + سكشن أدمن للرفع/الترتيب/الأرشفة + العارض + fallback عدسة تكبير.</div>
-      <div class="skills">skills: ui-animation (drag/gesture) · hyperframes-animation</div>
+      <div class="phase-desc">جدول جديد <strong>product_360_frames</strong> + سكشن أدمن لرفع صور الدوران الكامل وترتيبها (لأعلى/لأسفل) وحذفها في صفحة تعديل السيارة. عارض 360 للعميل: سحب باللمس أو الماوس يدوّر بين الصور 1:1 مع حركة الإصبع (من غير أي inertia — تلاعب مباشر مش حركة "إفلات")، أزرار وأسهم + دعم لوحة المفاتيح (يمين/شمال) كبديل، ومسار مخصص لـ prefers-reduced-motion للتلميح المتحرك. يظهر تلقائيًا بدل معرض الصور العادي لو السيارة عندها طقم 360 (2 صور فأكثر)، وإلا يفضل المعرض العادي شغّال زي ما هو. <strong>اكتشفنا وصلّحنا نهائيًا</strong> باج قديم في أداة drizzle-kit كان بيسبب تكرار أعمدة قديمة في أي migration جديدة — كان السبب ترقيم ملف migration قديم غلط، اتصلح بإعادة تسميته (بدون أي خطر على قاعدة البيانات، اتحقق منه فعليًا).</div>
+      <div class="skills">skills used: ui-animation (drag/gesture reference)</div>
     </div>
   </div>
 
@@ -294,6 +294,21 @@
       </div>
       <div class="timeline-links">
         <a href="https://fady-delta.vercel.app/cart" target="_blank">قائمة المعاينة اللايف</a>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">2026-07-03</div>
+      <div class="timeline-title">Phase 7 — عارض 360° + إصلاح دائم لباج الـ migrations</div>
+      <div class="timeline-desc">
+        جدول جديد <strong>product_360_frames</strong> (منفصل عن product_images) بصلاحيات RLS خاصة به.
+        سكشن أدمن جديد "عارض 360°" في صفحة تعديل السيارة: رفع عدة صور مرة واحدة، ترتيب بالأسهم، حذف — منفصل عن معرض الصور العادي.
+        كومبوننت عميل جديد <strong>Product360Viewer</strong>: سحب بالماوس أو اللمس يدوّر بين الصور بنفس حركة الإصبع تمامًا (بدون أي تسارع أو "إفلات" — تلاعب مباشر)، preload لكل الصور مع شاشة تحميل، أزرار وأسهم ودعم لوحة مفاتيح كبديل، ومسار خاص لـ prefers-reduced-motion. يظهر تلقائيًا في صفحة السيارة لو عندها طقم 360 (صورتين فأكثر)، وإلا يفضل المعرض العادي شغّال زي ما هو بدون أي تغيير.
+        <strong>اكتشفنا نفس باج قديم في drizzle-kit مرتين</strong> (ظهر أول مرة في Phase 8): بيكرر أعمدة اتضافت فعلاً في مراحل سابقة بدل ما يكتشف بس الجديد. في المرة التانية دي، رجعنا للسبب الجذري بدل ما نصلّح الأعراض بس: ملف migration قديم كان مرقّم غلط. أعدنا تسميته للترقيم الصحيح (اتحقق فعليًا إن الأداة بتعتمد على محتوى الملف مش اسمه، فمفيش أي خطر على البيانات المطبّقة فعلاً)، وأكدنا إن drizzle-kit generate بقى بيشتغل صح تاني.
+        <strong>Build محلي ناجح 100%</strong> وتم التحقق من النشر اللايف فعليًا (صفحة سيارة حقيقية رجعت 200 وعرضت المحتوى الصحيح).
+      </div>
+      <div class="timeline-links">
+        <a href="https://fady-delta.vercel.app/products/car-toyota-dmkjed" target="_blank">مثال صفحة سيارة اللايف</a>
       </div>
     </div>
 
