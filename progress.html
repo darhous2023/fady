@@ -162,11 +162,12 @@
     </div>
   </div>
 
-  <div class="phase pending">
-    <div class="check"></div>
+  <div class="phase done">
+    <div class="check">✓</div>
     <div class="phase-body">
       <div class="phase-title">Phase 8 — Booking Reframe</div>
-      <div class="phase-desc">cart/checkout/orders → حجز معاينة (UI + نموذج + أدمن).</div>
+      <div class="phase-desc">إزالة كل لغة "أضف للسلة/إتمام الطلب" من الموقع: السلة بقت "قائمة المعاينة"، الـ checkout بقى نموذج حجز معاينة (اسم/موبايل/ميعاد مفضل/فرع بدل المحافظة والعنوان وكود الخصم)، وحالات الطلب في الأدمن اتحوّلت لمراحل حجز (بانتظار التأكيد → تم تأكيد الموعد → تم التواصل → تمت المعاينة). أُضيف عمودي preferred_date وbranch لجدول orders (migration إضافية)، واتصلحت رسائل واتساب وبادئة رقم الطلب اللي كانت لسه بتقول "ShahY Store"/"SHY-".</div>
+      <div class="skills">no design/animation skill — pure copy + data-model + backend relabeling task</div>
     </div>
   </div>
 
@@ -278,6 +279,21 @@
       <div class="timeline-links">
         <a href="https://fady-delta.vercel.app" target="_blank">الموقع اللايف</a>
         <a href="https://db-longbow.webflow.io/" target="_blank">المرجع البصري</a>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">2026-07-03</div>
+      <div class="timeline-title">Phase 8 — Booking Reframe (حجز معاينة بدل السلة)</div>
+      <div class="timeline-desc">
+        سيبنا لغة "أضف للسلة / إتمام الطلب" في كل مكان بالموقع لأنها مش منطقية لسيارة: السلة بقت <strong>قائمة المعاينة</strong>، والـ checkout بقى <strong>نموذج حجز معاينة</strong> (الاسم، الموبايل، الميعاد المفضل اختياري، ومكان المعاينة الثابت — بدل المحافظة/العنوان/كود الخصم/الشحن اللي كانت للتوصيل).
+        أضفنا عمودين جدد لجدول orders (preferred_date وbranch) بـ migration إضافية، وخلّينا governorate/address اختيارية بدل إجبارية.
+        حالات الطلب في الأدمن بقت: بانتظار التأكيد → تم تأكيد الموعد → تم التواصل → تمت المعاينة (بدل مراحل الشحن/التسليم القديمة) — نفس enum الأساسي في قاعدة البيانات، بس Labels مختلفة.
+        صلّحنا رقم الطلب اللي كان لسه بادئته "SHY-" (بقى "FADY-")، ورسائل واتساب اللي كانت بتقول "ShahY Store" في صفحة تأكيد الطلب وتفاصيل الطلب بالأدمن.
+        <strong>Build محلي ناجح 100%</strong> وتم التحقق من النشر اللايف فعليًا (فحص محتوى /cart و/checkout و/track بعد الـ deploy).
+      </div>
+      <div class="timeline-links">
+        <a href="https://fady-delta.vercel.app/cart" target="_blank">قائمة المعاينة اللايف</a>
       </div>
     </div>
 
