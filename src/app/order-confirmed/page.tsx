@@ -14,7 +14,7 @@ function ConfirmContent() {
     <div style={{ textAlign: "center", padding: "80px 24px" }}>
       <div style={{ fontSize: 64, marginBottom: 24 }}>🎉</div>
       <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 10, letterSpacing: "6px", color: "#9BA3AA", opacity: 0.7, marginBottom: 16 }}>
-        ✦ &nbsp; ORDER CONFIRMED &nbsp; ✦
+        ✦ &nbsp; BOOKING CONFIRMED &nbsp; ✦
       </div>
       <h1 style={{
         fontFamily: "Tajawal,sans-serif", fontSize: "clamp(26px,5vw,40px)", fontWeight: 800,
@@ -22,7 +22,7 @@ function ConfirmContent() {
         WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
         margin: "0 0 16px",
       }}>
-        تم تأكيد طلبك!
+        تم استلام طلب الحجز!
       </h1>
       {orderNumber && (
         <div style={{
@@ -36,15 +36,15 @@ function ConfirmContent() {
         borderRadius: 14, padding: "24px 28px", maxWidth: 420, margin: "0 auto 32px",
       }}>
         <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 15, color: "#F2F0EC", opacity: 0.6, lineHeight: 1.9, margin: 0 }}>
-          سنتواصل معك قريباً على رقمك لتأكيد الطلب وتحديد موعد التوصيل.
-          يمكنكِ أيضاً إخطارنا بطلبك مباشرةً عبر واتساب لأسرع استجابة.
+          سنتواصل معك قريباً على رقمك لتأكيد ميعاد المعاينة.
+          يمكنك أيضاً إخطارنا بطلبك مباشرةً عبر واتساب لأسرع استجابة.
         </p>
       </div>
 
       {/* Primary CTA: notify admin via WA */}
       {orderNumber && (
         <div style={{ maxWidth: 380, margin: "0 auto 16px" }}>
-          <a href={`https://wa.me/201555557745?text=${encodeURIComponent(`🛍️ طلب جديد على ShahY Store\n\nرقم الطلب: ${orderNumber}\n\nأرجو تأكيد استلام الطلب. شكراً 💛`)}`}
+          <a href={`https://wa.me/201555557745?text=${encodeURIComponent(`🚗 طلب حجز معاينة جديد — معرض الفادي\n\nرقم الطلب: ${orderNumber}\n\nأرجو تأكيد استلام الطلب. شكراً`)}`}
             target="_blank" rel="noopener noreferrer"
             style={{
               display: "flex", alignItems: "center", justifyContent: "center", gap: 10,
@@ -58,7 +58,7 @@ function ConfirmContent() {
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
               <path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/>
             </svg>
-            أبلغي الأدمن بطلبك
+            أبلغ الأدمن بطلبك
           </a>
         </div>
       )}
@@ -70,14 +70,14 @@ function ConfirmContent() {
           background: "transparent", color: "#9BA3AA",
           border: "1px solid rgba(155,163,170,0.3)",
         }}>
-          🔍 تتبّع طلبك
+          🔍 تتبّع حالة الحجز
         </Link>
         <Link href="/" style={{
           fontFamily: "Tajawal,sans-serif", fontWeight: 700, fontSize: 14,
           padding: "11px 24px", borderRadius: 8, textDecoration: "none",
           background: "linear-gradient(135deg,#9BA3AA,#C9CFD4)", color: "#0A0A0A",
         }}>
-          متابعة التسوق
+          العودة للرئيسية
         </Link>
       </div>
     </div>

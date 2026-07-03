@@ -6,21 +6,21 @@ import StoreFooter from "@/components/store/StoreFooter"
 import FloatingWA from "@/components/store/FloatingWA"
 
 const STATUS_STEPS = [
-  { key: "pending",   label: "تم استلام الطلب",   icon: "📋" },
-  { key: "confirmed", label: "تم تأكيد الطلب",    icon: "✅" },
-  { key: "shipped",   label: "في الطريق إليكِ",   icon: "🚚" },
-  { key: "delivered", label: "تم التسليم",          icon: "🎉" },
+  { key: "pending",   label: "تم استلام طلب الحجز", icon: "📋" },
+  { key: "confirmed", label: "تم تأكيد الموعد",      icon: "✅" },
+  { key: "shipped",   label: "تم التواصل معك",       icon: "📞" },
+  { key: "delivered", label: "تمت المعاينة",          icon: "🎉" },
 ]
 
-const QUALITY: Record<string, string> = { hi_copy: "بريميوم", mirror: "ميرور كواليتي", original: "أصلي" }
+const QUALITY: Record<string, string> = { original: "ممتازة", mirror: "جيدة جدًا", hi_copy: "جيدة" }
 
 interface TrackResult {
   order_number: string
   customer_name: string
-  governorate: string
+  branch: string | null
+  preferred_date: string | null
   status: string
   total: string
-  shipping_cost: string
   created_at: string
   items: { product_name: string; quality_tier: string; qty: number; unit_price: string }[]
 }
@@ -67,19 +67,19 @@ export default function TrackPage() {
           {/* Header */}
           <div style={{ textAlign: "center", marginBottom: 48 }}>
             <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 9, letterSpacing: "6px", color: "#9BA3AA", opacity: 0.7, marginBottom: 16, textTransform: "uppercase" }}>
-              ✦ &nbsp; ORDER TRACKING &nbsp; ✦
+              ✦ &nbsp; BOOKING TRACKING &nbsp; ✦
             </div>
             <h1 style={{ fontFamily: "Tajawal,sans-serif", fontSize: "clamp(26px,5vw,38px)", fontWeight: 800, color: "#F2F0EC", margin: "0 0 10px" }}>
-              تتبّع طلبكِ
+              تتبّع حالة الحجز
             </h1>
             <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 14, color: "#F2F0EC", opacity: 0.35 }}>
-              أدخلي رقم الطلب لمعرفة حالته الحالية
+              أدخل رقم الطلب لمعرفة حالته الحالية
             </p>
           </div>
 
           {/* Search form */}
           <form onSubmit={handleTrack} style={{ display: "flex", gap: 10, marginBottom: 40 }}>
-            <input className="tr-input" dir="ltr" placeholder="SHY-XXXXXXXX"
+            <input className="tr-input" dir="ltr" placeholder="FADY-XXXXXXXX"
               value={input} onChange={e => setInput(e.target.value.toUpperCase())} />
             <button type="submit" disabled={loading}
               style={{
@@ -120,7 +120,8 @@ export default function TrackPage() {
                 </div>
                 <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
                   <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "rgba(242,240,236,0.5)" }}>👤 {result.customer_name}</span>
-                  <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "rgba(242,240,236,0.5)" }}>📍 {result.governorate}</span>
+                  {result.branch && <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "rgba(242,240,236,0.5)" }}>📍 {result.branch}</span>}
+                  {result.preferred_date && <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "rgba(242,240,236,0.5)" }}>📅 {result.preferred_date}</span>}
                 </div>
               </div>
 
@@ -178,14 +179,14 @@ export default function TrackPage() {
               {/* Items */}
               {result.items.length > 0 && (
                 <div style={{ background: "linear-gradient(145deg,#131313,#141414)", border: "1px solid rgba(155,163,170,0.12)", borderRadius: 16, padding: "20px", marginBottom: 20 }}>
-                  <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 12, color: "rgba(155,163,170,0.6)", letterSpacing: "2px", marginBottom: 16, fontWeight: 700 }}>المنتجات ({result.items.length})</div>
+                  <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 12, color: "rgba(155,163,170,0.6)", letterSpacing: "2px", marginBottom: 16, fontWeight: 700 }}>السيارات ({result.items.length})</div>
                   <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                     {result.items.map((item, i) => (
                       <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                         <div>
                           <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 14, color: "#F2F0EC" }}>{item.product_name}</div>
                           <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 11, color: "rgba(242,240,236,0.35)", marginTop: 2 }}>
-                            {QUALITY[item.quality_tier] ?? item.quality_tier} · {item.qty} قطعة
+                            {QUALITY[item.quality_tier] ?? item.quality_tier}
                           </div>
                         </div>
                         <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "#9BA3AA", fontWeight: 700 }}>
@@ -202,7 +203,7 @@ export default function TrackPage() {
                 <a href={`https://wa.me/201555557745?text=${encodeURIComponent(`السلام عليكم، أريد الاستفسار عن طلبي رقم ${result.order_number}`)}`}
                   target="_blank" rel="noopener noreferrer"
                   style={{ fontFamily: "Tajawal,sans-serif", fontWeight: 700, fontSize: 14, padding: "12px 28px", borderRadius: 8, textDecoration: "none", background: "rgba(37,211,102,0.1)", border: "1px solid rgba(37,211,102,0.3)", color: "#25D366" }}>
-                  📱 تواصلي مع خدمة العملاء
+                  📱 تواصل مع خدمة العملاء
                 </a>
               </div>
             </div>

@@ -10,7 +10,7 @@ import StoreHeader from "@/components/store/StoreHeader"
 import StoreFooter from "@/components/store/StoreFooter"
 import FloatingWA from "@/components/store/FloatingWA"
 
-interface ShippingZone { id: string; governorate_ar: string; cost: number }
+const BRANCH = "معرض الفادي لتجارة السيارات — المهندسين، شارع أحمد عرابي"
 
 export default function CheckoutPage() {
   const router = useRouter()
@@ -19,21 +19,9 @@ export default function CheckoutPage() {
   const [customerId, setCustomerId] = useState<string | null>(null)
   const [name, setName] = useState("")
   const [phone, setPhone] = useState("")
-  const [governorate, setGovernorate] = useState("")
-  const [address, setAddress] = useState("")
+  const [preferredDate, setPreferredDate] = useState("")
   const [notes, setNotes] = useState("")
   const [loading, setLoading] = useState(false)
-  const [discountCode, setDiscountCode] = useState("")
-  const [appliedDiscount, setAppliedDiscount] = useState<{ id: string; code: string; type: string; value: number; discount: number } | null>(null)
-  const [discountLoading, setDiscountLoading] = useState(false)
-  const [zones, setZones] = useState<ShippingZone[]>([])
-  const [zonesLoading, setZonesLoading] = useState(true)
-
-  useEffect(() => {
-    fetch("/api/shipping").then(r => r.json()).then(data => {
-      setZones(data.map((z: ShippingZone) => ({ ...z, cost: Number(z.cost) })))
-    }).catch(() => {}).finally(() => setZonesLoading(false))
-  }, [])
 
   useEffect(() => {
     if (!session?.user) return
@@ -46,28 +34,9 @@ export default function CheckoutPage() {
     }).catch(() => {})
   }, [session])
 
-  const shippingFee = zones.find(z => z.governorate_ar === governorate)?.cost ?? 0
-  const discountAmount = appliedDiscount?.discount ?? 0
-  const orderTotal = total + shippingFee - discountAmount
-
-  async function applyDiscount() {
-    if (!discountCode.trim()) return
-    setDiscountLoading(true)
-    try {
-      const res = await fetch(`/api/discounts/validate?code=${encodeURIComponent(discountCode)}&total=${total}`)
-      const data = await res.json()
-      if (!res.ok) { toast.error(data.error || "كود غير صحيح"); return }
-      setAppliedDiscount(data)
-      toast.success(`تم تطبيق الخصم: ${data.discount.toLocaleString("ar-EG")} ج.م`)
-    } finally {
-      setDiscountLoading(false)
-    }
-  }
-
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    if (!items.length) { toast.error("سلتك فارغة"); return }
-    if (!governorate) { toast.error("اختر المحافظة"); return }
+    if (!items.length) { toast.error("قائمة المعاينة فارغة"); return }
 
     setLoading(true)
     try {
@@ -78,8 +47,8 @@ export default function CheckoutPage() {
           customer_name: name,
           phone,
           customer_id: customerId,
-          governorate,
-          address,
+          preferred_date: preferredDate || null,
+          branch: BRANCH,
           notes: notes || null,
           items: items.map(i => ({
             product_id: i.id,
@@ -89,11 +58,7 @@ export default function CheckoutPage() {
             unit_price: i.price,
           })),
           subtotal: total,
-          shipping_cost: shippingFee,
-          total: orderTotal,
-          method: "cod",
-          discount_code: appliedDiscount?.code ?? null,
-          discount_amount: discountAmount,
+          total,
         }),
       })
 
@@ -119,13 +84,13 @@ export default function CheckoutPage() {
         <StoreHeader />
         <main style={{ background: "#0A0A0A", minHeight: "100vh", paddingTop: 80, display: "flex", alignItems: "center", justifyContent: "center", direction: "rtl" }}>
           <div style={{ textAlign: "center", padding: 40 }}>
-            <div style={{ fontSize: 56, marginBottom: 20, opacity: 0.3 }}>🛒</div>
-            <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 18, color: "#F2F0EC", opacity: 0.45, marginBottom: 24 }}>لا يوجد منتجات لإتمام الطلب</p>
-            <Link href="/#products" style={{
+            <div style={{ fontSize: 56, marginBottom: 20, opacity: 0.3 }}>🚗</div>
+            <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 18, color: "#F2F0EC", opacity: 0.45, marginBottom: 24 }}>لا توجد سيارات لإتمام طلب الحجز</p>
+            <Link href="/used" style={{
               fontFamily: "Tajawal,sans-serif", fontWeight: 700, fontSize: 14,
               padding: "11px 28px", borderRadius: 8, textDecoration: "none",
               background: "linear-gradient(135deg,#9BA3AA,#C9CFD4)", color: "#0A0A0A",
-            }}>تصفّح المنتجات</Link>
+            }}>تصفّح السيارات</Link>
           </div>
         </main>
         <StoreFooter />
@@ -157,16 +122,16 @@ export default function CheckoutPage() {
 
           <div style={{ marginBottom: 40 }}>
             <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 10, letterSpacing: "6px", color: "#9BA3AA", opacity: 0.7, marginBottom: 12 }}>
-              ✦ &nbsp; CHECKOUT &nbsp; ✦
+              ✦ &nbsp; BOOK A VIEWING &nbsp; ✦
             </div>
             <h1 style={{
               fontFamily: "Tajawal,sans-serif", fontSize: "clamp(26px,5vw,38px)", fontWeight: 800,
               background: "linear-gradient(135deg,#9BA3AA,#C9CFD4)",
               WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
               margin: 0,
-            }}>إتمام الطلب</h1>
+            }}>تأكيد طلب المعاينة</h1>
             <Link href="/cart" style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "#9BA3AA", opacity: 0.6, textDecoration: "none", marginTop: 8, display: "inline-block" }}>
-              ← العودة للسلة
+              ← العودة لقائمة المعاينة
             </Link>
           </div>
 
@@ -178,13 +143,13 @@ export default function CheckoutPage() {
                 border: "1px solid rgba(155,163,170,0.1)", borderRadius: 16, padding: "24px 20px",
               }}>
                 <h2 style={{ fontFamily: "Tajawal,sans-serif", fontWeight: 700, fontSize: 16, color: "#F2F0EC", marginBottom: 20, borderBottom: "1px solid rgba(155,163,170,0.08)", paddingBottom: 14 }}>
-                  بيانات التواصل والشحن
+                  بيانات التواصل
                 </h2>
 
                 <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                   <div>
                     <label style={{ display: "block", fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "#F2F0EC", opacity: 0.55, marginBottom: 8 }}>الاسم الكامل *</label>
-                    <input className="co-input" required placeholder="مثال: سارة محمد"
+                    <input className="co-input" required placeholder="مثال: أحمد محمد"
                       value={name} onChange={e => setName(e.target.value)} />
                   </div>
 
@@ -195,74 +160,22 @@ export default function CheckoutPage() {
                   </div>
 
                   <div>
-                    <label style={{ display: "block", fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "#F2F0EC", opacity: 0.55, marginBottom: 8 }}>المحافظة *</label>
-                    {zonesLoading ? (
-                      <div className="co-input" style={{ opacity: 0.4, display: "flex", alignItems: "center", gap: 8 }}>
-                        <span style={{ display: "inline-block", width: 14, height: 14, border: "2px solid rgba(155,163,170,0.3)", borderTopColor: "#9BA3AA", borderRadius: "50%", animation: "spin 0.7s linear infinite" }} />
-                        جاري تحميل أسعار الشحن...
-                      </div>
-                    ) : (
-                      <select className="co-input" required value={governorate} onChange={e => setGovernorate(e.target.value)}>
-                        <option value="">اختر المحافظة</option>
-                        {zones.map(z => (
-                          <option key={z.id} value={z.governorate_ar}>
-                            {z.governorate_ar} — شحن {z.cost === 0 ? "مجاني" : `${z.cost} ج.م`}
-                          </option>
-                        ))}
-                      </select>
-                    )}
+                    <label style={{ display: "block", fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "#F2F0EC", opacity: 0.55, marginBottom: 8 }}>الميعاد المفضل للمعاينة (اختياري)</label>
+                    <input className="co-input" type="date" value={preferredDate} onChange={e => setPreferredDate(e.target.value)} />
                   </div>
 
                   <div>
-                    <label style={{ display: "block", fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "#F2F0EC", opacity: 0.55, marginBottom: 8 }}>العنوان التفصيلي *</label>
-                    <textarea className="co-input" required rows={3} placeholder="الشارع، الحي، المبنى..."
-                      value={address} onChange={e => setAddress(e.target.value)}
-                      style={{ resize: "vertical", minHeight: 80 }} />
+                    <label style={{ display: "block", fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "#F2F0EC", opacity: 0.55, marginBottom: 8 }}>مكان المعاينة</label>
+                    <div className="co-input" style={{ opacity: 0.75, cursor: "default" }}>📍 {BRANCH}</div>
                   </div>
 
                   <div>
                     <label style={{ display: "block", fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "#F2F0EC", opacity: 0.55, marginBottom: 8 }}>ملاحظات إضافية (اختياري)</label>
-                    <textarea className="co-input" rows={2} placeholder="أي تعليمات خاصة للتوصيل..."
+                    <textarea className="co-input" rows={2} placeholder="أي استفسار عن السيارة أو الميعاد..."
                       value={notes} onChange={e => setNotes(e.target.value)}
                       style={{ resize: "vertical" }} />
                   </div>
                 </div>
-              </div>
-
-              <div style={{
-                background: "linear-gradient(145deg,#131313,#141414)",
-                border: "1px solid rgba(155,163,170,0.1)", borderRadius: 16, padding: "20px",
-              }}>
-                <h2 style={{ fontFamily: "Tajawal,sans-serif", fontWeight: 700, fontSize: 15, color: "#F2F0EC", marginBottom: 14 }}>
-                  🎁 كود الخصم
-                </h2>
-                {appliedDiscount ? (
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "rgba(34,197,94,0.08)", border: "1px solid rgba(34,197,94,0.2)", borderRadius: 10, padding: "12px 16px" }}>
-                    <div>
-                      <span style={{ fontFamily: "monospace", fontSize: 13, fontWeight: 700, color: "#4ade80", letterSpacing: "1px" }}>{appliedDiscount.code}</span>
-                      <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 12, color: "#4ade80", marginRight: 10 }}>
-                        خصم {appliedDiscount.discount.toLocaleString("ar-EG")} ج.م
-                      </span>
-                    </div>
-                    <button type="button" onClick={() => { setAppliedDiscount(null); setDiscountCode("") }}
-                      style={{ background: "transparent", border: "none", color: "rgba(239,68,68,0.6)", cursor: "pointer", fontSize: 18, lineHeight: 1 }}>×</button>
-                  </div>
-                ) : (
-                  <div style={{ display: "flex", gap: 8 }}>
-                    <input className="co-input" placeholder="أدخل كود الخصم" dir="ltr"
-                      value={discountCode} onChange={e => setDiscountCode(e.target.value.toUpperCase())}
-                      onKeyDown={e => e.key === "Enter" && (e.preventDefault(), applyDiscount())}
-                      style={{ flex: 1, letterSpacing: "1px" }} />
-                    <button type="button" onClick={applyDiscount} disabled={discountLoading || !discountCode.trim()}
-                      style={{
-                        padding: "0 20px", background: "rgba(155,163,170,0.1)", border: "1px solid rgba(155,163,170,0.3)",
-                        borderRadius: 10, color: "#9BA3AA", fontFamily: "Tajawal,sans-serif", fontWeight: 700, fontSize: 14,
-                        cursor: discountLoading ? "wait" : "pointer", whiteSpace: "nowrap", opacity: !discountCode.trim() ? 0.4 : 1,
-                      }}>
-                      {discountLoading ? "..." : "تطبيق"}
-                    </button>
-                  </div>
-                )}
               </div>
 
               <button type="submit" disabled={loading} className="co-submit"
@@ -281,7 +194,7 @@ export default function CheckoutPage() {
                     <polyline points="20,6 9,17 4,12"/>
                   </svg>
                 )}
-                {loading ? "جاري تأكيد الطلب..." : "تأكيد الطلب (الدفع عند الاستلام)"}
+                {loading ? "جاري إرسال الطلب..." : "إرسال طلب الحجز"}
               </button>
               <style>{`@keyframes spin { to { transform: rotate(360deg) } }`}</style>
             </form>
@@ -293,42 +206,21 @@ export default function CheckoutPage() {
                 borderRadius: 16, padding: "24px 20px",
               }}>
                 <h3 style={{ fontFamily: "Tajawal,sans-serif", fontWeight: 700, fontSize: 15, color: "#F2F0EC", marginBottom: 16, borderBottom: "1px solid rgba(155,163,170,0.1)", paddingBottom: 12 }}>
-                  تفاصيل طلبك
+                  تفاصيل الحجز
                 </h3>
 
                 <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 16 }}>
                   {items.map(item => (
                     <div key={item.id} style={{ display: "flex", justifyContent: "space-between", gap: 8 }}>
                       <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "#F2F0EC", opacity: 0.6, flex: 1 }}>
-                        {item.name_ar} × {item.quantity}
+                        {item.name_ar}
                       </span>
                       <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "#F2F0EC", fontWeight: 700, whiteSpace: "nowrap" }}>
-                        {(item.price * item.quantity).toLocaleString("ar-EG")} ج.م
+                        {item.price.toLocaleString("ar-EG")} ج.م
                       </span>
                     </div>
                   ))}
                 </div>
-
-                <div style={{ height: 1, background: "rgba(155,163,170,0.12)", marginBottom: 12 }} />
-
-                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
-                  <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "#F2F0EC", opacity: 0.5 }}>المنتجات</span>
-                  <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "#F2F0EC", fontWeight: 700 }}>{total.toLocaleString("ar-EG")} ج.م</span>
-                </div>
-                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: appliedDiscount ? 8 : 16 }}>
-                  <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "#F2F0EC", opacity: 0.5 }}>الشحن</span>
-                  <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, color: shippingFee > 0 ? "#9BA3AA" : "#555", fontWeight: 700 }}>
-                    {governorate ? (shippingFee === 0 ? "مجاني" : `${shippingFee} ج.م`) : "اختر المحافظة"}
-                  </span>
-                </div>
-                {appliedDiscount && (
-                  <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 16 }}>
-                    <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "#4ade80", opacity: 0.85 }}>خصم ({appliedDiscount.code})</span>
-                    <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "#4ade80", fontWeight: 700 }}>
-                      -{discountAmount.toLocaleString("ar-EG")} ج.م
-                    </span>
-                  </div>
-                )}
 
                 <div style={{ height: 1, background: "linear-gradient(90deg,#9BA3AA44,transparent)", marginBottom: 16 }} />
 
@@ -339,15 +231,15 @@ export default function CheckoutPage() {
                     background: "linear-gradient(135deg,#9BA3AA,#C9CFD4)",
                     WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
                   }}>
-                    {orderTotal.toLocaleString("ar-EG")} ج.م
+                    {total.toLocaleString("ar-EG")} ج.م
                   </span>
                 </div>
 
                 <div style={{ marginTop: 20, padding: "12px 14px", background: "rgba(155,163,170,0.04)", border: "1px solid rgba(155,163,170,0.1)", borderRadius: 10 }}>
                   <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 12, color: "#F2F0EC", opacity: 0.45, lineHeight: 1.7 }}>
-                    💵 الدفع عند الاستلام<br/>
-                    🚚 توصيل لجميع محافظات مصر<br/>
-                    📞 سنتواصل معك لتأكيد الطلب
+                    📞 سيتواصل معك فريق المعرض لتأكيد الموعد<br/>
+                    📍 المعاينة في معرض الفادي — المهندسين<br/>
+                    🚗 بدون التزام بالشراء
                   </div>
                 </div>
               </div>

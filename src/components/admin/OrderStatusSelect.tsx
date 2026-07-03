@@ -3,10 +3,10 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 const STATUS_OPTIONS = [
-  { value: "pending", label: "قيد الانتظار", color: "text-yellow-400" },
-  { value: "confirmed", label: "مؤكد", color: "text-blue-400" },
-  { value: "shipped", label: "تم الشحن", color: "text-purple-400" },
-  { value: "delivered", label: "تم التسليم", color: "text-green-400" },
+  { value: "pending", label: "بانتظار التأكيد", color: "text-yellow-400" },
+  { value: "confirmed", label: "تم تأكيد الموعد", color: "text-blue-400" },
+  { value: "shipped", label: "تم التواصل", color: "text-purple-400" },
+  { value: "delivered", label: "تمت المعاينة", color: "text-green-400" },
   { value: "cancelled", label: "ملغي", color: "text-red-400" },
 ];
 

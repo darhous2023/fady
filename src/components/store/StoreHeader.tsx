@@ -154,7 +154,7 @@ export default function StoreHeader() {
         </Link>
 
         {/* Cart */}
-        <Link href="/cart" className="sh-icon-btn" aria-label="السلة">
+        <Link href="/cart" className="sh-icon-btn" aria-label="قائمة المعاينة">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
             <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
             <line x1="3" y1="6" x2="21" y2="6"/>
@@ -173,7 +173,7 @@ export default function StoreHeader() {
             <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
           </svg>
         </button>
-        <Link href="/cart" className="sh-icon-btn" aria-label="السلة">
+        <Link href="/cart" className="sh-icon-btn" aria-label="قائمة المعاينة">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
             <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
             <line x1="3" y1="6" x2="21" y2="6"/>
@@ -203,8 +203,8 @@ export default function StoreHeader() {
           { href: "/#products", label: "المنتجات" },
           { href: "/sale",      label: "العروض",   color: "#C97169" },
           { href: "/wishlist",  label: "المفضلة" },
-          { href: "/cart",      label: "السلة" },
-          { href: "/track",     label: "تتبّع طلبك" },
+          { href: "/cart",      label: "قائمة المعاينة" },
+          { href: "/track",     label: "تتبّع الحجز" },
           { href: "/account",   label: "حسابي" },
         ].map(({ href, label, color }) => (
           <Link key={href} href={href} onClick={() => setMenuOpen(false)} style={{

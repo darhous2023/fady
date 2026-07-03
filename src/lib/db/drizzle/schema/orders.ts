@@ -45,8 +45,10 @@ export const orders = pgTable(
     customer_id: uuid("customer_id"),
     customer_name: text("customer_name").notNull(),
     phone: text("phone").notNull(),
-    governorate: text("governorate").notNull(),
-    address: text("address").notNull(),
+    governorate: text("governorate"),
+    address: text("address"),
+    preferred_date: text("preferred_date"),
+    branch: text("branch"),
     subtotal: numeric("subtotal", { precision: 10, scale: 2 }).notNull(),
     shipping_cost: numeric("shipping_cost", { precision: 10, scale: 2 })
       .notNull()
@@ -134,8 +136,10 @@ export const selectOrderSchema = createSelectSchema(orders, {
 export const insertOrderSchema = createInsertSchema(orders, {
   customer_name: z.string().min(1),
   phone: z.string().min(11),
-  governorate: z.string().min(1),
-  address: z.string().min(1),
+  governorate: z.string().nullable().optional(),
+  address: z.string().nullable().optional(),
+  preferred_date: z.string().nullable().optional(),
+  branch: z.string().nullable().optional(),
   subtotal: z.coerce.number().min(0),
   shipping_cost: z.coerce.number().min(0),
   total: z.coerce.number().min(0),

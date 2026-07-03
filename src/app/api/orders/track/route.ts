@@ -11,10 +11,10 @@ export async function GET(req: NextRequest) {
     id: orders.id,
     order_number: orders.order_number,
     customer_name: orders.customer_name,
-    governorate: orders.governorate,
+    branch: orders.branch,
+    preferred_date: orders.preferred_date,
     status: orders.status,
     total: orders.total,
-    shipping_cost: orders.shipping_cost,
     created_at: orders.created_at,
     method: orders.method,
   }).from(orders).where(eq(orders.order_number, number)).limit(1)

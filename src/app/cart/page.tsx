@@ -15,13 +15,13 @@ function buildWaMessage(items: ReturnType<typeof useCart>["items"]): string {
   const total = items.reduce((s, i) => s + i.price * i.quantity, 0)
   return [
     "السلام عليكم 👋",
-    "أريد طلب المنتجات التالية:",
+    "أريد حجز معاينة السيارات التالية:",
     "",
     ...lines,
     "",
     `الإجمالي: ${total.toLocaleString("ar-EG")} ج.م`,
     "",
-    "أرجو التواصل لتأكيد الطلب.",
+    "أرجو التواصل لتحديد ميعاد المعاينة.",
   ].join("\n")
 }
 
@@ -53,7 +53,7 @@ export default function CartPage() {
           {/* Header */}
           <div style={{ marginBottom: 40 }}>
             <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 10, letterSpacing: "6px", color: "#9BA3AA", opacity: 0.7, marginBottom: 12 }}>
-              ✦ &nbsp; YOUR CART &nbsp; ✦
+              ✦ &nbsp; VIEWING LIST &nbsp; ✦
             </div>
             <h1 style={{
               fontFamily: "Tajawal,sans-serif", fontSize: "clamp(28px,5vw,42px)", fontWeight: 800,
@@ -61,23 +61,23 @@ export default function CartPage() {
               WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
               margin: 0,
             }}>
-              سلة الشراء {count > 0 && <span style={{ fontSize: "0.55em", opacity: 0.6 }}>({count} منتج)</span>}
+              قائمة المعاينة {count > 0 && <span style={{ fontSize: "0.55em", opacity: 0.6 }}>({count} سيارة)</span>}
             </h1>
           </div>
 
           {items.length === 0 ? (
             /* Empty state */
             <div style={{ textAlign: "center", padding: "80px 24px" }}>
-              <div style={{ fontSize: 64, marginBottom: 24, opacity: 0.3 }}>🛍️</div>
+              <div style={{ fontSize: 64, marginBottom: 24, opacity: 0.3 }}>🚗</div>
               <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 18, color: "#F2F0EC", opacity: 0.4, marginBottom: 32 }}>
-                سلتك فارغة حتى الآن
+                لسه مفيش سيارات في قائمة المعاينة
               </p>
-              <Link href="/#products" style={{
+              <Link href="/used" style={{
                 fontFamily: "Tajawal,sans-serif", fontWeight: 700, fontSize: 15,
                 padding: "12px 32px", borderRadius: 8, textDecoration: "none",
                 background: "linear-gradient(135deg,#9BA3AA,#C9CFD4)", color: "#0A0A0A",
               }}>
-                تصفّح المنتجات
+                تصفّح السيارات
               </Link>
             </div>
           ) : (
@@ -99,7 +99,7 @@ export default function CartPage() {
                         <img src={item.image} alt={item.name_ar}
                           style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                       ) : (
-                        <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28, opacity: 0.3 }}>👜</div>
+                        <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28, opacity: 0.3 }}>🚗</div>
                       )}
                     </div>
 
@@ -132,10 +132,10 @@ export default function CartPage() {
                   </div>
                 ))}
 
-                {/* Clear cart */}
-                <button onClick={() => { if (confirm("مسح كل منتجات السلة؟")) clearCart() }}
+                {/* Clear list */}
+                <button onClick={() => { if (confirm("إفراغ قائمة المعاينة؟")) clearCart() }}
                   style={{ alignSelf: "flex-start", background: "none", border: "none", cursor: "pointer", fontFamily: "Tajawal,sans-serif", fontSize: 12, color: "#555", textDecoration: "underline", padding: "4px 0" }}>
-                  مسح السلة
+                  إفراغ القائمة
                 </button>
               </div>
 
@@ -147,22 +147,22 @@ export default function CartPage() {
                   borderRadius: 16, padding: "24px 20px",
                 }}>
                   <h3 style={{ fontFamily: "Tajawal,sans-serif", fontWeight: 700, fontSize: 16, color: "#F2F0EC", marginBottom: 20, borderBottom: "1px solid rgba(155,163,170,0.1)", paddingBottom: 14 }}>
-                    ملخص الطلب
+                    ملخص الحجز
                   </h3>
 
                   <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 10 }}>
-                    <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 14, color: "#F2F0EC", opacity: 0.5 }}>الإجمالي ({count} منتج)</span>
-                    <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 14, color: "#F2F0EC", fontWeight: 700 }}>{total.toLocaleString("ar-EG")} ج.م</span>
+                    <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 14, color: "#F2F0EC", opacity: 0.5 }}>عدد السيارات</span>
+                    <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 14, color: "#F2F0EC", fontWeight: 700 }}>{count}</span>
                   </div>
                   <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 20 }}>
-                    <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 14, color: "#F2F0EC", opacity: 0.5 }}>الشحن</span>
-                    <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "#9BA3AA", opacity: 0.8 }}>2-5 أيام — يُحسب بعد تأكيد العنوان</span>
+                    <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 14, color: "#F2F0EC", opacity: 0.5 }}>الميعاد</span>
+                    <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "#9BA3AA", opacity: 0.8 }}>يُحدَّد في الخطوة التالية</span>
                   </div>
 
                   <div style={{ height: 1, background: "linear-gradient(90deg,#9BA3AA44,transparent)", marginBottom: 20 }} />
 
                   <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 24 }}>
-                    <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 15, fontWeight: 700, color: "#F2F0EC" }}>المجموع</span>
+                    <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 15, fontWeight: 700, color: "#F2F0EC" }}>إجمالي أسعار السيارات</span>
                     <span style={{
                       fontFamily: "Tajawal,sans-serif", fontSize: 20, fontWeight: 900,
                       background: "linear-gradient(135deg,#9BA3AA,#C9CFD4)",
@@ -185,10 +185,10 @@ export default function CartPage() {
                       <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
                       <polyline points="9,22 9,12 15,12 15,22"/>
                     </svg>
-                    إتمام الطلب
+                    متابعة لتأكيد الحجز
                   </Link>
 
-                  {/* WhatsApp checkout */}
+                  {/* WhatsApp booking */}
                   <a href={waHref} target="_blank" rel="noopener noreferrer"
                     className="cart-wa-btn"
                     style={{
@@ -201,11 +201,11 @@ export default function CartPage() {
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/>
                     </svg>
-                    طلب عبر واتساب
+                    حجز عبر واتساب
                   </a>
 
                   <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 11, color: "#F2F0EC", opacity: 0.25, textAlign: "center", marginTop: 16 }}>
-                    🔒 تسوق آمن — نحن معك
+                    🔒 بدون التزام بالشراء — المعاينة مجانية
                   </p>
                 </div>
               </div>
@@ -230,7 +230,7 @@ export default function CartPage() {
           `}</style>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
             <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "rgba(242,240,236,0.5)" }}>
-              المجموع ({count} منتج)
+              إجمالي {count} سيارة
             </span>
             <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 17, fontWeight: 900, color: "#9BA3AA" }}>
               {total.toLocaleString("ar-EG")} ج.م
@@ -243,7 +243,7 @@ export default function CartPage() {
             background: "linear-gradient(135deg, #9BA3AA, #C9CFD4)", color: "#0A0A0A",
             boxShadow: "0 4px 20px rgba(155,163,170,0.25)",
           }}>
-            إتمام الطلب ←
+            تأكيد الحجز ←
           </Link>
         </div>
       )}

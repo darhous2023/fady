@@ -23,8 +23,8 @@ export async function GET(req: NextRequest) {
         status: orders.status,
         total: orders.total,
         subtotal: orders.subtotal,
-        shipping_cost: orders.shipping_cost,
-        governorate: orders.governorate,
+        preferred_date: orders.preferred_date,
+        branch: orders.branch,
         created_at: orders.created_at,
       })
       .from(orders)

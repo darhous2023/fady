@@ -1,44 +1,39 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db/drizzle/connection";
-import { orders, orderItems, discountCodes } from "@/lib/db/drizzle/schema";
-import { eq, sql } from "drizzle-orm";
+import { orders, orderItems } from "@/lib/db/drizzle/schema";
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
   const {
     customer_name,
     phone,
-    governorate,
-    address,
+    preferred_date,
+    branch,
     items,
     subtotal,
-    shipping_cost,
     total,
-    method,
-    discount_code,
     notes,
     customer_id,
   } = body;
 
-  if (!customer_name || !phone || !governorate || !address || !items?.length || !total) {
+  if (!customer_name || !phone || !items?.length || !total) {
     return NextResponse.json({ error: "بيانات ناقصة" }, { status: 400 });
   }
 
-  const order_number = `SHY-${Date.now().toString(36).toUpperCase()}`;
+  const order_number = `FADY-${Date.now().toString(36).toUpperCase()}`;
 
   const [order] = await db.insert(orders).values({
     order_number,
     customer_id: customer_id || null,
     customer_name,
     phone,
-    governorate,
-    address,
+    preferred_date: preferred_date || null,
+    branch: branch || null,
     subtotal: String(subtotal),
-    shipping_cost: String(shipping_cost || 0),
+    shipping_cost: "0",
     total: String(total),
-    method: method || "cod",
+    method: "whatsapp",
     status: "pending",
-    discount_code: discount_code || null,
     notes: notes || null,
   }).returning();
 
@@ -61,12 +56,6 @@ export async function POST(request: NextRequest) {
         unit_price: String(item.unit_price),
       }))
     );
-  }
-
-  if (discount_code) {
-    await db.update(discountCodes)
-      .set({ used_count: sql`used_count + 1` })
-      .where(eq(discountCodes.code, discount_code.toUpperCase().trim()))
   }
 
   return NextResponse.json({ order_number: order.order_number, id: order.id }, { status: 201 });

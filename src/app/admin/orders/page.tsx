@@ -7,10 +7,10 @@ import ExportCSVButton from "@/components/admin/ExportCSVButton";
 import Link from "next/link";
 
 const STATUS_LABELS: Record<string, string> = {
-  pending: "قيد الانتظار",
-  confirmed: "مؤكد",
-  shipped: "تم الشحن",
-  delivered: "تم التسليم",
+  pending: "بانتظار التأكيد",
+  confirmed: "تم تأكيد الموعد",
+  shipped: "تم التواصل",
+  delivered: "تمت المعاينة",
   cancelled: "ملغي",
 };
 
@@ -24,7 +24,7 @@ const STATUS_COLORS: Record<string, string> = {
 
 const METHOD_LABELS: Record<string, string> = {
   whatsapp: "واتساب",
-  cod: "عند الاستلام",
+  cod: "نموذج الموقع",
 };
 
 export default async function OrdersPage() {
@@ -37,7 +37,7 @@ export default async function OrdersPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[#F5EFE0]">الطلبات</h1>
+          <h1 className="text-2xl font-bold text-[#F5EFE0]">طلبات حجز المعاينة</h1>
           <p className="text-[#F5EFE0]/40 text-sm mt-1">{allOrders.length} طلب</p>
         </div>
         <ExportCSVButton />
@@ -49,7 +49,7 @@ export default async function OrdersPage() {
             <tr className="border-b border-[#C9A84C]/10">
               <th className="text-right px-6 py-3 text-[#F5EFE0]/40 font-medium">رقم الطلب</th>
               <th className="text-right px-4 py-3 text-[#F5EFE0]/40 font-medium">العميل</th>
-              <th className="text-right px-4 py-3 text-[#F5EFE0]/40 font-medium">المحافظة</th>
+              <th className="text-right px-4 py-3 text-[#F5EFE0]/40 font-medium">الميعاد المفضل</th>
               <th className="text-right px-4 py-3 text-[#F5EFE0]/40 font-medium">الإجمالي</th>
               <th className="text-right px-4 py-3 text-[#F5EFE0]/40 font-medium">الطريقة</th>
               <th className="text-right px-4 py-3 text-[#F5EFE0]/40 font-medium">الحالة</th>
@@ -84,7 +84,7 @@ export default async function OrdersPage() {
                     </div>
                   </td>
                   <td className="px-4 py-4 text-[#F5EFE0]/60 text-xs">
-                    {order.governorate}
+                    {order.preferred_date ?? "—"}
                   </td>
                   <td className="px-4 py-4 text-[#C9A84C] font-medium">
                     {Number(order.total).toLocaleString("ar-EG")} ج

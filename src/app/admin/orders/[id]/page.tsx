@@ -10,8 +10,8 @@ import OrderStatusSelect from "@/components/admin/OrderStatusSelect"
 interface Props { params: Promise<{ id: string }> }
 
 const STATUS_LABELS: Record<string, string> = {
-  pending: "قيد الانتظار", confirmed: "مؤكد",
-  shipped: "تم الشحن", delivered: "تم التسليم", cancelled: "ملغي",
+  pending: "بانتظار التأكيد", confirmed: "تم تأكيد الموعد",
+  shipped: "تم التواصل", delivered: "تمت المعاينة", cancelled: "ملغي",
 }
 const STATUS_COLORS: Record<string, string> = {
   pending: "bg-yellow-500/20 text-yellow-400",
@@ -21,7 +21,7 @@ const STATUS_COLORS: Record<string, string> = {
   cancelled: "bg-red-500/20 text-red-400",
 }
 const QUALITY_LABELS: Record<string, string> = {
-  hi_copy: "هاي كوبي", mirror: "ميرور", original: "أورجنال",
+  original: "ممتازة", mirror: "جيدة جدًا", hi_copy: "جيدة",
 }
 
 export default async function OrderDetailPage({ params }: Props) {
@@ -34,7 +34,7 @@ export default async function OrderDetailPage({ params }: Props) {
 
   const waPhone = order.phone.replace(/\D/g, "")
   const waMsg = encodeURIComponent(
-    `السلام عليكم ${order.customer_name}، بخصوص طلبك رقم ${order.order_number} من ShahY Store 🌟`
+    `السلام عليكم ${order.customer_name}، بخصوص طلب حجز المعاينة رقم ${order.order_number} من معرض الفادي`
   )
 
   return (
@@ -63,7 +63,7 @@ export default async function OrderDetailPage({ params }: Props) {
             واتساب
           </a>
           {order.status === "delivered" && (
-            <a href={`https://wa.me/${waPhone}?text=${encodeURIComponent(`السلام عليكم ${order.customer_name} 🌟\nنأمل أن طلبك رقم ${order.order_number} من ShahY Store قد وصلك بسلامة.\nنودّ سماع رأيك — هل يمكنك تقييم تجربتك معنا؟ رأيك يهمنا جداً 💛`)}`}
+            <a href={`https://wa.me/${waPhone}?text=${encodeURIComponent(`السلام عليكم ${order.customer_name}\nنأمل أن تكون معاينة السيارة (طلب رقم ${order.order_number}) في معرض الفادي قد أعجبتك.\nنودّ سماع رأيك — هل يمكنك تقييم تجربتك معنا؟ رأيك يهمنا جداً`)}`}
               target="_blank" rel="noopener noreferrer"
               className="flex items-center gap-2 px-4 py-2 text-sm font-bold text-[#C9A84C] border border-[#C9A84C]/30 rounded-lg hover:bg-[#C9A84C]/10 transition-colors">
               ⭐ اطلب تقييم
@@ -102,20 +102,17 @@ export default async function OrderDetailPage({ params }: Props) {
               </a>
             }
           />
-          <Row label="المحافظة" value={order.governorate} />
-          <Row label="العنوان" value={order.address} />
+          <Row label="الميعاد المفضل" value={order.preferred_date ?? "لم يُحدَّد"} />
+          <Row label="مكان المعاينة" value={order.branch ?? "—"} />
           {order.notes && <Row label="ملاحظات" value={order.notes} />}
         </div>
 
         {/* Order summary */}
         <div className="bg-[#0A0806] rounded-xl border border-[#C9A84C]/10 p-5 space-y-3">
           <h2 className="text-sm font-semibold text-[#F5EFE0]/60 uppercase tracking-widest border-b border-[#C9A84C]/10 pb-3">
-            ملخص الطلب
+            ملخص الحجز
           </h2>
-          <Row label="طريقة الدفع" value={order.method === "cod" ? "الدفع عند الاستلام" : "واتساب"} />
-          <Row label="المنتجات" value={`${Number(order.subtotal).toLocaleString("ar-EG")} ج.م`} />
-          <Row label="الشحن" value={`${Number(order.shipping_cost).toLocaleString("ar-EG")} ج.م`} />
-          {order.discount_code && <Row label="كود الخصم" value={order.discount_code} />}
+          <Row label="طريقة الطلب" value={order.method === "cod" ? "نموذج الموقع" : "واتساب"} />
           <div className="border-t border-[#C9A84C]/10 pt-3">
             <Row label="الإجمالي"
               value={
@@ -131,15 +128,15 @@ export default async function OrderDetailPage({ params }: Props) {
       {/* Order items */}
       <div className="bg-[#0A0806] rounded-xl border border-[#C9A84C]/10 overflow-hidden">
         <h2 className="text-sm font-semibold text-[#F5EFE0]/60 uppercase tracking-widest px-6 py-4 border-b border-[#C9A84C]/10">
-          المنتجات ({items.length})
+          السيارات المطلوب معاينتها ({items.length})
         </h2>
         {items.length === 0 ? (
-          <p className="text-center text-[#F5EFE0]/30 py-8 text-sm">لا توجد منتجات</p>
+          <p className="text-center text-[#F5EFE0]/30 py-8 text-sm">لا توجد سيارات</p>
         ) : (
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-[#C9A84C]/5">
-                <th className="text-right px-6 py-3 text-[#F5EFE0]/40 font-medium">المنتج</th>
+                <th className="text-right px-6 py-3 text-[#F5EFE0]/40 font-medium">السيارة</th>
                 <th className="text-right px-4 py-3 text-[#F5EFE0]/40 font-medium">الجودة</th>
                 <th className="text-right px-4 py-3 text-[#F5EFE0]/40 font-medium">الكمية</th>
                 <th className="text-right px-4 py-3 text-[#F5EFE0]/40 font-medium">السعر</th>

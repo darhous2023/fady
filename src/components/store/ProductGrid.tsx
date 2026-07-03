@@ -310,7 +310,7 @@ function ProductCard({ product, index }: { product: StoreProduct; index: number 
                 <line x1="3" y1="6" x2="21" y2="6"/>
                 <path d="M16 10a4 4 0 0 1-8 0"/>
               </svg>
-              {adding ? "✓ تمت" : "أضف للسلة"}
+              {adding ? "✓ أُضيفت" : "احجز معاينة"}
             </button>
 
             {/* WhatsApp */}

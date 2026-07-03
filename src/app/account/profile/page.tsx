@@ -9,7 +9,7 @@ import StoreFooter from "@/components/store/StoreFooter"
 
 interface Order {
   order_number: string; status: string; total: number; subtotal: number;
-  shipping_cost: number; governorate: string; created_at: string;
+  preferred_date: string | null; branch: string | null; created_at: string;
 }
 
 interface Notification {
@@ -30,8 +30,8 @@ interface CustomerProfile {
 }
 
 const STATUS_AR: Record<string, string> = {
-  pending: "قيد الانتظار", confirmed: "مؤكد", shipped: "تم الشحن",
-  delivered: "تم التسليم", cancelled: "ملغي",
+  pending: "بانتظار التأكيد", confirmed: "تم تأكيد الموعد", shipped: "تم التواصل",
+  delivered: "تمت المعاينة", cancelled: "ملغي",
 }
 const STATUS_COLOR: Record<string, string> = {
   pending: "#eab308", confirmed: "#3b82f6", shipped: "#a855f7",
@@ -413,10 +413,10 @@ export default function ProfilePage() {
                 <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                   {orders.length === 0 ? (
                     <div className="card" style={{ textAlign: "center", padding: "48px 24px" }}>
-                      <div style={{ fontSize: 48, marginBottom: 14 }}>📦</div>
-                      <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 16, color: "#F2F0EC", opacity: 0.35, margin: "0 0 20px" }}>لا توجد طلبات بعد</p>
-                      <Link href="/#products" className="browse-btn" style={{ fontFamily: "Tajawal,sans-serif", fontSize: 14, color: "#9BA3AA", textDecoration: "none", fontWeight: 700, padding: "10px 24px", borderRadius: 10, border: "1px solid rgba(155,163,170,0.2)", background: "rgba(155,163,170,0.07)", transition: "background 0.2s" }}>
-                        تصفّح المنتجات
+                      <div style={{ fontSize: 48, marginBottom: 14 }}>🚗</div>
+                      <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 16, color: "#F2F0EC", opacity: 0.35, margin: "0 0 20px" }}>لا توجد طلبات حجز بعد</p>
+                      <Link href="/used" className="browse-btn" style={{ fontFamily: "Tajawal,sans-serif", fontSize: 14, color: "#9BA3AA", textDecoration: "none", fontWeight: 700, padding: "10px 24px", borderRadius: 10, border: "1px solid rgba(155,163,170,0.2)", background: "rgba(155,163,170,0.07)", transition: "background 0.2s" }}>
+                        تصفّح السيارات
                       </Link>
                     </div>
                   ) : (
@@ -430,16 +430,13 @@ export default function ProfilePage() {
                               <div style={{ fontFamily: "monospace", fontSize: 13, color: "#9BA3AA", letterSpacing: "0.5px", fontWeight: 700 }}>{order.order_number}</div>
                               <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 12, color: "#F2F0EC", opacity: 0.35, marginTop: 4 }}>
                                 {new Date(order.created_at).toLocaleDateString("ar-EG", { year: "numeric", month: "long", day: "numeric" })}
-                                {order.governorate && ` · ${order.governorate}`}
+                                {order.preferred_date && ` · الميعاد المفضل: ${order.preferred_date}`}
                               </div>
                             </div>
                             <div style={{ textAlign: "left" }}>
                               <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 20, fontWeight: 900, color: "#9BA3AA" }}>
                                 {Number(order.total).toLocaleString("ar-EG")} <span style={{ fontSize: 12, opacity: 0.7 }}>ج.م</span>
                               </div>
-                              {order.shipping_cost > 0 && (
-                                <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 11, color: "#F2F0EC", opacity: 0.35, marginTop: 2 }}>شحن {Number(order.shipping_cost).toLocaleString("ar-EG")} ج.م</div>
-                              )}
                             </div>
                           </div>
 
@@ -486,13 +483,11 @@ export default function ProfilePage() {
                             </div>
                           )}
 
-                          {order.status === "shipped" && (
-                            <div style={{ marginTop: 14 }}>
-                              <a href="#" style={{ fontFamily: "Tajawal,sans-serif", fontSize: 12, color: "#a855f7", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 5 }}>
-                                <span>📍</span> تتبّع الشحنة
-                              </a>
-                            </div>
-                          )}
+                          <div style={{ marginTop: 14 }}>
+                            <Link href={`/track?n=${encodeURIComponent(order.order_number)}`} style={{ fontFamily: "Tajawal,sans-serif", fontSize: 12, color: "#9BA3AA", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 5 }}>
+                              <span>📍</span> تتبّع حالة الحجز
+                            </Link>
+                          </div>
                         </div>
                       )
                     })

@@ -39,6 +39,7 @@ next-env.d.ts
 .cursor/
 .agents/
 .claude/
+.ai/
 .env*
 
 # local execution backups created while building the master template

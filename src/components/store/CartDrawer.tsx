@@ -5,7 +5,7 @@ import Link from "next/link"
 import { useCart } from "@/contexts/CartContext"
 
 const QUALITY_LABELS: Record<string, string> = {
-  hi_copy: "بريميوم", mirror: "ميرور كواليتي", original: "أصلي",
+  original: "ممتازة", mirror: "جيدة جدًا", hi_copy: "جيدة",
 }
 
 export default function CartDrawer() {
@@ -72,7 +72,7 @@ export default function CartDrawer() {
               <path d="M16 10a4 4 0 0 1-8 0"/>
             </svg>
             <span style={{ fontFamily: "Tajawal, sans-serif", fontWeight: 700, fontSize: 17, color: "#F2F0EC" }}>
-              السلة
+              قائمة المعاينة
             </span>
             {count > 0 && (
               <span style={{
@@ -100,16 +100,16 @@ export default function CartDrawer() {
         <div style={{ flex: 1, overflowY: "auto", padding: "8px 0" }}>
           {items.length === 0 ? (
             <div style={{ textAlign: "center", padding: "60px 24px" }}>
-              <div style={{ fontSize: 52, opacity: 0.12, marginBottom: 16 }}>🛍️</div>
+              <div style={{ fontSize: 52, opacity: 0.12, marginBottom: 16 }}>🚗</div>
               <p style={{ fontFamily: "Tajawal, sans-serif", fontSize: 15, color: "rgba(242,240,236,0.3)", margin: "0 0 24px" }}>
-                سلتك فارغة
+                لسه معندكش سيارات في قائمة المعاينة
               </p>
               <button onClick={closeCart} style={{
                 fontFamily: "Tajawal, sans-serif", fontWeight: 700, fontSize: 13,
                 padding: "10px 24px", borderRadius: 8, border: "none", cursor: "pointer",
                 background: "linear-gradient(135deg, #9BA3AA, #C9CFD4)", color: "#0A0A0A",
               }}>
-                تصفّحي المتجر
+                تصفّح السيارات
               </button>
             </div>
           ) : (
@@ -124,7 +124,7 @@ export default function CartDrawer() {
                     {item.image
                       // eslint-disable-next-line @next/next/no-img-element
                       ? <img src={item.image} alt={item.name_ar} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                      : <div style={{ width: "100%", height: "100%", background: "#1A1A1A", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 24, opacity: 0.2 }}>👜</div>
+                      : <div style={{ width: "100%", height: "100%", background: "#1A1A1A", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 24, opacity: 0.2 }}>🚗</div>
                     }
                   </div>
                 </Link>
@@ -164,17 +164,17 @@ export default function CartDrawer() {
         {/* Footer */}
         {items.length > 0 && (
           <div style={{ borderTop: "1px solid rgba(155,163,170,0.1)", padding: "20px 24px", flexShrink: 0 }}>
-            {/* Shipping note */}
+            {/* Booking note */}
             <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 16, padding: "10px 14px", background: "rgba(155,163,170,0.04)", border: "1px solid rgba(155,163,170,0.08)", borderRadius: 8 }}>
-              <span style={{ fontSize: 14 }}>🚚</span>
+              <span style={{ fontSize: 14 }}>📞</span>
               <span style={{ fontFamily: "Tajawal, sans-serif", fontSize: 12, color: "rgba(242,240,236,0.45)" }}>
-                شحن خلال 2-5 أيام — يُحسب بعد تأكيد العنوان
+                سيتواصل معك فريق المعرض لتأكيد ميعاد المعاينة
               </span>
             </div>
 
             {/* Total */}
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 16 }}>
-              <span style={{ fontFamily: "Tajawal, sans-serif", fontSize: 14, color: "rgba(242,240,236,0.55)" }}>الإجمالي</span>
+              <span style={{ fontFamily: "Tajawal, sans-serif", fontSize: 14, color: "rgba(242,240,236,0.55)" }}>إجمالي أسعار السيارات</span>
               <span style={{ fontFamily: "Tajawal, sans-serif", fontSize: 22, fontWeight: 900, color: "#9BA3AA" }}>
                 {total.toLocaleString("ar-EG")} ج.م
               </span>
@@ -190,7 +190,7 @@ export default function CartDrawer() {
                 color: "#0A0A0A",
                 boxShadow: "0 4px 20px rgba(155,163,170,0.25)",
               }}>
-                إتمام الطلب ←
+                تأكيد طلب الحجز ←
               </Link>
               <Link href="/cart" onClick={closeCart} style={{
                 display: "block", textAlign: "center",
@@ -199,7 +199,7 @@ export default function CartDrawer() {
                 border: "1px solid rgba(155,163,170,0.25)",
                 color: "rgba(242,240,236,0.6)",
               }}>
-                عرض السلة كاملة
+                عرض قائمة المعاينة كاملة
               </Link>
             </div>
           </div>

@@ -22,6 +22,13 @@
       "when": 1783086865112,
       "tag": "0002_parallel_steel_serpent",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1783093200000,
+      "tag": "0003_orders_booking_fields",
+      "breakpoints": true
     }
   ]
 }
