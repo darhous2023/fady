@@ -17,12 +17,15 @@ export async function PATCH(
   const allowed = [
     "name_ar", "slug", "description_ar", "category_id",
     "quality_tier", "price", "compare_at_price", "status", "is_featured",
+    "make", "model", "year", "mileage_km", "transmission", "fuel_type", "body_type",
   ];
   const updates: Record<string, unknown> = {};
   for (const key of allowed) {
     if (key in body) {
       if (key === "price" || key === "compare_at_price") {
         updates[key] = body[key] ? String(body[key]) : null;
+      } else if (key === "year" || key === "mileage_km") {
+        updates[key] = body[key] ? Number(body[key]) : null;
       } else {
         updates[key] = body[key];
       }

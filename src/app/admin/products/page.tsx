@@ -5,15 +5,15 @@ import { desc, eq } from "drizzle-orm";
 import Link from "next/link";
 
 const QUALITY_LABELS: Record<string, string> = {
-  hi_copy: "هاي كوبي",
-  mirror: "ميرو",
-  original: "أورجنال",
+  original: "ممتازة",
+  mirror: "جيدة جدًا",
+  hi_copy: "جيدة",
 };
 
 const QUALITY_COLORS: Record<string, string> = {
-  hi_copy: "bg-blue-500/20 text-blue-400",
-  mirror: "bg-[#C9A84C]/20 text-[#C9A84C]",
   original: "bg-green-500/20 text-green-400",
+  mirror: "bg-[#9BA3AA]/20 text-[#9BA3AA]",
+  hi_copy: "bg-blue-500/20 text-blue-400",
 };
 
 const STATUS_LABELS: Record<string, string> = {
@@ -40,6 +40,9 @@ async function getProducts() {
       is_featured: products.is_featured,
       category_name: categories.name_ar,
       created_at: products.created_at,
+      year: products.year,
+      mileage_km: products.mileage_km,
+      transmission: products.transmission,
     })
     .from(products)
     .leftJoin(categories, eq(products.category_id, categories.id))
@@ -53,51 +56,55 @@ export default async function ProductsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[#F5EFE0]">المنتجات</h1>
+          <h1 className="text-2xl font-bold text-[#F5EFE0]">السيارات المستعملة</h1>
           <p className="text-[#F5EFE0]/40 text-sm mt-1">
-            {items.length} منتج
+            {items.length} سيارة
           </p>
         </div>
         <Link
           href="/admin/products/create"
-          className="bg-[#C9A84C] hover:bg-[#B89440] text-[#0A0806] font-bold px-4 py-2.5 rounded-lg text-sm transition-colors"
+          className="bg-[#9BA3AA] hover:bg-[#838B92] text-[#0A0A0A] font-bold px-4 py-2.5 rounded-lg text-sm transition-colors"
         >
-          + منتج جديد
+          + سيارة جديدة
         </Link>
       </div>
 
-      <div className="bg-[#0A0806] rounded-xl border border-[#C9A84C]/10 overflow-hidden">
+      <div className="bg-[#0A0A0A] rounded-xl border border-[#9BA3AA]/10 overflow-hidden">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-[#C9A84C]/10">
-              <th className="text-right px-6 py-3 text-[#F5EFE0]/40 font-medium">المنتج</th>
-              <th className="text-right px-4 py-3 text-[#F5EFE0]/40 font-medium">القسم</th>
-              <th className="text-right px-4 py-3 text-[#F5EFE0]/40 font-medium">الجودة</th>
-              <th className="text-right px-4 py-3 text-[#F5EFE0]/40 font-medium">السعر</th>
+            <tr className="border-b border-[#9BA3AA]/10">
+              <th className="text-right px-6 py-3 text-[#F5EFE0]/40 font-medium">السيارة</th>
+              <th className="text-right px-4 py-3 text-[#F5EFE0]/40 font-medium">الماركة</th>
+              <th className="text-right px-4 py-3 text-[#F5EFE0]/40 font-medium">سنة / عداد</th>
               <th className="text-right px-4 py-3 text-[#F5EFE0]/40 font-medium">الحالة</th>
+              <th className="text-right px-4 py-3 text-[#F5EFE0]/40 font-medium">السعر</th>
+              <th className="text-right px-4 py-3 text-[#F5EFE0]/40 font-medium">النشر</th>
               <th className="px-4 py-3"></th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#C9A84C]/5">
+          <tbody className="divide-y divide-[#9BA3AA]/5">
             {items.length === 0 ? (
               <tr>
-                <td colSpan={6} className="text-center py-12 text-[#F5EFE0]/30">
-                  لا توجد منتجات. أضف أول منتج الآن.
+                <td colSpan={7} className="text-center py-12 text-[#F5EFE0]/30">
+                  لا توجد سيارات. أضف أول سيارة الآن.
                 </td>
               </tr>
             ) : (
               items.map((p) => (
-                <tr key={p.id} className="hover:bg-[#C9A84C]/3">
+                <tr key={p.id} className="hover:bg-[#9BA3AA]/3">
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-2">
                       {p.is_featured && (
-                        <span className="text-[#C9A84C] text-xs">★</span>
+                        <span className="text-[#9BA3AA] text-xs">★</span>
                       )}
                       <span className="text-[#F5EFE0] font-medium">{p.name_ar}</span>
                     </div>
                   </td>
                   <td className="px-4 py-4 text-[#F5EFE0]/60">
                     {p.category_name || "—"}
+                  </td>
+                  <td className="px-4 py-4 text-[#F5EFE0]/60 text-xs">
+                    {p.year || "—"} {p.mileage_km ? `· ${Number(p.mileage_km).toLocaleString("ar-EG")} كم` : ""}
                   </td>
                   <td className="px-4 py-4">
                     <span
@@ -106,7 +113,7 @@ export default async function ProductsPage() {
                       {QUALITY_LABELS[p.quality_tier]}
                     </span>
                   </td>
-                  <td className="px-4 py-4 text-[#C9A84C] font-medium">
+                  <td className="px-4 py-4 text-[#9BA3AA] font-medium">
                     {Number(p.price).toLocaleString("ar-EG")} ج
                     {p.compare_at_price && (
                       <span className="text-[#F5EFE0]/30 line-through text-xs mr-2">
@@ -124,7 +131,7 @@ export default async function ProductsPage() {
                   <td className="px-4 py-4">
                     <Link
                       href={`/admin/products/${p.id}/edit`}
-                      className="text-xs text-[#C9A84C] hover:underline"
+                      className="text-xs text-[#9BA3AA] hover:underline"
                     >
                       تعديل
                     </Link>

@@ -11,12 +11,12 @@ const WL_KEY = "elfady-wishlist"
 
 const WA = "201555557745"
 
-const QUALITY_LABELS: Record<string, string> = { hi_copy: "بريميوم", mirror: "ميرور كواليتي", original: "أصلي" }
-const QUALITY_COLORS: Record<string, string> = { hi_copy: "#4a4a4a", mirror: "#A5342C", original: "#9BA3AA" }
+const QUALITY_LABELS: Record<string, string> = { original: "ممتازة", mirror: "جيدة جدًا", hi_copy: "جيدة" }
+const QUALITY_COLORS: Record<string, string> = { original: "#9BA3AA", mirror: "#838B92", hi_copy: "#6E747A" }
 const QUALITY_DESC: Record<string, string> = {
-  hi_copy:  "جودة عالية، تشطيب ممتاز، مواد مطابقة للأصل",
-  mirror:   "طبق الأصل، لا يمكن تمييزه عن الأورجنال",
-  original: "منتج أصلي بضمان كامل",
+  original: "حالة ممتازة، فحص شامل متاح",
+  mirror:   "حالة جيدة جدًا، جاهزة للمعاينة",
+  hi_copy:  "حالة جيدة، مناسبة للاستخدام اليومي",
 }
 
 interface RelatedProduct {
@@ -35,11 +35,15 @@ interface ProductDetailProps {
     id: string; slug: string; name_ar: string; description_ar: string | null
     price: number; compare_at_price: number | null; quality_tier: string
     is_featured: boolean; category_name: string | null
+    year?: number | null; mileage_km?: number | null
+    transmission?: string | null; fuel_type?: string | null; body_type?: string | null
   }
   images: { id: string; url: string; alt_ar: string | null; sort_order: number }[]
   related?: RelatedProduct[]
   variants?: Variant[]
 }
+
+const TRANSMISSION_LABELS: Record<string, string> = { automatic: "أوتوماتيك", manual: "مانيوال" }
 
 export default function ProductDetail({ product, images, related = [], variants = [] }: ProductDetailProps) {
   const [activeIdx, setActiveIdx] = useState(0)
@@ -210,7 +214,7 @@ export default function ProductDetail({ product, images, related = [], variants 
                     transition: "transform 0.65s cubic-bezier(0.2,0,0.2,1)",
                   }} />
               ) : (
-                <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg,#1A1A1A,#242424)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 80, opacity: 0.2 }}>👜</div>
+                <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg,#1A1A1A,#242424)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 80, opacity: 0.2 }}>🚗</div>
               )}
               <div style={{ position: "absolute", top: 16, right: 16, zIndex: 5, background: qColor, color: "#fff", fontFamily: "Tajawal,sans-serif", fontSize: 11, fontWeight: 700, padding: "4px 14px", borderRadius: 20 }}>
                 {QUALITY_LABELS[product.quality_tier] ?? product.quality_tier}
@@ -279,6 +283,23 @@ export default function ProductDetail({ product, images, related = [], variants 
                 <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 15, color: "#F2F0EC", opacity: 0.65, lineHeight: 2, whiteSpace: "pre-wrap" }}>
                   {product.description_ar}
                 </p>
+              </div>
+            )}
+
+            {(product.year || product.mileage_km != null || product.transmission || product.fuel_type || product.body_type) && (
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(110px, 1fr))", gap: 12, marginBottom: 24 }}>
+                {[
+                  { label: "سنة الصنع", value: product.year },
+                  { label: "العداد", value: product.mileage_km != null ? `${product.mileage_km.toLocaleString("ar-EG")} كم` : null },
+                  { label: "ناقل الحركة", value: product.transmission ? (TRANSMISSION_LABELS[product.transmission] ?? product.transmission) : null },
+                  { label: "الوقود", value: product.fuel_type },
+                  { label: "الهيكل", value: product.body_type },
+                ].filter(s => s.value).map(s => (
+                  <div key={s.label} style={{ background: "rgba(155,163,170,0.05)", border: "1px solid rgba(155,163,170,0.1)", borderRadius: 10, padding: "10px 14px" }}>
+                    <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 10, color: "#9BA3AA", opacity: 0.7, marginBottom: 3 }}>{s.label}</div>
+                    <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 14, fontWeight: 700, color: "#F2F0EC" }}>{s.value}</div>
+                  </div>
+                ))}
               </div>
             )}
 
@@ -427,9 +448,9 @@ export default function ProductDetail({ product, images, related = [], variants 
             {/* Trust signals */}
             <div style={{ marginTop: 24, display: "flex", flexDirection: "column", gap: 8 }}>
               {[
-                { icon: "🚚", title: "شحن سريع", desc: "خلال 2-5 أيام لكل محافظات مصر" },
-                { icon: "🔄", title: "استبدال واسترجاع", desc: "خلال 7 أيام من تاريخ الاستلام" },
-                { icon: "💬", title: "دعم فوري", desc: "تواصلي معنا على واتساب في أي وقت" },
+                { icon: "🔍", title: "معاينة كاملة", desc: "زور المعرض وعاين السيارة قبل الشراء" },
+                { icon: "📋", title: "فحص شامل", desc: "بيانات دقيقة عن الحالة والعداد والمواصفات" },
+                { icon: "💬", title: "دعم فوري", desc: "تواصل معنا على واتساب في أي وقت" },
               ].map(({ icon, title, desc }) => (
                 <div key={title} style={{
                   display: "flex", alignItems: "center", gap: 12,
@@ -475,7 +496,7 @@ export default function ProductDetail({ product, images, related = [], variants 
                           className="pd-rel-img" loading="lazy"
                           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
                       ) : (
-                        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 36, opacity: 0.2 }}>👜</div>
+                        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 36, opacity: 0.2 }}>🚗</div>
                       )}
                     </div>
                     <div style={{ padding: "14px 14px 16px", direction: "rtl" }}>

@@ -15,14 +15,32 @@ type ProductRow = {
   compare_at_price: string | number | null;
   status: "active" | "draft" | "archived";
   is_featured: boolean;
+  make?: string | null;
+  model?: string | null;
+  year?: number | null;
+  mileage_km?: number | null;
+  transmission?: string | null;
+  fuel_type?: string | null;
+  body_type?: string | null;
 };
 
 type ImageRow = { id: string; url: string; alt_ar: string | null; sort_order: number };
 
+// quality_tier is inherited from the fashion-store schema; relabeled here as the car's condition grade.
 const QUALITY_OPTIONS = [
-  { value: "hi_copy",  label: "هاي كوبي" },
-  { value: "mirror",   label: "ميرو" },
-  { value: "original", label: "أورجنال" },
+  { value: "original", label: "ممتازة" },
+  { value: "mirror",   label: "جيدة جدًا" },
+  { value: "hi_copy",  label: "جيدة" },
+];
+const TRANSMISSION_OPTIONS = [
+  { value: "automatic", label: "أوتوماتيك" },
+  { value: "manual",    label: "مانيوال" },
+];
+const FUEL_OPTIONS = [
+  { value: "gasoline", label: "بنزين" },
+  { value: "diesel",   label: "ديزل" },
+  { value: "hybrid",   label: "هايبرد" },
+  { value: "electric", label: "كهرباء" },
 ];
 const STATUS_OPTIONS = [
   { value: "active",   label: "نشط" },
@@ -347,6 +365,13 @@ export default function ProductForm({ categories, product }: { categories: Categ
       compare_at_price: compare_at || null,
       status:          getValue("status"),
       is_featured:     getChecked("is_featured"),
+      make:            getValue("make") || null,
+      model:           getValue("model") || null,
+      year:            getValue("year") || null,
+      mileage_km:      getValue("mileage_km") || null,
+      transmission:    getValue("transmission") || null,
+      fuel_type:       getValue("fuel_type") || null,
+      body_type:       getValue("body_type") || null,
     };
 
     const url    = isEdit ? `/api/admin/products/${product!.id}` : "/api/admin/products";
@@ -386,8 +411,8 @@ export default function ProductForm({ categories, product }: { categories: Categ
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className={labelCls}>اسم المنتج *</label>
-              <input name="name_ar" required defaultValue={product?.name_ar} placeholder="مثال: شنطة جلد طبيعي"
+              <label className={labelCls}>عنوان الإعلان *</label>
+              <input name="name_ar" required defaultValue={product?.name_ar} placeholder="مثال: تويوتا كورولا 2020"
                 onChange={() => {}}
                 className={inputCls}
               />
@@ -401,28 +426,28 @@ export default function ProductForm({ categories, product }: { categories: Categ
           <div>
             <label className={labelCls}>الوصف التفصيلي</label>
             <textarea name="description_ar" defaultValue={product?.description_ar || ""} rows={5}
-              placeholder={`مثال:\nالخامة: جلد طبيعي فاخر\nالمقاس: 30×20×10 سم\nاللون: بيج / أسود\nمميزات: مقاومة للماء، يُثبّت على الكتف\nملاحظات: متوفر بألوان متعددة`}
+              placeholder={`مثال:\nحالة السيارة: ممتازة، فبريكة بالكامل\nعدد الملاك: مالك واحد\nالفحص: تم الفحص الشامل\nملاحظات: صيانة دورية بالوكيل`}
               className={`${inputCls} resize-y min-h-[120px]`}
             />
-            <p className="text-xs text-[#F5EFE0]/25 mt-1">اكتب كل التفاصيل: الخامة، المقاس، الألوان، المميزات</p>
+            <p className="text-xs text-[#F5EFE0]/25 mt-1">اكتب كل التفاصيل المهمة للعميل قبل الاتصال</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <label className={labelCls}>القسم *</label>
+              <label className={labelCls}>الماركة (القسم) *</label>
               <select name="category_id" required defaultValue={product?.category_id} className={inputCls}>
-                <option value="">اختر قسم</option>
+                <option value="">اختر الماركة</option>
                 {categories.map(c => <option key={c.id} value={c.id}>{c.name_ar}</option>)}
               </select>
             </div>
             <div>
-              <label className={labelCls}>درجة الجودة *</label>
-              <select name="quality_tier" required defaultValue={product?.quality_tier || "hi_copy"} className={inputCls}>
+              <label className={labelCls}>حالة السيارة *</label>
+              <select name="quality_tier" required defaultValue={product?.quality_tier || "original"} className={inputCls}>
                 {QUALITY_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
               </select>
             </div>
             <div>
-              <label className={labelCls}>الحالة</label>
+              <label className={labelCls}>الحالة (النشر)</label>
               <select name="status" defaultValue={product?.status || "draft"} className={inputCls}>
                 {STATUS_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
               </select>
@@ -433,21 +458,63 @@ export default function ProductForm({ categories, product }: { categories: Categ
             <div>
               <label className={labelCls}>السعر (جنيه) *</label>
               <input name="price" type="number" required min="1" step="0.01"
-                defaultValue={product?.price ? String(product.price) : ""} placeholder="1200" className={inputCls} />
+                defaultValue={product?.price ? String(product.price) : ""} placeholder="450000" className={inputCls} />
             </div>
             <div>
               <label className={labelCls}>السعر قبل الخصم (اختياري)</label>
               <input name="compare_at_price" type="number" min="1" step="0.01"
-                defaultValue={product?.compare_at_price ? String(product.compare_at_price) : ""} placeholder="1600" className={inputCls} />
+                defaultValue={product?.compare_at_price ? String(product.compare_at_price) : ""} placeholder="480000" className={inputCls} />
             </div>
           </div>
 
           <div className="flex items-center gap-3">
             <input type="checkbox" name="is_featured" id="is_featured"
-              defaultChecked={product?.is_featured} className="w-4 h-4 accent-[#C9A84C]" />
+              defaultChecked={product?.is_featured} className="w-4 h-4 accent-[#9BA3AA]" />
             <label htmlFor="is_featured" className="text-sm text-[#F5EFE0]/60">
-              منتج مميّز (يظهر في الصفحة الرئيسية)
+              سيارة مميّزة (تظهر في الصفحة الرئيسية)
             </label>
+          </div>
+        </div>
+
+        <div className="bg-[#0A0A0A] rounded-xl border border-[#9BA3AA]/10 p-6 space-y-5">
+          <h2 className="font-semibold text-[#F5EFE0] border-b border-[#9BA3AA]/10 pb-3">مواصفات السيارة</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className={labelCls}>الموديل (الطراز)</label>
+              <input name="model" defaultValue={product?.model || ""} placeholder="كورولا" className={inputCls} />
+            </div>
+            <div>
+              <label className={labelCls}>الماركة (نصي، للعرض)</label>
+              <input name="make" defaultValue={product?.make || ""} placeholder="تويوتا" className={inputCls} />
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className={labelCls}>سنة الصنع</label>
+              <input name="year" type="number" min="1980" max="2030" defaultValue={product?.year ?? ""} placeholder="2020" className={inputCls} />
+            </div>
+            <div>
+              <label className={labelCls}>العداد (كم)</label>
+              <input name="mileage_km" type="number" min="0" defaultValue={product?.mileage_km ?? ""} placeholder="65000" className={inputCls} />
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <label className={labelCls}>ناقل الحركة</label>
+              <select name="transmission" defaultValue={product?.transmission || "automatic"} className={inputCls}>
+                {TRANSMISSION_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+              </select>
+            </div>
+            <div>
+              <label className={labelCls}>نوع الوقود</label>
+              <select name="fuel_type" defaultValue={product?.fuel_type || "gasoline"} className={inputCls}>
+                {FUEL_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+              </select>
+            </div>
+            <div>
+              <label className={labelCls}>نوع الهيكل</label>
+              <input name="body_type" defaultValue={product?.body_type || ""} placeholder="سيدان" className={inputCls} />
+            </div>
           </div>
         </div>
 

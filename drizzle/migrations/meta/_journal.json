@@ -15,6 +15,13 @@
       "when": 1782563992171,
       "tag": "0004_shiny_mariko_yashida",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1783086865112,
+      "tag": "0002_parallel_steel_serpent",
+      "breakpoints": true
     }
   ]
 }

@@ -8,14 +8,18 @@ import { useCart } from "@/contexts/CartContext"
 const WA = "201555557745"
 
 const QUALITY_LABELS: Record<string, string> = {
-  hi_copy:  "بريميوم",
-  mirror:   "ميرور كواليتي",
-  original: "أصلي",
+  original: "ممتازة",
+  mirror:   "جيدة جدًا",
+  hi_copy:  "جيدة",
 }
 const QUALITY_COLORS: Record<string, string> = {
-  hi_copy:  "#4a4a4a",
-  mirror:   "#A5342C",
   original: "#9BA3AA",
+  mirror:   "#838B92",
+  hi_copy:  "#6E747A",
+}
+const TRANSMISSION_LABELS: Record<string, string> = {
+  automatic: "أوتوماتيك",
+  manual: "مانيوال",
 }
 
 export interface StoreProduct {
@@ -30,6 +34,9 @@ export interface StoreProduct {
   is_featured: boolean
   image: { url: string; alt_ar: string | null } | null
   total_stock?: number | null
+  year?: number | null
+  mileage_km?: number | null
+  transmission?: string | null
 }
 
 // ── Reveal on scroll ────────────────────────────────────────────────────────
@@ -183,7 +190,7 @@ function ProductCard({ product, index }: { product: StoreProduct; index: number 
               background: "linear-gradient(135deg,#1A1A1A 0%,#242424 100%)",
               display: "flex", alignItems: "center", justifyContent: "center",
               fontSize: 52, opacity: 0.3,
-            }}>👜</div>
+            }}>🚗</div>
           )}
           <div style={{
             position: "absolute", inset: 0, zIndex: 1,
@@ -260,6 +267,13 @@ function ProductCard({ product, index }: { product: StoreProduct; index: number 
           <div style={{ fontSize: 15, fontWeight: 700, color: "#F2F0EC", fontFamily: "Tajawal,sans-serif", lineHeight: 1.4 }}>
             {product.name_ar}
           </div>
+          {(product.year || product.mileage_km || product.transmission) && (
+            <div style={{ fontSize: 12, color: "rgba(242,240,236,0.4)", fontFamily: "Tajawal,sans-serif", display: "flex", gap: 8, flexWrap: "wrap" }}>
+              {product.year && <span>{product.year}</span>}
+              {product.mileage_km != null && <span>· {product.mileage_km.toLocaleString("ar-EG")} كم</span>}
+              {product.transmission && <span>· {TRANSMISSION_LABELS[product.transmission] ?? product.transmission}</span>}
+            </div>
+          )}
           <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginTop: 2 }}>
             <span style={{ fontSize: 22, fontWeight: 900, color: "#9BA3AA", fontFamily: "Tajawal,sans-serif" }}>
               {product.price.toLocaleString("ar-EG")} ج.م
@@ -385,16 +399,16 @@ function SectionHeader() {
 // ── Main export ──────────────────────────────────────────────────────────────
 const QUALITY_FILTER = [
   { key: "الكل", label: "الكل" },
-  { key: "hi_copy", label: "بريميوم" },
-  { key: "mirror", label: "ميرور كواليتي" },
-  { key: "original", label: "أصلي" },
+  { key: "original", label: "ممتازة" },
+  { key: "mirror", label: "جيدة جدًا" },
+  { key: "hi_copy", label: "جيدة" },
 ]
 const PRICE_RANGES = [
   { key: "الكل", label: "كل الأسعار", min: 0, max: Infinity },
-  { key: "500", label: "أقل من 500", min: 0, max: 500 },
-  { key: "1000", label: "500 — 1000", min: 500, max: 1000 },
-  { key: "2000", label: "1000 — 2000", min: 1000, max: 2000 },
-  { key: "2001", label: "أكثر من 2000", min: 2000, max: Infinity },
+  { key: "400k", label: "أقل من 400 ألف", min: 0, max: 400000 },
+  { key: "600k", label: "400 — 600 ألف", min: 400000, max: 600000 },
+  { key: "900k", label: "600 — 900 ألف", min: 600000, max: 900000 },
+  { key: "900k+", label: "أكثر من 900 ألف", min: 900000, max: Infinity },
 ]
 
 export default function ProductGrid({ initialProducts }: { initialProducts: StoreProduct[] }) {

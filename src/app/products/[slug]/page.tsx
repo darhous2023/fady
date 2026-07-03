@@ -24,10 +24,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     .where(and(eq(productImages.product_id, rows[0].id), eq(productImages.sort_order, 0)))
     .limit(1)
 
-  const title = `${rows[0].name_ar} — ShahY Store`
+  const title = `${rows[0].name_ar} — ELFADY`
   const desc = rows[0].description_ar
     ? rows[0].description_ar.slice(0, 155)
-    : `${rows[0].name_ar} بسعر ${Number(rows[0].price).toLocaleString("ar-EG")} ج.م — ShahY Store إكسسوارات فاخرة مستوردة`
+    : `${rows[0].name_ar} بسعر ${Number(rows[0].price).toLocaleString("ar-EG")} ج.م — معرض الفادي لتجارة السيارات`
 
   return {
     title,
@@ -54,6 +54,8 @@ export default async function ProductPage({ params }: Props) {
       quality_tier: products.quality_tier, is_featured: products.is_featured,
       status: products.status, category_name: categories.name_ar,
       category_id: products.category_id,
+      year: products.year, mileage_km: products.mileage_km,
+      transmission: products.transmission, fuel_type: products.fuel_type, body_type: products.body_type,
     })
     .from(products)
     .leftJoin(categories, eq(products.category_id, categories.id))

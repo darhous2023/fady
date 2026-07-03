@@ -24,7 +24,7 @@ export default async function EditProductPage({
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-[#F5EFE0]">تعديل المنتج</h1>
+        <h1 className="text-2xl font-bold text-[#F5EFE0]">تعديل السيارة</h1>
         <p className="text-[#F5EFE0]/40 text-sm mt-1">{rows[0].name_ar}</p>
       </div>
       <ProductForm categories={cats} product={rows[0]} />

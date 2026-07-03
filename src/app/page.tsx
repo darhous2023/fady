@@ -33,6 +33,9 @@ async function getProducts(): Promise<StoreProduct[]> {
         quality_tier: products.quality_tier,
         is_featured: products.is_featured,
         category_name: categories.name_ar,
+        year: products.year,
+        mileage_km: products.mileage_km,
+        transmission: products.transmission,
       })
       .from(products)
       .leftJoin(categories, eq(products.category_id, categories.id))
