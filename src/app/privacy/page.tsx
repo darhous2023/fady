@@ -3,8 +3,8 @@ import StoreHeader from "@/components/store/StoreHeader"
 import StoreFooter from "@/components/store/StoreFooter"
 
 export const metadata: Metadata = {
-  title: "سياسة الخصوصية — ShahY Store",
-  description: "سياسة الخصوصية وحماية البيانات في ShahY Store.",
+  title: "سياسة الخصوصية — معرض الفادي",
+  description: "سياسة الخصوصية وحماية البيانات في معرض الفادي لتجارة السيارات.",
 }
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
@@ -39,19 +39,19 @@ export default function PrivacyPage() {
             سياسة الخصوصية
           </h1>
           <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 14, color: "#F2F0EC", opacity: 0.35, marginBottom: 48 }}>
-            آخر تحديث: يونيو 2025
+            آخر تحديث: يوليو 2026
           </p>
 
           <div style={{ height: 1, background: "linear-gradient(90deg,#9BA3AA33,transparent)", marginBottom: 48 }} />
 
           <Section title="ما البيانات التي نجمعها؟">
-            عند تقديم طلب نجمع: الاسم، رقم الهاتف، المحافظة، والعنوان. هذه البيانات ضرورية فقط لإتمام عملية الشحن والتواصل معك.
+            عند إرسال طلب حجز معاينة نجمع: الاسم، رقم الهاتف، والميعاد المفضل (لو حدّدته). هذه البيانات ضرورية فقط لتأكيد ميعاد المعاينة والتواصل معك.
           </Section>
 
           <Section title="كيف نستخدم بياناتك؟">
             <ul>
-              <li>تأكيد الطلب والتواصل معك لترتيب التوصيل.</li>
-              <li>تحسين خدمتنا وتجربتك في المتجر.</li>
+              <li>تأكيد طلب الحجز والتواصل معك لترتيب ميعاد المعاينة.</li>
+              <li>تحسين خدمتنا وتجربتك في المعرض.</li>
               <li>لا نبيع ولا نشارك بياناتك مع أي طرف ثالث.</li>
             </ul>
           </Section>
@@ -61,7 +61,7 @@ export default function PrivacyPage() {
           </Section>
 
           <Section title="ملفات الكوكيز">
-            نستخدم ملفات كوكيز محدودة لتحسين أداء الموقع (مثل تذكر سلة التسوق). لا نستخدم كوكيز التتبع الإعلاني.
+            نستخدم ملفات كوكيز محدودة لتحسين أداء الموقع (مثل تذكر قائمة المعاينة). لا نستخدم كوكيز التتبع الإعلاني.
           </Section>
 
           <Section title="حقوقك">
@@ -72,7 +72,7 @@ export default function PrivacyPage() {
             لأي استفسار حول خصوصيتك تواصل معنا:{" "}
             <a href="https://wa.me/201555557745" target="_blank" rel="noopener noreferrer"
               style={{ color: "#25D366", textDecoration: "none", fontWeight: 700 }}>
-              واتساب ShahY Store
+              واتساب معرض الفادي
             </a>
           </Section>
         </div>

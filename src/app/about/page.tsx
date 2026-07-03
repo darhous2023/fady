@@ -4,8 +4,8 @@ import StoreFooter from "@/components/store/StoreFooter"
 import FloatingWA from "@/components/store/FloatingWA"
 
 export const metadata: Metadata = {
-  title: "عن ShahY Store — قصتنا",
-  description: "ShahY Store — متجر إكسسوارات نسائية فاخرة مستوردة، بدأ من شغف حقيقي بالأناقة الراقية.",
+  title: "عن معرض الفادي — قصتنا",
+  description: "معرض الفادي لتجارة السيارات — المهندسين، شارع أحمد عرابي. سيارات مفحوصة، وضوح كامل في الحالة والسعر، ومعاينة حقيقية قبل أي قرار.",
 }
 
 export default function AboutPage() {
@@ -49,14 +49,14 @@ export default function AboutPage() {
               animation: "shimmer 6s linear infinite",
               lineHeight: 1.25, margin: "0 0 28px",
             }}>
-              خُلقت لأنثى<br/>تعشق الأناقة الحقيقية
+              كل سيارة عندنا،<br/>اخترناها كأنها لينا
             </h1>
             <p style={{
               fontFamily: "Tajawal, sans-serif", fontStyle: "italic",
               fontSize: "clamp(18px,2.5vw,24px)", color: "#F2F0EC", opacity: 0.55,
               lineHeight: 1.9, letterSpacing: "0.5px",
             }}>
-              قصة بدأت بشغف لم يجد ما يليق به،<br/>فقررت صاحبته أن تصنعه بنفسها.
+              معرض الفادي لتجارة السيارات — المهندسين، شارع أحمد عرابي.<br/>وضوح كامل في الحالة والسعر، ومعاينة حقيقية قبل أي قرار.
             </p>
           </div>
         </section>
@@ -70,9 +70,7 @@ export default function AboutPage() {
                 — البداية
               </div>
               <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: "clamp(17px,2.2vw,20px)", color: "#F2F0EC", opacity: 0.7, lineHeight: 2.1 }}>
-                شاهيندا سليمان — فتاة مصرية كانت دائماً تعرف ما تريد، لكنها لم تجده.
-                كانت تدور في الأسواق تبحث عن شنطة تليق بذوقها، عن محفظة تحمل معنى لا مجرد شكل،
-                عن إكسسوار يقول "هذه أنا" قبل أن تتكلم.
+                معرض الفادي بدأ من المهندسين كمحل ثقة بين الجيران قبل ما يبقى معرض. كل سيارة بتدخل المعرض بييجي صاحبها وهو عارف إنها هتتباع بسعرها الحقيقي، وكل عميل بيدخل بييجي وهو عارف إنه مش هيتفاجئ بحاجة مخفية.
               </p>
             </div>
 
@@ -80,12 +78,11 @@ export default function AboutPage() {
 
             <div className="abt-fade" style={{ animationDelay: "0.3s" }}>
               <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 9, letterSpacing: "5px", color: "#9BA3AA", opacity: 0.6, marginBottom: 20, textTransform: "uppercase" }}>
-                — القرار
+                — المبدأ
               </div>
               <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: "clamp(17px,2.2vw,20px)", color: "#F2F0EC", opacity: 0.7, lineHeight: 2.1 }}>
-                كل ما هو جميل كان إما بعيد أو مُكلف بشكل غير منطقي.
-                فكان الحل بسيطاً في فكرته عميقاً في تأثيره:
-                لماذا لا تجلب هي العالم إلى باب كل فتاة مصرية؟
+                شراء سيارة قرار كبير، ومش المفروض يتبني على صور مفلترة أو وصف ناقص.
+                لذلك كل سيارة مستعملة عندنا بتتعرض بحالتها الحقيقية، بالكيلومترات الصحيحة، وبدرجة وضوح واحدة نلتزم بيها:
               </p>
               <blockquote style={{
                 borderRight: "3px solid #9BA3AA", paddingRight: 24, marginTop: 28,
@@ -93,7 +90,7 @@ export default function AboutPage() {
                 fontSize: "clamp(20px,2.5vw,26px)", color: "#9BA3AA",
                 opacity: 0.85, lineHeight: 1.7,
               }}>
-                "لا يجب أن تكوني في باريس لتحملي شيئاً يليق بك."
+                "اللي هتشوفه في المعرض هو نفسه اللي هتاخده."
               </blockquote>
             </div>
 
@@ -104,15 +101,13 @@ export default function AboutPage() {
                 — اليوم
               </div>
               <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: "clamp(17px,2.2vw,20px)", color: "#F2F0EC", opacity: 0.7, lineHeight: 2.1 }}>
-                ShahY Store اليوم ليس مجرد متجر — إنه وعد.
-                وعد بأن كل منتج اخترناه مرّ عبر نظرة شاهيندا أولاً،
-                وأنكِ حين تفتحين الطرد لن تجدي بضاعة، بل ستجدين تجربة.
+                معرض الفادي اليوم بوابتين: سيارات مستعملة حقيقية موجودة في المعرض تقدر تحجز معاينتها فورًا، وتصفح للسيارات الجديدة بمواصفاتها وأسعارها للاستفسار عليها. كل ده وإحنا في نفس المكان اللي بدأنا منه — المهندسين، شارع أحمد عرابي.
               </p>
             </div>
           </div>
         </section>
 
-        {/* ── Quality Tiers ── */}
+        {/* ── Condition Grades ── */}
         <section style={{ background: "radial-gradient(ellipse 80% 50% at 50% 50%, #121212 0%, #0A0A0A 100%)", padding: "80px 40px" }}>
           <div style={{ maxWidth: 1100, margin: "0 auto" }}>
             <div style={{ textAlign: "center", marginBottom: 56 }}>
@@ -120,25 +115,25 @@ export default function AboutPage() {
                 ✦ &nbsp; philosophy &nbsp; ✦
               </div>
               <h2 style={{ fontFamily: "Tajawal,sans-serif", fontSize: "clamp(28px,4vw,42px)", fontWeight: 700, color: "#F2F0EC", margin: 0 }}>
-                درجات الجودة — ليس كل شيء سواء
+                درجات حالة السيارة — بوضوح، من غير مجاملة
               </h2>
             </div>
             <div style={{ display: "flex", gap: 20, flexWrap: "wrap", justifyContent: "center" }}>
               {[
                 {
-                  label: "هاي كوبي", en: "HI-COPY", color: "#666", glow: "rgba(100,100,100,0.2)",
-                  desc: "أعلى درجات الجودة في المنتجات المقلدة. مواد تشبه الأصل إلى حد بعيد، تشطيب ممتاز، وسعر يليق بكل محفظة.",
-                  icon: "💎",
+                  label: "جيدة", en: "GOOD", color: "#666", glow: "rgba(100,100,100,0.2)",
+                  desc: "حالة جيدة ومناسبة للاستخدام اليومي، بكل تفاصيلها الحقيقية معروضة قبل ما تيجي تعاينها.",
+                  icon: "🔧",
                 },
                 {
-                  label: "ميرور", en: "MIRROR", color: "#A5342C", glow: "rgba(165,52,44,0.25)",
-                  desc: "طبق الأصل تماماً — نسخة لا يمكن تمييزها من الخارج عن المنتج الأصلي. للمرأة التي تريد المظهر الفاخر بلا مبالغة في السعر.",
-                  icon: "✨",
+                  label: "جيدة جدًا", en: "VERY GOOD", color: "#A5342C", glow: "rgba(165,52,44,0.25)",
+                  desc: "حالة جيدة جدًا، جاهزة للمعاينة والقيادة فورًا، صيانة دورية متابَعة.",
+                  icon: "🛡️",
                 },
                 {
-                  label: "أصلي", en: "ORIGINAL", color: "#9BA3AA", glow: "rgba(155,163,170,0.25)",
-                  desc: "منتجات أصلية 100% بضمان كامل. استثمار حقيقي في قطعة ستبقى معك لسنوات.",
-                  icon: "👑",
+                  label: "ممتازة", en: "EXCELLENT", color: "#9BA3AA", glow: "rgba(155,163,170,0.25)",
+                  desc: "حالة ممتازة، فحص شامل متاح عند الطلب. أقرب ما تكون لسيارة صفر.",
+                  icon: "🏆",
                 },
               ].map(t => (
                 <div key={t.en} className="tier-card" style={{ flex: "1 1 280px", maxWidth: 340, boxShadow: `0 0 0 0 ${t.glow}` }}>
@@ -160,23 +155,23 @@ export default function AboutPage() {
         {/* ── Promise ── */}
         <section style={{ padding: "100px 40px", textAlign: "center" }}>
           <div style={{ maxWidth: 680, margin: "0 auto" }}>
-            <div style={{ fontSize: 36, marginBottom: 24 }}>🌹</div>
+            <div style={{ fontSize: 36, marginBottom: 24 }}>🔑</div>
             <h2 style={{
               fontFamily: "Tajawal,sans-serif", fontStyle: "italic",
               fontSize: "clamp(26px,4vw,42px)", fontWeight: 700,
               color: "#F2F0EC", lineHeight: 1.5, marginBottom: 24,
             }}>
-              كل منتج عندنا قصة،<br/>وأنتِ تستحقين الأجمل.
+              كل سيارة عندنا، تستاهل تتشاف عن قرب.
             </h2>
             <div style={{ height: 1, width: 160, background: "linear-gradient(90deg,transparent,#9BA3AA,transparent)", margin: "0 auto 32px" }} />
-            <a href="/#products" style={{
+            <a href="/used" style={{
               display: "inline-flex", alignItems: "center", gap: 10,
               fontFamily: "Tajawal,sans-serif", fontWeight: 700, fontSize: 15,
               padding: "14px 36px", borderRadius: 8, textDecoration: "none",
               background: "linear-gradient(135deg,#9BA3AA,#C9CFD4)", color: "#0A0A0A",
               boxShadow: "0 8px 32px rgba(155,163,170,0.3)",
             }}>
-              اكتشفي التشكيلة ✦
+              تصفح السيارات ✦
             </a>
           </div>
         </section>

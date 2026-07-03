@@ -11,7 +11,7 @@ const client = postgres(process.env.MIGRATION_DATABASE_URL!, { max: 1 });
 const db = drizzle(client);
 
 async function seed() {
-  console.log("🌱 Seeding ShahY Store database...");
+  console.log("🌱 Seeding elfady database...");
 
   // Categories
   console.log("  → Categories...");
@@ -71,9 +71,9 @@ async function seed() {
   await db
     .insert(settings)
     .values([
-      { key: "whatsapp_number", value: "+201030002331" },
-      { key: "store_name_ar", value: "شاهي" },
-      { key: "store_tagline_ar", value: "فخامة حقيقية. منتجات مستوردة." },
+      { key: "whatsapp_number", value: "+201555557745" },
+      { key: "store_name_ar", value: "الفادي" },
+      { key: "store_tagline_ar", value: "معرض سيارات — المهندسين، شارع أحمد عرابي" },
       { key: "instagram_url", value: "" },
       { key: "facebook_url", value: "" },
       { key: "tiktok_url", value: "" },

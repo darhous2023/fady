@@ -123,7 +123,7 @@ export default function StoreHeader() {
           onMouseEnter={e => (e.currentTarget.style.opacity = "1")} onMouseLeave={e => (e.currentTarget.style.opacity = "0.85")}>العروض</a>
 
         <a href="/track" style={{ fontFamily: "Tajawal, sans-serif", fontSize: 13, color: "#F2F0EC", opacity: 0.6, textDecoration: "none", transition: "opacity 0.2s" }}
-          onMouseEnter={e => (e.currentTarget.style.opacity = "1")} onMouseLeave={e => (e.currentTarget.style.opacity = "0.6")}>تتبّع طلبك</a>
+          onMouseEnter={e => (e.currentTarget.style.opacity = "1")} onMouseLeave={e => (e.currentTarget.style.opacity = "0.6")}>تتبّع الحجز</a>
 
         <a href={`https://wa.me/201555557745?text=${encodeURIComponent("السلام عليكم، أريد الاستفسار عن منتجاتكم")}`}
           target="_blank" rel="noopener noreferrer"

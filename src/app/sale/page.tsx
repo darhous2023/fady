@@ -8,8 +8,8 @@ import StoreFooter from "@/components/store/StoreFooter"
 import FloatingWA from "@/components/store/FloatingWA"
 
 export const metadata: Metadata = {
-  title: "العروض والتخفيضات — ShahY Store",
-  description: "أفضل العروض على الشنط والمحافظ والشوزات المستوردة — خصومات حصرية لفترة محدودة",
+  title: "عروض السيارات — معرض الفادي",
+  description: "سيارات مستعملة بأسعار مخفّضة في معرض الفادي لتجارة السيارات — عروض حصرية لفترة محدودة",
 }
 
 export const dynamic = "force-dynamic"
@@ -52,7 +52,7 @@ async function getSaleProducts() {
   } catch { return [] }
 }
 
-const QUALITY_LABELS: Record<string, string> = { hi_copy: "بريميوم", mirror: "ميرور كواليتي", original: "أصلي" }
+const QUALITY_LABELS: Record<string, string> = { hi_copy: "جيدة", mirror: "جيدة جدًا", original: "ممتازة" }
 const QUALITY_COLORS: Record<string, string> = { hi_copy: "#888", mirror: "#A5342C", original: "#9BA3AA" }
 
 export default async function SalePage() {
@@ -85,10 +85,10 @@ export default async function SalePage() {
             fontFamily: "Tajawal,sans-serif", fontSize: "clamp(32px,6vw,56px)", fontWeight: 900,
             color: "#F2F0EC", margin: "0 0 12px",
           }}>
-            العروض والتخفيضات
+            عروض السيارات
           </h1>
           <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 15, color: "#F2F0EC", opacity: 0.4 }}>
-            {items.length > 0 ? `${items.length} منتج بخصومات حصرية` : "لا توجد عروض حالياً"}
+            {items.length > 0 ? `${items.length} سيارة بأسعار مخفّضة` : "لا توجد عروض حالياً"}
           </p>
         </section>
 
@@ -99,8 +99,8 @@ export default async function SalePage() {
               <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 18, color: "#F2F0EC", opacity: 0.3 }}>
                 لا توجد عروض في الوقت الحالي
               </p>
-              <Link href="/" style={{ fontFamily: "Tajawal,sans-serif", fontWeight: 700, fontSize: 14, padding: "12px 28px", borderRadius: 8, textDecoration: "none", background: "linear-gradient(135deg,#9BA3AA,#C9CFD4)", color: "#0A0A0A", display: "inline-block", marginTop: 24 }}>
-                تصفّح المتجر
+              <Link href="/used" style={{ fontFamily: "Tajawal,sans-serif", fontWeight: 700, fontSize: 14, padding: "12px 28px", borderRadius: 8, textDecoration: "none", background: "linear-gradient(135deg,#9BA3AA,#C9CFD4)", color: "#0A0A0A", display: "inline-block", marginTop: 24 }}>
+                تصفّح السيارات
               </Link>
             </div>
           ) : (
@@ -112,7 +112,7 @@ export default async function SalePage() {
                     {item.image ? (
                       <img src={item.image} alt={item.name_ar} className="card-img" loading="lazy" />
                     ) : (
-                      <div className="card-img-placeholder">🛍️</div>
+                      <div className="card-img-placeholder">🚗</div>
                     )}
                     <div style={{
                       position: "absolute", top: 12, right: 12,

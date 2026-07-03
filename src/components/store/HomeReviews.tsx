@@ -63,10 +63,10 @@ export default function HomeReviews() {
             fontFamily: "Tajawal, sans-serif", fontSize: "clamp(22px,4vw,32px)", fontWeight: 800,
             color: "#F2F0EC", margin: "0 0 8px",
           }}>
-            ماذا تقول عميلاتنا؟
+            ماذا يقول عملاؤنا؟
           </h2>
           <p style={{ fontFamily: "Tajawal, sans-serif", fontSize: 13, color: "rgba(242,240,236,0.35)", margin: 0 }}>
-            آراء حقيقية من عميلات ShahY
+            آراء حقيقية من عملاء معرض الفادي
           </p>
         </div>
 

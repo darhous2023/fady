@@ -101,7 +101,7 @@ export default function StoreFooter() {
               سياساتنا
             </h4>
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-              <a href="/returns" className="sf-link">الاسترجاع والاستبدال</a>
+              <a href="/returns" className="sf-link">سياسة الحجز والإلغاء</a>
               <a href="/privacy" className="sf-link">سياسة الخصوصية</a>
               <a href="/faq" className="sf-link">الأسئلة الشائعة</a>
             </div>

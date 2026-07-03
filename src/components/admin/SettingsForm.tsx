@@ -37,11 +37,11 @@ export default function SettingsForm({ settings }: { settings: Record<string, st
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label className={labelCls}>اسم المتجر</label>
-            <input name="store_name_ar" defaultValue={settings.store_name_ar || "شاهي"} className={inputCls} />
+            <input name="store_name_ar" defaultValue={settings.store_name_ar || "الفادي"} className={inputCls} />
           </div>
           <div>
             <label className={labelCls}>رقم الواتساب</label>
-            <input name="whatsapp_number" defaultValue={settings.whatsapp_number || "+201015835455"} className={inputCls} />
+            <input name="whatsapp_number" defaultValue={settings.whatsapp_number || "+201555557745"} className={inputCls} />
           </div>
         </div>
 

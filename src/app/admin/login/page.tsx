@@ -32,7 +32,7 @@ function LoginForm() {
       <div className="w-full max-w-sm">
         {/* Logo */}
         <div className="text-center mb-10">
-          <h1 className="text-4xl font-black text-[#C9A84C] tracking-widest">شاهي</h1>
+          <h1 className="text-4xl font-black text-[#C9A84C] tracking-widest">ELFADY</h1>
           <p className="text-[#F5EFE0]/40 text-sm mt-2">لوحة الإدارة</p>
         </div>
 

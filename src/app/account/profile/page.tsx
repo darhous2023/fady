@@ -274,9 +274,9 @@ export default function ProfilePage() {
           {/* Stats Bar */}
           <div style={{ display: "flex", gap: 12, marginBottom: 28, flexWrap: "wrap" }}>
             {[
-              { label: "طلب", value: orders.length.toString(), icon: "📦" },
+              { label: "حجز معاينة", value: orders.length.toString(), icon: "🚗" },
               { label: "ج.م إجمالي", value: totalSpent.toLocaleString("ar-EG"), icon: "💰" },
-              { label: "عضو ShahY", value: "", icon: "👑" },
+              { label: "عضو elfady", value: "", icon: "👑" },
             ].map((stat, i) => (
               <div key={i} style={{
                 flex: 1, minWidth: 130,
@@ -393,7 +393,7 @@ export default function ProfilePage() {
                   </div>
 
                   <div style={{ textAlign: "center" }}>
-                    <Link href="/#products" className="browse-btn" style={{
+                    <Link href="/used" className="browse-btn" style={{
                       display: "inline-flex", alignItems: "center", gap: 8,
                       fontFamily: "Tajawal,sans-serif", fontSize: 14, fontWeight: 700,
                       color: "#9BA3AA", textDecoration: "none",
@@ -402,7 +402,7 @@ export default function ProfilePage() {
                       background: "rgba(155,163,170,0.07)",
                       transition: "background 0.2s",
                     }}>
-                      <span>🛍️</span> تصفّح المنتجات
+                      <span>🚗</span> تصفّح السيارات
                     </Link>
                   </div>
                 </div>
@@ -620,7 +620,7 @@ export default function ProfilePage() {
                   <div className="card">
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 18, paddingBottom: 14, borderBottom: "1px solid rgba(155,163,170,0.08)" }}>
                       <h2 style={{ fontFamily: "Tajawal,sans-serif", fontSize: 17, fontWeight: 700, color: "#F2F0EC", margin: 0 }}>معلومات الحساب</h2>
-                      <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 11, padding: "3px 10px", borderRadius: 20, background: "rgba(155,163,170,0.1)", color: "#9BA3AA", fontWeight: 700 }}>👑 عضو ShahY</span>
+                      <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 11, padding: "3px 10px", borderRadius: 20, background: "rgba(155,163,170,0.1)", color: "#9BA3AA", fontWeight: 700 }}>👑 عضو elfady</span>
                     </div>
                     {([
                       { label: "البريد الإلكتروني", value: session?.user?.email || "—", ltr: true },
