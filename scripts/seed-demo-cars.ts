@@ -45,8 +45,7 @@ const DEMO_CARS: DemoCar[] = [
     condition: "original", price: 620000, compare_at_price: 660000, is_featured: true,
     description_ar: "حالة السيارة: ممتازة، فبريكة بالكامل\nعدد الملاك: مالك واحد\nصيانة دورية بالوكيل\nتم الفحص الشامل",
     images: [
-      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1400&q=80",
-      "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?w=1400&q=80",
+      "https://images.unsplash.com/photo-1559385988-439b04de16f8?w=1400&q=80",
     ],
   },
   {
@@ -54,35 +53,35 @@ const DEMO_CARS: DemoCar[] = [
     mileage_km: 58000, transmission: "automatic", fuel_type: "بنزين", body_type: "سيدان",
     condition: "original", price: 520000, is_featured: true,
     description_ar: "حالة ممتازة، فحص كامل\nمالك واحد من الوكيل\nكاملة المعدات",
-    images: ["https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=1400&q=80"],
+    images: ["https://images.unsplash.com/photo-1569173455238-b885a4cad163?w=1400&q=80"],
   },
   {
     brandSlug: "kia", name_ar: "كيا سيراتو 2019", model: "سيراتو", year: 2019,
     mileage_km: 71000, transmission: "automatic", fuel_type: "بنزين", body_type: "سيدان",
     condition: "mirror", price: 430000,
     description_ar: "حالة جيدة جدًا، جاهزة للمعاينة\nصيانة دورية موثقة",
-    images: ["https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=1400&q=80"],
+    images: ["https://images.unsplash.com/photo-1561299593-7633f311838a?w=1400&q=80"],
   },
   {
     brandSlug: "chevrolet", name_ar: "شيفروليه أفيو 2018", model: "أفيو", year: 2018,
     mileage_km: 85000, transmission: "manual", fuel_type: "بنزين", body_type: "هاتشباك",
     condition: "mirror", price: 320000,
     description_ar: "اقتصادية في الاستهلاك\nحالة جيدة جدًا ومناسبة للاستخدام اليومي",
-    images: ["https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=1400&q=80"],
+    images: ["https://images.unsplash.com/photo-1575028401612-46bedd08ec81?w=1400&q=80"],
   },
   {
     brandSlug: "nissan", name_ar: "نيسان صني 2022", model: "صني", year: 2022,
     mileage_km: 21000, transmission: "automatic", fuel_type: "بنزين", body_type: "سيدان",
     condition: "original", price: 480000, is_featured: true,
     description_ar: "شبه جديدة، عداد قليل جدًا\nضمان الوكيل ساري",
-    images: ["https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=1400&q=80"],
+    images: ["https://images.unsplash.com/photo-1559095380-3a7d465772a5?w=1400&q=80"],
   },
   {
     brandSlug: "mg", name_ar: "أم جي 5 2021", model: "MG5", year: 2021,
     mileage_km: 39000, transmission: "automatic", fuel_type: "بنزين", body_type: "سيدان",
     condition: "original", price: 495000,
     description_ar: "حالة ممتازة، فحص شامل متاح\nكاملة المعدات مع شاشة لمس",
-    images: ["https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=1400&q=80"],
+    images: ["https://images.unsplash.com/photo-1573710459621-bb101783ca0f?w=1400&q=80"],
   },
 ];
 
