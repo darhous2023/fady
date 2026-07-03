@@ -14,12 +14,12 @@ function BannerSlide({ b }: { b: Banner }) {
       {b.title_ar && (
         <div style={{
           position: "absolute", bottom: 0, left: 0, right: 0,
-          background: "linear-gradient(to top,rgba(10,8,6,0.75),transparent)",
+          background: "linear-gradient(to top,rgba(10,10,10,0.75),transparent)",
           padding: "40px 40px 24px",
         }}>
           <p style={{
             fontFamily: "Tajawal, sans-serif", fontWeight: 700,
-            fontSize: "clamp(18px,3vw,32px)", color: "#F5EFE0",
+            fontSize: "clamp(18px,3vw,32px)", color: "#F2F0EC",
             textShadow: "0 2px 8px rgba(0,0,0,0.5)", direction: "rtl",
           }}>{b.title_ar}</p>
         </div>
@@ -45,7 +45,7 @@ export default function BannersCarousel({ banners }: { banners: Banner[] }) {
   if (!banners.length) return null
 
   return (
-    <div style={{ position: "relative", width: "100%", overflow: "hidden", background: "#0E0C09" }}
+    <div style={{ position: "relative", width: "100%", overflow: "hidden", background: "#131313" }}
       onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
       <style>{`@keyframes bannerFade{from{opacity:0;transform:scale(1.02)}to{opacity:1;transform:scale(1)}}`}</style>
 
@@ -64,18 +64,18 @@ export default function BannersCarousel({ banners }: { banners: Banner[] }) {
             {banners.map((_, i) => (
               <button key={i} onClick={() => setIdx(i)} style={{
                 width: i === idx ? 24 : 8, height: 8, borderRadius: 4,
-                background: i === idx ? "#C9A84C" : "rgba(245,239,224,0.3)",
+                background: i === idx ? "#9BA3AA" : "rgba(242,240,236,0.3)",
                 border: "none", cursor: "pointer", padding: 0, transition: "all 0.3s ease",
               }} />
             ))}
           </div>
           <button onClick={() => setIdx(i => (i - 1 + banners.length) % banners.length)}
-            style={{ position: "absolute", right: 16, top: "50%", transform: "translateY(-50%)", background: "rgba(10,8,6,0.55)", border: "1px solid rgba(201,168,76,0.2)", borderRadius: 8, width: 40, height: 40, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(4px)" }}>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+            style={{ position: "absolute", right: 16, top: "50%", transform: "translateY(-50%)", background: "rgba(10,10,10,0.55)", border: "1px solid rgba(155,163,170,0.2)", borderRadius: 8, width: 40, height: 40, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(4px)" }}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9BA3AA" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6"/></svg>
           </button>
           <button onClick={() => setIdx(i => (i + 1) % banners.length)}
-            style={{ position: "absolute", left: 16, top: "50%", transform: "translateY(-50%)", background: "rgba(10,8,6,0.55)", border: "1px solid rgba(201,168,76,0.2)", borderRadius: 8, width: 40, height: 40, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(4px)" }}>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+            style={{ position: "absolute", left: 16, top: "50%", transform: "translateY(-50%)", background: "rgba(10,10,10,0.55)", border: "1px solid rgba(155,163,170,0.2)", borderRadius: 8, width: 40, height: 40, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(4px)" }}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9BA3AA" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
           </button>
         </>
       )}

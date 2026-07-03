@@ -8,7 +8,7 @@ import FloatingWA from "@/components/store/FloatingWA"
 import { useCart } from "@/contexts/CartContext"
 import { toast } from "sonner"
 
-const WL_KEY = "shahy-wishlist"
+const WL_KEY = "elfady-wishlist"
 
 export interface WishlistItem {
   id: string; slug: string; name_ar: string; price: number
@@ -16,7 +16,7 @@ export interface WishlistItem {
 }
 
 const QUALITY: Record<string, string> = { hi_copy: "بريميوم", mirror: "ميرور كواليتي", original: "أصلي" }
-const QC: Record<string, string> = { hi_copy: "#888", mirror: "#7B1C2E", original: "#C9A84C" }
+const QC: Record<string, string> = { hi_copy: "#888", mirror: "#A5342C", original: "#9BA3AA" }
 
 export default function WishlistPage() {
   const [items, setItems] = useState<WishlistItem[]>([])
@@ -41,22 +41,22 @@ export default function WishlistPage() {
     <>
       <StoreHeader />
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;900&family=Cinzel:wght@400&display=swap');
-        * { box-sizing: border-box; } body { margin: 0; background: #0A0806; }
-        .wl-card { background: linear-gradient(145deg,#0E0C09,#111009); border: 1px solid rgba(201,168,76,0.1); border-radius: 16px; overflow: hidden; transition: all 0.3s ease; }
-        .wl-card:hover { border-color: rgba(201,168,76,0.25); transform: translateY(-2px); }
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;900&display=swap');
+        * { box-sizing: border-box; } body { margin: 0; background: #0A0A0A; }
+        .wl-card { background: linear-gradient(145deg,#131313,#141414); border: 1px solid rgba(155,163,170,0.1); border-radius: 16px; overflow: hidden; transition: all 0.3s ease; }
+        .wl-card:hover { border-color: rgba(155,163,170,0.25); transform: translateY(-2px); }
         .wl-img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; transition: transform 0.4s ease; }
         .wl-card:hover .wl-img { transform: scale(1.04); }
       `}</style>
 
-      <main style={{ background: "#0A0806", minHeight: "100vh", paddingTop: 80, direction: "rtl" }}>
+      <main style={{ background: "#0A0A0A", minHeight: "100vh", paddingTop: 80, direction: "rtl" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "48px 24px 100px" }}>
           <div style={{ textAlign: "center", marginBottom: 48 }}>
-            <div style={{ fontFamily: "Cinzel,serif", fontSize: 9, letterSpacing: "6px", color: "#C9A84C", opacity: 0.7, marginBottom: 16 }}>✦ &nbsp; WISHLIST &nbsp; ✦</div>
-            <h1 style={{ fontFamily: "Tajawal,sans-serif", fontSize: "clamp(26px,5vw,40px)", fontWeight: 900, color: "#F5EFE0", margin: "0 0 10px" }}>
+            <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 9, letterSpacing: "6px", color: "#9BA3AA", opacity: 0.7, marginBottom: 16 }}>✦ &nbsp; WISHLIST &nbsp; ✦</div>
+            <h1 style={{ fontFamily: "Tajawal,sans-serif", fontSize: "clamp(26px,5vw,40px)", fontWeight: 900, color: "#F2F0EC", margin: "0 0 10px" }}>
               قائمة أمنياتك
             </h1>
-            <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 14, color: "rgba(245,239,224,0.35)" }}>
+            <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 14, color: "rgba(242,240,236,0.35)" }}>
               {items.length > 0 ? `${items.length} منتج محفوظ` : "لا توجد منتجات محفوظة"}
             </p>
           </div>
@@ -64,10 +64,10 @@ export default function WishlistPage() {
           {items.length === 0 ? (
             <div style={{ textAlign: "center", padding: "60px 20px" }}>
               <div style={{ fontSize: 56, marginBottom: 20, opacity: 0.15 }}>🤍</div>
-              <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 16, color: "rgba(245,239,224,0.3)" }}>
+              <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 16, color: "rgba(242,240,236,0.3)" }}>
                 لم تحفظي أي منتج حتى الآن
               </p>
-              <Link href="/" style={{ fontFamily: "Tajawal,sans-serif", fontWeight: 700, fontSize: 14, padding: "12px 28px", borderRadius: 8, textDecoration: "none", background: "linear-gradient(135deg,#C9A84C,#F0D882)", color: "#0A0806", display: "inline-block", marginTop: 24 }}>
+              <Link href="/" style={{ fontFamily: "Tajawal,sans-serif", fontWeight: 700, fontSize: 14, padding: "12px 28px", borderRadius: 8, textDecoration: "none", background: "linear-gradient(135deg,#9BA3AA,#C9CFD4)", color: "#0A0A0A", display: "inline-block", marginTop: 24 }}>
                 تصفّحي المتجر
               </Link>
             </div>
@@ -88,13 +88,13 @@ export default function WishlistPage() {
                   </Link>
 
                   <div style={{ padding: "14px" }}>
-                    <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 14, fontWeight: 700, color: "#F5EFE0", margin: "0 0 4px", lineHeight: 1.4 }}>{item.name_ar}</p>
-                    <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 16, fontWeight: 900, color: "#C9A84C", margin: "0 0 14px" }}>{item.price.toLocaleString("ar-EG")} ج.م</p>
+                    <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 14, fontWeight: 700, color: "#F2F0EC", margin: "0 0 4px", lineHeight: 1.4 }}>{item.name_ar}</p>
+                    <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 16, fontWeight: 900, color: "#9BA3AA", margin: "0 0 14px" }}>{item.price.toLocaleString("ar-EG")} ج.م</p>
                     <div style={{ display: "flex", gap: 8 }}>
-                      <button onClick={() => addToCart(item)} style={{ flex: 1, background: "linear-gradient(135deg,#C9A84C,#F0D882)", color: "#0A0806", fontFamily: "Tajawal,sans-serif", fontWeight: 700, fontSize: 12, padding: "9px 10px", borderRadius: 8, border: "none", cursor: "pointer" }}>
+                      <button onClick={() => addToCart(item)} style={{ flex: 1, background: "linear-gradient(135deg,#9BA3AA,#C9CFD4)", color: "#0A0A0A", fontFamily: "Tajawal,sans-serif", fontWeight: 700, fontSize: 12, padding: "9px 10px", borderRadius: 8, border: "none", cursor: "pointer" }}>
                         أضف للسلة
                       </button>
-                      <button onClick={() => remove(item.id)} style={{ background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.2)", color: "#f87171", fontFamily: "Tajawal,sans-serif", fontSize: 12, padding: "9px 12px", borderRadius: 8, cursor: "pointer" }}>
+                      <button onClick={() => remove(item.id)} style={{ background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.2)", color: "#D9776A", fontFamily: "Tajawal,sans-serif", fontSize: 12, padding: "9px 12px", borderRadius: 8, cursor: "pointer" }}>
                         ✕
                       </button>
                     </div>

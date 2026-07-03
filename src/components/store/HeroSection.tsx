@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 
-const DEFAULT_WORDS = ["شُعوراً", "هويّتكِ", "قوّتكِ", "أُسلوباً", "تميّزكِ"]
+const DEFAULT_WORDS = ["ثقةً", "شفافيةً", "جودةً", "خبرةً", "التزاماً"]
 
 export default function HeroSection({ words }: { words?: string[] }) {
   const W = words?.length ? words : DEFAULT_WORDS
@@ -22,7 +22,7 @@ export default function HeroSection({ words }: { words?: string[] }) {
 
   return (
     <section style={{
-      background: "radial-gradient(ellipse 80% 60% at 50% 20%, #1C0A0A 0%, #0A0806 70%)",
+      background: "radial-gradient(ellipse 80% 60% at 50% 20%, #141414 0%, #0A0A0A 70%)",
       minHeight: "100vh",
       display: "flex", flexDirection: "column",
       alignItems: "center", justifyContent: "center",
@@ -39,17 +39,17 @@ export default function HeroSection({ words }: { words?: string[] }) {
       {/* Decorative lines */}
       <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none" }}
         viewBox="0 0 1440 800" preserveAspectRatio="xMidYMid slice">
-        <line x1="-50" y1="200" x2="800" y2="50" stroke="#7B1C2E" strokeWidth="0.6" opacity="0.15" />
-        <line x1="600" y1="850" x2="1500" y2="300" stroke="#7B1C2E" strokeWidth="0.6" opacity="0.12" />
-        <line x1="200" y1="-20" x2="1100" y2="600" stroke="#C9A84C" strokeWidth="0.4" opacity="0.1" />
-        <line x1="-100" y1="600" x2="700" y2="350" stroke="#C9A84C" strokeWidth="0.3" opacity="0.08" />
+        <line x1="-50" y1="200" x2="800" y2="50" stroke="#A5342C" strokeWidth="0.6" opacity="0.15" />
+        <line x1="600" y1="850" x2="1500" y2="300" stroke="#A5342C" strokeWidth="0.6" opacity="0.12" />
+        <line x1="200" y1="-20" x2="1100" y2="600" stroke="#9BA3AA" strokeWidth="0.4" opacity="0.1" />
+        <line x1="-100" y1="600" x2="700" y2="350" stroke="#9BA3AA" strokeWidth="0.3" opacity="0.08" />
       </svg>
 
       {/* Ambient glow */}
       <div style={{
         position: "absolute", top: "25%", left: "50%", transform: "translate(-50%,-50%)",
         width: 700, height: 500, borderRadius: "50%",
-        background: "radial-gradient(ellipse, rgba(201,168,76,0.08) 0%, transparent 70%)",
+        background: "radial-gradient(ellipse, rgba(155,163,170,0.08) 0%, transparent 70%)",
         animation: "pulseGold 4s ease-in-out infinite", pointerEvents: "none",
       }} />
 
@@ -57,25 +57,20 @@ export default function HeroSection({ words }: { words?: string[] }) {
 
         {/* Eyebrow */}
         <div style={{
-          fontFamily: "Cinzel, serif", fontSize: 10, letterSpacing: "7px",
-          color: "#C9A84C", opacity: 0.7, marginBottom: 32, textTransform: "uppercase",
+          fontFamily: "Tajawal, sans-serif", fontSize: 10, letterSpacing: "7px",
+          color: "#9BA3AA", opacity: 0.7, marginBottom: 32, textTransform: "uppercase",
         }}>
-          ✦ &nbsp; منتجات مستوردة فاخرة &nbsp; ✦
+          ✦ &nbsp; معرض سيارات موثوق &nbsp; ✦
         </div>
 
         {/* Pre-label */}
         <p style={{
           fontFamily: "Tajawal, sans-serif", fontWeight: 300,
           fontSize: "clamp(16px, 2.5vw, 22px)",
-          color: "#F5EFE0", opacity: 0.45, letterSpacing: "2px",
+          color: "#F2F0EC", opacity: 0.45, letterSpacing: "2px",
           margin: "0 0 8px",
         }}>
-          حين تُصبح&nbsp;
-          <span style={{
-            background: "linear-gradient(135deg,#C9A84C,#F0D882)",
-            WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
-            fontWeight: 700,
-          }}>الأناقةُ</span>
+          حين تصبح رحلة اقتناء سيارتك&nbsp;
         </p>
 
         {/* Big cycling word */}
@@ -84,7 +79,7 @@ export default function HeroSection({ words }: { words?: string[] }) {
             fontFamily: "Tajawal, sans-serif",
             fontSize: "clamp(72px, 14vw, 148px)",
             fontWeight: 900,
-            background: "linear-gradient(135deg,#A07030,#C9A84C,#F0D882,#E8C860,#C9A84C)",
+            background: "linear-gradient(135deg,#6E747A,#9BA3AA,#C9CFD4,#BEC4C9,#9BA3AA)",
             backgroundSize: "300% auto",
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
             margin: 0, lineHeight: 1,
@@ -98,11 +93,11 @@ export default function HeroSection({ words }: { words?: string[] }) {
         <p style={{
           fontFamily: "Tajawal, sans-serif", fontWeight: 300,
           fontSize: "clamp(16px, 2.5vw, 22px)",
-          color: "#F5EFE0", opacity: 0.4, letterSpacing: "2px",
+          color: "#F2F0EC", opacity: 0.4, letterSpacing: "2px",
           margin: "0 0 48px",
         }}>
-          حين تختارين&nbsp;
-          <span style={{ color: "#C9A84C", fontWeight: 700, opacity: 1 }}>ShahY</span>
+          مع&nbsp;
+          <span style={{ color: "#9BA3AA", fontWeight: 700, opacity: 1 }}>ELFADY</span>
         </p>
 
         {/* CTA buttons */}
@@ -110,28 +105,29 @@ export default function HeroSection({ words }: { words?: string[] }) {
           <a href="#products" style={{
             fontFamily: "Tajawal, sans-serif", fontWeight: 700, fontSize: 15,
             padding: "14px 40px", borderRadius: 8, textDecoration: "none",
-            background: "linear-gradient(135deg, #C9A84C, #F0D882)",
-            color: "#0A0806", letterSpacing: "0.5px",
-            boxShadow: "0 8px 32px rgba(201,168,76,0.3)",
+            background: "linear-gradient(135deg, #9BA3AA, #C9CFD4)",
+            color: "#0A0A0A", letterSpacing: "0.5px",
+            boxShadow: "0 8px 32px rgba(155,163,170,0.3)",
             transition: "all 0.3s ease",
           }}>
-            تسوّقي الآن
+            تصفّح السيارات
           </a>
-          <a href="/sale"
+          <a href={`https://wa.me/201555557745?text=${encodeURIComponent("السلام عليكم، أريد الاستفسار عن السيارات المتاحة")}`}
+            target="_blank" rel="noopener noreferrer"
             style={{
               fontFamily: "Tajawal, sans-serif", fontWeight: 700, fontSize: 15,
               padding: "14px 36px", borderRadius: 8, textDecoration: "none",
-              background: "transparent", color: "#F5EFE0",
-              border: "1px solid rgba(201,168,76,0.3)", letterSpacing: "0.5px",
+              background: "transparent", color: "#F2F0EC",
+              border: "1px solid rgba(155,163,170,0.3)", letterSpacing: "0.5px",
             }}>
-            اكتشفي العروض ✦
+            تواصل معنا ✦
           </a>
         </div>
 
         {/* Scroll hint */}
         <div style={{ marginTop: 64, display: "flex", flexDirection: "column", alignItems: "center", gap: 8, opacity: 0.35 }}>
-          <div style={{ fontFamily: "Cinzel,serif", fontSize: 9, letterSpacing: "4px", color: "#C9A84C" }}>SCROLL</div>
-          <div style={{ width: 1, height: 44, background: "linear-gradient(to bottom, #C9A84C, transparent)" }} />
+          <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 9, letterSpacing: "4px", color: "#9BA3AA" }}>SCROLL</div>
+          <div style={{ width: 1, height: 44, background: "linear-gradient(to bottom, #9BA3AA, transparent)" }} />
         </div>
       </div>
     </section>

@@ -80,32 +80,32 @@ export default function SearchOverlay({ onClose }: { onClose: () => void }) {
       <style>{`
         @keyframes searchSpin{to{transform:rotate(360deg)}}
         .so-chip { cursor: pointer; transition: all 0.2s; }
-        .so-chip:hover { background: rgba(201,168,76,0.12) !important; border-color: rgba(201,168,76,0.4) !important; color: #F5EFE0 !important; }
+        .so-chip:hover { background: rgba(155,163,170,0.12) !important; border-color: rgba(155,163,170,0.4) !important; color: #F2F0EC !important; }
       `}</style>
 
       <div style={{
-        background: "#0E0C09", border: "1px solid rgba(201,168,76,0.2)",
+        background: "#131313", border: "1px solid rgba(155,163,170,0.2)",
         borderRadius: 16, width: "min(640px, 92vw)", overflow: "hidden",
         boxShadow: "0 32px 80px rgba(0,0,0,0.8)",
         direction: "rtl",
       }}>
         {/* Input */}
-        <div style={{ display: "flex", alignItems: "center", padding: "16px 20px", borderBottom: "1px solid rgba(201,168,76,0.1)" }}>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+        <div style={{ display: "flex", alignItems: "center", padding: "16px 20px", borderBottom: "1px solid rgba(155,163,170,0.1)" }}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9BA3AA" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
             <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
           </svg>
           <input ref={inputRef} value={q} onChange={e => setQ(e.target.value)}
             placeholder="ابحثي عن منتج..."
             style={{
               flex: 1, background: "none", border: "none", outline: "none",
-              fontFamily: "Tajawal,sans-serif", fontSize: 16, color: "#F5EFE0",
+              fontFamily: "Tajawal,sans-serif", fontSize: 16, color: "#F2F0EC",
               padding: "0 14px", direction: "rtl",
             }}
           />
           {loading && (
-            <div style={{ width: 16, height: 16, border: "2px solid rgba(201,168,76,0.3)", borderTopColor: "#C9A84C", borderRadius: "50%", animation: "searchSpin 0.7s linear infinite", flexShrink: 0, marginLeft: 8 }} />
+            <div style={{ width: 16, height: 16, border: "2px solid rgba(155,163,170,0.3)", borderTopColor: "#9BA3AA", borderRadius: "50%", animation: "searchSpin 0.7s linear infinite", flexShrink: 0, marginLeft: 8 }} />
           )}
-          <button onClick={onClose} style={{ background: "none", border: "none", cursor: "pointer", color: "#F5EFE0", opacity: 0.4, fontSize: 18, padding: "0 4px", marginRight: 4 }}>✕</button>
+          <button onClick={onClose} style={{ background: "none", border: "none", cursor: "pointer", color: "#F2F0EC", opacity: 0.4, fontSize: 18, padding: "0 4px", marginRight: 4 }}>✕</button>
         </div>
 
         {/* Suggestions (before typing) */}
@@ -115,19 +115,19 @@ export default function SearchOverlay({ onClose }: { onClose: () => void }) {
             {recent.length > 0 && (
               <div style={{ marginBottom: 20 }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
-                  <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 11, fontWeight: 700, color: "rgba(245,239,224,0.35)", letterSpacing: "1px" }}>
+                  <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 11, fontWeight: 700, color: "rgba(242,240,236,0.35)", letterSpacing: "1px" }}>
                     🕐 بحثتِ مؤخراً
                   </span>
                   <button
                     onClick={() => { clearRecent(); setRecent([]) }}
-                    style={{ background: "none", border: "none", cursor: "pointer", fontFamily: "Tajawal,sans-serif", fontSize: 11, color: "rgba(245,239,224,0.25)", padding: 0 }}>
+                    style={{ background: "none", border: "none", cursor: "pointer", fontFamily: "Tajawal,sans-serif", fontSize: 11, color: "rgba(242,240,236,0.25)", padding: 0 }}>
                     مسح
                   </button>
                 </div>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
                   {recent.map(s => (
                     <button key={s} className="so-chip" onClick={() => handleSelect(s)} style={{
-                      fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "rgba(245,239,224,0.6)",
+                      fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "rgba(242,240,236,0.6)",
                       background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)",
                       borderRadius: 20, padding: "5px 14px", cursor: "pointer",
                       display: "flex", alignItems: "center", gap: 6,
@@ -144,14 +144,14 @@ export default function SearchOverlay({ onClose }: { onClose: () => void }) {
 
             {/* Popular searches */}
             <div>
-              <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 11, fontWeight: 700, color: "rgba(245,239,224,0.35)", letterSpacing: "1px", marginBottom: 12 }}>
+              <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 11, fontWeight: 700, color: "rgba(242,240,236,0.35)", letterSpacing: "1px", marginBottom: 12 }}>
                 🔥 الأكثر بحثاً
               </div>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
                 {POPULAR.map(s => (
                   <button key={s} className="so-chip" onClick={() => handleSelect(s)} style={{
-                    fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "rgba(245,239,224,0.55)",
-                    background: "rgba(201,168,76,0.05)", border: "1px solid rgba(201,168,76,0.12)",
+                    fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "rgba(242,240,236,0.55)",
+                    background: "rgba(155,163,170,0.05)", border: "1px solid rgba(155,163,170,0.12)",
                     borderRadius: 20, padding: "5px 14px", cursor: "pointer",
                   }}>
                     {s}
@@ -168,16 +168,16 @@ export default function SearchOverlay({ onClose }: { onClose: () => void }) {
             {results.map(r => (
               <Link key={r.id} href={`/products/${r.slug}`} onClick={handleLinkClick}
                 style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 14, padding: "12px 20px", borderBottom: "1px solid rgba(255,255,255,0.04)", transition: "background 0.2s" }}
-                onMouseEnter={e => (e.currentTarget.style.background = "rgba(201,168,76,0.06)")}
+                onMouseEnter={e => (e.currentTarget.style.background = "rgba(155,163,170,0.06)")}
                 onMouseLeave={e => (e.currentTarget.style.background = "")}>
                 <div style={{ width: 48, height: 48, borderRadius: 8, overflow: "hidden", flexShrink: 0, background: "#1a1a1a" }}>
                   {r.image && <img src={r.image} alt={r.name_ar} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover" }} />}
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 14, fontWeight: 700, color: "#F5EFE0" }}>{r.name_ar}</div>
-                  {r.category_name && <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 11, color: "rgba(245,239,224,0.35)", marginTop: 2 }}>{r.category_name}</div>}
+                  <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 14, fontWeight: 700, color: "#F2F0EC" }}>{r.name_ar}</div>
+                  {r.category_name && <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 11, color: "rgba(242,240,236,0.35)", marginTop: 2 }}>{r.category_name}</div>}
                 </div>
-                <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 14, fontWeight: 700, color: "#C9A84C", flexShrink: 0 }}>
+                <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 14, fontWeight: 700, color: "#9BA3AA", flexShrink: 0 }}>
                   {r.price.toLocaleString("ar-EG")} ج.م
                 </div>
               </Link>
@@ -189,10 +189,10 @@ export default function SearchOverlay({ onClose }: { onClose: () => void }) {
         {!showSuggestions && !loading && results.length === 0 && (
           <div style={{ textAlign: "center", padding: "32px 20px" }}>
             <div style={{ fontSize: 32, opacity: 0.12, marginBottom: 12 }}>🔍</div>
-            <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 14, color: "rgba(245,239,224,0.3)", margin: "0 0 6px" }}>
+            <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 14, color: "rgba(242,240,236,0.3)", margin: "0 0 6px" }}>
               لا توجد نتائج لـ &quot;{q}&quot;
             </p>
-            <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 12, color: "rgba(245,239,224,0.2)", margin: 0 }}>
+            <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 12, color: "rgba(242,240,236,0.2)", margin: 0 }}>
               جربي كلمة أخرى أو تصفّحي المنتجات
             </p>
           </div>

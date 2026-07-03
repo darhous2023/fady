@@ -48,28 +48,28 @@ export default function FaqPage() {
     <>
       <StoreHeader />
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;900&family=Cinzel:wght@400&family=Playfair+Display:ital,wght@1,400&display=swap');
-        * { box-sizing: border-box; } body { margin: 0; background: #0A0806; }
-        .faq-item { border: 1px solid rgba(201,168,76,0.08); border-radius: 14px; padding: 22px 24px; background: linear-gradient(145deg,#0E0C09,#111009); transition: all 0.3s ease; }
-        .faq-item:hover { border-color: rgba(201,168,76,0.2); }
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;900&display=swap');
+        * { box-sizing: border-box; } body { margin: 0; background: #0A0A0A; }
+        .faq-item { border: 1px solid rgba(155,163,170,0.08); border-radius: 14px; padding: 22px 24px; background: linear-gradient(145deg,#131313,#141414); transition: all 0.3s ease; }
+        .faq-item:hover { border-color: rgba(155,163,170,0.2); }
       `}</style>
 
-      <main style={{ background: "#0A0806", minHeight: "100vh", paddingTop: 80, direction: "rtl" }}>
+      <main style={{ background: "#0A0A0A", minHeight: "100vh", paddingTop: 80, direction: "rtl" }}>
         <div style={{ maxWidth: 780, margin: "0 auto", padding: "56px 24px 100px" }}>
 
           {/* Header */}
           <div style={{ textAlign: "center", marginBottom: 56 }}>
-            <div style={{ fontFamily: "Cinzel,serif", fontSize: 9, letterSpacing: "6px", color: "#C9A84C", opacity: 0.7, marginBottom: 16 }}>✦ &nbsp; FAQ &nbsp; ✦</div>
+            <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 9, letterSpacing: "6px", color: "#9BA3AA", opacity: 0.7, marginBottom: 16 }}>✦ &nbsp; FAQ &nbsp; ✦</div>
             <h1 style={{
               fontFamily: "Tajawal,sans-serif", fontSize: "clamp(28px,5vw,42px)", fontWeight: 900,
-              color: "#F5EFE0", margin: "0 0 12px",
+              color: "#F2F0EC", margin: "0 0 12px",
             }}>
               الأسئلة الشائعة
             </h1>
-            <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 14, color: "rgba(245,239,224,0.35)", margin: 0 }}>
+            <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 14, color: "rgba(242,240,236,0.35)", margin: 0 }}>
               إجابات سريعة على أكثر الأسئلة شيوعاً
             </p>
-            <div style={{ height: 1.5, width: 100, margin: "24px auto 0", background: "linear-gradient(90deg,transparent,#C9A84C,transparent)" }} />
+            <div style={{ height: 1.5, width: 100, margin: "24px auto 0", background: "linear-gradient(90deg,transparent,#9BA3AA,transparent)" }} />
           </div>
 
           {/* FAQs */}
@@ -79,9 +79,9 @@ export default function FaqPage() {
                 <div style={{ display: "flex", gap: 14, alignItems: "flex-start" }}>
                   <div style={{
                     flexShrink: 0, width: 28, height: 28, borderRadius: 8,
-                    background: "rgba(201,168,76,0.1)", border: "1px solid rgba(201,168,76,0.2)",
+                    background: "rgba(155,163,170,0.1)", border: "1px solid rgba(155,163,170,0.2)",
                     display: "flex", alignItems: "center", justifyContent: "center",
-                    fontFamily: "Cinzel,serif", fontSize: 11, color: "#C9A84C", fontWeight: 700,
+                    fontFamily: "Tajawal,sans-serif", fontSize: 11, color: "#9BA3AA", fontWeight: 700,
                     marginTop: 1,
                   }}>
                     {i + 1}
@@ -89,13 +89,13 @@ export default function FaqPage() {
                   <div>
                     <h3 style={{
                       fontFamily: "Tajawal,sans-serif", fontWeight: 700, fontSize: 15,
-                      color: "#F5EFE0", margin: "0 0 10px", lineHeight: 1.5,
+                      color: "#F2F0EC", margin: "0 0 10px", lineHeight: 1.5,
                     }}>
                       {faq.q}
                     </h3>
                     <p style={{
                       fontFamily: "Tajawal,sans-serif", fontSize: 13, lineHeight: 1.8,
-                      color: "rgba(245,239,224,0.5)", margin: 0,
+                      color: "rgba(242,240,236,0.5)", margin: 0,
                     }}>
                       {faq.a}
                     </p>
@@ -108,14 +108,14 @@ export default function FaqPage() {
           {/* CTA */}
           <div style={{
             textAlign: "center", marginTop: 56,
-            background: "linear-gradient(145deg,#0E0C09,#111009)",
-            border: "1px solid rgba(201,168,76,0.12)", borderRadius: 16, padding: "32px 24px",
+            background: "linear-gradient(145deg,#131313,#141414)",
+            border: "1px solid rgba(155,163,170,0.12)", borderRadius: 16, padding: "32px 24px",
           }}>
-            <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 15, color: "rgba(245,239,224,0.6)", margin: "0 0 20px" }}>
+            <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 15, color: "rgba(242,240,236,0.6)", margin: "0 0 20px" }}>
               لم تجدي إجابة لسؤالك؟
             </p>
             <a
-              href={`https://wa.me/201015835455?text=${encodeURIComponent("السلام عليكم، عندي سؤال بخصوص...")}`}
+              href={`https://wa.me/201555557745?text=${encodeURIComponent("السلام عليكم، عندي سؤال بخصوص...")}`}
               target="_blank" rel="noopener noreferrer"
               style={{
                 display: "inline-flex", alignItems: "center", gap: 8,

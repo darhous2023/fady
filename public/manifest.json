@@ -1,11 +1,11 @@
 {
-  "name": "ShahY Store",
-  "short_name": "ShahY",
-  "description": "أرقى الإكسسوارات النسائية المستوردة — شنط، محافظ، وشوزات فاخرة",
+  "name": "ELFADY — معرض سيارات",
+  "short_name": "ELFADY",
+  "description": "معرض الفادي لتجارة السيارات — سيارات جديدة ومستعملة بثقة وشفافية",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0A0806",
-  "theme_color": "#C9A84C",
+  "background_color": "#0A0A0A",
+  "theme_color": "#9BA3AA",
   "orientation": "portrait-primary",
   "lang": "ar",
   "dir": "rtl",
@@ -24,17 +24,17 @@
     }
   ],
   "screenshots": [],
-  "categories": ["shopping", "lifestyle"],
+  "categories": ["autos", "shopping"],
   "shortcuts": [
     {
-      "name": "العروض",
-      "url": "/sale",
-      "description": "تصفّح آخر العروض والتخفيضات"
+      "name": "سيارات جديدة",
+      "url": "/new",
+      "description": "تصفّح السيارات الجديدة"
     },
     {
-      "name": "تتبّع طلبك",
-      "url": "/track",
-      "description": "تتبّع حالة طلبك الحالي"
+      "name": "سيارات مستعملة",
+      "url": "/used",
+      "description": "تصفّح السيارات المستعملة المتاحة"
     }
   ]
 }

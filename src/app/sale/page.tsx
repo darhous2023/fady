@@ -53,7 +53,7 @@ async function getSaleProducts() {
 }
 
 const QUALITY_LABELS: Record<string, string> = { hi_copy: "بريميوم", mirror: "ميرور كواليتي", original: "أصلي" }
-const QUALITY_COLORS: Record<string, string> = { hi_copy: "#888", mirror: "#7B1C2E", original: "#C9A84C" }
+const QUALITY_COLORS: Record<string, string> = { hi_copy: "#888", mirror: "#A5342C", original: "#9BA3AA" }
 
 export default async function SalePage() {
   const items = await getSaleProducts()
@@ -62,32 +62,32 @@ export default async function SalePage() {
     <>
       <StoreHeader />
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;800;900&family=Cinzel:wght@400&display=swap');
-        * { box-sizing: border-box; } body { margin: 0; background: #0A0806; }
-        .sale-card { background: linear-gradient(145deg,#0E0C09,#111009); border: 1px solid rgba(201,168,76,0.1); border-radius: 16px; overflow: hidden; text-decoration: none; display: block; transition: all 0.3s ease; }
-        .sale-card:hover { transform: translateY(-4px); border-color: rgba(201,168,76,0.3); box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;800;900&display=swap');
+        * { box-sizing: border-box; } body { margin: 0; background: #0A0A0A; }
+        .sale-card { background: linear-gradient(145deg,#131313,#141414); border: 1px solid rgba(155,163,170,0.1); border-radius: 16px; overflow: hidden; text-decoration: none; display: block; transition: all 0.3s ease; }
+        .sale-card:hover { transform: translateY(-4px); border-color: rgba(155,163,170,0.3); box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
         .sale-card:hover .card-img { transform: scale(1.04); }
         .card-img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; transition: transform 0.4s ease; background: #111; }
         .card-img-placeholder { width: 100%; aspect-ratio: 1; background: linear-gradient(135deg,#111,#1a1a1a); display: flex; align-items: center; justify-content: center; font-size: 40px; opacity: 0.2; }
         @keyframes badgePulse { 0%,100%{opacity:1}50%{opacity:0.7} }
       `}</style>
 
-      <main style={{ background: "#0A0806", minHeight: "100vh", paddingTop: 80, direction: "rtl" }}>
+      <main style={{ background: "#0A0A0A", minHeight: "100vh", paddingTop: 80, direction: "rtl" }}>
         {/* Hero */}
         <section style={{
-          background: "radial-gradient(ellipse 80% 50% at 50% 0%, #1a0808 0%, #0A0806 60%)",
+          background: "radial-gradient(ellipse 80% 50% at 50% 0%, #1a0808 0%, #0A0A0A 60%)",
           padding: "60px 40px 48px", textAlign: "center",
         }}>
-          <div style={{ fontFamily: "Cinzel,serif", fontSize: 9, letterSpacing: "7px", color: "#C9A84C", opacity: 0.7, marginBottom: 16, textTransform: "uppercase" }}>
+          <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 9, letterSpacing: "7px", color: "#9BA3AA", opacity: 0.7, marginBottom: 16, textTransform: "uppercase" }}>
             ✦ &nbsp; SALE &nbsp; ✦
           </div>
           <h1 style={{
             fontFamily: "Tajawal,sans-serif", fontSize: "clamp(32px,6vw,56px)", fontWeight: 900,
-            color: "#F5EFE0", margin: "0 0 12px",
+            color: "#F2F0EC", margin: "0 0 12px",
           }}>
             العروض والتخفيضات
           </h1>
-          <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 15, color: "#F5EFE0", opacity: 0.4 }}>
+          <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 15, color: "#F2F0EC", opacity: 0.4 }}>
             {items.length > 0 ? `${items.length} منتج بخصومات حصرية` : "لا توجد عروض حالياً"}
           </p>
         </section>
@@ -96,10 +96,10 @@ export default async function SalePage() {
           {items.length === 0 ? (
             <div style={{ textAlign: "center", padding: "80px 20px" }}>
               <div style={{ fontSize: 56, marginBottom: 20, opacity: 0.2 }}>🏷️</div>
-              <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 18, color: "#F5EFE0", opacity: 0.3 }}>
+              <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 18, color: "#F2F0EC", opacity: 0.3 }}>
                 لا توجد عروض في الوقت الحالي
               </p>
-              <Link href="/" style={{ fontFamily: "Tajawal,sans-serif", fontWeight: 700, fontSize: 14, padding: "12px 28px", borderRadius: 8, textDecoration: "none", background: "linear-gradient(135deg,#C9A84C,#F0D882)", color: "#0A0806", display: "inline-block", marginTop: 24 }}>
+              <Link href="/" style={{ fontFamily: "Tajawal,sans-serif", fontWeight: 700, fontSize: 14, padding: "12px 28px", borderRadius: 8, textDecoration: "none", background: "linear-gradient(135deg,#9BA3AA,#C9CFD4)", color: "#0A0A0A", display: "inline-block", marginTop: 24 }}>
                 تصفّح المتجر
               </Link>
             </div>
@@ -116,7 +116,7 @@ export default async function SalePage() {
                     )}
                     <div style={{
                       position: "absolute", top: 12, right: 12,
-                      background: "#7B1C2E", color: "#F5EFE0",
+                      background: "#A5342C", color: "#F2F0EC",
                       fontFamily: "Tajawal,sans-serif", fontWeight: 900, fontSize: 14,
                       padding: "5px 12px", borderRadius: 20,
                       animation: "badgePulse 2s ease-in-out infinite",
@@ -125,7 +125,7 @@ export default async function SalePage() {
                     </div>
                     <div style={{
                       position: "absolute", top: 12, left: 12,
-                      background: `rgba(${item.quality_tier === "original" ? "201,168,76" : item.quality_tier === "mirror" ? "123,28,46" : "100,100,100"},0.15)`,
+                      background: `rgba(${item.quality_tier === "original" ? "155,163,170" : item.quality_tier === "mirror" ? "165,52,44" : "100,100,100"},0.15)`,
                       border: `1px solid ${QUALITY_COLORS[item.quality_tier]}44`,
                       color: QUALITY_COLORS[item.quality_tier],
                       fontFamily: "Tajawal,sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "1px",
@@ -136,21 +136,21 @@ export default async function SalePage() {
                   </div>
 
                   <div style={{ padding: "16px 14px" }}>
-                    <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 14, fontWeight: 700, color: "#F5EFE0", margin: "0 0 6px", lineHeight: 1.4 }}>
+                    <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 14, fontWeight: 700, color: "#F2F0EC", margin: "0 0 6px", lineHeight: 1.4 }}>
                       {item.name_ar}
                     </p>
                     {item.category_name && (
-                      <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 11, color: "rgba(245,239,224,0.35)", margin: "0 0 12px" }}>{item.category_name}</p>
+                      <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 11, color: "rgba(242,240,236,0.35)", margin: "0 0 12px" }}>{item.category_name}</p>
                     )}
                     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                       <span style={{
                         fontFamily: "Tajawal,sans-serif", fontSize: 18, fontWeight: 900,
-                        background: "linear-gradient(135deg,#C9A84C,#F0D882)",
+                        background: "linear-gradient(135deg,#9BA3AA,#C9CFD4)",
                         WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
                       }}>
                         {item.price.toLocaleString("ar-EG")} ج.م
                       </span>
-                      <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "rgba(245,239,224,0.3)", textDecoration: "line-through" }}>
+                      <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "rgba(242,240,236,0.3)", textDecoration: "line-through" }}>
                         {item.compare_at_price.toLocaleString("ar-EG")}
                       </span>
                     </div>

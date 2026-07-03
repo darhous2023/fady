@@ -24,16 +24,16 @@ const TRUST_ITEMS = [
 export default function TrustSection() {
   return (
     <section style={{
-      background: "linear-gradient(180deg, #0A0806 0%, #0f0d0a 50%, #0A0806 100%)",
-      borderTop: "1px solid rgba(201,168,76,0.06)",
-      borderBottom: "1px solid rgba(201,168,76,0.06)",
+      background: "linear-gradient(180deg, #0A0A0A 0%, #121212 50%, #0A0A0A 100%)",
+      borderTop: "1px solid rgba(155,163,170,0.06)",
+      borderBottom: "1px solid rgba(155,163,170,0.06)",
       padding: "48px 40px",
       direction: "rtl",
     }}>
       <style>{`
         @keyframes trustFadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
         .trust-card { transition: all 0.3s ease; }
-        .trust-card:hover { transform: translateY(-3px); border-color: rgba(201,168,76,0.2) !important; }
+        .trust-card:hover { transform: translateY(-3px); border-color: rgba(155,163,170,0.2) !important; }
         @media (max-width: 640px) {
           .trust-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 12px !important; }
         }
@@ -54,7 +54,7 @@ export default function TrustSection() {
               className="trust-card"
               style={{
                 background: "rgba(255,255,255,0.02)",
-                border: "1px solid rgba(201,168,76,0.08)",
+                border: "1px solid rgba(155,163,170,0.08)",
                 borderRadius: 14,
                 padding: "22px 18px",
                 textAlign: "center",
@@ -64,13 +64,13 @@ export default function TrustSection() {
               <div style={{ fontSize: 28, marginBottom: 10 }}>{item.icon}</div>
               <div style={{
                 fontFamily: "Tajawal, sans-serif", fontWeight: 700, fontSize: 14,
-                color: "#F5EFE0", marginBottom: 6,
+                color: "#F2F0EC", marginBottom: 6,
               }}>
                 {item.title}
               </div>
               <div style={{
                 fontFamily: "Tajawal, sans-serif", fontSize: 12,
-                color: "rgba(245,239,224,0.38)", lineHeight: 1.5,
+                color: "rgba(242,240,236,0.38)", lineHeight: 1.5,
               }}>
                 {item.desc}
               </div>

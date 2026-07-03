@@ -5,7 +5,7 @@ import Link from "next/link"
 import { toast } from "sonner"
 import { useCart } from "@/contexts/CartContext"
 
-const WA = "201015835455"
+const WA = "201555557745"
 
 const QUALITY_LABELS: Record<string, string> = {
   hi_copy:  "بريميوم",
@@ -14,8 +14,8 @@ const QUALITY_LABELS: Record<string, string> = {
 }
 const QUALITY_COLORS: Record<string, string> = {
   hi_copy:  "#4a4a4a",
-  mirror:   "#7B1C2E",
-  original: "#C9A84C",
+  mirror:   "#A5342C",
+  original: "#9BA3AA",
 }
 
 export interface StoreProduct {
@@ -50,7 +50,7 @@ function useReveal() {
 }
 
 // ── Single product card ──────────────────────────────────────────────────────
-const WL_KEY = "shahy-wishlist"
+const WL_KEY = "elfady-wishlist"
 function useWishlist(productId: string) {
   const [inWl, setInWl] = useState(false)
   useEffect(() => {
@@ -68,7 +68,7 @@ function useWishlist(productId: string) {
       const next = exists ? wl.filter(i => i.id !== product.id) : [...wl, product]
       localStorage.setItem(WL_KEY, JSON.stringify(next))
       setInWl(!exists)
-      window.dispatchEvent(new Event("shahy-wl-change"))
+      window.dispatchEvent(new Event("elfady-wl-change"))
     } catch {}
   }, [])
 
@@ -135,8 +135,8 @@ function ProductCard({ product, index }: { product: StoreProduct; index: number 
       <div
         onMouseMove={onMove} onMouseEnter={onEnter} onMouseLeave={onLeave}
         style={{
-          background: "linear-gradient(145deg,#111009 0%,#0D0B08 100%)",
-          border: `1px solid ${hovered ? "#C9A84C55" : "#1e1c18"}`,
+          background: "linear-gradient(145deg,#141414 0%,#101010 100%)",
+          border: `1px solid ${hovered ? "#9BA3AA55" : "#1E1E1E"}`,
           borderRadius: 16, overflow: "hidden", position: "relative",
           opacity: visible ? 1 : 0, transform: entryTransform,
           transition: `
@@ -145,7 +145,7 @@ function ProductCard({ product, index }: { product: StoreProduct; index: number 
             border-color 0.3s ease, box-shadow 0.3s ease
           `,
           boxShadow: hovered
-            ? "0 24px 64px rgba(201,168,76,0.18),0 8px 28px rgba(0,0,0,0.7),inset 0 1px 0 rgba(201,168,76,0.1)"
+            ? "0 24px 64px rgba(155,163,170,0.18),0 8px 28px rgba(0,0,0,0.7),inset 0 1px 0 rgba(155,163,170,0.1)"
             : "0 4px 24px rgba(0,0,0,0.5)",
           willChange: "transform, box-shadow", cursor: "pointer",
         }}
@@ -153,14 +153,14 @@ function ProductCard({ product, index }: { product: StoreProduct; index: number 
         {/* Gold light follow */}
         <div style={{
           position: "absolute", inset: 0, zIndex: 3, pointerEvents: "none",
-          background: `radial-gradient(ellipse 180px 160px at ${tilt.gx}% ${tilt.gy}%,rgba(201,168,76,0.12) 0%,transparent 70%)`,
+          background: `radial-gradient(ellipse 180px 160px at ${tilt.gx}% ${tilt.gy}%,rgba(155,163,170,0.12) 0%,transparent 70%)`,
           opacity: hovered ? 1 : 0, transition: "opacity 0.3s",
         }} />
 
         {/* Shimmer sweep */}
         <div style={{
           position: "absolute", inset: 0, zIndex: 4, pointerEvents: "none",
-          background: "linear-gradient(105deg,transparent 30%,rgba(240,216,130,0.18) 50%,transparent 70%)",
+          background: "linear-gradient(105deg,transparent 30%,rgba(201,207,212,0.18) 50%,transparent 70%)",
           transform: `translateX(${shimmer ? "120%" : "-120%"})`,
           transition: shimmer ? "transform 0.55s cubic-bezier(0.4,0,0.2,1)" : "none",
         }} />
@@ -180,14 +180,14 @@ function ProductCard({ product, index }: { product: StoreProduct; index: number 
           ) : (
             <div style={{
               position: "absolute", inset: 0,
-              background: "linear-gradient(135deg,#1a1510 0%,#2a2015 100%)",
+              background: "linear-gradient(135deg,#1A1A1A 0%,#242424 100%)",
               display: "flex", alignItems: "center", justifyContent: "center",
               fontSize: 52, opacity: 0.3,
             }}>👜</div>
           )}
           <div style={{
             position: "absolute", inset: 0, zIndex: 1,
-            background: "linear-gradient(to bottom,transparent 55%,rgba(10,8,6,0.55) 100%)",
+            background: "linear-gradient(to bottom,transparent 55%,rgba(10,10,10,0.55) 100%)",
           }} />
           <div style={{
             position: "absolute", top: 12, right: 12, zIndex: 2,
@@ -205,8 +205,8 @@ function ProductCard({ product, index }: { product: StoreProduct; index: number 
             style={{
               position: "absolute", top: 10, left: 10, zIndex: 5,
               width: 32, height: 32, borderRadius: "50%",
-              background: "rgba(10,8,6,0.8)", backdropFilter: "blur(6px)",
-              border: inWl ? "1px solid rgba(220,60,80,0.5)" : "1px solid rgba(201,168,76,0.2)",
+              background: "rgba(10,10,10,0.8)", backdropFilter: "blur(6px)",
+              border: inWl ? "1px solid rgba(178,58,54,0.5)" : "1px solid rgba(155,163,170,0.2)",
               display: "flex", alignItems: "center", justifyContent: "center",
               cursor: "pointer", transition: "all 0.25s ease",
               transform: hovered ? "scale(1)" : "scale(0.9)",
@@ -214,8 +214,8 @@ function ProductCard({ product, index }: { product: StoreProduct; index: number 
             }}
           >
             <svg width="14" height="14" viewBox="0 0 24 24"
-              fill={inWl ? "#dc3c50" : "none"}
-              stroke={inWl ? "#dc3c50" : "rgba(245,239,224,0.7)"}
+              fill={inWl ? "#C2453C" : "none"}
+              stroke={inWl ? "#C2453C" : "rgba(242,240,236,0.7)"}
               strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
             </svg>
@@ -224,15 +224,15 @@ function ProductCard({ product, index }: { product: StoreProduct; index: number 
           {product.is_featured && (
             <div style={{
               position: "absolute", top: 48, left: 10, zIndex: 2,
-              background: "rgba(10,8,6,0.85)", backdropFilter: "blur(4px)",
-              color: "#C9A84C", fontSize: 12, padding: "2px 7px", borderRadius: 20,
-              border: "1px solid rgba(201,168,76,0.3)",
+              background: "rgba(10,10,10,0.85)", backdropFilter: "blur(4px)",
+              color: "#9BA3AA", fontSize: 12, padding: "2px 7px", borderRadius: 20,
+              border: "1px solid rgba(155,163,170,0.3)",
             }}>⭐</div>
           )}
           {product.compare_at_price && product.compare_at_price > product.price && (
             <div style={{
               position: "absolute", bottom: 12, right: 12, zIndex: 2,
-              background: "#7B1C2E", color: "#fff",
+              background: "#A5342C", color: "#fff",
               fontSize: 10, fontFamily: "Tajawal,sans-serif", fontWeight: 700,
               padding: "3px 8px", borderRadius: 20,
             }}>
@@ -242,9 +242,9 @@ function ProductCard({ product, index }: { product: StoreProduct; index: number 
           {product.total_stock != null && product.total_stock > 0 && product.total_stock <= 5 && (
             <div style={{
               position: "absolute", bottom: 12, left: 12, zIndex: 2,
-              background: "rgba(10,8,6,0.88)", backdropFilter: "blur(4px)",
-              border: "1px solid rgba(240,100,80,0.5)",
-              color: "#F06450", fontSize: 10, fontFamily: "Tajawal,sans-serif", fontWeight: 700,
+              background: "rgba(10,10,10,0.88)", backdropFilter: "blur(4px)",
+              border: "1px solid rgba(194,69,60,0.5)",
+              color: "#C2453C", fontSize: 10, fontFamily: "Tajawal,sans-serif", fontWeight: 700,
               padding: "3px 9px", borderRadius: 20,
             }}>
               آخر {product.total_stock} قطع!
@@ -254,14 +254,14 @@ function ProductCard({ product, index }: { product: StoreProduct; index: number 
 
         {/* Card content */}
         <div style={{ padding: "18px 18px 14px", direction: "rtl", display: "flex", flexDirection: "column", gap: 6 }}>
-          <div style={{ fontSize: 10, color: "#C9A84C", fontFamily: "Tajawal,sans-serif", letterSpacing: "2px", opacity: 0.85, textTransform: "uppercase" }}>
+          <div style={{ fontSize: 10, color: "#9BA3AA", fontFamily: "Tajawal,sans-serif", letterSpacing: "2px", opacity: 0.85, textTransform: "uppercase" }}>
             {product.category_name}
           </div>
-          <div style={{ fontSize: 15, fontWeight: 700, color: "#F5EFE0", fontFamily: "Tajawal,sans-serif", lineHeight: 1.4 }}>
+          <div style={{ fontSize: 15, fontWeight: 700, color: "#F2F0EC", fontFamily: "Tajawal,sans-serif", lineHeight: 1.4 }}>
             {product.name_ar}
           </div>
           <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginTop: 2 }}>
-            <span style={{ fontSize: 22, fontWeight: 900, color: "#C9A84C", fontFamily: "Tajawal,sans-serif" }}>
+            <span style={{ fontSize: 22, fontWeight: 900, color: "#9BA3AA", fontFamily: "Tajawal,sans-serif" }}>
               {product.price.toLocaleString("ar-EG")} ج.م
             </span>
             {product.compare_at_price && (
@@ -270,7 +270,7 @@ function ProductCard({ product, index }: { product: StoreProduct; index: number 
               </span>
             )}
           </div>
-          <div style={{ height: 1, margin: "8px 0", background: "linear-gradient(90deg,#C9A84C44,transparent)" }} />
+          <div style={{ height: 1, margin: "8px 0", background: "linear-gradient(90deg,#9BA3AA44,transparent)" }} />
 
           {/* Dual CTAs */}
           <div style={{ display: "flex", gap: 8 }} onClick={e => e.preventDefault()}>
@@ -282,9 +282,9 @@ function ProductCard({ product, index }: { product: StoreProduct; index: number 
                 flex: 1,
                 display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
                 background: adding
-                  ? "linear-gradient(135deg,#C9A84C,#F0D882)"
-                  : "linear-gradient(135deg,#7B1C2E,#9B2C3E)",
-                color: adding ? "#0A0806" : "#F5EFE0",
+                  ? "linear-gradient(135deg,#9BA3AA,#C9CFD4)"
+                  : "linear-gradient(135deg,#A5342C,#963D34)",
+                color: adding ? "#0A0A0A" : "#F2F0EC",
                 fontFamily: "Tajawal,sans-serif", fontWeight: 700, fontSize: 13,
                 padding: "10px 12px", borderRadius: 8, border: "none", cursor: "pointer",
                 transition: "all 0.3s cubic-bezier(0.2,0,0.2,1)",
@@ -343,15 +343,15 @@ function SectionHeader() {
   return (
     <div ref={ref} style={{ textAlign: "center", marginBottom: 56 }}>
       <div style={{
-        fontFamily: "Cinzel,serif", fontSize: 10, letterSpacing: "6px",
-        color: "#C9A84C", textTransform: "uppercase",
+        fontFamily: "Tajawal,sans-serif", fontSize: 10, letterSpacing: "6px",
+        color: "#9BA3AA", textTransform: "uppercase",
         opacity: visible ? 0.7 : 0, transform: visible ? "translateY(0)" : "translateY(12px)",
         transition: "all 0.7s ease", marginBottom: 16,
       }}>✦ &nbsp; luxury collection &nbsp; ✦</div>
 
       <div style={{
-        fontFamily: "Playfair Display,serif", fontSize: "clamp(32px,4vw,46px)", fontWeight: 700,
-        background: "linear-gradient(135deg,#A07030,#C9A84C,#F0D882,#C9A84C,#A07030)",
+        fontFamily: "Tajawal,sans-serif", fontSize: "clamp(32px,4vw,46px)", fontWeight: 700,
+        background: "linear-gradient(135deg,#6E747A,#9BA3AA,#C9CFD4,#9BA3AA,#6E747A)",
         backgroundSize: "300% auto", WebkitBackgroundClip: "text",
         WebkitTextFillColor: "transparent", backgroundClip: "text",
         opacity: visible ? 1 : 0,
@@ -364,8 +364,8 @@ function SectionHeader() {
       </div>
 
       <div style={{
-        fontFamily: "Cormorant Garamond,serif", fontStyle: "italic",
-        fontSize: 15, color: "#F5EFE0",
+        fontFamily: "Tajawal,sans-serif", fontStyle: "italic",
+        fontSize: 15, color: "#F2F0EC",
         opacity: visible ? 0.5 : 0, transform: visible ? "translateY(0)" : "translateY(12px)",
         transition: "all 0.7s ease 0.25s", marginBottom: 20, letterSpacing: "1px",
       }}>
@@ -374,7 +374,7 @@ function SectionHeader() {
 
       <div style={{
         height: 1.5,
-        background: "linear-gradient(90deg,transparent,#C9A84C 20%,#F0D882 50%,#C9A84C 80%,transparent)",
+        background: "linear-gradient(90deg,transparent,#9BA3AA 20%,#C9CFD4 50%,#9BA3AA 80%,transparent)",
         margin: "0 auto",
         width: visible ? 200 : 0, transition: "width 0.9s cubic-bezier(0.2,0,0.2,1) 0.35s",
       }} />
@@ -414,12 +414,12 @@ export default function ProductGrid({ initialProducts }: { initialProducts: Stor
   })
 
   return (
-    <section style={{ background: "#0A0806", padding: "96px 40px 80px", direction: "rtl" }}>
+    <section style={{ background: "#0A0A0A", padding: "96px 40px 80px", direction: "rtl" }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;900&family=Playfair+Display:ital,wght@0,700;1,400&family=Cinzel:wght@400&family=Cormorant+Garamond:ital,wght@1,300;1,400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;900&display=swap');
         @keyframes pgShimmer { from{background-position:200% center} to{background-position:-200% center} }
         .pg-cat-pill { cursor:pointer; transition:all 0.3s ease; background:transparent; border:none; }
-        .pg-cat-pill:hover { background:rgba(201,168,76,0.12)!important; color:#C9A84C!important; border-color:#C9A84C!important; }
+        .pg-cat-pill:hover { background:rgba(155,163,170,0.12)!important; color:#9BA3AA!important; border-color:#9BA3AA!important; }
       `}</style>
 
       <SectionHeader />
@@ -435,9 +435,9 @@ export default function ProductGrid({ initialProducts }: { initialProducts: Stor
                 style={{
                   fontFamily: "Tajawal,sans-serif", fontSize: 13, fontWeight: 700,
                   padding: "7px 20px", borderRadius: 30, cursor: "pointer",
-                  border: `1px solid ${activeCategory === cat ? "#C9A84C" : "#252018"}`,
-                  background: activeCategory === cat ? "#C9A84C" : "transparent",
-                  color: activeCategory === cat ? "#0A0806" : "#555",
+                  border: `1px solid ${activeCategory === cat ? "#9BA3AA" : "#232323"}`,
+                  background: activeCategory === cat ? "#9BA3AA" : "transparent",
+                  color: activeCategory === cat ? "#0A0A0A" : "#555",
                 }}>
                 {cat}
               </button>
@@ -454,9 +454,9 @@ export default function ProductGrid({ initialProducts }: { initialProducts: Stor
               style={{
                 fontFamily: "Tajawal,sans-serif", fontSize: 12, fontWeight: 700,
                 padding: "5px 14px", borderRadius: 20, cursor: "pointer",
-                border: `1px solid ${activeQuality === q.key ? "#7B1C2E" : "#1e1a14"}`,
-                background: activeQuality === q.key ? "#7B1C2E" : "transparent",
-                color: activeQuality === q.key ? "#F5EFE0" : "#444",
+                border: `1px solid ${activeQuality === q.key ? "#A5342C" : "#1E1E1E"}`,
+                background: activeQuality === q.key ? "#A5342C" : "transparent",
+                color: activeQuality === q.key ? "#F2F0EC" : "#444",
               }}>
               {q.label}
             </button>
@@ -472,9 +472,9 @@ export default function ProductGrid({ initialProducts }: { initialProducts: Stor
               style={{
                 fontFamily: "Tajawal,sans-serif", fontSize: 12, fontWeight: 700,
                 padding: "5px 14px", borderRadius: 20, cursor: "pointer",
-                border: `1px solid ${activePriceKey === r.key ? "rgba(201,168,76,0.5)" : "#1e1a14"}`,
-                background: activePriceKey === r.key ? "rgba(201,168,76,0.12)" : "transparent",
-                color: activePriceKey === r.key ? "#C9A84C" : "#444",
+                border: `1px solid ${activePriceKey === r.key ? "rgba(155,163,170,0.5)" : "#1E1E1E"}`,
+                background: activePriceKey === r.key ? "rgba(155,163,170,0.12)" : "transparent",
+                color: activePriceKey === r.key ? "#9BA3AA" : "#444",
               }}>
               {r.label}
             </button>
@@ -484,11 +484,11 @@ export default function ProductGrid({ initialProducts }: { initialProducts: Stor
         {/* Active filter count */}
         {(activeCategory !== "الكل" || activeQuality !== "الكل" || activePriceKey !== "الكل") && (
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 12, color: "rgba(245,239,224,0.35)" }}>
+            <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 12, color: "rgba(242,240,236,0.35)" }}>
               {filtered.length} منتج
             </span>
             <button onClick={() => { setActiveCategory("الكل"); setActiveQuality("الكل"); setActivePriceKey("الكل") }}
-              style={{ fontFamily: "Tajawal,sans-serif", fontSize: 11, color: "#C9A84C", background: "rgba(201,168,76,0.08)", border: "1px solid rgba(201,168,76,0.2)", padding: "3px 10px", borderRadius: 12, cursor: "pointer" }}>
+              style={{ fontFamily: "Tajawal,sans-serif", fontSize: 11, color: "#9BA3AA", background: "rgba(155,163,170,0.08)", border: "1px solid rgba(155,163,170,0.2)", padding: "3px 10px", borderRadius: 12, cursor: "pointer" }}>
               مسح الفلاتر ✕
             </button>
           </div>
@@ -507,9 +507,9 @@ export default function ProductGrid({ initialProducts }: { initialProducts: Stor
       </div>
 
       {/* Footer credit */}
-      <div style={{ textAlign: "center", marginTop: 80, paddingTop: 40, borderTop: "1px solid #151210" }}>
-        <div style={{ fontFamily: "Cinzel,serif", fontSize: 8, letterSpacing: "4px", color: "#2a2520", textTransform: "uppercase" }}>
-          ShahY Store · by Shahenda Souliman · designed by Ahmed Darhous
+      <div style={{ textAlign: "center", marginTop: 80, paddingTop: 40, borderTop: "1px solid #171717" }}>
+        <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 8, letterSpacing: "4px", color: "#262626", textTransform: "uppercase" }}>
+          ELFADY · معرض سيارات
         </div>
       </div>
     </section>

@@ -36,14 +36,14 @@ function CountdownBox({ value, label }: { value: number; label: string }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
       <div style={{
-        background: "rgba(10,8,6,0.8)", border: "1px solid rgba(240,100,80,0.35)",
+        background: "rgba(10,10,10,0.8)", border: "1px solid rgba(194,69,60,0.35)",
         borderRadius: 10, padding: "10px 14px", minWidth: 52, textAlign: "center",
-        fontFamily: "Tajawal, sans-serif", fontSize: 28, fontWeight: 900, color: "#F5EFE0",
+        fontFamily: "Tajawal, sans-serif", fontSize: 28, fontWeight: 900, color: "#F2F0EC",
         lineHeight: 1, fontVariantNumeric: "tabular-nums",
       }}>
         {pad(value)}
       </div>
-      <span style={{ fontFamily: "Tajawal, sans-serif", fontSize: 10, color: "rgba(245,239,224,0.45)", letterSpacing: "1px" }}>
+      <span style={{ fontFamily: "Tajawal, sans-serif", fontSize: 10, color: "rgba(242,240,236,0.45)", letterSpacing: "1px" }}>
         {label}
       </span>
     </div>
@@ -67,19 +67,19 @@ export default function FlashDeals({ deals, title, endsAt }: FlashDealsProps) {
 
   return (
     <section style={{
-      background: "linear-gradient(135deg, #1a0505 0%, #0f0202 40%, #0A0806 100%)",
-      borderTop: "1px solid rgba(240,100,80,0.15)",
-      borderBottom: "1px solid rgba(240,100,80,0.1)",
+      background: "linear-gradient(135deg, #161616 0%, #101010 40%, #0A0A0A 100%)",
+      borderTop: "1px solid rgba(194,69,60,0.15)",
+      borderBottom: "1px solid rgba(194,69,60,0.1)",
       padding: "56px 40px 64px",
       direction: "rtl",
       position: "relative",
       overflow: "hidden",
     }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;900&family=Cinzel:wght@400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;900&display=swap');
         @keyframes flashPulse {
-          0%,100% { opacity:1; text-shadow: 0 0 20px rgba(240,100,80,0.6); }
-          50%      { opacity:0.75; text-shadow: 0 0 40px rgba(240,100,80,0.9); }
+          0%,100% { opacity:1; text-shadow: 0 0 20px rgba(194,69,60,0.6); }
+          50%      { opacity:0.75; text-shadow: 0 0 40px rgba(194,69,60,0.9); }
         }
         @keyframes flashBgMove {
           0%   { transform: translate(-10%, -10%) rotate(0deg); }
@@ -96,14 +96,14 @@ export default function FlashDeals({ deals, title, endsAt }: FlashDealsProps) {
       <div style={{
         position: "absolute", top: "-40%", right: "-10%",
         width: 500, height: 500, borderRadius: "50%",
-        background: "radial-gradient(circle, rgba(180,40,40,0.12) 0%, transparent 70%)",
+        background: "radial-gradient(circle, rgba(150,55,48,0.12) 0%, transparent 70%)",
         pointerEvents: "none",
         animation: "flashBgMove 20s linear infinite",
       }} />
       <div style={{
         position: "absolute", bottom: "-30%", left: "5%",
         width: 400, height: 400, borderRadius: "50%",
-        background: "radial-gradient(circle, rgba(200,60,30,0.08) 0%, transparent 70%)",
+        background: "radial-gradient(circle, rgba(165,60,45,0.08) 0%, transparent 70%)",
         pointerEvents: "none",
       }} />
 
@@ -111,14 +111,14 @@ export default function FlashDeals({ deals, title, endsAt }: FlashDealsProps) {
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: 40, animation: "flashSlide 0.6s ease both" }}>
           <div style={{
-            fontFamily: "Cinzel, serif", fontSize: 10, letterSpacing: "6px",
-            color: "rgba(240,100,80,0.8)", textTransform: "uppercase", marginBottom: 12,
+            fontFamily: "Tajawal, sans-serif", fontSize: 10, letterSpacing: "6px",
+            color: "rgba(194,69,60,0.8)", textTransform: "uppercase", marginBottom: 12,
           }}>
             ✦ &nbsp; LIMITED TIME &nbsp; ✦
           </div>
           <h2 style={{
             fontFamily: "Tajawal, sans-serif", fontSize: "clamp(28px,5vw,48px)", fontWeight: 900,
-            color: "#F5EFE0", margin: "0 0 8px",
+            color: "#F2F0EC", margin: "0 0 8px",
             animation: "flashPulse 2.5s ease-in-out infinite",
           }}>
             ⚡ {title} ⚡
@@ -128,7 +128,7 @@ export default function FlashDeals({ deals, title, endsAt }: FlashDealsProps) {
           {time && !time.expired && (
             <div style={{ marginTop: 24, display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
               <span style={{
-                fontFamily: "Tajawal, sans-serif", fontSize: 12, color: "rgba(240,100,80,0.7)",
+                fontFamily: "Tajawal, sans-serif", fontSize: 12, color: "rgba(194,69,60,0.7)",
                 letterSpacing: "2px", textTransform: "uppercase",
               }}>
                 تنتهي خلال
@@ -139,13 +139,13 @@ export default function FlashDeals({ deals, title, endsAt }: FlashDealsProps) {
                   <>
                     <CountdownBox value={time.h} label="ساعة" />
                     {time.d > 0 && (
-                      <div style={{ fontFamily: "Tajawal, sans-serif", fontSize: 22, fontWeight: 900, color: "rgba(240,100,80,0.5)", paddingTop: 10 }}>:</div>
+                      <div style={{ fontFamily: "Tajawal, sans-serif", fontSize: 22, fontWeight: 900, color: "rgba(194,69,60,0.5)", paddingTop: 10 }}>:</div>
                     )}
                   </>
                 )}
-                <div style={{ fontFamily: "Tajawal, sans-serif", fontSize: 22, fontWeight: 900, color: "rgba(240,100,80,0.5)", paddingTop: 10 }}>:</div>
+                <div style={{ fontFamily: "Tajawal, sans-serif", fontSize: 22, fontWeight: 900, color: "rgba(194,69,60,0.5)", paddingTop: 10 }}>:</div>
                 <CountdownBox value={time.m} label="دقيقة" />
-                <div style={{ fontFamily: "Tajawal, sans-serif", fontSize: 22, fontWeight: 900, color: "rgba(240,100,80,0.5)", paddingTop: 10 }}>:</div>
+                <div style={{ fontFamily: "Tajawal, sans-serif", fontSize: 22, fontWeight: 900, color: "rgba(194,69,60,0.5)", paddingTop: 10 }}>:</div>
                 <CountdownBox value={time.s} label="ثانية" />
               </div>
             </div>
@@ -154,7 +154,7 @@ export default function FlashDeals({ deals, title, endsAt }: FlashDealsProps) {
           {/* Gold divider */}
           <div style={{
             height: 1.5, width: 160, margin: "24px auto 0",
-            background: "linear-gradient(90deg, transparent, rgba(240,100,80,0.5), rgba(201,168,76,0.6), rgba(240,100,80,0.5), transparent)",
+            background: "linear-gradient(90deg, transparent, rgba(194,69,60,0.5), rgba(155,163,170,0.6), rgba(194,69,60,0.5), transparent)",
           }} />
         </div>
 
@@ -167,8 +167,8 @@ export default function FlashDeals({ deals, title, endsAt }: FlashDealsProps) {
             <Link key={deal.id} href={`/products/${deal.slug}`} className="fd-card"
               style={{ flex: "1 1 220px", maxWidth: 260 }}>
               <div style={{
-                background: "linear-gradient(145deg, #120808, #0f0606)",
-                border: "1px solid rgba(240,100,80,0.15)",
+                background: "linear-gradient(145deg, #151515, #101010)",
+                border: "1px solid rgba(194,69,60,0.15)",
                 borderRadius: 16, overflow: "hidden",
                 boxShadow: "0 4px 24px rgba(0,0,0,0.5)",
                 animationDelay: `${i * 0.07}s`,
@@ -179,25 +179,25 @@ export default function FlashDeals({ deals, title, endsAt }: FlashDealsProps) {
                     // eslint-disable-next-line @next/next/no-img-element
                     <img src={deal.image} alt={deal.name_ar} className="fd-img" loading="lazy" />
                   ) : (
-                    <div style={{ width: "100%", aspectRatio: "1", background: "#1a0a0a", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 48, opacity: 0.2 }}>🛍️</div>
+                    <div style={{ width: "100%", aspectRatio: "1", background: "#161616", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 48, opacity: 0.2 }}>🛍️</div>
                   )}
                   {/* Discount badge */}
                   <div style={{
                     position: "absolute", top: 12, right: 12,
-                    background: "linear-gradient(135deg, #C0392B, #E74C3C)",
+                    background: "linear-gradient(135deg, #A5342C, #C2453C)",
                     color: "#fff", fontFamily: "Tajawal, sans-serif", fontWeight: 900, fontSize: 15,
                     padding: "4px 12px", borderRadius: 20,
-                    boxShadow: "0 4px 16px rgba(192,57,43,0.5)",
+                    boxShadow: "0 4px 16px rgba(165,52,44,0.5)",
                   }}>
                     خصم {deal.discount}٪
                   </div>
                   {/* ⚡ Flash badge */}
                   <div style={{
                     position: "absolute", top: 12, left: 12,
-                    background: "rgba(10,8,6,0.85)", backdropFilter: "blur(4px)",
-                    border: "1px solid rgba(240,100,80,0.3)",
+                    background: "rgba(10,10,10,0.85)", backdropFilter: "blur(4px)",
+                    border: "1px solid rgba(194,69,60,0.3)",
                     fontFamily: "Tajawal, sans-serif", fontSize: 12,
-                    padding: "3px 8px", borderRadius: 8, color: "rgba(240,100,80,0.9)",
+                    padding: "3px 8px", borderRadius: 8, color: "rgba(194,69,60,0.9)",
                   }}>⚡ فلاش</div>
                   {/* Dark overlay */}
                   <div style={{
@@ -210,7 +210,7 @@ export default function FlashDeals({ deals, title, endsAt }: FlashDealsProps) {
                 <div style={{ padding: "14px 14px 16px" }}>
                   <p style={{
                     fontFamily: "Tajawal, sans-serif", fontSize: 14, fontWeight: 700,
-                    color: "#F5EFE0", margin: "0 0 10px", lineHeight: 1.4,
+                    color: "#F2F0EC", margin: "0 0 10px", lineHeight: 1.4,
                     display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden",
                   }}>
                     {deal.name_ar}
@@ -218,14 +218,14 @@ export default function FlashDeals({ deals, title, endsAt }: FlashDealsProps) {
                   <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
                     <span style={{
                       fontFamily: "Tajawal, sans-serif", fontSize: 20, fontWeight: 900,
-                      background: "linear-gradient(135deg,#C9A84C,#F0D882)",
+                      background: "linear-gradient(135deg,#9BA3AA,#C9CFD4)",
                       WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
                     }}>
                       {deal.price.toLocaleString("ar-EG")} ج.م
                     </span>
                     <span style={{
                       fontFamily: "Tajawal, sans-serif", fontSize: 13,
-                      color: "rgba(245,239,224,0.3)", textDecoration: "line-through",
+                      color: "rgba(242,240,236,0.3)", textDecoration: "line-through",
                     }}>
                       {deal.compare_at_price.toLocaleString("ar-EG")}
                     </span>
@@ -240,18 +240,18 @@ export default function FlashDeals({ deals, title, endsAt }: FlashDealsProps) {
         <div style={{ textAlign: "center", marginTop: 36 }}>
           <Link href="/sale" style={{
             fontFamily: "Tajawal, sans-serif", fontWeight: 700, fontSize: 14,
-            color: "rgba(240,100,80,0.8)", textDecoration: "none",
-            border: "1px solid rgba(240,100,80,0.25)", padding: "10px 28px",
+            color: "rgba(194,69,60,0.8)", textDecoration: "none",
+            border: "1px solid rgba(194,69,60,0.25)", padding: "10px 28px",
             borderRadius: 8, display: "inline-block", transition: "all 0.25s",
           }}
           onMouseEnter={e => {
-            e.currentTarget.style.color = "rgba(240,100,80,1)"
-            e.currentTarget.style.borderColor = "rgba(240,100,80,0.5)"
-            e.currentTarget.style.background = "rgba(240,100,80,0.08)"
+            e.currentTarget.style.color = "rgba(194,69,60,1)"
+            e.currentTarget.style.borderColor = "rgba(194,69,60,0.5)"
+            e.currentTarget.style.background = "rgba(194,69,60,0.08)"
           }}
           onMouseLeave={e => {
-            e.currentTarget.style.color = "rgba(240,100,80,0.8)"
-            e.currentTarget.style.borderColor = "rgba(240,100,80,0.25)"
+            e.currentTarget.style.color = "rgba(194,69,60,0.8)"
+            e.currentTarget.style.borderColor = "rgba(194,69,60,0.25)"
             e.currentTarget.style.background = "transparent"
           }}>
             عرض كل التخفيضات ←

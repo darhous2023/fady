@@ -7,12 +7,12 @@ import { useCart } from "@/contexts/CartContext"
 import { saveRecentlyViewed } from "./RecentlyViewed"
 import RecentlyViewed from "./RecentlyViewed"
 
-const WL_KEY = "shahy-wishlist"
+const WL_KEY = "elfady-wishlist"
 
-const WA = "201015835455"
+const WA = "201555557745"
 
 const QUALITY_LABELS: Record<string, string> = { hi_copy: "بريميوم", mirror: "ميرور كواليتي", original: "أصلي" }
-const QUALITY_COLORS: Record<string, string> = { hi_copy: "#4a4a4a", mirror: "#7B1C2E", original: "#C9A84C" }
+const QUALITY_COLORS: Record<string, string> = { hi_copy: "#4a4a4a", mirror: "#A5342C", original: "#9BA3AA" }
 const QUALITY_DESC: Record<string, string> = {
   hi_copy:  "جودة عالية، تشطيب ممتاز، مواد مطابقة للأصل",
   mirror:   "طبق الأصل، لا يمكن تمييزه عن الأورجنال",
@@ -88,7 +88,7 @@ export default function ProductDetail({ product, images, related = [], variants 
       }
       localStorage.setItem(WL_KEY, JSON.stringify(next))
       setWishlisted(!wishlisted)
-      window.dispatchEvent(new Event("shahy-wl-change"))
+      window.dispatchEvent(new Event("elfady-wl-change"))
     } catch {}
   }
 
@@ -125,7 +125,7 @@ export default function ProductDetail({ product, images, related = [], variants 
 
   const handleShare = () => {
     const url = window.location.href
-    const text = `شوف المنتج ده من ShahY Store 🛍️\n${product.name_ar} — ${product.price.toLocaleString("ar-EG")} ج.م\n${url}`
+    const text = `شوف السيارة دي في ELFADY 🚗\n${product.name_ar} — ${product.price.toLocaleString("ar-EG")} ج.م\n${url}`
     if (navigator.share) {
       navigator.share({ title: product.name_ar, text, url }).catch(() => {})
     } else {
@@ -148,17 +148,17 @@ export default function ProductDetail({ product, images, related = [], variants 
   const waHref = `https://wa.me/${WA}?text=${waText}`
 
   return (
-    <div style={{ background: "#0A0806", minHeight: "100vh", paddingTop: 80, direction: "rtl" }}>
+    <div style={{ background: "#0A0A0A", minHeight: "100vh", paddingTop: 80, direction: "rtl" }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;900&family=Playfair+Display:ital,wght@0,700;1,400&family=Cinzel:wght@400&family=Cormorant+Garamond:ital,wght@1,300&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;900&display=swap');
         @keyframes pdShimmer { from{background-position:200% center} to{background-position:-200% center} }
         .pd-thumb { cursor:pointer; border-radius:8px; overflow:hidden; transition:all 0.25s ease; }
-        .pd-thumb:hover { border-color:rgba(201,168,76,0.6)!important; }
-        .pd-cart-btn:hover { background:linear-gradient(135deg,#B89440,#D4B060)!important; transform:translateY(-1px); box-shadow:0 12px 40px rgba(201,168,76,0.35)!important; }
+        .pd-thumb:hover { border-color:rgba(155,163,170,0.6)!important; }
+        .pd-cart-btn:hover { background:linear-gradient(135deg,#838B92,#AEB6BC)!important; transform:translateY(-1px); box-shadow:0 12px 40px rgba(155,163,170,0.35)!important; }
         .pd-wa-btn:hover { background:rgba(37,160,85,0.25)!important; border-color:rgba(37,160,85,0.6)!important; transform:translateY(-1px); }
-        .pd-share-btn:hover { background:rgba(201,168,76,0.12)!important; border-color:rgba(201,168,76,0.4)!important; }
+        .pd-share-btn:hover { background:rgba(155,163,170,0.12)!important; border-color:rgba(155,163,170,0.4)!important; }
         .pd-rel-card { transition:all 0.3s ease; }
-        .pd-rel-card:hover { border-color:rgba(201,168,76,0.3)!important; transform:translateY(-3px); box-shadow:0 12px 40px rgba(0,0,0,0.5)!important; }
+        .pd-rel-card:hover { border-color:rgba(155,163,170,0.3)!important; transform:translateY(-3px); box-shadow:0 12px 40px rgba(0,0,0,0.5)!important; }
         .pd-rel-img { transition:transform 0.5s ease; }
         .pd-rel-card:hover .pd-rel-img { transform:scale(1.06); }
       `}</style>
@@ -166,11 +166,11 @@ export default function ProductDetail({ product, images, related = [], variants 
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "40px 40px 80px" }}>
         {/* Breadcrumb */}
         <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 36 }}>
-          <Link href="/" style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "#F5EFE0", opacity: 0.4, textDecoration: "none" }}>الرئيسية</Link>
-          <span style={{ color: "#C9A84C", opacity: 0.4, fontSize: 10 }}>›</span>
-          <Link href="/#products" style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "#F5EFE0", opacity: 0.4, textDecoration: "none" }}>{product.category_name ?? "المنتجات"}</Link>
-          <span style={{ color: "#C9A84C", opacity: 0.4, fontSize: 10 }}>›</span>
-          <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "#C9A84C", opacity: 0.8 }}>{product.name_ar}</span>
+          <Link href="/" style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "#F2F0EC", opacity: 0.4, textDecoration: "none" }}>الرئيسية</Link>
+          <span style={{ color: "#9BA3AA", opacity: 0.4, fontSize: 10 }}>›</span>
+          <Link href="/#products" style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "#F2F0EC", opacity: 0.4, textDecoration: "none" }}>{product.category_name ?? "المنتجات"}</Link>
+          <span style={{ color: "#9BA3AA", opacity: 0.4, fontSize: 10 }}>›</span>
+          <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "#9BA3AA", opacity: 0.8 }}>{product.name_ar}</span>
         </div>
 
         {/* Main layout */}
@@ -184,19 +184,19 @@ export default function ProductDetail({ product, images, related = [], variants 
                 borderRadius: 20, overflow: "hidden", position: "relative", paddingBottom: "100%",
                 transform: `perspective(900px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) scale(${hovered ? 1.02 : 1})`,
                 transition: hovered ? "transform 0.1s ease" : "transform 0.6s cubic-bezier(0.2,0,0.2,1)",
-                boxShadow: hovered ? "0 32px 80px rgba(201,168,76,0.2),0 12px 40px rgba(0,0,0,0.8)" : "0 8px 40px rgba(0,0,0,0.6)",
-                border: `1px solid ${hovered ? "rgba(201,168,76,0.3)" : "rgba(201,168,76,0.08)"}`,
-                willChange: "transform", cursor: "pointer", background: "#111009",
+                boxShadow: hovered ? "0 32px 80px rgba(155,163,170,0.2),0 12px 40px rgba(0,0,0,0.8)" : "0 8px 40px rgba(0,0,0,0.6)",
+                border: `1px solid ${hovered ? "rgba(155,163,170,0.3)" : "rgba(155,163,170,0.08)"}`,
+                willChange: "transform", cursor: "pointer", background: "#141414",
               }}
             >
               <div style={{
                 position: "absolute", inset: 0, zIndex: 3, pointerEvents: "none",
-                background: `radial-gradient(ellipse 240px 200px at ${tilt.gx}% ${tilt.gy}%,rgba(201,168,76,0.1) 0%,transparent 70%)`,
+                background: `radial-gradient(ellipse 240px 200px at ${tilt.gx}% ${tilt.gy}%,rgba(155,163,170,0.1) 0%,transparent 70%)`,
                 opacity: hovered ? 1 : 0, transition: "opacity 0.3s",
               }} />
               <div style={{
                 position: "absolute", inset: 0, zIndex: 4, pointerEvents: "none",
-                background: "linear-gradient(105deg,transparent 25%,rgba(240,216,130,0.15) 50%,transparent 75%)",
+                background: "linear-gradient(105deg,transparent 25%,rgba(201,207,212,0.15) 50%,transparent 75%)",
                 transform: `translateX(${shimmer ? "130%" : "-130%"})`,
                 transition: shimmer ? "transform 0.6s cubic-bezier(0.4,0,0.2,1)" : "none",
               }} />
@@ -210,7 +210,7 @@ export default function ProductDetail({ product, images, related = [], variants 
                     transition: "transform 0.65s cubic-bezier(0.2,0,0.2,1)",
                   }} />
               ) : (
-                <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg,#1a1510,#2a2015)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 80, opacity: 0.2 }}>👜</div>
+                <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg,#1A1A1A,#242424)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 80, opacity: 0.2 }}>👜</div>
               )}
               <div style={{ position: "absolute", top: 16, right: 16, zIndex: 5, background: qColor, color: "#fff", fontFamily: "Tajawal,sans-serif", fontSize: 11, fontWeight: 700, padding: "4px 14px", borderRadius: 20 }}>
                 {QUALITY_LABELS[product.quality_tier] ?? product.quality_tier}
@@ -219,11 +219,11 @@ export default function ProductDetail({ product, images, related = [], variants 
               {images.length > 1 && (
                 <>
                   <button onClick={() => setActiveIdx(i => (i - 1 + images.length) % images.length)}
-                    style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", zIndex: 6, background: "rgba(10,8,6,0.6)", border: "1px solid rgba(201,168,76,0.3)", borderRadius: "50%", width: 36, height: 36, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "#C9A84C", fontSize: 16 }}>‹</button>
+                    style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", zIndex: 6, background: "rgba(10,10,10,0.6)", border: "1px solid rgba(155,163,170,0.3)", borderRadius: "50%", width: 36, height: 36, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "#9BA3AA", fontSize: 16 }}>‹</button>
                   <button onClick={() => setActiveIdx(i => (i + 1) % images.length)}
-                    style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", zIndex: 6, background: "rgba(10,8,6,0.6)", border: "1px solid rgba(201,168,76,0.3)", borderRadius: "50%", width: 36, height: 36, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "#C9A84C", fontSize: 16 }}>›</button>
+                    style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", zIndex: 6, background: "rgba(10,10,10,0.6)", border: "1px solid rgba(155,163,170,0.3)", borderRadius: "50%", width: 36, height: 36, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "#9BA3AA", fontSize: 16 }}>›</button>
                   <div style={{ position: "absolute", bottom: 12, left: "50%", transform: "translateX(-50%)", zIndex: 6, display: "flex", gap: 5 }}>
-                    {images.map((_, i) => <div key={i} style={{ width: i === activeIdx ? 18 : 6, height: 6, borderRadius: 3, background: i === activeIdx ? "#C9A84C" : "rgba(245,239,224,0.3)", transition: "all 0.3s" }} />)}
+                    {images.map((_, i) => <div key={i} style={{ width: i === activeIdx ? 18 : 6, height: 6, borderRadius: 3, background: i === activeIdx ? "#9BA3AA" : "rgba(242,240,236,0.3)", transition: "all 0.3s" }} />)}
                   </div>
                 </>
               )}
@@ -234,10 +234,10 @@ export default function ProductDetail({ product, images, related = [], variants 
                 {images.map((img, i) => (
                   <div key={img.id} className="pd-thumb"
                     onClick={() => setActiveIdx(i)}
-                    style={{ width: 72, height: 72, flexShrink: 0, position: "relative", border: `2px solid ${i === activeIdx ? "rgba(201,168,76,0.7)" : "rgba(201,168,76,0.15)"}` }}>
+                    style={{ width: 72, height: 72, flexShrink: 0, position: "relative", border: `2px solid ${i === activeIdx ? "rgba(155,163,170,0.7)" : "rgba(155,163,170,0.15)"}` }}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={img.url} alt={img.alt_ar ?? product.name_ar} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                    {i === activeIdx && <div style={{ position: "absolute", inset: 0, background: "rgba(201,168,76,0.12)" }} />}
+                    {i === activeIdx && <div style={{ position: "absolute", inset: 0, background: "rgba(155,163,170,0.12)" }} />}
                   </div>
                 ))}
               </div>
@@ -246,16 +246,16 @@ export default function ProductDetail({ product, images, related = [], variants 
 
           {/* ── Right: Product info ── */}
           <div style={{ flex: "1 1 360px", minWidth: 300, paddingTop: 8 }}>
-            <div style={{ fontFamily: "Cinzel,serif", fontSize: 10, letterSpacing: "4px", color: "#C9A84C", textTransform: "uppercase", opacity: 0.8, marginBottom: 12 }}>
+            <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 10, letterSpacing: "4px", color: "#9BA3AA", textTransform: "uppercase", opacity: 0.8, marginBottom: 12 }}>
               ✦ &nbsp; {product.category_name ?? ""}
             </div>
-            <h1 style={{ fontFamily: "Tajawal,sans-serif", fontSize: "clamp(26px,4vw,38px)", fontWeight: 800, color: "#F5EFE0", lineHeight: 1.3, margin: "0 0 20px" }}>
+            <h1 style={{ fontFamily: "Tajawal,sans-serif", fontSize: "clamp(26px,4vw,38px)", fontWeight: 800, color: "#F2F0EC", lineHeight: 1.3, margin: "0 0 20px" }}>
               {product.name_ar}
             </h1>
             <div style={{ display: "flex", alignItems: "baseline", gap: 12, marginBottom: 24 }}>
               <span style={{
-                fontFamily: "Tajawal,sans-serif", fontSize: 36, fontWeight: 900, color: "#C9A84C",
-                background: "linear-gradient(135deg,#C9A84C,#F0D882)",
+                fontFamily: "Tajawal,sans-serif", fontSize: 36, fontWeight: 900, color: "#9BA3AA",
+                background: "linear-gradient(135deg,#9BA3AA,#C9CFD4)",
                 WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
                 animation: "pdShimmer 6s linear infinite", backgroundSize: "300% auto",
               }}>{effectivePrice.toLocaleString("ar-EG")} ج.م</span>
@@ -265,29 +265,29 @@ export default function ProductDetail({ product, images, related = [], variants 
                 </span>
               )}
               {product.compare_at_price && (
-                <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 12, fontWeight: 700, color: "#fff", background: "#7B1C2E", padding: "3px 10px", borderRadius: 20 }}>
+                <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 12, fontWeight: 700, color: "#fff", background: "#A5342C", padding: "3px 10px", borderRadius: 20 }}>
                   خصم {Math.round((1 - product.price / product.compare_at_price) * 100)}%
                 </span>
               )}
             </div>
 
-            <div style={{ height: 1, background: "linear-gradient(90deg,#C9A84C44,transparent)", marginBottom: 24 }} />
+            <div style={{ height: 1, background: "linear-gradient(90deg,#9BA3AA44,transparent)", marginBottom: 24 }} />
 
             {product.description_ar && (
               <div style={{ marginBottom: 28 }}>
-                <h3 style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, fontWeight: 700, color: "#C9A84C", letterSpacing: "2px", textTransform: "uppercase", marginBottom: 12 }}>تفاصيل المنتج</h3>
-                <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 15, color: "#F5EFE0", opacity: 0.65, lineHeight: 2, whiteSpace: "pre-wrap" }}>
+                <h3 style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, fontWeight: 700, color: "#9BA3AA", letterSpacing: "2px", textTransform: "uppercase", marginBottom: 12 }}>تفاصيل المنتج</h3>
+                <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 15, color: "#F2F0EC", opacity: 0.65, lineHeight: 2, whiteSpace: "pre-wrap" }}>
                   {product.description_ar}
                 </p>
               </div>
             )}
 
-            <div style={{ background: "rgba(201,168,76,0.05)", border: "1px solid rgba(201,168,76,0.12)", borderRadius: 12, padding: "16px 20px", marginBottom: 28 }}>
+            <div style={{ background: "rgba(155,163,170,0.05)", border: "1px solid rgba(155,163,170,0.12)", borderRadius: 12, padding: "16px 20px", marginBottom: 28 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
                 <div style={{ width: 10, height: 10, borderRadius: "50%", background: qColor, flexShrink: 0 }} />
-                <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 14, fontWeight: 700, color: "#F5EFE0" }}>{QUALITY_LABELS[product.quality_tier] ?? product.quality_tier}</span>
+                <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 14, fontWeight: 700, color: "#F2F0EC" }}>{QUALITY_LABELS[product.quality_tier] ?? product.quality_tier}</span>
               </div>
-              <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "#F5EFE0", opacity: 0.5, margin: 0 }}>{QUALITY_DESC[product.quality_tier] ?? ""}</p>
+              <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "#F2F0EC", opacity: 0.5, margin: 0 }}>{QUALITY_DESC[product.quality_tier] ?? ""}</p>
             </div>
 
             {/* ── Variants selector ── */}
@@ -295,7 +295,7 @@ export default function ProductDetail({ product, images, related = [], variants 
               <div style={{ marginBottom: 24 }}>
                 {sizes.length > 0 && (
                   <div style={{ marginBottom: 16 }}>
-                    <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 12, color: "#C9A84C", letterSpacing: "2px", marginBottom: 10 }}>
+                    <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 12, color: "#9BA3AA", letterSpacing: "2px", marginBottom: 10 }}>
                       المقاس {selectedVariant?.size ? `— ${selectedVariant.size}` : ""}
                     </div>
                     <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
@@ -310,9 +310,9 @@ export default function ProductDetail({ product, images, related = [], variants 
                             style={{
                               fontFamily: "Tajawal,sans-serif", fontWeight: 700, fontSize: 14,
                               padding: "8px 18px", borderRadius: 8, cursor: outOfStock ? "not-allowed" : "pointer",
-                              border: `2px solid ${active ? "#C9A84C" : "rgba(201,168,76,0.2)"}`,
-                              background: active ? "rgba(201,168,76,0.12)" : "transparent",
-                              color: outOfStock ? "#333" : active ? "#C9A84C" : "#F5EFE0",
+                              border: `2px solid ${active ? "#9BA3AA" : "rgba(155,163,170,0.2)"}`,
+                              background: active ? "rgba(155,163,170,0.12)" : "transparent",
+                              color: outOfStock ? "#333" : active ? "#9BA3AA" : "#F2F0EC",
                               opacity: outOfStock ? 0.4 : 1,
                               transition: "all 0.2s ease",
                               textDecoration: outOfStock ? "line-through" : "none",
@@ -326,7 +326,7 @@ export default function ProductDetail({ product, images, related = [], variants 
                 )}
                 {colors.length > 0 && (
                   <div>
-                    <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 12, color: "#C9A84C", letterSpacing: "2px", marginBottom: 10 }}>
+                    <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 12, color: "#9BA3AA", letterSpacing: "2px", marginBottom: 10 }}>
                       اللون {selectedVariant?.color_ar ? `— ${selectedVariant.color_ar}` : ""}
                     </div>
                     <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
@@ -341,9 +341,9 @@ export default function ProductDetail({ product, images, related = [], variants 
                             style={{
                               fontFamily: "Tajawal,sans-serif", fontWeight: 700, fontSize: 13,
                               padding: "7px 16px", borderRadius: 8, cursor: outOfStock ? "not-allowed" : "pointer",
-                              border: `2px solid ${active ? "#C9A84C" : "rgba(201,168,76,0.2)"}`,
-                              background: active ? "rgba(201,168,76,0.12)" : "transparent",
-                              color: outOfStock ? "#333" : active ? "#C9A84C" : "#F5EFE0",
+                              border: `2px solid ${active ? "#9BA3AA" : "rgba(155,163,170,0.2)"}`,
+                              background: active ? "rgba(155,163,170,0.12)" : "transparent",
+                              color: outOfStock ? "#333" : active ? "#9BA3AA" : "#F2F0EC",
                               opacity: outOfStock ? 0.4 : 1, transition: "all 0.2s ease",
                             }}>
                             {c}
@@ -354,7 +354,7 @@ export default function ProductDetail({ product, images, related = [], variants 
                   </div>
                 )}
                 {selectedVariant && selectedVariant.stock > 0 && selectedVariant.stock <= 5 && (
-                  <div style={{ marginTop: 10, fontFamily: "Tajawal,sans-serif", fontSize: 12, color: "#F06450", fontWeight: 700 }}>
+                  <div style={{ marginTop: 10, fontFamily: "Tajawal,sans-serif", fontSize: 12, color: "#C2453C", fontWeight: 700 }}>
                     ⚠ آخر {selectedVariant.stock} قطع فقط!
                   </div>
                 )}
@@ -366,10 +366,10 @@ export default function ProductDetail({ product, images, related = [], variants 
               <button onClick={handleAddToCart} disabled={adding} className="pd-cart-btn"
                 style={{
                   flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 10,
-                  background: adding ? "linear-gradient(135deg,#C9A84C,#F0D882)" : "linear-gradient(135deg,#C9A84C,#D4B060)",
-                  color: "#0A0806", fontFamily: "Tajawal,sans-serif", fontWeight: 700, fontSize: 16,
+                  background: adding ? "linear-gradient(135deg,#9BA3AA,#C9CFD4)" : "linear-gradient(135deg,#9BA3AA,#AEB6BC)",
+                  color: "#0A0A0A", fontFamily: "Tajawal,sans-serif", fontWeight: 700, fontSize: 16,
                   padding: "15px 20px", borderRadius: 10, border: "none", cursor: "pointer",
-                  boxShadow: "0 8px 32px rgba(201,168,76,0.25)", transition: "all 0.3s cubic-bezier(0.2,0,0.2,1)",
+                  boxShadow: "0 8px 32px rgba(155,163,170,0.25)", transition: "all 0.3s cubic-bezier(0.2,0,0.2,1)",
                 }}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
@@ -397,13 +397,13 @@ export default function ProductDetail({ product, images, related = [], variants 
               <button onClick={toggleWishlist}
                 style={{
                   flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
-                  background: wishlisted ? "rgba(201,168,76,0.1)" : "transparent",
-                  border: `1px solid ${wishlisted ? "rgba(201,168,76,0.4)" : "rgba(201,168,76,0.15)"}`,
-                  color: wishlisted ? "#C9A84C" : "#F5EFE0", opacity: wishlisted ? 1 : 0.55,
+                  background: wishlisted ? "rgba(155,163,170,0.1)" : "transparent",
+                  border: `1px solid ${wishlisted ? "rgba(155,163,170,0.4)" : "rgba(155,163,170,0.15)"}`,
+                  color: wishlisted ? "#9BA3AA" : "#F2F0EC", opacity: wishlisted ? 1 : 0.55,
                   fontFamily: "Tajawal,sans-serif", fontSize: 13,
                   padding: "11px 20px", borderRadius: 10, cursor: "pointer", transition: "all 0.25s ease",
                 }}>
-                <svg width="15" height="15" viewBox="0 0 24 24" fill={wishlisted ? "#C9A84C" : "none"} stroke={wishlisted ? "#C9A84C" : "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill={wishlisted ? "#9BA3AA" : "none"} stroke={wishlisted ? "#9BA3AA" : "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
                 </svg>
                 {wishlisted ? "في قائمتكِ" : "أضف للأمنيات"}
@@ -412,8 +412,8 @@ export default function ProductDetail({ product, images, related = [], variants 
               <button onClick={handleShare} className="pd-share-btn"
                 style={{
                   flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
-                  background: "transparent", border: "1px solid rgba(201,168,76,0.15)",
-                  color: "#F5EFE0", fontFamily: "Tajawal,sans-serif", fontSize: 13, opacity: 0.55,
+                  background: "transparent", border: "1px solid rgba(155,163,170,0.15)",
+                  color: "#F2F0EC", fontFamily: "Tajawal,sans-serif", fontSize: 13, opacity: 0.55,
                   padding: "11px 20px", borderRadius: 10, cursor: "pointer", transition: "all 0.25s ease",
                 }}>
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -435,13 +435,13 @@ export default function ProductDetail({ product, images, related = [], variants 
                   display: "flex", alignItems: "center", gap: 12,
                   padding: "10px 14px",
                   background: "rgba(255,255,255,0.02)",
-                  border: "1px solid rgba(201,168,76,0.07)",
+                  border: "1px solid rgba(155,163,170,0.07)",
                   borderRadius: 10,
                 }}>
                   <span style={{ fontSize: 18, flexShrink: 0 }}>{icon}</span>
                   <div>
-                    <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 12, fontWeight: 700, color: "#F5EFE0" }}>{title}</div>
-                    <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 11, color: "rgba(245,239,224,0.38)" }}>{desc}</div>
+                    <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 12, fontWeight: 700, color: "#F2F0EC" }}>{title}</div>
+                    <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 11, color: "rgba(242,240,236,0.38)" }}>{desc}</div>
                   </div>
                 </div>
               ))}
@@ -453,18 +453,18 @@ export default function ProductDetail({ product, images, related = [], variants 
         {related.length > 0 && (
           <div style={{ marginTop: 80 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 32 }}>
-              <div style={{ height: 1, flex: 1, background: "linear-gradient(90deg,transparent,rgba(201,168,76,0.2))" }} />
-              <span style={{ fontFamily: "Cinzel,serif", fontSize: 10, letterSpacing: "5px", color: "#C9A84C", opacity: 0.7, textTransform: "uppercase", whiteSpace: "nowrap" }}>
+              <div style={{ height: 1, flex: 1, background: "linear-gradient(90deg,transparent,rgba(155,163,170,0.2))" }} />
+              <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 10, letterSpacing: "5px", color: "#9BA3AA", opacity: 0.7, textTransform: "uppercase", whiteSpace: "nowrap" }}>
                 ✦ منتجات مشابهة ✦
               </span>
-              <div style={{ height: 1, flex: 1, background: "linear-gradient(90deg,rgba(201,168,76,0.2),transparent)" }} />
+              <div style={{ height: 1, flex: 1, background: "linear-gradient(90deg,rgba(155,163,170,0.2),transparent)" }} />
             </div>
             <div style={{ display: "flex", gap: 20, flexWrap: "wrap" }}>
               {related.map(rel => (
                 <Link key={rel.id} href={`/products/${rel.slug}`} style={{ textDecoration: "none", flex: "1 1 200px", maxWidth: 240 }}>
                   <div className="pd-rel-card" style={{
-                    background: "linear-gradient(145deg,#0E0C09,#111009)",
-                    border: "1px solid rgba(201,168,76,0.1)",
+                    background: "linear-gradient(145deg,#131313,#141414)",
+                    border: "1px solid rgba(155,163,170,0.1)",
                     borderRadius: 14, overflow: "hidden",
                     boxShadow: "0 4px 20px rgba(0,0,0,0.4)",
                   }}>
@@ -479,8 +479,8 @@ export default function ProductDetail({ product, images, related = [], variants 
                       )}
                     </div>
                     <div style={{ padding: "14px 14px 16px", direction: "rtl" }}>
-                      <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 14, fontWeight: 700, color: "#F5EFE0", margin: "0 0 6px", lineHeight: 1.4 }}>{rel.name_ar}</p>
-                      <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 15, fontWeight: 900, color: "#C9A84C" }}>
+                      <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 14, fontWeight: 700, color: "#F2F0EC", margin: "0 0 6px", lineHeight: 1.4 }}>{rel.name_ar}</p>
+                      <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 15, fontWeight: 900, color: "#9BA3AA" }}>
                         {rel.price.toLocaleString("ar-EG")} ج.م
                       </span>
                     </div>

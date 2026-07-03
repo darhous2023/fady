@@ -9,14 +9,14 @@ export default function GuidePage() {
   return (
     <div className="guide-root">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;800;900&family=Cinzel:wght@400;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;800;900;600&display=swap');
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         .guide-root {
           font-family: 'Tajawal', sans-serif;
-          background: #0A0806;
-          color: #F5EFE0;
+          background: #0A0A0A;
+          color: #F2F0EC;
           direction: rtl;
           min-height: 100vh;
         }
@@ -27,8 +27,8 @@ export default function GuidePage() {
           bottom: 32px;
           left: 32px;
           z-index: 9999;
-          background: linear-gradient(135deg, #C9A84C, #F0D882);
-          color: #0A0806;
+          background: linear-gradient(135deg, #9BA3AA, #C9CFD4);
+          color: #0A0A0A;
           border: none;
           border-radius: 50px;
           padding: 14px 28px;
@@ -36,7 +36,7 @@ export default function GuidePage() {
           font-weight: 800;
           font-size: 15px;
           cursor: pointer;
-          box-shadow: 0 8px 32px rgba(201,168,76,0.4);
+          box-shadow: 0 8px 32px rgba(155,163,170,0.4);
           display: flex;
           align-items: center;
           gap: 10px;
@@ -45,7 +45,7 @@ export default function GuidePage() {
         }
         .pdf-fab:hover {
           transform: translateY(-3px);
-          box-shadow: 0 12px 40px rgba(201,168,76,0.55);
+          box-shadow: 0 12px 40px rgba(155,163,170,0.55);
         }
 
         /* ── SCREEN LAYOUT ── */
@@ -57,7 +57,7 @@ export default function GuidePage() {
           justify-content: center;
           text-align: center;
           padding: 80px 40px;
-          background: radial-gradient(ellipse 80% 60% at 50% 20%, #1C0A0A 0%, #0A0806 70%);
+          background: radial-gradient(ellipse 80% 60% at 50% 20%, #141414 0%, #0A0A0A 70%);
           position: relative;
           overflow: hidden;
         }
@@ -65,7 +65,7 @@ export default function GuidePage() {
           max-width: 860px;
           margin: 0 auto;
           padding: 64px 40px;
-          border-bottom: 1px solid rgba(201,168,76,0.08);
+          border-bottom: 1px solid rgba(155,163,170,0.08);
         }
         .g-section:last-child { border-bottom: none; }
 
@@ -79,20 +79,20 @@ export default function GuidePage() {
           width: 48px;
           height: 48px;
           border-radius: 12px;
-          background: rgba(201,168,76,0.1);
-          border: 1px solid rgba(201,168,76,0.25);
+          background: rgba(155,163,170,0.1);
+          border: 1px solid rgba(155,163,170,0.25);
           display: flex;
           align-items: center;
           justify-content: center;
-          font-family: 'Cinzel', serif;
+          font-family: Tajawal,sans-serif;
           font-size: 18px;
-          color: #C9A84C;
+          color: #9BA3AA;
           flex-shrink: 0;
         }
         .g-section-title h2 {
           font-size: 26px;
           font-weight: 800;
-          color: #F5EFE0;
+          color: #F2F0EC;
         }
         .g-section-title .g-emoji {
           font-size: 28px;
@@ -108,8 +108,8 @@ export default function GuidePage() {
           width: 28px;
           height: 28px;
           border-radius: 50%;
-          background: #C9A84C;
-          color: #0A0806;
+          background: #9BA3AA;
+          color: #0A0A0A;
           font-weight: 800;
           font-size: 13px;
           display: flex;
@@ -123,31 +123,31 @@ export default function GuidePage() {
         }
         .g-step-body strong {
           display: block;
-          color: #F5EFE0;
+          color: #F2F0EC;
           font-weight: 700;
           font-size: 15px;
           margin-bottom: 4px;
         }
         .g-step-body p {
-          color: rgba(245,239,224,0.55);
+          color: rgba(242,240,236,0.55);
           font-size: 14px;
           line-height: 1.7;
         }
         .g-step-body code {
-          background: rgba(201,168,76,0.1);
-          border: 1px solid rgba(201,168,76,0.2);
+          background: rgba(155,163,170,0.1);
+          border: 1px solid rgba(155,163,170,0.2);
           border-radius: 4px;
           padding: 1px 8px;
           font-family: monospace;
           font-size: 13px;
-          color: #C9A84C;
+          color: #9BA3AA;
           direction: ltr;
           display: inline-block;
         }
 
         .g-tip {
-          background: rgba(201,168,76,0.06);
-          border: 1px solid rgba(201,168,76,0.2);
+          background: rgba(155,163,170,0.06);
+          border: 1px solid rgba(155,163,170,0.2);
           border-radius: 10px;
           padding: 16px 20px;
           margin: 20px 0;
@@ -156,12 +156,12 @@ export default function GuidePage() {
           align-items: flex-start;
         }
         .g-tip-icon { font-size: 20px; flex-shrink: 0; }
-        .g-tip-body { font-size: 13px; color: rgba(245,239,224,0.65); line-height: 1.7; }
-        .g-tip-body strong { color: #C9A84C; display: block; margin-bottom: 2px; }
+        .g-tip-body { font-size: 13px; color: rgba(242,240,236,0.65); line-height: 1.7; }
+        .g-tip-body strong { color: #9BA3AA; display: block; margin-bottom: 2px; }
 
         .g-warn {
-          background: rgba(123,28,46,0.08);
-          border: 1px solid rgba(123,28,46,0.25);
+          background: rgba(165,52,44,0.08);
+          border: 1px solid rgba(165,52,44,0.25);
           border-radius: 10px;
           padding: 16px 20px;
           margin: 20px 0;
@@ -169,12 +169,12 @@ export default function GuidePage() {
           gap: 12px;
           align-items: flex-start;
         }
-        .g-warn-body { font-size: 13px; color: rgba(245,239,224,0.6); line-height: 1.7; }
+        .g-warn-body { font-size: 13px; color: rgba(242,240,236,0.6); line-height: 1.7; }
         .g-warn-body strong { color: #E05A70; display: block; margin-bottom: 2px; }
 
         .g-divider {
           height: 1px;
-          background: linear-gradient(90deg, transparent, rgba(201,168,76,0.15), transparent);
+          background: linear-gradient(90deg, transparent, rgba(155,163,170,0.15), transparent);
           margin: 28px 0;
         }
 
@@ -184,7 +184,7 @@ export default function GuidePage() {
         .g-subsection-title {
           font-size: 17px;
           font-weight: 700;
-          color: #C9A84C;
+          color: #9BA3AA;
           margin-bottom: 16px;
           display: flex;
           align-items: center;
@@ -195,7 +195,7 @@ export default function GuidePage() {
           display: inline-block;
           width: 3px;
           height: 18px;
-          background: #C9A84C;
+          background: #9BA3AA;
           border-radius: 2px;
         }
 
@@ -208,13 +208,13 @@ export default function GuidePage() {
         }
         .g-field-label {
           font-weight: 700;
-          color: #F5EFE0;
+          color: #F2F0EC;
           font-size: 14px;
           min-width: 160px;
           flex-shrink: 0;
         }
         .g-field-desc {
-          color: rgba(245,239,224,0.5);
+          color: rgba(242,240,236,0.5);
           font-size: 13px;
           line-height: 1.6;
         }
@@ -227,19 +227,19 @@ export default function GuidePage() {
           font-weight: 700;
           margin-right: 6px;
         }
-        .g-badge-gold { background: rgba(201,168,76,0.15); color: #C9A84C; border: 1px solid rgba(201,168,76,0.3); }
-        .g-badge-red  { background: rgba(123,28,46,0.15);  color: #E05A70; border: 1px solid rgba(123,28,46,0.3); }
+        .g-badge-gold { background: rgba(155,163,170,0.15); color: #9BA3AA; border: 1px solid rgba(155,163,170,0.3); }
+        .g-badge-red  { background: rgba(165,52,44,0.15);  color: #E05A70; border: 1px solid rgba(165,52,44,0.3); }
         .g-badge-green{ background: rgba(37,211,102,0.1);  color: #25D366; border: 1px solid rgba(37,211,102,0.25);}
 
         .g-url-box {
-          background: #0E0C09;
-          border: 1px solid rgba(201,168,76,0.2);
+          background: #131313;
+          border: 1px solid rgba(155,163,170,0.2);
           border-radius: 8px;
           padding: 12px 18px;
           margin: 12px 0;
           font-family: monospace;
           font-size: 14px;
-          color: #C9A84C;
+          color: #9BA3AA;
           direction: ltr;
           text-align: left;
           display: flex;
@@ -253,17 +253,17 @@ export default function GuidePage() {
           align-items: center;
           gap: 12px;
           padding: 10px 0;
-          border-bottom: 1px dashed rgba(201,168,76,0.1);
+          border-bottom: 1px dashed rgba(155,163,170,0.1);
           text-decoration: none;
-          color: rgba(245,239,224,0.6);
+          color: rgba(242,240,236,0.6);
           font-size: 15px;
           transition: color 0.2s;
         }
-        .g-toc-item:hover { color: #C9A84C; }
+        .g-toc-item:hover { color: #9BA3AA; }
         .g-toc-num {
-          font-family: 'Cinzel', serif;
+          font-family: Tajawal,sans-serif;
           font-size: 12px;
-          color: #C9A84C;
+          color: #9BA3AA;
           opacity: 0.6;
           min-width: 24px;
         }
@@ -294,13 +294,13 @@ export default function GuidePage() {
           .g-step-body p { color: #555 !important; }
           .g-step-body code {
             background: #f5f0e8 !important;
-            border-color: #C9A84C !important;
+            border-color: #9BA3AA !important;
             color: #8B6820 !important;
           }
           .g-section-title h2 { color: #1a1612 !important; }
           .g-tip {
             background: #fdf8ee !important;
-            border-color: #C9A84C !important;
+            border-color: #9BA3AA !important;
           }
           .g-tip-body { color: #555 !important; }
           .g-warn {
@@ -310,7 +310,7 @@ export default function GuidePage() {
           .g-warn-body { color: #555 !important; }
           .g-url-box {
             background: #f5f0e8 !important;
-            border-color: #C9A84C !important;
+            border-color: #9BA3AA !important;
           }
           .g-field-desc { color: #666 !important; }
           .g-subsection-title { color: #8B6820 !important; }
@@ -319,7 +319,7 @@ export default function GuidePage() {
           .g-toc-num { color: #8B6820 !important; }
           .g-num {
             background: #f5f0e8 !important;
-            border-color: #C9A84C !important;
+            border-color: #9BA3AA !important;
           }
           .g-divider { background: #e8e0d0 !important; }
           .g-badge-gold { background: #f5f0e8 !important; color: #8B6820 !important; }
@@ -340,8 +340,8 @@ export default function GuidePage() {
 
         /* ── SCREEN MOCKUP ── */
         .g-screen {
-          background: #0D0B08;
-          border: 1px solid rgba(201,168,76,0.15);
+          background: #101010;
+          border: 1px solid rgba(155,163,170,0.15);
           border-radius: 10px;
           overflow: hidden;
           margin: 20px 0;
@@ -358,14 +358,14 @@ export default function GuidePage() {
         .g-screen-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
         .g-screen-url {
           flex: 1; background: rgba(255,255,255,0.04); border-radius: 4px;
-          padding: 3px 10px; font-size: 11px; color: rgba(245,239,224,0.25);
+          padding: 3px 10px; font-size: 11px; color: rgba(242,240,236,0.25);
           font-family: monospace; direction: ltr;
         }
         .g-screen-body { padding: 20px; }
         .g-screen-label {
-          font-size: 11px; color: rgba(201,168,76,0.7); font-weight: 700;
+          font-size: 11px; color: rgba(155,163,170,0.7); font-weight: 700;
           letter-spacing: 1px; text-transform: uppercase;
-          border-right: 3px solid #C9A84C; padding-right: 10px;
+          border-right: 3px solid #9BA3AA; padding-right: 10px;
           margin-bottom: 12px; font-family: 'Tajawal', sans-serif;
           display: flex; align-items: center; gap: 6px;
         }
@@ -376,18 +376,18 @@ export default function GuidePage() {
           border: 1px solid rgba(255,255,255,0.06);
           border-radius: 6px; margin-bottom: 8px;
         }
-        .g-screen-field-label { font-size: 12px; color: rgba(245,239,224,0.4); min-width: 110px; flex-shrink: 0; }
-        .g-screen-field-value { font-size: 13px; color: #F5EFE0; }
-        .g-screen-field-placeholder { font-size: 13px; color: rgba(245,239,224,0.2); font-style: italic; }
+        .g-screen-field-label { font-size: 12px; color: rgba(242,240,236,0.4); min-width: 110px; flex-shrink: 0; }
+        .g-screen-field-value { font-size: 13px; color: #F2F0EC; }
+        .g-screen-field-placeholder { font-size: 13px; color: rgba(242,240,236,0.2); font-style: italic; }
         .g-screen-btn {
           display: inline-flex; align-items: center; gap: 8px;
           padding: 9px 22px; border-radius: 6px; font-size: 13px;
           font-weight: 700; font-family: 'Tajawal', sans-serif; cursor: default;
         }
-        .g-screen-btn-gold { background: linear-gradient(135deg,#C9A84C,#F0D882); color: #0A0806; }
-        .g-screen-btn-outline { background: transparent; border: 1px solid rgba(201,168,76,0.3); color: #C9A84C; }
+        .g-screen-btn-gold { background: linear-gradient(135deg,#9BA3AA,#C9CFD4); color: #0A0A0A; }
+        .g-screen-btn-outline { background: transparent; border: 1px solid rgba(155,163,170,0.3); color: #9BA3AA; }
         .g-screen-caption {
-          font-size: 11px; color: rgba(245,239,224,0.25); text-align: center;
+          font-size: 11px; color: rgba(242,240,236,0.25); text-align: center;
           margin-top: 6px; font-style: italic; font-family: 'Tajawal', sans-serif;
         }
         .g-screen-sidebar {
@@ -403,37 +403,37 @@ export default function GuidePage() {
           font-family: 'Tajawal', sans-serif; display: flex; align-items: center; gap: 8px;
         }
         .g-screen-nav-item.active {
-          background: rgba(201,168,76,0.1); color: #C9A84C;
-          border-right: 3px solid #C9A84C; padding-right: 9px;
+          background: rgba(155,163,170,0.1); color: #9BA3AA;
+          border-right: 3px solid #9BA3AA; padding-right: 9px;
         }
-        .g-screen-nav-item.inactive { color: rgba(245,239,224,0.35); }
+        .g-screen-nav-item.inactive { color: rgba(242,240,236,0.35); }
         .g-screen-content { flex: 1; padding: 16px; }
         .g-screen-table { width: 100%; border-collapse: collapse; font-size: 12px; }
         .g-screen-table th {
           text-align: right; padding: 8px 10px;
-          color: rgba(201,168,76,0.6); font-weight: 700;
+          color: rgba(155,163,170,0.6); font-weight: 700;
           border-bottom: 1px solid rgba(255,255,255,0.06);
           font-family: 'Tajawal', sans-serif;
         }
         .g-screen-table td {
-          padding: 9px 10px; color: rgba(245,239,224,0.65);
+          padding: 9px 10px; color: rgba(242,240,236,0.65);
           border-bottom: 1px solid rgba(255,255,255,0.03);
           font-family: 'Tajawal', sans-serif;
         }
         .g-screen-stock-green { color: #4ade80; font-weight: 700; }
         .g-screen-stock-yellow { color: #facc15; font-weight: 700; }
-        .g-screen-stock-red { color: #f87171; font-weight: 700; }
+        .g-screen-stock-red { color: #D9776A; font-weight: 700; }
         .g-screen-badge {
           display: inline-block; padding: 2px 8px; border-radius: 20px;
           font-size: 10px; font-weight: 700; font-family: 'Tajawal', sans-serif;
         }
         .g-screen-badge-active { background: rgba(37,211,102,0.1); color: #25D366; border: 1px solid rgba(37,211,102,0.2); }
-        .g-screen-badge-draft { background: rgba(255,255,255,0.05); color: rgba(245,239,224,0.4); border: 1px solid rgba(255,255,255,0.08); }
+        .g-screen-badge-draft { background: rgba(255,255,255,0.05); color: rgba(242,240,236,0.4); border: 1px solid rgba(255,255,255,0.08); }
         @media print {
           .g-screen { background: #f9f5ee !important; border-color: #e0d8c0 !important; }
           .g-screen-bar { background: #ede8de !important; }
-          .g-screen-nav-item.active { background: #f0e8d0 !important; color: #8B6020 !important; }
-          .g-screen-table th { color: #8B6020 !important; }
+          .g-screen-nav-item.active { background: #f0e8d0 !important; color: #5C6167 !important; }
+          .g-screen-table th { color: #5C6167 !important; }
           .g-screen-table td { color: #555 !important; }
         }
       `}</style>
@@ -450,10 +450,10 @@ export default function GuidePage() {
       <div className="g-cover">
         <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none" }}
           viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
-          <line x1="-50" y1="200" x2="800" y2="50" stroke="#7B1C2E" strokeWidth="0.6" opacity="0.12" />
-          <line x1="600" y1="900" x2="1500" y2="300" stroke="#7B1C2E" strokeWidth="0.6" opacity="0.1" />
-          <line x1="200" y1="-20" x2="1100" y2="600" stroke="#C9A84C" strokeWidth="0.4" opacity="0.08" />
-          <line x1="-80" y1="600" x2="900" y2="350" stroke="#C9A84C" strokeWidth="0.3" opacity="0.06" />
+          <line x1="-50" y1="200" x2="800" y2="50" stroke="#A5342C" strokeWidth="0.6" opacity="0.12" />
+          <line x1="600" y1="900" x2="1500" y2="300" stroke="#A5342C" strokeWidth="0.6" opacity="0.1" />
+          <line x1="200" y1="-20" x2="1100" y2="600" stroke="#9BA3AA" strokeWidth="0.4" opacity="0.08" />
+          <line x1="-80" y1="600" x2="900" y2="350" stroke="#9BA3AA" strokeWidth="0.3" opacity="0.06" />
         </svg>
 
         <div style={{ position: "relative", zIndex: 1 }}>
@@ -462,49 +462,49 @@ export default function GuidePage() {
             <svg width="96" height="52" viewBox="0 0 120 64" fill="none">
               <path d="M5 60L18 18L38 42L60 5L82 42L102 18L115 60Z"
                 stroke="url(#guideGold)" strokeWidth="2.5" fill="none" strokeLinejoin="round" strokeLinecap="round"/>
-              <circle cx="60" cy="5" r="4" fill="#F0D882"/>
-              <circle cx="38" cy="42" r="2.5" fill="#C9A84C" opacity="0.7"/>
-              <circle cx="82" cy="42" r="2.5" fill="#C9A84C" opacity="0.7"/>
+              <circle cx="60" cy="5" r="4" fill="#C9CFD4"/>
+              <circle cx="38" cy="42" r="2.5" fill="#9BA3AA" opacity="0.7"/>
+              <circle cx="82" cy="42" r="2.5" fill="#9BA3AA" opacity="0.7"/>
               <line x1="5" y1="60" x2="115" y2="60" stroke="url(#guideGold)" strokeWidth="1.5"/>
               <defs>
                 <linearGradient id="guideGold" x1="0" y1="0" x2="120" y2="0">
-                  <stop offset="0%" stopColor="#8B6020"/>
-                  <stop offset="50%" stopColor="#F0D882"/>
-                  <stop offset="100%" stopColor="#8B6020"/>
+                  <stop offset="0%" stopColor="#5C6167"/>
+                  <stop offset="50%" stopColor="#C9CFD4"/>
+                  <stop offset="100%" stopColor="#5C6167"/>
                 </linearGradient>
               </defs>
             </svg>
           </div>
 
-          <div style={{ fontFamily: "Cinzel, serif", fontSize: 10, letterSpacing: "8px", color: "#C9A84C", opacity: 0.6, marginBottom: 20 }}>
+          <div style={{ fontFamily: "Tajawal, sans-serif", fontSize: 10, letterSpacing: "8px", color: "#9BA3AA", opacity: 0.6, marginBottom: 20 }}>
             OFFICIAL USER GUIDE — 2025
           </div>
 
           <h1 style={{
-            fontFamily: "Playfair Display, serif", fontSize: "clamp(52px, 9vw, 96px)", fontWeight: 700,
+            fontFamily: "Tajawal, sans-serif", fontSize: "clamp(52px, 9vw, 96px)", fontWeight: 700,
             lineHeight: 1, letterSpacing: "-1px",
-            background: "linear-gradient(135deg, #A07030, #C9A84C, #F0D882, #C9A84C, #A07030)",
+            background: "linear-gradient(135deg, #6E747A, #9BA3AA, #C9CFD4, #9BA3AA, #6E747A)",
             backgroundSize: "300% auto",
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
             animation: "shimmer 5s linear infinite",
             marginBottom: 12,
           }}>ShahY Store</h1>
 
-          <div style={{ fontFamily: "Cinzel, serif", fontSize: 14, letterSpacing: "8px", color: "#9B8040", marginBottom: 40 }}>
+          <div style={{ fontFamily: "Tajawal, sans-serif", fontSize: 14, letterSpacing: "8px", color: "#9B8040", marginBottom: 40 }}>
             دليل الاستخدام الشامل
           </div>
 
-          <div style={{ width: 120, height: 1, background: "linear-gradient(90deg, transparent, #C9A84C, transparent)", margin: "0 auto 40px" }}/>
+          <div style={{ width: 120, height: 1, background: "linear-gradient(90deg, transparent, #9BA3AA, transparent)", margin: "0 auto 40px" }}/>
 
           <div style={{ display: "flex", gap: 48, justifyContent: "center", flexWrap: "wrap", marginBottom: 48 }}>
             <div style={{ textAlign: "center" }}>
-              <div style={{ fontFamily: "Cinzel, serif", fontSize: 8, letterSpacing: "4px", color: "#C9A84C", opacity: 0.5, marginBottom: 8 }}>صاحبة المتجر</div>
-              <div style={{ fontFamily: "Playfair Display, serif", fontSize: 22, color: "#F5EFE0" }}>Shahenda Souliman</div>
+              <div style={{ fontFamily: "Tajawal, sans-serif", fontSize: 8, letterSpacing: "4px", color: "#9BA3AA", opacity: 0.5, marginBottom: 8 }}>صاحبة المتجر</div>
+              <div style={{ fontFamily: "Tajawal, sans-serif", fontSize: 22, color: "#F2F0EC" }}>Shahenda Souliman</div>
             </div>
-            <div style={{ width: 1, background: "rgba(201,168,76,0.15)" }}/>
+            <div style={{ width: 1, background: "rgba(155,163,170,0.15)" }}/>
             <div style={{ textAlign: "center" }}>
-              <div style={{ fontFamily: "Cinzel, serif", fontSize: 8, letterSpacing: "4px", color: "#C9A84C", opacity: 0.5, marginBottom: 8 }}>تصميم وتطوير</div>
-              <div style={{ fontFamily: "Playfair Display, serif", fontSize: 22, color: "#F5EFE0" }}>Ahmed Darhous</div>
+              <div style={{ fontFamily: "Tajawal, sans-serif", fontSize: 8, letterSpacing: "4px", color: "#9BA3AA", opacity: 0.5, marginBottom: 8 }}>تصميم وتطوير</div>
+              <div style={{ fontFamily: "Tajawal, sans-serif", fontSize: 22, color: "#F2F0EC" }}>Ahmed Darhous</div>
             </div>
           </div>
 
@@ -513,7 +513,7 @@ export default function GuidePage() {
             your-store.vercel.app
           </div>
 
-          <p style={{ fontFamily: "Tajawal, sans-serif", fontSize: 13, color: "rgba(245,239,224,0.25)", marginTop: 48, letterSpacing: "1px" }}>
+          <p style={{ fontFamily: "Tajawal, sans-serif", fontSize: 13, color: "rgba(242,240,236,0.25)", marginTop: 48, letterSpacing: "1px" }}>
             2025 — النسخة الأولى
           </p>
         </div>
@@ -589,7 +589,7 @@ export default function GuidePage() {
         {/* Screen mockup */}
         <div className="g-screen">
           <div className="g-screen-bar">
-            <div className="g-screen-dot" style={{ background: "#f87171" }}/>
+            <div className="g-screen-dot" style={{ background: "#D9776A" }}/>
             <div className="g-screen-dot" style={{ background: "#facc15" }}/>
             <div className="g-screen-dot" style={{ background: "#4ade80" }}/>
             <div className="g-screen-url">your-store.vercel.app/admin</div>
@@ -615,7 +615,7 @@ export default function GuidePage() {
           <span className="g-tip-icon">💡</span>
           <div className="g-tip-body">
             <strong>نصيحة</strong>
-            لو نسيتي كلمة المرور، تواصلي مع المطور أحمد درهوس على واتساب: +201030002331
+            لو نسيتي كلمة المرور، تواصلي مع المطور أحمد درهوس على واتساب: 201555557745
           </div>
         </div>
 
@@ -638,7 +638,7 @@ export default function GuidePage() {
           <h2>لوحة الإحصاءات</h2>
         </div>
 
-        <p style={{ color: "rgba(245,239,224,0.55)", fontSize: 14, lineHeight: 1.8, marginBottom: 24 }}>
+        <p style={{ color: "rgba(242,240,236,0.55)", fontSize: 14, lineHeight: 1.8, marginBottom: 24 }}>
           بعد الدخول، أول حاجة هتشوفيها هي لوحة الإحصاءات. دي نظرة عامة سريعة على المتجر.
         </p>
 
@@ -656,7 +656,7 @@ export default function GuidePage() {
 
         <div className="g-divider"/>
 
-        <p style={{ color: "rgba(245,239,224,0.45)", fontSize: 13, lineHeight: 1.7 }}>
+        <p style={{ color: "rgba(242,240,236,0.45)", fontSize: 13, lineHeight: 1.7 }}>
           من القايمة الجانبية على اليسار هتلاقي كل أقسام لوحة التحكم — اضغطي على أي قسم للدخول إليه.
         </p>
       </div>
@@ -678,7 +678,7 @@ export default function GuidePage() {
           {/* Admin sidebar mockup */}
           <div className="g-screen">
             <div className="g-screen-bar">
-              <div className="g-screen-dot" style={{ background: "#f87171" }}/>
+              <div className="g-screen-dot" style={{ background: "#D9776A" }}/>
               <div className="g-screen-dot" style={{ background: "#facc15" }}/>
               <div className="g-screen-dot" style={{ background: "#4ade80" }}/>
               <div className="g-screen-url">your-store.vercel.app/admin/products</div>
@@ -693,7 +693,7 @@ export default function GuidePage() {
               </div>
               <div className="g-screen-content">
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-                  <span style={{ color: "#F5EFE0", fontWeight: 700, fontSize: 14, fontFamily: "Tajawal" }}>المنتجات</span>
+                  <span style={{ color: "#F2F0EC", fontWeight: 700, fontSize: 14, fontFamily: "Tajawal" }}>المنتجات</span>
                   <span className="g-screen-btn g-screen-btn-gold" style={{ fontSize: 11, padding: "5px 14px" }}>+ منتج جديد</span>
                 </div>
                 <table className="g-screen-table">
@@ -786,7 +786,7 @@ export default function GuidePage() {
           {/* Product form mockup */}
           <div className="g-screen">
             <div className="g-screen-bar">
-              <div className="g-screen-dot" style={{ background: "#f87171" }}/>
+              <div className="g-screen-dot" style={{ background: "#D9776A" }}/>
               <div className="g-screen-dot" style={{ background: "#facc15" }}/>
               <div className="g-screen-dot" style={{ background: "#4ade80" }}/>
               <div className="g-screen-url">your-store.vercel.app/admin/products/new</div>
@@ -954,7 +954,7 @@ export default function GuidePage() {
           <h2>إدارة التصنيفات</h2>
         </div>
 
-        <p style={{ color: "rgba(245,239,224,0.55)", fontSize: 14, lineHeight: 1.8, marginBottom: 24 }}>
+        <p style={{ color: "rgba(242,240,236,0.55)", fontSize: 14, lineHeight: 1.8, marginBottom: 24 }}>
           التصنيفات هي الأقسام الرئيسية للمتجر — مثل: شنط، محافظ، شوزات.
         </p>
 
@@ -1001,7 +1001,7 @@ export default function GuidePage() {
           <h2>إدارة الطلبات</h2>
         </div>
 
-        <p style={{ color: "rgba(245,239,224,0.55)", fontSize: 14, lineHeight: 1.8, marginBottom: 24 }}>
+        <p style={{ color: "rgba(242,240,236,0.55)", fontSize: 14, lineHeight: 1.8, marginBottom: 24 }}>
           الطلبات بتيجي من العملاء على واتساب — بعد ما العميل يبعتلك واتساب، انتي بتدخليه يدوياً في النظام وتتابعيه.
         </p>
 
@@ -1067,7 +1067,7 @@ export default function GuidePage() {
           <h2>البانرات الإعلانية</h2>
         </div>
 
-        <p style={{ color: "rgba(245,239,224,0.55)", fontSize: 14, lineHeight: 1.8, marginBottom: 24 }}>
+        <p style={{ color: "rgba(242,240,236,0.55)", fontSize: 14, lineHeight: 1.8, marginBottom: 24 }}>
           البانرات هي الصور الإعلانية الكبيرة اللي ممكن تظهر على الموقع — زي عروض المواسم أو المجموعات الجديدة.
         </p>
 
@@ -1122,7 +1122,7 @@ export default function GuidePage() {
           <h2>أكواد الخصم</h2>
         </div>
 
-        <p style={{ color: "rgba(245,239,224,0.55)", fontSize: 14, lineHeight: 1.8, marginBottom: 24 }}>
+        <p style={{ color: "rgba(242,240,236,0.55)", fontSize: 14, lineHeight: 1.8, marginBottom: 24 }}>
           أكواد الخصم هي كودات تعطيها للعملاء يكتبوها وقت الطلب يأخذوا خصم عليه.
         </p>
 
@@ -1178,7 +1178,7 @@ export default function GuidePage() {
           <h2>إعدادات الشحن</h2>
         </div>
 
-        <p style={{ color: "rgba(245,239,224,0.55)", fontSize: 14, lineHeight: 1.8, marginBottom: 24 }}>
+        <p style={{ color: "rgba(242,240,236,0.55)", fontSize: 14, lineHeight: 1.8, marginBottom: 24 }}>
           من هنا بتحددي تكلفة الشحن لكل محافظة. الإعدادات الافتراضية:
         </p>
 
@@ -1222,7 +1222,7 @@ export default function GuidePage() {
           <h2>إعدادات المتجر</h2>
         </div>
 
-        <p style={{ color: "rgba(245,239,224,0.55)", fontSize: 14, lineHeight: 1.8, marginBottom: 24 }}>
+        <p style={{ color: "rgba(242,240,236,0.55)", fontSize: 14, lineHeight: 1.8, marginBottom: 24 }}>
           من هنا بتتحكمي في كل إعدادات المتجر — من القايمة اضغطي "الإعدادات".
         </p>
 
@@ -1248,7 +1248,7 @@ export default function GuidePage() {
         {/* Settings mockup */}
         <div className="g-screen">
           <div className="g-screen-bar">
-            <div className="g-screen-dot" style={{ background: "#f87171" }}/>
+            <div className="g-screen-dot" style={{ background: "#D9776A" }}/>
             <div className="g-screen-dot" style={{ background: "#facc15" }}/>
             <div className="g-screen-dot" style={{ background: "#4ade80" }}/>
             <div className="g-screen-url">your-store.vercel.app/admin/settings</div>
@@ -1261,7 +1261,7 @@ export default function GuidePage() {
             </div>
             <div className="g-screen-field">
               <span className="g-screen-field-label">رقم الواتساب</span>
-              <span className="g-screen-field-value" style={{ direction: "ltr" }}>+201015835455</span>
+              <span className="g-screen-field-value" style={{ direction: "ltr" }}>201555557745</span>
             </div>
             <div className="g-screen-field">
               <span className="g-screen-field-label">إنستاجرام</span>
@@ -1282,7 +1282,7 @@ export default function GuidePage() {
           <span className="g-tip-icon">📱</span>
           <div className="g-tip-body">
             <strong>رقم الواتساب</strong>
-            اكتبيه بالصيغة الدولية: <code>+201015835455</code> — بدون مسافات أو أقواس. لو كتبتي غلط، رسائل الطلبات مش هتوصلك.
+            اكتبيه بالصيغة الدولية: <code>201555557745</code> — بدون مسافات أو أقواس. لو كتبتي غلط، رسائل الطلبات مش هتوصلك.
           </div>
         </div>
 
@@ -1305,7 +1305,7 @@ export default function GuidePage() {
           <h2>التقييمات والمراجعات</h2>
         </div>
 
-        <p style={{ color: "rgba(245,239,224,0.55)", fontSize: 14, lineHeight: 1.8, marginBottom: 24 }}>
+        <p style={{ color: "rgba(242,240,236,0.55)", fontSize: 14, lineHeight: 1.8, marginBottom: 24 }}>
           العملاء ممكن يكتبوا تقييمات على المنتجات — من هنا بتراجعيها وتقرري تظهر أو لأ.
         </p>
 
@@ -1344,7 +1344,7 @@ export default function GuidePage() {
           <h2>إدارة المسؤولين</h2>
         </div>
 
-        <p style={{ color: "rgba(245,239,224,0.55)", fontSize: 14, lineHeight: 1.8, marginBottom: 24 }}>
+        <p style={{ color: "rgba(242,240,236,0.55)", fontSize: 14, lineHeight: 1.8, marginBottom: 24 }}>
           لو عندك واحدة تانية بتساعدك في إدارة المتجر، ممكن تعمليلها حساب أدمن.
         </p>
 
@@ -1444,51 +1444,51 @@ export default function GuidePage() {
           <h2>الدعم الفني — تواصلي مع المطور</h2>
         </div>
 
-        <p style={{ color: "rgba(245,239,224,0.55)", fontSize: 14, lineHeight: 1.8, marginBottom: 28 }}>
+        <p style={{ color: "rgba(242,240,236,0.55)", fontSize: 14, lineHeight: 1.8, marginBottom: 28 }}>
           لو في أي مشكلة تقنية أو عايزة تضيفي ميزة جديدة أو تغييري في الموقع:
         </p>
 
         <div style={{ display: "flex", gap: 24, flexWrap: "wrap" }}>
           <div style={{
             flex: "1 1 220px",
-            background: "#0E0C09",
-            border: "1px solid rgba(201,168,76,0.15)",
+            background: "#131313",
+            border: "1px solid rgba(155,163,170,0.15)",
             borderRadius: 12,
             padding: "24px",
             textAlign: "center",
           }}>
             <div style={{ fontSize: 36, marginBottom: 12 }}>📱</div>
-            <div style={{ fontFamily: "Cinzel, serif", fontSize: 10, letterSpacing: "3px", color: "#C9A84C", opacity: 0.6, marginBottom: 8 }}>WHATSAPP</div>
-            <div style={{ fontFamily: "Tajawal, sans-serif", fontSize: 18, fontWeight: 700, color: "#F5EFE0", direction: "ltr" }}>+201030002331</div>
-            <div style={{ fontSize: 12, color: "rgba(245,239,224,0.35)", marginTop: 6 }}>أحمد درهوس</div>
+            <div style={{ fontFamily: "Tajawal, sans-serif", fontSize: 10, letterSpacing: "3px", color: "#9BA3AA", opacity: 0.6, marginBottom: 8 }}>WHATSAPP</div>
+            <div style={{ fontFamily: "Tajawal, sans-serif", fontSize: 18, fontWeight: 700, color: "#F2F0EC", direction: "ltr" }}>201555557745</div>
+            <div style={{ fontSize: 12, color: "rgba(242,240,236,0.35)", marginTop: 6 }}>أحمد درهوس</div>
           </div>
 
           <div style={{
             flex: "1 1 220px",
-            background: "#0E0C09",
-            border: "1px solid rgba(201,168,76,0.15)",
+            background: "#131313",
+            border: "1px solid rgba(155,163,170,0.15)",
             borderRadius: 12,
             padding: "24px",
             textAlign: "center",
           }}>
             <div style={{ fontSize: 36, marginBottom: 12 }}>📸</div>
-            <div style={{ fontFamily: "Cinzel, serif", fontSize: 10, letterSpacing: "3px", color: "#C9A84C", opacity: 0.6, marginBottom: 8 }}>INSTAGRAM</div>
-            <div style={{ fontFamily: "Tajawal, sans-serif", fontSize: 18, fontWeight: 700, color: "#F5EFE0", direction: "ltr" }}>@darhous</div>
-            <div style={{ fontSize: 12, color: "rgba(245,239,224,0.35)", marginTop: 6 }}>ahmed darhous</div>
+            <div style={{ fontFamily: "Tajawal, sans-serif", fontSize: 10, letterSpacing: "3px", color: "#9BA3AA", opacity: 0.6, marginBottom: 8 }}>INSTAGRAM</div>
+            <div style={{ fontFamily: "Tajawal, sans-serif", fontSize: 18, fontWeight: 700, color: "#F2F0EC", direction: "ltr" }}>@darhous</div>
+            <div style={{ fontSize: 12, color: "rgba(242,240,236,0.35)", marginTop: 6 }}>ahmed darhous</div>
           </div>
 
           <div style={{
             flex: "1 1 220px",
-            background: "#0E0C09",
-            border: "1px solid rgba(201,168,76,0.15)",
+            background: "#131313",
+            border: "1px solid rgba(155,163,170,0.15)",
             borderRadius: 12,
             padding: "24px",
             textAlign: "center",
           }}>
             <div style={{ fontSize: 36, marginBottom: 12 }}>💼</div>
-            <div style={{ fontFamily: "Cinzel, serif", fontSize: 10, letterSpacing: "3px", color: "#C9A84C", opacity: 0.6, marginBottom: 8 }}>LINKEDIN</div>
-            <div style={{ fontFamily: "Tajawal, sans-serif", fontSize: 18, fontWeight: 700, color: "#F5EFE0", direction: "ltr" }}>in/darhous</div>
-            <div style={{ fontSize: 12, color: "rgba(245,239,224,0.35)", marginTop: 6 }}>linkedin.com/in/darhous</div>
+            <div style={{ fontFamily: "Tajawal, sans-serif", fontSize: 10, letterSpacing: "3px", color: "#9BA3AA", opacity: 0.6, marginBottom: 8 }}>LINKEDIN</div>
+            <div style={{ fontFamily: "Tajawal, sans-serif", fontSize: 18, fontWeight: 700, color: "#F2F0EC", direction: "ltr" }}>in/darhous</div>
+            <div style={{ fontSize: 12, color: "rgba(242,240,236,0.35)", marginTop: 6 }}>linkedin.com/in/darhous</div>
           </div>
         </div>
       </div>
@@ -1503,7 +1503,7 @@ export default function GuidePage() {
           <h2>عروض الفلاش</h2>
         </div>
 
-        <p style={{ color: "rgba(245,239,224,0.55)", fontSize: 14, lineHeight: 1.8, marginBottom: 24 }}>
+        <p style={{ color: "rgba(242,240,236,0.55)", fontSize: 14, lineHeight: 1.8, marginBottom: 24 }}>
           عروض الفلاش هي قسم خاص بيظهر تحت الهيرو مباشرة — بيعرض منتجات مخفّضة بعداد تنازلي يخلي العميلة تشتري بسرعة.
         </p>
 
@@ -1568,7 +1568,7 @@ export default function GuidePage() {
           <div className="g-num">15</div>
           <h2>متغيّرات المنتج</h2>
         </div>
-        <p style={{ color: "rgba(245,239,224,0.65)", lineHeight: 1.85, marginBottom: 28 }}>
+        <p style={{ color: "rgba(242,240,236,0.65)", lineHeight: 1.85, marginBottom: 28 }}>
           كل منتج ممكن يكون له أكتر من متغيّر (مقاس، لون، ستوك). المتغيّرات بتظهر للعميلة في صفحة المنتج وبتخليها تختار قبل الشراء.
         </p>
 
@@ -1610,7 +1610,7 @@ export default function GuidePage() {
         {/* Variants table mockup */}
         <div className="g-screen">
           <div className="g-screen-bar">
-            <div className="g-screen-dot" style={{ background: "#f87171" }}/>
+            <div className="g-screen-dot" style={{ background: "#D9776A" }}/>
             <div className="g-screen-dot" style={{ background: "#facc15" }}/>
             <div className="g-screen-dot" style={{ background: "#4ade80" }}/>
             <div className="g-screen-url">your-store.vercel.app/admin/products/edit</div>
@@ -1633,21 +1633,21 @@ export default function GuidePage() {
                   <td>M</td>
                   <td><span className="g-screen-stock-green">12</span></td>
                   <td>—</td>
-                  <td><span style={{ color: "#C9A84C", cursor: "default", fontSize: 11 }}>تعديل | حذف</span></td>
+                  <td><span style={{ color: "#9BA3AA", cursor: "default", fontSize: 11 }}>تعديل | حذف</span></td>
                 </tr>
                 <tr>
                   <td>أسود</td>
                   <td>L</td>
                   <td><span className="g-screen-stock-yellow">3</span></td>
                   <td>—</td>
-                  <td><span style={{ color: "#C9A84C", cursor: "default", fontSize: 11 }}>تعديل | حذف</span></td>
+                  <td><span style={{ color: "#9BA3AA", cursor: "default", fontSize: 11 }}>تعديل | حذف</span></td>
                 </tr>
                 <tr>
                   <td>بني</td>
                   <td>M</td>
                   <td><span className="g-screen-stock-red">0</span></td>
                   <td>950 ج</td>
-                  <td><span style={{ color: "#C9A84C", cursor: "default", fontSize: 11 }}>تعديل | حذف</span></td>
+                  <td><span style={{ color: "#9BA3AA", cursor: "default", fontSize: 11 }}>تعديل | حذف</span></td>
                 </tr>
               </tbody>
             </table>
@@ -1671,12 +1671,12 @@ export default function GuidePage() {
         </p>
 
         <div className="g-subsection-title" style={{ marginTop: 32 }}>تعديل الستوك</div>
-        <p style={{ color: "rgba(245,239,224,0.65)", lineHeight: 1.85, marginBottom: 12 }}>
+        <p style={{ color: "rgba(242,240,236,0.65)", lineHeight: 1.85, marginBottom: 12 }}>
           اضغطي <strong>تعديل</strong> جنب أي متغيّر عشان تغيّري الستوك أو السعر أو المقاس. التغيير بيحصل في نفس الصف بدون ما الصفحة تتحرك.
         </p>
-        <p style={{ color: "rgba(245,239,224,0.65)", lineHeight: 1.85, marginBottom: 20 }}>
+        <p style={{ color: "rgba(242,240,236,0.65)", lineHeight: 1.85, marginBottom: 20 }}>
           لون الستوك بيتغيّر تلقائياً:
-          {" "}<span style={{ color: "#f87171", fontWeight: 700 }}>أحمر = نفد (0)</span>
+          {" "}<span style={{ color: "#D9776A", fontWeight: 700 }}>أحمر = نفد (0)</span>
           {" / "}<span style={{ color: "#facc15", fontWeight: 700 }}>أصفر = قليل (أقل من 5)</span>
           {" / "}<span style={{ color: "#4ade80", fontWeight: 700 }}>أخضر = متوفر (5 أو أكتر)</span>.
         </p>
@@ -1700,18 +1700,18 @@ export default function GuidePage() {
 
       {/* ── FOOTER ── */}
       <div style={{
-        background: "#060504",
-        borderTop: "1px solid #151210",
+        background: "#0D0D0D",
+        borderTop: "1px solid #171717",
         padding: "40px",
         textAlign: "center",
       }}>
-        <div style={{ height: 1, background: "linear-gradient(90deg, transparent, #C9A84C, transparent)", marginBottom: 24 }}/>
+        <div style={{ height: 1, background: "linear-gradient(90deg, transparent, #9BA3AA, transparent)", marginBottom: 24 }}/>
 
-        <div style={{ fontFamily: "Playfair Display, serif", fontSize: 24, fontWeight: 700, color: "#C9A84C", marginBottom: 8 }}>ShahY Store</div>
-        <div style={{ fontFamily: "Tajawal, sans-serif", fontSize: 14, color: "rgba(245,239,224,0.35)", marginBottom: 4 }}>
+        <div style={{ fontFamily: "Tajawal, sans-serif", fontSize: 24, fontWeight: 700, color: "#9BA3AA", marginBottom: 8 }}>ShahY Store</div>
+        <div style={{ fontFamily: "Tajawal, sans-serif", fontSize: 14, color: "rgba(242,240,236,0.35)", marginBottom: 4 }}>
           صاحبة المتجر: شاهندة سليمان
         </div>
-        <div style={{ fontFamily: "Tajawal, sans-serif", fontSize: 13, color: "rgba(245,239,224,0.2)" }}>
+        <div style={{ fontFamily: "Tajawal, sans-serif", fontSize: 13, color: "rgba(242,240,236,0.2)" }}>
           تصميم وتطوير: أحمد درهوس — © 2025
         </div>
       </div>

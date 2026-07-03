@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 
 export default function FloatingWA() {
   const [hovered, setHovered] = useState(false)
-  const [waNum, setWaNum]     = useState("201015835455")
+  const [waNum, setWaNum]     = useState("201555557745")
 
   useEffect(() => {
     fetch("/api/store-config")
@@ -34,9 +34,9 @@ export default function FloatingWA() {
         .wa-fab:hover { transform: scale(1.12); animation: none; box-shadow: 0 12px 40px rgba(37,211,102,0.45); }
         .wa-tooltip {
           position: fixed; bottom: 36px; left: 94px; z-index: 8001;
-          background: rgba(10,8,6,0.92); backdrop-filter: blur(10px);
+          background: rgba(10,10,10,0.92); backdrop-filter: blur(10px);
           border: 1px solid rgba(37,211,102,0.25);
-          color: #F5EFE0; font-family: Tajawal, sans-serif; font-size: 13px; font-weight: 700;
+          color: #F2F0EC; font-family: Tajawal, sans-serif; font-size: 13px; font-weight: 700;
           padding: 8px 14px; border-radius: 10px; white-space: nowrap;
           pointer-events: none;
           transition: all 0.25s cubic-bezier(0.2,0,0.2,1);

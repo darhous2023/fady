@@ -40,34 +40,34 @@ export default function OrdersPage() {
   return (
     <>
       <StoreHeader />
-      <style>{`@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&family=Cinzel&display=swap'); * { box-sizing: border-box; } body { margin: 0; background: #0A0806; }`}</style>
-      <main style={{ background: "#0A0806", minHeight: "100vh", paddingTop: 80, direction: "rtl" }}>
+      <style>{`@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap'); * { box-sizing: border-box; } body { margin: 0; background: #0A0A0A; }`}</style>
+      <main style={{ background: "#0A0A0A", minHeight: "100vh", paddingTop: 80, direction: "rtl" }}>
         <div style={{ maxWidth: 800, margin: "0 auto", padding: "48px 24px 80px" }}>
           <div style={{ marginBottom: 32 }}>
-            <Link href="/account/profile" style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "#C9A84C", opacity: 0.6, textDecoration: "none" }}>← رجوع للحساب</Link>
-            <h1 style={{ fontFamily: "Tajawal,sans-serif", fontSize: 28, fontWeight: 900, background: "linear-gradient(135deg,#C9A84C,#F0D882)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", margin: "12px 0 0" }}>
+            <Link href="/account/profile" style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "#9BA3AA", opacity: 0.6, textDecoration: "none" }}>← رجوع للحساب</Link>
+            <h1 style={{ fontFamily: "Tajawal,sans-serif", fontSize: 28, fontWeight: 900, background: "linear-gradient(135deg,#9BA3AA,#C9CFD4)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", margin: "12px 0 0" }}>
               طلباتي
             </h1>
           </div>
 
           {loading ? (
-            <div style={{ textAlign: "center", padding: 60, color: "#F5EFE0", opacity: 0.3, fontFamily: "Tajawal,sans-serif" }}>جاري التحميل...</div>
+            <div style={{ textAlign: "center", padding: 60, color: "#F2F0EC", opacity: 0.3, fontFamily: "Tajawal,sans-serif" }}>جاري التحميل...</div>
           ) : orders.length === 0 ? (
             <div style={{ textAlign: "center", padding: 60 }}>
               <div style={{ fontSize: 48, marginBottom: 16, opacity: 0.2 }}>📦</div>
-              <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 16, color: "#F5EFE0", opacity: 0.35, marginBottom: 20 }}>لا توجد طلبات بعد</p>
-              <Link href="/#products" style={{ fontFamily: "Tajawal,sans-serif", fontSize: 14, fontWeight: 700, color: "#C9A84C", textDecoration: "none", padding: "10px 24px", border: "1px solid rgba(201,168,76,0.3)", borderRadius: 8 }}>
+              <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 16, color: "#F2F0EC", opacity: 0.35, marginBottom: 20 }}>لا توجد طلبات بعد</p>
+              <Link href="/#products" style={{ fontFamily: "Tajawal,sans-serif", fontSize: 14, fontWeight: 700, color: "#9BA3AA", textDecoration: "none", padding: "10px 24px", border: "1px solid rgba(155,163,170,0.3)", borderRadius: 8 }}>
                 تصفّح المنتجات
               </Link>
             </div>
           ) : (
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
               {orders.map(o => (
-                <div key={o.order_number} style={{ background: "linear-gradient(145deg,#0E0C09,#111009)", border: "1px solid rgba(201,168,76,0.1)", borderRadius: 14, padding: "20px 24px" }}>
+                <div key={o.order_number} style={{ background: "linear-gradient(145deg,#131313,#141414)", border: "1px solid rgba(155,163,170,0.1)", borderRadius: 14, padding: "20px 24px" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 12 }}>
                     <div>
-                      <div style={{ fontFamily: "monospace", fontSize: 13, color: "#F5EFE0", opacity: 0.5, marginBottom: 4 }}>{o.order_number}</div>
-                      <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "#F5EFE0", opacity: 0.35 }}>
+                      <div style={{ fontFamily: "monospace", fontSize: 13, color: "#F2F0EC", opacity: 0.5, marginBottom: 4 }}>{o.order_number}</div>
+                      <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "#F2F0EC", opacity: 0.35 }}>
                         {new Date(o.created_at).toLocaleDateString("ar-EG", { year: "numeric", month: "long", day: "numeric" })} — {o.governorate}
                       </div>
                     </div>
@@ -76,11 +76,11 @@ export default function OrdersPage() {
                         {STATUS[o.status]}
                       </span>
                       <div style={{ textAlign: "left" }}>
-                        <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 18, fontWeight: 900, background: "linear-gradient(135deg,#C9A84C,#F0D882)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+                        <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 18, fontWeight: 900, background: "linear-gradient(135deg,#9BA3AA,#C9CFD4)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
                           {Number(o.total).toLocaleString("ar-EG")} ج.م
                         </div>
                         {Number(o.shipping_cost) > 0 && (
-                          <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 11, color: "#F5EFE0", opacity: 0.3 }}>
+                          <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 11, color: "#F2F0EC", opacity: 0.3 }}>
                             شحن {Number(o.shipping_cost).toLocaleString("ar-EG")} ج.م
                           </div>
                         )}
@@ -88,8 +88,8 @@ export default function OrdersPage() {
                     </div>
                   </div>
                   {o.status === "shipped" && (
-                    <div style={{ marginTop: 14, paddingTop: 12, borderTop: "1px solid rgba(201,168,76,0.07)" }}>
-                      <Link href="/track" style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "#C9A84C", textDecoration: "none", opacity: 0.8 }}>
+                    <div style={{ marginTop: 14, paddingTop: 12, borderTop: "1px solid rgba(155,163,170,0.07)" }}>
+                      <Link href="/track" style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "#9BA3AA", textDecoration: "none", opacity: 0.8 }}>
                         تتبّع الشحنة →
                       </Link>
                     </div>

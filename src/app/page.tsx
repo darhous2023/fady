@@ -16,8 +16,8 @@ import CategoriesStrip from "@/components/store/CategoriesStrip"
 import HomeReviews from "@/components/store/HomeReviews"
 
 export const metadata: Metadata = {
-  title: "ShahY Store — إكسسوارات فاخرة مستوردة",
-  description: "أرقى الشنط والمحافظ والشوزات النسائية المستوردة — تشكيلات حصرية بأفضل الأسعار",
+  title: "ELFADY — معرض سيارات",
+  description: "معرض الفادي لتجارة السيارات — سيارات جديدة ومستعملة، بثقة وشفافية، وتواصل فوري عبر واتساب",
 }
 
 async function getProducts(): Promise<StoreProduct[]> {
@@ -166,9 +166,9 @@ export default async function StorePage() {
     <>
       <StoreHeader />
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;700;800;900&family=Playfair+Display:ital,wght@1,400&family=Cormorant+Garamond:ital,wght@1,300&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;700;800;900&display=swap');
         * { box-sizing: border-box; }
-        body { margin: 0; background: #0A0806; }
+        body { margin: 0; background: #0A0A0A; }
         main { padding: 0 !important; min-height: unset !important; }
       `}</style>
 

@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og"
 
 export const runtime = "edge"
-export const alt = "ShahY Store — إكسسوارات فاخرة مستوردة"
+export const alt = "ELFADY — معرض سيارات"
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
 
@@ -16,7 +16,7 @@ export default function OGImage() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          background: "#0A0806",
+          background: "#0A0A0A",
           position: "relative",
           overflow: "hidden",
           fontFamily: "serif",
@@ -31,7 +31,7 @@ export default function OGImage() {
           width: 700,
           height: 400,
           borderRadius: "50%",
-          background: "radial-gradient(ellipse, rgba(201,168,76,0.12) 0%, transparent 70%)",
+          background: "radial-gradient(ellipse, rgba(155,163,170,0.12) 0%, transparent 70%)",
           display: "flex",
         }} />
 
@@ -42,7 +42,7 @@ export default function OGImage() {
           left: 0,
           right: 0,
           height: 3,
-          background: "linear-gradient(90deg, transparent, #C9A84C, #F0D882, #C9A84C, transparent)",
+          background: "linear-gradient(90deg, transparent, #9BA3AA, #C9CFD4, #9BA3AA, transparent)",
           display: "flex",
         }} />
 
@@ -53,7 +53,7 @@ export default function OGImage() {
           left: 0,
           right: 0,
           height: 3,
-          background: "linear-gradient(90deg, transparent, #C9A84C, #F0D882, #C9A84C, transparent)",
+          background: "linear-gradient(90deg, transparent, #9BA3AA, #C9CFD4, #9BA3AA, transparent)",
           display: "flex",
         }} />
 
@@ -64,7 +64,7 @@ export default function OGImage() {
           top: 0,
           bottom: 0,
           width: 6,
-          background: "linear-gradient(to bottom, transparent, #7B1C2E, transparent)",
+          background: "linear-gradient(to bottom, transparent, #A5342C, transparent)",
           display: "flex",
         }} />
 
@@ -75,7 +75,7 @@ export default function OGImage() {
           top: 0,
           bottom: 0,
           width: 6,
-          background: "linear-gradient(to bottom, transparent, #7B1C2E, transparent)",
+          background: "linear-gradient(to bottom, transparent, #A5342C, transparent)",
           display: "flex",
         }} />
 
@@ -86,7 +86,7 @@ export default function OGImage() {
           left: 80,
           width: 300,
           height: 1,
-          background: "rgba(201,168,76,0.12)",
+          background: "rgba(155,163,170,0.12)",
           transform: "rotate(-25deg)",
           display: "flex",
         }} />
@@ -96,7 +96,7 @@ export default function OGImage() {
           right: 80,
           width: 250,
           height: 1,
-          background: "rgba(201,168,76,0.1)",
+          background: "rgba(155,163,170,0.1)",
           transform: "rotate(-25deg)",
           display: "flex",
         }} />
@@ -108,20 +108,20 @@ export default function OGImage() {
           <div style={{
             fontSize: 13,
             letterSpacing: "10px",
-            color: "#C9A84C",
+            color: "#9BA3AA",
             opacity: 0.7,
             marginBottom: 28,
             textTransform: "uppercase",
             fontFamily: "serif",
           }}>
-            ✦  LUXURY COLLECTION  ✦
+            ✦  TRUSTED CAR DEALERSHIP  ✦
           </div>
 
-          {/* ShahY logotype */}
+          {/* ELFADY logotype */}
           <div style={{
             fontSize: 130,
             fontWeight: 700,
-            background: "linear-gradient(135deg, #A07030, #C9A84C, #F0D882, #E8C860, #C9A84C)",
+            background: "linear-gradient(135deg, #6E747A, #9BA3AA, #C9CFD4, #BEC4C9, #9BA3AA)",
             backgroundClip: "text",
             color: "transparent",
             lineHeight: 1,
@@ -129,26 +129,26 @@ export default function OGImage() {
             marginBottom: 4,
             display: "flex",
           }}>
-            ShahY
+            ELFADY
           </div>
 
-          {/* STORE subtitle */}
+          {/* subtitle */}
           <div style={{
-            fontSize: 18,
-            letterSpacing: "18px",
-            color: "#9B8040",
+            fontSize: 22,
+            letterSpacing: "4px",
+            color: "#9BA3AA",
             fontFamily: "serif",
             marginBottom: 32,
             display: "flex",
           }}>
-            STORE
+            معرض سيارات
           </div>
 
           {/* Gold divider */}
           <div style={{
             width: 180,
             height: 1.5,
-            background: "linear-gradient(90deg, transparent, #C9A84C, #F0D882, #C9A84C, transparent)",
+            background: "linear-gradient(90deg, transparent, #9BA3AA, #C9CFD4, #9BA3AA, transparent)",
             marginBottom: 28,
             display: "flex",
           }} />
@@ -156,26 +156,26 @@ export default function OGImage() {
           {/* Arabic tagline */}
           <div style={{
             fontSize: 28,
-            color: "#F5EFE0",
+            color: "#F2F0EC",
             opacity: 0.65,
             fontFamily: "serif",
             letterSpacing: "2px",
             marginBottom: 10,
             display: "flex",
           }}>
-            أرقى الإكسسوارات النسائية المستوردة
+            معرض الفادي لتجارة السيارات
           </div>
 
           {/* Sub tagline */}
           <div style={{
             fontSize: 18,
-            color: "#C9A84C",
+            color: "#9BA3AA",
             opacity: 0.55,
             fontFamily: "serif",
             letterSpacing: "1px",
             display: "flex",
           }}>
-            شنط · محافظ · شوزات
+            سيارات جديدة · سيارات مستعملة
           </div>
         </div>
 
@@ -187,11 +187,11 @@ export default function OGImage() {
           alignItems: "center",
           gap: 8,
         }}>
-          <div style={{ width: 40, height: 1, background: "rgba(201,168,76,0.3)", display: "flex" }} />
-          <div style={{ fontSize: 14, color: "#C9A84C", opacity: 0.45, letterSpacing: "3px", fontFamily: "serif" }}>
-            your-store.vercel.app
+          <div style={{ width: 40, height: 1, background: "rgba(155,163,170,0.3)", display: "flex" }} />
+          <div style={{ fontSize: 14, color: "#9BA3AA", opacity: 0.45, letterSpacing: "3px", fontFamily: "serif" }}>
+            fady-delta.vercel.app
           </div>
-          <div style={{ width: 40, height: 1, background: "rgba(201,168,76,0.3)", display: "flex" }} />
+          <div style={{ width: 40, height: 1, background: "rgba(155,163,170,0.3)", display: "flex" }} />
         </div>
       </div>
     ),

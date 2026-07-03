@@ -6,32 +6,32 @@ import ScrollToTop from "@/components/store/ScrollToTop";
 import CartDrawer from "@/components/store/CartDrawer";
 import "@/styles/globals.css";
 
-const SITE_URL = "https://your-store.vercel.app"
-const OG_IMAGE = `${SITE_URL}/og-image.jpg`
+const SITE_URL = "https://fady-delta.vercel.app"
+const OG_IMAGE = `${SITE_URL}/opengraph-image`
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "ShahY Store — إكسسوارات فاخرة مستوردة",
-    template: "%s — ShahY Store",
+    default: "ELFADY — معرض سيارات",
+    template: "%s — ELFADY",
   },
-  description: "أرقى الشنط والمحافظ والشوزات النسائية المستوردة — تشكيلات حصرية بأفضل الأسعار",
-  keywords: ["شنط مستوردة", "محافظ فاخرة", "شوزات نسائية", "هاي كوبي", "ميرور", "أورجنال", "شنط شانيل", "شنط لويس فيتون", "شنط ديور", "إكسسوارات فاخرة مصر", "ShahY Store", "شاهي ستور"],
+  description: "معرض الفادي لتجارة السيارات — سيارات جديدة ومستعملة، بثقة وشفافية، وتواصل فوري عبر واتساب",
+  keywords: ["سيارات مستعملة", "سيارات جديدة", "معرض سيارات", "معرض الفادي", "elfady", "شراء سيارة مصر", "بيع سيارات"],
   robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
-  authors: [{ name: "ShahY Store" }],
+  authors: [{ name: "ELFADY" }],
   openGraph: {
     type: "website",
     locale: "ar_EG",
     url: SITE_URL,
-    siteName: "ShahY Store",
-    title: "ShahY Store — إكسسوارات فاخرة مستوردة",
-    description: "أرقى الشنط والمحافظ والشوزات النسائية المستوردة — تشكيلات حصرية",
-    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: "ShahY Store" }],
+    siteName: "ELFADY",
+    title: "ELFADY — معرض سيارات",
+    description: "معرض الفادي لتجارة السيارات — سيارات جديدة ومستعملة، بثقة وشفافية",
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: "ELFADY" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "ShahY Store — إكسسوارات فاخرة مستوردة",
-    description: "أرقى الشنط والمحافظ والشوزات النسائية المستوردة",
+    title: "ELFADY — معرض سيارات",
+    description: "معرض الفادي لتجارة السيارات — سيارات جديدة ومستعملة",
     images: [OG_IMAGE],
   },
   manifest: "/manifest.json",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     icon: [{ url: "/icon-192.png", sizes: "192x192" }],
     apple: "/icon-192.png",
   },
-  themeColor: "#C9A84C",
+  themeColor: "#9BA3AA",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -66,20 +66,25 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           "@context": "https://schema.org",
           "@graph": [
             {
-              "@type": "Organization",
-              "@id": "https://your-store.vercel.app/#org",
-              "name": "ShahY Store",
-              "url": "https://your-store.vercel.app",
-              "logo": "https://your-store.vercel.app/icon-192.png",
-              "contactPoint": { "@type": "ContactPoint", "contactType": "customer service", "telephone": "+201015835455", "availableLanguage": "Arabic" }
+              "@type": ["AutoDealer", "Organization"],
+              "@id": `${SITE_URL}/#org`,
+              "name": "ELFADY",
+              "url": SITE_URL,
+              "logo": `${SITE_URL}/icon-192.png`,
+              "address": { "@type": "PostalAddress", "streetAddress": "شارع أحمد عرابي، المهندسين", "addressLocality": "الجيزة", "addressCountry": "EG" },
+              "contactPoint": { "@type": "ContactPoint", "contactType": "customer service", "telephone": "+201555557745", "availableLanguage": "Arabic" },
+              "sameAs": [
+                "https://www.facebook.com/elfadywaelmeladcars",
+                "https://www.instagram.com/el_fady_car_trading/",
+              ],
             },
             {
               "@type": "WebSite",
-              "@id": "https://your-store.vercel.app/#website",
-              "url": "https://your-store.vercel.app",
-              "name": "ShahY Store",
-              "publisher": { "@id": "https://your-store.vercel.app/#org" },
-              "potentialAction": { "@type": "SearchAction", "target": "https://your-store.vercel.app/?q={search_term_string}", "query-input": "required name=search_term_string" }
+              "@id": `${SITE_URL}/#website`,
+              "url": SITE_URL,
+              "name": "ELFADY",
+              "publisher": { "@id": `${SITE_URL}/#org` },
+              "potentialAction": { "@type": "SearchAction", "target": `${SITE_URL}/?q={search_term_string}`, "query-input": "required name=search_term_string" }
             }
           ]
         })}} />
