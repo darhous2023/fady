@@ -48,7 +48,6 @@ function Step({ num, title, desc }: { num: number; title: string; desc: string }
 }
 
 const CSS = `
-@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;900&family=Cinzel:wght@400;700&display=swap');
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { background: #f4f4f2; font-family: Tajawal, sans-serif; direction: rtl; }
 

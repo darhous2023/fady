@@ -34,8 +34,7 @@ export default function CartPage() {
     <>
       <StoreHeader />
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;900&display=swap');
-        * { box-sizing: border-box; }
+                * { box-sizing: border-box; }
         body { margin: 0; background: #0A0A0A; }
         .cart-item { transition: all 0.3s ease; }
         .cart-item:hover { border-color: rgba(155,163,170,0.25)!important; }

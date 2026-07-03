@@ -211,7 +211,7 @@ function ProductCard({ product, index }: { product: StoreProduct; index: number 
             aria-label={inWl ? "إزالة من المفضلة" : "إضافة للمفضلة"}
             style={{
               position: "absolute", top: 10, left: 10, zIndex: 5,
-              width: 32, height: 32, borderRadius: "50%",
+              width: 44, height: 44, borderRadius: "50%",
               background: "rgba(10,10,10,0.8)", backdropFilter: "blur(6px)",
               border: inWl ? "1px solid rgba(178,58,54,0.5)" : "1px solid rgba(155,163,170,0.2)",
               display: "flex", alignItems: "center", justifyContent: "center",
@@ -430,8 +430,7 @@ export default function ProductGrid({ initialProducts, initialCategory }: { init
   return (
     <section style={{ background: "#0A0A0A", padding: "96px 40px 80px", direction: "rtl" }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;900&display=swap');
-        @keyframes pgShimmer { from{background-position:200% center} to{background-position:-200% center} }
+                @keyframes pgShimmer { from{background-position:200% center} to{background-position:-200% center} }
         .pg-cat-pill { cursor:pointer; transition:all 0.3s ease; background:transparent; border:none; }
         .pg-cat-pill:hover { background:rgba(155,163,170,0.12)!important; color:#9BA3AA!important; border-color:#9BA3AA!important; }
       `}</style>

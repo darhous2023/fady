@@ -13,8 +13,7 @@ export default function AboutPage() {
     <>
       <StoreHeader />
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;700;800;900&display=swap');
-        * { box-sizing: border-box; } body { margin: 0; background: #0A0A0A; }
+                * { box-sizing: border-box; } body { margin: 0; background: #0A0A0A; }
         @keyframes fadeUp { from{opacity:0;transform:translateY(32px)} to{opacity:1;transform:translateY(0)} }
         @keyframes shimmer { from{background-position:200% center} to{background-position:-200% center} }
         .abt-fade { animation: fadeUp 0.9s cubic-bezier(0.2,0,0.2,1) both; }

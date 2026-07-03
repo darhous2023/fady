@@ -41,8 +41,7 @@ export default function WishlistPage() {
     <>
       <StoreHeader />
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;900&display=swap');
-        * { box-sizing: border-box; } body { margin: 0; background: #0A0A0A; }
+                * { box-sizing: border-box; } body { margin: 0; background: #0A0A0A; }
         .wl-card { background: linear-gradient(145deg,#131313,#141414); border: 1px solid rgba(155,163,170,0.1); border-radius: 16px; overflow: hidden; transition: all 0.3s ease; }
         .wl-card:hover { border-color: rgba(155,163,170,0.25); transform: translateY(-2px); }
         .wl-img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; transition: transform 0.4s ease; }

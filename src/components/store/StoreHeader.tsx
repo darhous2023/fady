@@ -45,8 +45,7 @@ export default function StoreHeader() {
   return (
     <>
     <style>{`
-      @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap');
-      .sh-icon-btn { position:relative; background:none; border:none; cursor:pointer; padding:6px; border-radius:8px; transition:background 0.2s; display:flex; align-items:center; color:#9BA3AA; }
+            .sh-icon-btn { position:relative; background:none; border:none; cursor:pointer; padding:6px; border-radius:8px; transition:background 0.2s; display:flex; align-items:center; justify-content:center; color:#9BA3AA; min-width:44px; min-height:44px; }
       .sh-icon-btn:hover { background:rgba(155,163,170,0.1); }
       .sh-badge { position:absolute; top:-2px; left:-2px; min-width:16px; height:16px; border-radius:8px; background:#A5342C; color:#fff; font-size:9px; font-weight:700; display:flex; align-items:center; justify-content:center; padding:0 4px; font-family:Tajawal,sans-serif; animation:badgePop 0.25s cubic-bezier(0.34,1.56,0.64,1); }
       @keyframes badgePop { from{transform:scale(0)} to{transform:scale(1)} }

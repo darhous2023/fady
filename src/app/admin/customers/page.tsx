@@ -48,7 +48,7 @@ export default function CustomersPage() {
 
   return (
     <div className="space-y-6" dir="rtl" style={{ fontFamily: "Tajawal,sans-serif" }}>
-      <style>{`@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');`}</style>
+      <style>{``}</style>
 
       <div>
         <h1 className="text-2xl font-bold text-[#F5EFE0]">الأعضاء والعملاء</h1>

@@ -10,8 +10,7 @@ export default function NotFound() {
       direction: "rtl",
     }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap');
-        @keyframes floatIcon { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+                @keyframes floatIcon { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
         @keyframes nfShimmer { from{background-position:200% center} to{background-position:-200% center} }
       `}</style>
 

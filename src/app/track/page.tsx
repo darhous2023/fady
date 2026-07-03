@@ -52,8 +52,7 @@ export default function TrackPage() {
     <>
       <StoreHeader />
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;800&display=swap');
-        * { box-sizing: border-box; } body { margin: 0; background: #0A0A0A; }
+                * { box-sizing: border-box; } body { margin: 0; background: #0A0A0A; }
         .tr-input { width: 100%; background: #131313; border: 1px solid rgba(155,163,170,0.25); border-radius: 10px; padding: 14px 18px; color: #F2F0EC; font-family: Tajawal,sans-serif; font-size: 16px; outline: none; letter-spacing: 1.5px; transition: border-color 0.25s; }
         .tr-input:focus { border-color: rgba(155,163,170,0.6); }
         .tr-input::placeholder { color: rgba(242,240,236,0.2); letter-spacing: 1px; }

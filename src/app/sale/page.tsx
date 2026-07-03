@@ -62,8 +62,7 @@ export default async function SalePage() {
     <>
       <StoreHeader />
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;800;900&display=swap');
-        * { box-sizing: border-box; } body { margin: 0; background: #0A0A0A; }
+                * { box-sizing: border-box; } body { margin: 0; background: #0A0A0A; }
         .sale-card { background: linear-gradient(145deg,#131313,#141414); border: 1px solid rgba(155,163,170,0.1); border-radius: 16px; overflow: hidden; text-decoration: none; display: block; transition: all 0.3s ease; }
         .sale-card:hover { transform: translateY(-4px); border-color: rgba(155,163,170,0.3); box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
         .sale-card:hover .card-img { transform: scale(1.04); }

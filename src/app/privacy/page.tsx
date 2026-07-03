@@ -26,8 +26,7 @@ export default function PrivacyPage() {
     <>
       <StoreHeader />
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;800&display=swap');
-        * { box-sizing: border-box; } body { margin: 0; background: #0A0A0A; }
+                * { box-sizing: border-box; } body { margin: 0; background: #0A0A0A; }
         ul { padding-right: 20px; margin: 0; } li { margin-bottom: 8px; }
       `}</style>
       <main style={{ background: "#0A0A0A", minHeight: "100vh", paddingTop: 80, direction: "rtl" }}>

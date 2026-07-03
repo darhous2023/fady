@@ -14,8 +14,7 @@ export default function StoreFooter() {
       padding: "64px 40px 40px", direction: "rtl",
     }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;900&display=swap');
-        .sf-link { color: #F2F0EC; opacity: 0.45; text-decoration: none; transition: opacity 0.2s; display: flex; align-items: center; gap: 8px; font-family: Tajawal, sans-serif; font-size: 14px; }
+                .sf-link { color: #F2F0EC; opacity: 0.45; text-decoration: none; transition: opacity 0.2s; display: flex; align-items: center; gap: 8px; font-family: Tajawal, sans-serif; font-size: 14px; }
         .sf-link:hover { opacity: 0.9; }
         .sf-social { display: flex; align-items: center; gap: 10px; text-decoration: none; transition: opacity 0.2s; }
         .sf-social:hover { opacity: 0.85; }

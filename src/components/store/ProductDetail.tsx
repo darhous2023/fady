@@ -159,8 +159,7 @@ export default function ProductDetail({ product, images, frames360 = [], related
   return (
     <div style={{ background: "#0A0A0A", minHeight: "100vh", paddingTop: 80, direction: "rtl" }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;900&display=swap');
-        @keyframes pdShimmer { from{background-position:200% center} to{background-position:-200% center} }
+                @keyframes pdShimmer { from{background-position:200% center} to{background-position:-200% center} }
         .pd-thumb { cursor:pointer; border-radius:8px; overflow:hidden; transition:all 0.25s ease; }
         .pd-thumb:hover { border-color:rgba(155,163,170,0.6)!important; }
         .pd-cart-btn:hover { background:linear-gradient(135deg,#838B92,#AEB6BC)!important; transform:translateY(-1px); box-shadow:0 12px 40px rgba(155,163,170,0.35)!important; }

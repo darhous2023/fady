@@ -681,8 +681,7 @@ export default function AdminGuidePage() {
   return (
     <div style={{ direction: "rtl", fontFamily: "Tajawal, sans-serif" }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;800;900&family=Cinzel:wght@400&display=swap');
-        .guide-toc-item { transition: all 0.2s; cursor: pointer; }
+                .guide-toc-item { transition: all 0.2s; cursor: pointer; }
         .guide-toc-item:hover { background: rgba(201,168,76,0.08) !important; }
         .guide-section-card { transition: all 0.25s; }
         .guide-section-card:hover .guide-expand-btn { opacity: 1 !important; }

@@ -17,8 +17,7 @@ export default function CinematicHero({ videoUrl, eyebrow, headline, subheadline
   return (
     <section style={{ position: "relative", minHeight: "100vh", overflow: "hidden", background: "#0A0A0A" }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;900&family=Space+Mono:wght@400;700&display=swap');
-        .ch-video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0.55; }
+                .ch-video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0.55; }
         .ch-headline {
           font-family: Tajawal, sans-serif; font-weight: 900;
           font-size: clamp(64px, 15vw, 200px); line-height: 0.92; letter-spacing: -0.02em;

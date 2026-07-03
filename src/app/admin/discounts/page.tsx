@@ -102,8 +102,7 @@ export default function DiscountsPage() {
   return (
     <div className="space-y-6" style={{ fontFamily: "Tajawal,sans-serif", direction: "rtl" }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
-        input,select { background: #0A0806 !important; color: #F5EFE0 !important; }
+                input,select { background: #0A0806 !important; color: #F5EFE0 !important; }
         input::placeholder { color: rgba(245,239,224,0.25) !important; }
         input:focus, select:focus { border-color: rgba(201,168,76,0.5) !important; outline: none; }
         .badge-active { background: rgba(34,197,94,0.1); color: #4ade80; border: 1px solid rgba(34,197,94,0.2); }

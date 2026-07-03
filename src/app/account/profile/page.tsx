@@ -178,8 +178,7 @@ export default function ProfilePage() {
     <>
       <StoreHeader />
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;900&display=swap');
-        * { box-sizing: border-box; }
+                * { box-sizing: border-box; }
         body { margin: 0; background: #0A0A0A; }
         .acc-tab { background: none; border: none; cursor: pointer; padding: 10px 20px; border-radius: 10px; font-family: Tajawal,sans-serif; font-size: 14px; font-weight: 700; transition: all 0.2s; white-space: nowrap; }
         .acc-tab.active { background: rgba(155,163,170,0.12); color: #9BA3AA; }

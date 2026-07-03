@@ -162,8 +162,7 @@ export default async function StorePage() {
     <>
       <StoreHeader />
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;700;800;900&family=Space+Mono:wght@400;700&display=swap');
-        * { box-sizing: border-box; }
+                * { box-sizing: border-box; }
         body { margin: 0; background: #0A0A0A; }
         main { padding: 0 !important; min-height: unset !important; }
       `}</style>

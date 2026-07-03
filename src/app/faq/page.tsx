@@ -48,8 +48,7 @@ export default function FaqPage() {
     <>
       <StoreHeader />
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;900&display=swap');
-        * { box-sizing: border-box; } body { margin: 0; background: #0A0A0A; }
+                * { box-sizing: border-box; } body { margin: 0; background: #0A0A0A; }
         .faq-item { border: 1px solid rgba(155,163,170,0.08); border-radius: 14px; padding: 22px 24px; background: linear-gradient(145deg,#131313,#141414); transition: all 0.3s ease; }
         .faq-item:hover { border-color: rgba(155,163,170,0.2); }
       `}</style>

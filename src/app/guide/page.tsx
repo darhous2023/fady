@@ -9,8 +9,7 @@ export default function GuidePage() {
   return (
     <div className="guide-root">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;800;900;600&display=swap');
-
+        
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         .guide-root {

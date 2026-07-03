@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { GeistSans } from "geist/font/sans";
 import { Toaster } from "sonner";
 import { CartProvider } from "@/contexts/CartContext";
@@ -39,13 +39,24 @@ export const metadata: Metadata = {
     icon: [{ url: "/icon-192.png", sizes: "192x192" }],
     apple: "/icon-192.png",
   },
+};
+
+export const viewport: Viewport = {
   themeColor: "#9BA3AA",
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ar" dir="rtl" suppressHydrationWarning>
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;600;700;800;900&family=Space+Mono:wght@400;700&family=Cinzel:wght@400;700&display=swap"
+        />
         <script dangerouslySetInnerHTML={{ __html: `
           if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(() => {}));

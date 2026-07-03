@@ -80,8 +80,7 @@ export default function ReviewsSection({ productId }: { productId: string }) {
   return (
     <div style={{ borderTop: "1px solid rgba(155,163,170,0.12)", paddingTop: 64, marginTop: 64, direction: "rtl" }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700&display=swap');
-        .rev-input { width:100%; background:#131313; border:1px solid rgba(155,163,170,0.18); border-radius:10px; padding:12px 16px; color:#F2F0EC; font-family:Tajawal,sans-serif; font-size:14px; outline:none; transition:border-color 0.2s; }
+                .rev-input { width:100%; background:#131313; border:1px solid rgba(155,163,170,0.18); border-radius:10px; padding:12px 16px; color:#F2F0EC; font-family:Tajawal,sans-serif; font-size:14px; outline:none; transition:border-color 0.2s; }
         .rev-input:focus { border-color:rgba(155,163,170,0.5); }
         .rev-input::placeholder { color:rgba(242,240,236,0.2); }
         .rev-card { background:linear-gradient(145deg,#131313,#141414); border:1px solid rgba(155,163,170,0.08); border-radius:14px; padding:20px; transition:border-color 0.3s; }

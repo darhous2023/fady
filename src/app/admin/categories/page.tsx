@@ -114,7 +114,7 @@ export default function CategoriesPage() {
 
   return (
     <div className="space-y-6" dir="rtl" style={{ fontFamily: "Tajawal,sans-serif" }}>
-      <style>{`@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');`}</style>
+      <style>{``}</style>
 
       <div className="flex items-center justify-between">
         <div>

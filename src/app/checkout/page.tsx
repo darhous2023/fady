@@ -102,8 +102,7 @@ export default function CheckoutPage() {
     <>
       <StoreHeader />
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;900&display=swap');
-        * { box-sizing: border-box; }
+                * { box-sizing: border-box; }
         body { margin: 0; background: #0A0A0A; }
         .co-input {
           width: 100%; background: #131313; border: 1px solid rgba(155,163,170,0.2);

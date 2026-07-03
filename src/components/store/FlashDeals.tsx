@@ -76,8 +76,7 @@ export default function FlashDeals({ deals, title, endsAt }: FlashDealsProps) {
       overflow: "hidden",
     }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;900&display=swap');
-        @keyframes flashPulse {
+                @keyframes flashPulse {
           0%,100% { opacity:1; text-shadow: 0 0 20px rgba(194,69,60,0.6); }
           50%      { opacity:0.75; text-shadow: 0 0 40px rgba(194,69,60,0.9); }
         }

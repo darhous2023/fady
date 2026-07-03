@@ -40,7 +40,7 @@ export default function OrdersPage() {
   return (
     <>
       <StoreHeader />
-      <style>{`@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap'); * { box-sizing: border-box; } body { margin: 0; background: #0A0A0A; }`}</style>
+      <style>{`* { box-sizing: border-box; } body { margin: 0; background: #0A0A0A; }`}</style>
       <main style={{ background: "#0A0A0A", minHeight: "100vh", paddingTop: 80, direction: "rtl" }}>
         <div style={{ maxWidth: 800, margin: "0 auto", padding: "48px 24px 80px" }}>
           <div style={{ marginBottom: 32 }}>

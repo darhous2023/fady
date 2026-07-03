@@ -18,8 +18,7 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
       direction: "rtl", padding: "40px 24px",
     }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap');
-        @keyframes shimmer { from{background-position:200% center} to{background-position:-200% center} }
+                @keyframes shimmer { from{background-position:200% center} to{background-position:-200% center} }
       `}</style>
       <div style={{ textAlign: "center", maxWidth: 480 }}>
         <div style={{

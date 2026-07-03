@@ -44,7 +44,7 @@ export default function SignInPage() {
   return (
     <>
       <StoreHeader />
-      <style>{`@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap'); * { box-sizing: border-box; } body { margin: 0; background: #0A0A0A; }`}</style>
+      <style>{`* { box-sizing: border-box; } body { margin: 0; background: #0A0A0A; }`}</style>
       <main style={{ background: "#0A0A0A", minHeight: "100vh", paddingTop: 80, display: "flex", alignItems: "center", justifyContent: "center", direction: "rtl" }}>
         <div style={{ width: "100%", maxWidth: 420, padding: "40px 24px" }}>
           <div style={{ textAlign: "center", marginBottom: 40 }}>

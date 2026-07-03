@@ -89,8 +89,7 @@ export default function OrderConfirmedPage() {
     <>
       <StoreHeader />
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&display=swap');
-        * { box-sizing: border-box; } body { margin: 0; background: #0A0A0A; }
+                * { box-sizing: border-box; } body { margin: 0; background: #0A0A0A; }
       `}</style>
       <main style={{ background: "#0A0A0A", minHeight: "100vh", paddingTop: 80, direction: "rtl", display: "flex", alignItems: "center", justifyContent: "center" }}>
         <Suspense fallback={<div style={{ fontFamily: "Tajawal,sans-serif", color: "#9BA3AA", textAlign: "center", padding: 60 }}>...</div>}>
