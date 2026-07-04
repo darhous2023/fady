@@ -146,11 +146,12 @@
     </div>
   </div>
 
-  <div class="phase pending">
-    <div class="check"></div>
+  <div class="phase done">
+    <div class="check">✓</div>
     <div class="phase-body">
-      <div class="phase-title">Phase 6 — Used Cars</div>
-      <div class="phase-desc">migration حقول السيارة + ProductForm (رفع صور من الجهاز) + /used بفلاتر + تفاصيل.</div>
+      <div class="phase-title">Phase 6 — إعادة تصميم لوحة الأدمن</div>
+      <div class="phase-desc">إعادة تلوين لوحة الأدمن بالكامل (27 ملف) من لوحة الألوان الذهبية القديمة إلى هوية الستيل/الأسود المحايد المطابقة للموقع — تحقّق فعلي على صفحة الدخول اللايف.</div>
+      <div class="skills">no formal design skill invoked — mechanical color-swap re-skin, not a new visual direction</div>
     </div>
   </div>
 
@@ -190,12 +191,12 @@
     </div>
   </div>
 
-  <div class="phase pending">
-    <div class="check"></div>
+  <div class="phase done">
+    <div class="check">✓</div>
     <div class="phase-body">
-      <div class="phase-title">Phase 11 — Final QA</div>
-      <div class="phase-desc">اختبار حي شامل (بوابتين/360/واتساب/حجز/أدمن) + مراجعة RLS + handoff.</div>
-      <div class="skills">skills: accessibility</div>
+      <div class="phase-title">Phase 11 — Final QA + تسليم الموقع</div>
+      <div class="phase-desc">اختبار حي شامل: كل الصفحات الأساسية بترجع 200، صفر مشاكل تمرير أفقي على الموبايل، صلّحنا خلل حقيقي في معاينة السوشيال ميديا (og:image كان بيرجع صفر بايت لايف)، وصلّحنا خط عنوان الهيرو (تباعد حروف سالب كان بيكسر اتصال الحروف العربية في كلمة "الفادي"). حذفنا كمان ملفين قديمين من فولدر public كانوا متاحين للعامة ولسه بيوصفوا بيزنس ShahY القديم بالكامل. أعدنا بناء دليل الكتالوج ودليل الأدمن بمحتوى دقيق يعكس فيتشرز الموقع الحالية الحقيقية بدل المحتوى الموروث.</div>
+      <div class="skills">no formal design/animation skill — bug-fix, content-rewrite, and QA engineering</div>
     </div>
   </div>
 
@@ -360,6 +361,27 @@
       <div class="timeline-links">
         <a href="https://fady-delta.vercel.app/new" target="_blank">بوابة السيارات الجديدة اللايف</a>
         <a href="https://fady-delta.vercel.app/used" target="_blank">السيارات المستعملة اللايف</a>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">2026-07-04</div>
+      <div class="timeline-title">Phase 6 + Phase 11 + إعادة بناء الدليل — جلسة تسليم شاملة</div>
+      <div class="timeline-desc">
+        طلب شامل منك غطّى إعادة تصميم لوحة الأدمن، تدقيق نهائي، وتسليم الموقع. النتائج:
+        <strong>إعادة تصميم لوحة الأدمن بالكامل</strong> (27 ملف) من الذهبي القديم للستيل/الأسود المحايد المطابق للموقع.
+        <strong>صلّحنا خط عنوان الهيرو</strong>: تباعد حروف سالب زائد عن تنسيق لاتيني قديم كان بيكسر اتصال الحروف العربية في كلمة "الفادي" بصريًا.
+        <strong>لقينا وصلّحنا باج حقيقي خطير</strong>: صورة معاينة السوشيال ميديا (og:image) كانت بترجع صفر بايت لايف من غير ما نلاحظ — السبب إن next/og مش بيقدر يرسم الخط العربي ومكانش بيظهر أي صورة لمين بيبعت لينك الموقع. استبدلنا محتوى الصورة بنص إنجليزي وأكدنا إنها شغالة فعليًا لايف.
+        <strong>أضفنا شريط اعتماد المطوّر</strong> في الفوتر بالترتيب والروابط المطلوبة بالظبط (إنستجرام/لينكدإن/فيسبوك/واتساب/جيت هاب + تليفون + إيميل)، اتحقق منها كلها بدقة.
+        <strong>لقينا موجة تانية من أثر ShahY الحقيقي</strong> فاتت المراجعة الأولى بسبب مشكلة بحث في الهمزة العربية: عبارة "إكسسوارات فاخرة" كانت لسه ظاهرة لايف في الصفحة الرئيسية وصفحة المستعملة، صندوق البحث كان بيقترح كلمات أزياء (شنط/كلتشات) بصيغة مؤنثة، وأهم حاجة: سكريبت الـ seed الأساسي كان لسه هيزرع تصنيفات أزياء لو حد شغّله بالغلط. اتصلحوا كلهم.
+        <strong>لقينا وحذفنا ملفين كانوا متاحين للعامة فعليًا</strong> (مش بس في الكود) بيوصفوا بيزنس ShahY القديم بالكامل — كانوا قاعدين في مجلد public وبيترجعوا 200 لايف لأي حد يعرف الرابط.
+        <strong>أعدنا بناء دليل المعرض ودليل الأدمن بالكامل</strong> من الصفر (كانت مؤجلة لآخر الخطة، ودلوقتي خلصت) — بمحتوى دقيق يعكس الفيتشرز الحقيقية للموقع بدل ورشة تسويقية موروثة من متجر أزياء.
+        <strong>حدّثنا صفحة الـ README</strong> في الريبو لتوصف معرض الفادي فعليًا بدل وصف التمبلت العام.
+        <strong>حاجات مؤجلة/تحتاج منك</strong>: اللوجو اللي بعتّه — للأسف مفيش أداة تقدر تسحب الصورة من الشات مباشرة كملف، محتاجين ترفعه في الريبو؛ صور 360 حقيقية (دوّرنا واتأكدنا مفيش مصدر مجاني موثوق)؛ 3 ملفات قديمة غير مكتملة لقيناها في المشروع مش واضح مصيرها.
+      </div>
+      <div class="timeline-links">
+        <a href="https://fady-delta.vercel.app" target="_blank">الموقع اللايف</a>
+        <a href="https://fady-delta.vercel.app/guide" target="_blank">دليل المعرض الجديد</a>
       </div>
     </div>
 
