@@ -11,10 +11,15 @@ export default function StoreHeader() {
   const [menuOpen, setMenuOpen]     = useState(false)
   const [wlCount, setWlCount]       = useState(0)
   const [announcement, setAnnouncement] = useState<{ text: string; active: boolean } | null>(null)
+  const [tagline, setTagline] = useState("حيث تلتقي الفخامة بالثقة")
   const { count } = useCart()
 
   useEffect(() => {
     fetch("/api/announcement").then(r => r.json()).then(setAnnouncement).catch(() => {})
+  }, [])
+
+  useEffect(() => {
+    fetch("/api/store-config").then(r => r.json()).then(d => { if (d.intro_tagline_ar) setTagline(d.intro_tagline_ar) }).catch(() => {})
   }, [])
 
   useEffect(() => {
@@ -98,7 +103,7 @@ export default function StoreHeader() {
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
             letterSpacing: "1px",
           }}>ELFADY</span>
-          <span style={{ fontFamily: "Tajawal, sans-serif", fontSize: 9, color: "#666", letterSpacing: "3px", display: "block", lineHeight: 1, marginTop: 1 }}>معرض سيارات</span>
+          <span style={{ fontFamily: "Tajawal, sans-serif", fontSize: 9, color: "#666", letterSpacing: "1px", display: "block", lineHeight: 1.3, marginTop: 1, whiteSpace: "nowrap" }}>{tagline}</span>
         </div>
       </Link>
 

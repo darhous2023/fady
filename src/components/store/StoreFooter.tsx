@@ -1,5 +1,7 @@
 "use client"
 
+import { useEffect, useState } from "react"
+
 const WA = "201555557745"
 const FACEBOOK = "https://www.facebook.com/elfadywaelmeladcars"
 const INSTAGRAM_SHOWROOM = "https://www.instagram.com/el_fady_car_trading/"
@@ -42,6 +44,12 @@ const DEV_EMAIL = "ahmeddarhous@gmail.com"
 const DEV_EMAIL_MAILTO = "mailto:ahmeddarhous@gmail.com"
 
 export default function StoreFooter() {
+  const [tagline, setTagline] = useState("حيث تلتقي الفخامة بالثقة")
+
+  useEffect(() => {
+    fetch("/api/store-config").then(r => r.json()).then(d => { if (d.intro_tagline_ar) setTagline(d.intro_tagline_ar) }).catch(() => {})
+  }, [])
+
   return (
     <footer style={{
       background: "#0D0D0D", borderTop: "1px solid #171717",
@@ -79,8 +87,6 @@ export default function StoreFooter() {
           color: #6b7076; transition: color 0.2s ease, background 0.2s ease, transform 0.2s ease;
         }
         .sf-dev-icon:hover { color: #C9CFD4; background: rgba(155,163,170,0.08); transform: translateY(-2px); }
-        .sf-dev-contact { font-family: 'Space Mono', monospace; font-size: 12px; color: #6b7076; text-decoration: none; transition: color 0.2s ease; direction: ltr; unicode-bidi: isolate; }
-        .sf-dev-contact:hover { color: #C9CFD4; }
         .sf-dev-name { color: #9BA3AA; text-decoration: none; font-weight: 700; transition: color 0.2s ease; }
         .sf-dev-name:hover { color: #C9CFD4; text-decoration: underline; text-underline-offset: 3px; }
       `}</style>
@@ -100,7 +106,7 @@ export default function StoreFooter() {
                   background: "linear-gradient(135deg,#9BA3AA,#C9CFD4,#9BA3AA)",
                   WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
                 }}>ELFADY</span>
-                <span style={{ fontFamily: "Tajawal, sans-serif", fontSize: 10, color: "#666", letterSpacing: "3px", display: "block", lineHeight: 1, marginTop: 1 }}>معرض سيارات</span>
+                <span style={{ fontFamily: "Tajawal, sans-serif", fontSize: 10, color: "#666", letterSpacing: "0.5px", display: "block", lineHeight: 1.3, marginTop: 1 }}>{tagline}</span>
               </div>
             </div>
             <p style={{ fontFamily: "Tajawal, sans-serif", fontSize: 13, color: "#F2F0EC", opacity: 0.35, lineHeight: 1.8, marginBottom: 20 }}>
@@ -146,24 +152,21 @@ export default function StoreFooter() {
             <h4 style={{ fontFamily: "Tajawal, sans-serif", fontSize: 12, fontWeight: 700, color: "#9BA3AA", letterSpacing: "3px", textTransform: "uppercase", marginBottom: 20 }}>
               تواصل معنا
             </h4>
-            <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 20 }}>
-              <a href={`https://wa.me/${WA}`} target="_blank" rel="noopener noreferrer" className="sf-social" style={{ opacity: 0.6 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
+              <a href={`https://wa.me/${WA}`} target="_blank" rel="noopener noreferrer" className="sf-dicon sf-dicon-wa" aria-label="واتساب" title="واتساب">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#25D366" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/><path d="M9 10c0 5 3.5 7.5 7.5 7.5"/>
                 </svg>
-                <span style={{ fontFamily: "Tajawal, sans-serif", fontSize: 13, color: "#F2F0EC" }}>+{WA}</span>
               </a>
-              <a href={INSTAGRAM_SHOWROOM} target="_blank" rel="noopener noreferrer" className="sf-social" style={{ opacity: 0.6 }}>
+              <a href={INSTAGRAM_SHOWROOM} target="_blank" rel="noopener noreferrer" className="sf-dicon" aria-label="إنستجرام المعرض" title="إنستجرام المعرض">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9BA3AA" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="#9BA3AA"/>
                 </svg>
-                <span style={{ fontFamily: "Tajawal, sans-serif", fontSize: 13, color: "#F2F0EC" }}>@el_fady_car_trading</span>
               </a>
-              <a href={FACEBOOK} target="_blank" rel="noopener noreferrer" className="sf-social" style={{ opacity: 0.6 }}>
+              <a href={FACEBOOK} target="_blank" rel="noopener noreferrer" className="sf-dicon" aria-label="فيسبوك" title="فيسبوك">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9BA3AA" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
                 </svg>
-                <span style={{ fontFamily: "Tajawal, sans-serif", fontSize: 13, color: "#F2F0EC" }}>فيسبوك</span>
               </a>
             </div>
           </div>
@@ -242,12 +245,17 @@ export default function StoreFooter() {
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d={s.path} /></svg>
               </a>
             ))}
-          </div>
-
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 16, flexWrap: "wrap" }}>
-            <a href={DEV_PHONE_TEL} className="sf-dev-contact" aria-label="اتصل بنا">{DEV_PHONE_DISPLAY}</a>
-            <span style={{ color: "#333", fontSize: 10 }}>·</span>
-            <a href={DEV_EMAIL_MAILTO} className="sf-dev-contact" aria-label="راسلنا بالبريد الإلكتروني">{DEV_EMAIL}</a>
+            <span style={{ width: 1, height: 16, background: "#232323", margin: "0 4px" }} />
+            <a href={DEV_PHONE_TEL} className="sf-dev-icon" aria-label={`اتصل بنا: ${DEV_PHONE_DISPLAY}`} title={DEV_PHONE_DISPLAY}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92Z"/>
+              </svg>
+            </a>
+            <a href={DEV_EMAIL_MAILTO} className="sf-dev-icon" aria-label={`راسلنا: ${DEV_EMAIL}`} title={DEV_EMAIL}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/>
+              </svg>
+            </a>
           </div>
 
           <p style={{ fontFamily: "Tajawal, sans-serif", fontSize: 12, color: "#4d4d4d", margin: 0, direction: "ltr" }}>

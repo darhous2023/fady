@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { signIn } from "@/lib/auth/client";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
@@ -10,6 +10,11 @@ function LoginForm() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/admin/dashboard";
   const [loading, setLoading] = useState(false);
+  const [tagline, setTagline] = useState("حيث تلتقي الفخامة بالثقة");
+
+  useEffect(() => {
+    fetch("/api/store-config").then(r => r.json()).then(d => { if (d.intro_tagline_ar) setTagline(d.intro_tagline_ar) }).catch(() => {});
+  }, []);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -35,7 +40,8 @@ function LoginForm() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/logo-400.png" alt="ELFADY" width={56} height={56} className="rounded-xl object-cover mx-auto mb-4" />
           <h1 className="text-4xl font-black text-[#9BA3AA] tracking-widest">ELFADY</h1>
-          <p className="text-[#F2F0EC]/40 text-sm mt-2">لوحة الإدارة</p>
+          <p className="text-[#F2F0EC]/35 text-xs mt-2">{tagline}</p>
+          <p className="text-[#F2F0EC]/40 text-sm mt-1">لوحة الإدارة</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">

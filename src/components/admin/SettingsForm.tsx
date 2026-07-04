@@ -75,7 +75,7 @@ export default function SettingsForm({ settings }: { settings: Record<string, st
         <LogoField defaultValue={settings.logo_url} />
 
         <div>
-          <label className={labelCls}>نص مقدمة التحميل (يظهر تحت اسم الموقع في شاشة الانترو)</label>
+          <label className={labelCls}>الشعار التعريفي (يظهر تحت اسم ELFADY في الهيدر، الفوتر، شاشة الدخول، ومقدمة التحميل — في كل الموقع)</label>
           <input name="intro_tagline_ar" defaultValue={settings.intro_tagline_ar || "حيث تلتقي الفخامة بالثقة"} className={inputCls} />
         </div>
       </div>
