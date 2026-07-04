@@ -4,6 +4,7 @@ import { Toaster } from "sonner";
 import { CartProvider } from "@/contexts/CartContext";
 import ScrollToTop from "@/components/store/ScrollToTop";
 import CartDrawer from "@/components/store/CartDrawer";
+import PageViewTracker from "@/components/store/PageViewTracker";
 import "@/styles/globals.css";
 
 const SITE_URL = "https://fady-delta.vercel.app"
@@ -105,6 +106,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
           <ScrollToTop />
           <CartDrawer />
+          <PageViewTracker />
         </CartProvider>
         <Toaster position="bottom-left" richColors />
       </body>

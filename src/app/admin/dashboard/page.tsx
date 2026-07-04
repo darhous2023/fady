@@ -68,6 +68,40 @@ async function getStats() {
 
   const topProducts = (Array.isArray(topProductsRows) ? topProductsRows : (topProductsRows as { rows: unknown[] }).rows ?? []) as { name_ar: string; orders: number }[]
 
+  // Visitor stats (internal first-party page_views table)
+  function firstRow(result: unknown): { count: number } {
+    const rows = (Array.isArray(result) ? result : (result as { rows: unknown[] }).rows ?? []) as { count: number }[]
+    return rows[0] ?? { count: 0 }
+  }
+  const visitorsToday = firstRow(await db.execute(sql`
+    SELECT COUNT(DISTINCT visitor_id)::int AS count FROM page_views
+    WHERE created_at >= DATE_TRUNC('day', NOW())
+  `))
+  const visitors30d = firstRow(await db.execute(sql`
+    SELECT COUNT(DISTINCT visitor_id)::int AS count FROM page_views
+    WHERE created_at >= NOW() - INTERVAL '30 days'
+  `))
+  const views30d = firstRow(await db.execute(sql`
+    SELECT COUNT(*)::int AS count FROM page_views
+    WHERE created_at >= NOW() - INTERVAL '30 days'
+  `))
+
+  const mostViewedRows = await db.execute(sql`
+    SELECT p.name_ar, COUNT(pv.id)::int AS views
+    FROM page_views pv
+    JOIN products p ON pv.path = '/products/' || p.slug
+    WHERE pv.created_at >= NOW() - INTERVAL '30 days'
+    GROUP BY p.id, p.name_ar
+    ORDER BY views DESC
+    LIMIT 5
+  `)
+  const mostViewedCars = (Array.isArray(mostViewedRows) ? mostViewedRows : (mostViewedRows as { rows: unknown[] }).rows ?? []) as { name_ar: string; views: number }[]
+
+  const bookingsByStatusRows = await db.execute(sql`
+    SELECT status, COUNT(*)::int AS count FROM orders GROUP BY status
+  `)
+  const bookingsByStatus = (Array.isArray(bookingsByStatusRows) ? bookingsByStatusRows : (bookingsByStatusRows as { rows: unknown[] }).rows ?? []) as { status: string; count: number }[]
+
   return {
     totalOrders: totalOrders.count,
     pendingOrders: pendingOrders.count,
@@ -77,6 +111,11 @@ async function getStats() {
     recentOrders,
     revenueByDay,
     topProducts,
+    visitorsToday: visitorsToday.count,
+    visitors30d: visitors30d.count,
+    views30d: views30d.count,
+    mostViewedCars,
+    bookingsByStatus,
   };
 }
 
@@ -114,6 +153,16 @@ export default async function DashboardPage() {
           icon="💰"
         />
         <StatCard label="العملاء" value={stats.totalCustomers.toString()} icon="🧑‍💼" />
+      </div>
+
+      {/* Visitor Stats */}
+      <div>
+        <h2 className="text-sm font-semibold text-[#F2F0EC]/40 uppercase tracking-widest mb-3">إحصائيات الزوّار</h2>
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+          <StatCard label="زوّار اليوم" value={stats.visitorsToday.toString()} icon="👁️" highlight />
+          <StatCard label="زوّار فريدين (30 يوم)" value={stats.visitors30d.toString()} icon="👥" />
+          <StatCard label="مشاهدات الصفحات (30 يوم)" value={stats.views30d.toString()} icon="📈" />
+        </div>
       </div>
 
       {/* Revenue Chart */}
@@ -165,20 +214,61 @@ export default async function DashboardPage() {
           )}
         </div>
       </div>
-      {/* Top Products */}
-      {stats.topProducts.length > 0 && (
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Top Products */}
+        {stats.topProducts.length > 0 && (
+          <div className="bg-[#0A0A0A] rounded-xl border border-[#9BA3AA]/10 overflow-hidden">
+            <div className="px-6 py-4 border-b border-[#9BA3AA]/10">
+              <h2 className="font-semibold text-[#F2F0EC]">الأكثر حجزاً</h2>
+            </div>
+            <div className="divide-y divide-[#9BA3AA]/5">
+              {stats.topProducts.map((p, i) => (
+                <div key={i} className="flex items-center justify-between px-6 py-3">
+                  <div className="flex items-center gap-3">
+                    <span className="text-xs font-bold text-[#9BA3AA]/40 w-5">{i + 1}</span>
+                    <span className="text-sm text-[#F2F0EC]">{p.name_ar}</span>
+                  </div>
+                  <span className="text-xs font-bold text-[#9BA3AA] bg-[#9BA3AA]/10 px-2 py-1 rounded-full">{p.orders} طلب</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Most Viewed Cars */}
+        {stats.mostViewedCars.length > 0 && (
+          <div className="bg-[#0A0A0A] rounded-xl border border-[#9BA3AA]/10 overflow-hidden">
+            <div className="px-6 py-4 border-b border-[#9BA3AA]/10">
+              <h2 className="font-semibold text-[#F2F0EC]">الأكثر مشاهدة (30 يوم)</h2>
+            </div>
+            <div className="divide-y divide-[#9BA3AA]/5">
+              {stats.mostViewedCars.map((p, i) => (
+                <div key={i} className="flex items-center justify-between px-6 py-3">
+                  <div className="flex items-center gap-3">
+                    <span className="text-xs font-bold text-[#9BA3AA]/40 w-5">{i + 1}</span>
+                    <span className="text-sm text-[#F2F0EC]">{p.name_ar}</span>
+                  </div>
+                  <span className="text-xs font-bold text-[#9BA3AA] bg-[#9BA3AA]/10 px-2 py-1 rounded-full">{p.views} مشاهدة</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Bookings by status */}
+      {stats.bookingsByStatus.length > 0 && (
         <div className="bg-[#0A0A0A] rounded-xl border border-[#9BA3AA]/10 overflow-hidden">
           <div className="px-6 py-4 border-b border-[#9BA3AA]/10">
-            <h2 className="font-semibold text-[#F2F0EC]">الأكثر مبيعاً</h2>
+            <h2 className="font-semibold text-[#F2F0EC]">الحجوزات حسب الحالة</h2>
           </div>
-          <div className="divide-y divide-[#9BA3AA]/5">
-            {stats.topProducts.map((p, i) => (
-              <div key={i} className="flex items-center justify-between px-6 py-3">
-                <div className="flex items-center gap-3">
-                  <span className="text-xs font-bold text-[#9BA3AA]/40 w-5">{i + 1}</span>
-                  <span className="text-sm text-[#F2F0EC]">{p.name_ar}</span>
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-3 p-6">
+            {stats.bookingsByStatus.map(b => (
+              <div key={b.status} className="text-center">
+                <div className={`inline-block px-3 py-1 rounded-full text-xs font-medium mb-2 ${STATUS_COLORS[b.status] ?? "bg-[#9BA3AA]/10 text-[#9BA3AA]"}`}>
+                  {STATUS_LABELS[b.status as keyof typeof STATUS_LABELS] ?? b.status}
                 </div>
-                <span className="text-xs font-bold text-[#9BA3AA] bg-[#9BA3AA]/10 px-2 py-1 rounded-full">{p.orders} طلب</span>
+                <p className="text-xl font-bold text-[#F2F0EC]">{b.count}</p>
               </div>
             ))}
           </div>

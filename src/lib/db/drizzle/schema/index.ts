@@ -160,6 +160,15 @@ export {
   type AddToWishlistInput,
 } from "./wishlist";
 
+// Page views (internal analytics)
+export {
+  pageViews,
+  selectPageViewSchema,
+  insertPageViewSchema,
+  type PageView,
+  type InsertPageView,
+} from "./pageViews";
+
 // Relations
 export {
   usersRelations,
