@@ -10,8 +10,8 @@ export default async function HomeContentPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-[#F5EFE0]">محتوى الصفحة الرئيسية</h1>
-        <p className="text-[#F5EFE0]/40 text-sm mt-1">
+        <h1 className="text-2xl font-bold text-[#F2F0EC]">محتوى الصفحة الرئيسية</h1>
+        <p className="text-[#F2F0EC]/40 text-sm mt-1">
           كل نص وصورة وفيديو في الصفحة الرئيسية قابل للتعديل من هنا — بدون الحاجة لتعديل الكود
         </p>
       </div>

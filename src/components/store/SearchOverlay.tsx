@@ -5,8 +5,8 @@ import Link from "next/link"
 
 interface Result { id: string; slug: string; name_ar: string; price: number; category_name: string | null; image: string | null }
 
-const POPULAR = ["شنط", "محافظ", "كلتشات", "أحذية", "بريميوم", "ميرور كواليتي"]
-const RECENT_KEY = "shahy-recent-searches"
+const POPULAR = ["تويوتا", "هيونداي", "كيا", "سيارات أوتوماتيك", "أقل من 400 ألف", "موديل 2022"]
+const RECENT_KEY = "elfady-recent-searches"
 const MAX_RECENT = 5
 
 function getRecent(): string[] {
@@ -95,7 +95,7 @@ export default function SearchOverlay({ onClose }: { onClose: () => void }) {
             <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
           </svg>
           <input ref={inputRef} value={q} onChange={e => setQ(e.target.value)}
-            placeholder="ابحثي عن منتج..."
+            placeholder="ابحث عن سيارة أو ماركة..."
             style={{
               flex: 1, background: "none", border: "none", outline: "none",
               fontFamily: "Tajawal,sans-serif", fontSize: 16, color: "#F2F0EC",
@@ -116,7 +116,7 @@ export default function SearchOverlay({ onClose }: { onClose: () => void }) {
               <div style={{ marginBottom: 20 }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
                   <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 11, fontWeight: 700, color: "rgba(242,240,236,0.35)", letterSpacing: "1px" }}>
-                    🕐 بحثتِ مؤخراً
+                    🕐 بحثت مؤخرًا
                   </span>
                   <button
                     onClick={() => { clearRecent(); setRecent([]) }}
@@ -193,7 +193,7 @@ export default function SearchOverlay({ onClose }: { onClose: () => void }) {
               لا توجد نتائج لـ &quot;{q}&quot;
             </p>
             <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 12, color: "rgba(242,240,236,0.2)", margin: 0 }}>
-              جربي كلمة أخرى أو تصفّحي المنتجات
+              جرب كلمة أخرى أو تصفّح السيارات
             </p>
           </div>
         )}

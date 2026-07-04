@@ -73,7 +73,7 @@ export default async function UsedCarsPage({ searchParams }: { searchParams: Pro
             سيارات مستعملة
           </h1>
         </div>
-        <ProductGrid initialProducts={carsWithStock} initialCategory={initialCategory} />
+        <ProductGrid initialProducts={carsWithStock} initialCategory={initialCategory} showHeader={false} />
       </div>
       <StoreFooter />
       <FloatingWA />

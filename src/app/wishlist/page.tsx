@@ -56,7 +56,7 @@ export default function WishlistPage() {
               قائمة أمنياتك
             </h1>
             <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 14, color: "rgba(242,240,236,0.35)" }}>
-              {items.length > 0 ? `${items.length} منتج محفوظ` : "لا توجد منتجات محفوظة"}
+              {items.length > 0 ? `${items.length} سيارة محفوظة` : "لا توجد سيارات محفوظة"}
             </p>
           </div>
 
@@ -64,10 +64,10 @@ export default function WishlistPage() {
             <div style={{ textAlign: "center", padding: "60px 20px" }}>
               <div style={{ fontSize: 56, marginBottom: 20, opacity: 0.15 }}>🤍</div>
               <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 16, color: "rgba(242,240,236,0.3)" }}>
-                لم تحفظي أي منتج حتى الآن
+                لم تُحفظ أي سيارة حتى الآن
               </p>
-              <Link href="/" style={{ fontFamily: "Tajawal,sans-serif", fontWeight: 700, fontSize: 14, padding: "12px 28px", borderRadius: 8, textDecoration: "none", background: "linear-gradient(135deg,#9BA3AA,#C9CFD4)", color: "#0A0A0A", display: "inline-block", marginTop: 24 }}>
-                تصفّحي المتجر
+              <Link href="/used" style={{ fontFamily: "Tajawal,sans-serif", fontWeight: 700, fontSize: 14, padding: "12px 28px", borderRadius: 8, textDecoration: "none", background: "linear-gradient(135deg,#9BA3AA,#C9CFD4)", color: "#0A0A0A", display: "inline-block", marginTop: 24 }}>
+                تصفّح السيارات
               </Link>
             </div>
           ) : (

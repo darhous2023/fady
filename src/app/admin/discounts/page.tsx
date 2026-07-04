@@ -17,8 +17,8 @@ interface DiscountCode {
 }
 
 const inputStyle: React.CSSProperties = {
-  width: "100%", background: "#0A0806", border: "1px solid rgba(201,168,76,0.2)",
-  borderRadius: 8, padding: "10px 14px", color: "#F5EFE0",
+  width: "100%", background: "#0A0A0A", border: "1px solid rgba(201,168,76,0.2)",
+  borderRadius: 8, padding: "10px 14px", color: "#F2F0EC",
   fontFamily: "Tajawal,sans-serif", fontSize: 14, outline: "none",
 }
 
@@ -102,7 +102,7 @@ export default function DiscountsPage() {
   return (
     <div className="space-y-6" style={{ fontFamily: "Tajawal,sans-serif", direction: "rtl" }}>
       <style>{`
-                input,select { background: #0A0806 !important; color: #F5EFE0 !important; }
+                input,select { background: #0A0A0A !important; color: #F2F0EC !important; }
         input::placeholder { color: rgba(245,239,224,0.25) !important; }
         input:focus, select:focus { border-color: rgba(201,168,76,0.5) !important; outline: none; }
         .badge-active { background: rgba(34,197,94,0.1); color: #4ade80; border: 1px solid rgba(34,197,94,0.2); }
@@ -112,7 +112,7 @@ export default function DiscountsPage() {
       {/* Header */}
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div>
-          <h1 style={{ fontSize: 24, fontWeight: 700, color: "#F5EFE0", margin: 0 }}>أكواد الخصم</h1>
+          <h1 style={{ fontSize: 24, fontWeight: 700, color: "#F2F0EC", margin: 0 }}>أكواد الخصم</h1>
           <p style={{ fontSize: 13, color: "rgba(245,239,224,0.35)", margin: "4px 0 0" }}>
             {codes.length} كود — {codes.filter(c => c.is_active).length} مفعّل
           </p>
@@ -120,8 +120,8 @@ export default function DiscountsPage() {
         <button
           onClick={() => setShowForm(v => !v)}
           style={{
-            background: showForm ? "rgba(201,168,76,0.08)" : "linear-gradient(135deg,#C9A84C,#F0D882)",
-            color: showForm ? "#C9A84C" : "#0A0806", fontFamily: "Tajawal,sans-serif",
+            background: showForm ? "rgba(201,168,76,0.08)" : "linear-gradient(135deg,#9BA3AA,#C9CFD4)",
+            color: showForm ? "#9BA3AA" : "#0A0A0A", fontFamily: "Tajawal,sans-serif",
             fontWeight: 700, fontSize: 14, padding: "10px 20px", borderRadius: 8,
             border: showForm ? "1px solid rgba(201,168,76,0.3)" : "none", cursor: "pointer",
           }}
@@ -133,10 +133,10 @@ export default function DiscountsPage() {
       {/* Create form */}
       {showForm && (
         <form onSubmit={handleCreate} style={{
-          background: "linear-gradient(145deg,#0E0C09,#111009)",
+          background: "linear-gradient(145deg,#0A0A0A,#111111)",
           border: "1px solid rgba(201,168,76,0.15)", borderRadius: 14, padding: "24px 20px",
         }}>
-          <h2 style={{ fontSize: 15, fontWeight: 700, color: "#C9A84C", margin: "0 0 20px" }}>إنشاء كود خصم جديد</h2>
+          <h2 style={{ fontSize: 15, fontWeight: 700, color: "#9BA3AA", margin: "0 0 20px" }}>إنشاء كود خصم جديد</h2>
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))", gap: 14, marginBottom: 14 }}>
             <div>
@@ -145,7 +145,7 @@ export default function DiscountsPage() {
                 <input style={inputStyle} placeholder="SHAHY2025" value={form.code}
                   onChange={e => setForm(f => ({ ...f, code: e.target.value.toUpperCase() }))} />
                 <button type="button" onClick={generateCode}
-                  style={{ padding: "0 12px", background: "rgba(201,168,76,0.1)", border: "1px solid rgba(201,168,76,0.2)", borderRadius: 8, color: "#C9A84C", cursor: "pointer", fontSize: 12, whiteSpace: "nowrap" }}>
+                  style={{ padding: "0 12px", background: "rgba(201,168,76,0.1)", border: "1px solid rgba(201,168,76,0.2)", borderRadius: 8, color: "#9BA3AA", cursor: "pointer", fontSize: 12, whiteSpace: "nowrap" }}>
                   عشوائي
                 </button>
               </div>
@@ -189,7 +189,7 @@ export default function DiscountsPage() {
 
           <button type="submit" disabled={submitting}
             style={{
-              background: "linear-gradient(135deg,#C9A84C,#F0D882)", color: "#0A0806",
+              background: "linear-gradient(135deg,#9BA3AA,#C9CFD4)", color: "#0A0A0A",
               fontFamily: "Tajawal,sans-serif", fontWeight: 700, fontSize: 14,
               padding: "11px 28px", borderRadius: 8, border: "none", cursor: submitting ? "wait" : "pointer",
               opacity: submitting ? 0.7 : 1,
@@ -200,7 +200,7 @@ export default function DiscountsPage() {
       )}
 
       {/* Table */}
-      <div style={{ background: "#0A0806", border: "1px solid rgba(201,168,76,0.1)", borderRadius: 14, overflow: "hidden" }}>
+      <div style={{ background: "#0A0A0A", border: "1px solid rgba(201,168,76,0.1)", borderRadius: 14, overflow: "hidden" }}>
         {loading ? (
           <div style={{ padding: 48, textAlign: "center", color: "rgba(245,239,224,0.25)", fontSize: 14 }}>جاري التحميل...</div>
         ) : codes.length === 0 ? (
@@ -226,14 +226,14 @@ export default function DiscountsPage() {
                     <td style={{ padding: "14px 16px" }}>
                       <span style={{
                         fontFamily: "monospace", fontSize: 13, fontWeight: 700, letterSpacing: "1px",
-                        background: "rgba(201,168,76,0.08)", color: "#C9A84C",
+                        background: "rgba(201,168,76,0.08)", color: "#9BA3AA",
                         padding: "3px 10px", borderRadius: 6,
                       }}>{c.code}</span>
                     </td>
                     <td style={{ padding: "14px 16px", fontSize: 13, color: "rgba(245,239,224,0.6)" }}>
                       {c.type === "percent" ? "نسبة %" : "مبلغ ثابت"}
                     </td>
-                    <td style={{ padding: "14px 16px", fontSize: 14, fontWeight: 700, color: "#F5EFE0" }}>
+                    <td style={{ padding: "14px 16px", fontSize: 14, fontWeight: 700, color: "#F2F0EC" }}>
                       {c.type === "percent" ? `${c.value}%` : `${c.value} ج.م`}
                     </td>
                     <td style={{ padding: "14px 16px", fontSize: 13, color: "rgba(245,239,224,0.6)" }}>

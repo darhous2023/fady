@@ -10,8 +10,8 @@ export default async function SettingsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-[#F5EFE0]">الإعدادات</h1>
-        <p className="text-[#F5EFE0]/40 text-sm mt-1">إعدادات المتجر العامة</p>
+        <h1 className="text-2xl font-bold text-[#F2F0EC]">الإعدادات</h1>
+        <p className="text-[#F2F0EC]/40 text-sm mt-1">إعدادات المتجر العامة</p>
       </div>
       <SettingsForm settings={map} />
     </div>

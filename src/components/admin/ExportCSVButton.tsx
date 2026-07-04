@@ -9,7 +9,7 @@ export default function ExportCSVButton() {
         display: "inline-flex", alignItems: "center", gap: 6,
         padding: "8px 18px", borderRadius: 8, textDecoration: "none",
         background: "rgba(201,168,76,0.1)", border: "1px solid rgba(201,168,76,0.25)",
-        color: "#C9A84C", fontFamily: "Tajawal,sans-serif", fontSize: 13, fontWeight: 700,
+        color: "#9BA3AA", fontFamily: "Tajawal,sans-serif", fontSize: 13, fontWeight: 700,
         transition: "all 0.2s",
       }}
     >

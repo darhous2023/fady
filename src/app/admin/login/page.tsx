@@ -28,30 +28,30 @@ function LoginForm() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0A0806] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center p-4">
       <div className="w-full max-w-sm">
         {/* Logo */}
         <div className="text-center mb-10">
-          <h1 className="text-4xl font-black text-[#C9A84C] tracking-widest">ELFADY</h1>
-          <p className="text-[#F5EFE0]/40 text-sm mt-2">لوحة الإدارة</p>
+          <h1 className="text-4xl font-black text-[#9BA3AA] tracking-widest">ELFADY</h1>
+          <p className="text-[#F2F0EC]/40 text-sm mt-2">لوحة الإدارة</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm text-[#F5EFE0]/60 mb-1.5">
+            <label className="block text-sm text-[#F2F0EC]/60 mb-1.5">
               البريد الإلكتروني
             </label>
             <input
               name="email"
               type="email"
               required
-              placeholder="admin@shahystore.com"
-              className="w-full bg-[#1A1310] border border-[#C9A84C]/20 rounded-lg px-4 py-3 text-[#F5EFE0] text-sm placeholder:text-[#F5EFE0]/20 focus:outline-none focus:border-[#C9A84C]/60 transition-colors"
+              placeholder="admin@elfady.com"
+              className="w-full bg-[#111111] border border-[#9BA3AA]/20 rounded-lg px-4 py-3 text-[#F2F0EC] text-sm placeholder:text-[#F2F0EC]/20 focus:outline-none focus:border-[#9BA3AA]/60 transition-colors"
             />
           </div>
 
           <div>
-            <label className="block text-sm text-[#F5EFE0]/60 mb-1.5">
+            <label className="block text-sm text-[#F2F0EC]/60 mb-1.5">
               كلمة السر
             </label>
             <input
@@ -59,14 +59,14 @@ function LoginForm() {
               type="password"
               required
               placeholder="••••••••"
-              className="w-full bg-[#1A1310] border border-[#C9A84C]/20 rounded-lg px-4 py-3 text-[#F5EFE0] text-sm placeholder:text-[#F5EFE0]/20 focus:outline-none focus:border-[#C9A84C]/60 transition-colors"
+              className="w-full bg-[#111111] border border-[#9BA3AA]/20 rounded-lg px-4 py-3 text-[#F2F0EC] text-sm placeholder:text-[#F2F0EC]/20 focus:outline-none focus:border-[#9BA3AA]/60 transition-colors"
             />
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full mt-2 bg-[#C9A84C] hover:bg-[#B89440] disabled:opacity-50 text-[#0A0806] font-bold py-3 rounded-lg transition-colors text-sm"
+            className="w-full mt-2 bg-[#9BA3AA] hover:bg-[#7d858c] disabled:opacity-50 text-[#0A0A0A] font-bold py-3 rounded-lg transition-colors text-sm"
           >
             {loading ? "جاري الدخول..." : "دخول"}
           </button>

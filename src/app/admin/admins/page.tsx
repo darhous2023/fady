@@ -13,14 +13,14 @@ interface Admin {
 }
 
 const ROLES = [
-  { value: "owner", label: "مالك", desc: "كل الصلاحيات", color: "#C9A84C" },
+  { value: "owner", label: "مالك", desc: "كل الصلاحيات", color: "#9BA3AA" },
   { value: "manager", label: "مدير", desc: "منتجات + طلبات + خصومات", color: "#7B6FCC" },
   { value: "staff", label: "موظف", desc: "الطلبات فقط", color: "#5B9BD5" },
 ]
 
 const inputStyle: React.CSSProperties = {
-  width: "100%", background: "#0A0806", border: "1px solid rgba(201,168,76,0.2)",
-  borderRadius: 8, padding: "10px 14px", color: "#F5EFE0",
+  width: "100%", background: "#0A0A0A", border: "1px solid rgba(201,168,76,0.2)",
+  borderRadius: 8, padding: "10px 14px", color: "#F2F0EC",
   fontFamily: "Tajawal,sans-serif", fontSize: 14, outline: "none",
 }
 
@@ -101,7 +101,7 @@ export default function AdminsPage() {
   return (
     <div className="space-y-6" dir="rtl" style={{ fontFamily: "Tajawal,sans-serif" }}>
       <style>{`
-                input,select { background: #0A0806 !important; color: #F5EFE0 !important; }
+                input,select { background: #0A0A0A !important; color: #F2F0EC !important; }
         input::placeholder { color: rgba(245,239,224,0.25) !important; }
         input:focus,select:focus { border-color: rgba(201,168,76,0.5) !important; outline: none; }
       `}</style>
@@ -109,15 +109,15 @@ export default function AdminsPage() {
       {/* Header */}
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div>
-          <h1 style={{ fontSize: 24, fontWeight: 700, color: "#F5EFE0", margin: 0 }}>إدارة الصلاحيات</h1>
+          <h1 style={{ fontSize: 24, fontWeight: 700, color: "#F2F0EC", margin: 0 }}>إدارة الصلاحيات</h1>
           <p style={{ fontSize: 13, color: "rgba(245,239,224,0.35)", margin: "4px 0 0" }}>
             {admins.length} مستخدم — {admins.filter(a => a.is_active).length} نشط
           </p>
         </div>
         <button onClick={() => setShowForm(v => !v)}
           style={{
-            background: showForm ? "rgba(201,168,76,0.08)" : "linear-gradient(135deg,#C9A84C,#F0D882)",
-            color: showForm ? "#C9A84C" : "#0A0806", fontFamily: "Tajawal,sans-serif",
+            background: showForm ? "rgba(201,168,76,0.08)" : "linear-gradient(135deg,#9BA3AA,#C9CFD4)",
+            color: showForm ? "#9BA3AA" : "#0A0A0A", fontFamily: "Tajawal,sans-serif",
             fontWeight: 700, fontSize: 14, padding: "10px 20px", borderRadius: 8,
             border: showForm ? "1px solid rgba(201,168,76,0.3)" : "none", cursor: "pointer",
           }}>
@@ -129,7 +129,7 @@ export default function AdminsPage() {
       <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
         {ROLES.map(r => (
           <div key={r.value} style={{
-            background: "#0A0806", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 10,
+            background: "#0A0A0A", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 10,
             padding: "12px 16px", flex: "1 1 160px",
           }}>
             <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
@@ -144,10 +144,10 @@ export default function AdminsPage() {
       {/* Create Form */}
       {showForm && (
         <form onSubmit={handleCreate} style={{
-          background: "linear-gradient(145deg,#0E0C09,#111009)",
+          background: "linear-gradient(145deg,#0A0A0A,#111111)",
           border: "1px solid rgba(201,168,76,0.15)", borderRadius: 14, padding: "24px 20px",
         }}>
-          <h2 style={{ fontSize: 15, fontWeight: 700, color: "#C9A84C", margin: "0 0 20px" }}>إضافة مستخدم جديد</h2>
+          <h2 style={{ fontSize: 15, fontWeight: 700, color: "#9BA3AA", margin: "0 0 20px" }}>إضافة مستخدم جديد</h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))", gap: 14, marginBottom: 14 }}>
             <div>
               <label style={{ display: "block", fontSize: 12, color: "rgba(245,239,224,0.45)", marginBottom: 6 }}>الاسم *</label>
@@ -173,7 +173,7 @@ export default function AdminsPage() {
           </div>
           <button type="submit" disabled={submitting}
             style={{
-              background: "linear-gradient(135deg,#C9A84C,#F0D882)", color: "#0A0806",
+              background: "linear-gradient(135deg,#9BA3AA,#C9CFD4)", color: "#0A0A0A",
               fontFamily: "Tajawal,sans-serif", fontWeight: 700, fontSize: 14,
               padding: "11px 28px", borderRadius: 8, border: "none", cursor: submitting ? "wait" : "pointer",
               opacity: submitting ? 0.7 : 1,
@@ -184,7 +184,7 @@ export default function AdminsPage() {
       )}
 
       {/* Admins Table */}
-      <div style={{ background: "#0A0806", border: "1px solid rgba(201,168,76,0.1)", borderRadius: 14, overflow: "hidden" }}>
+      <div style={{ background: "#0A0A0A", border: "1px solid rgba(201,168,76,0.1)", borderRadius: 14, overflow: "hidden" }}>
         {loading ? (
           <div style={{ padding: 48, textAlign: "center", color: "rgba(245,239,224,0.25)", fontSize: 14 }}>جاري التحميل...</div>
         ) : admins.length === 0 ? (
@@ -207,7 +207,7 @@ export default function AdminsPage() {
                 return (
                   <tr key={a.id} style={{ borderBottom: i < admins.length - 1 ? "1px solid rgba(255,255,255,0.03)" : "none" }}>
                     <td style={{ padding: "14px 16px" }}>
-                      <div style={{ fontSize: 14, fontWeight: 700, color: "#F5EFE0" }}>{a.name}</div>
+                      <div style={{ fontSize: 14, fontWeight: 700, color: "#F2F0EC" }}>{a.name}</div>
                       <div style={{ fontSize: 12, color: "rgba(245,239,224,0.4)", marginTop: 2 }}>{a.email}</div>
                     </td>
                     <td style={{ padding: "14px 16px" }}>
@@ -217,7 +217,7 @@ export default function AdminsPage() {
                           borderRadius: 8, padding: "5px 10px", color: roleInfo?.color,
                           fontFamily: "Tajawal,sans-serif", fontSize: 13, fontWeight: 700, cursor: "pointer",
                         }}>
-                        {ROLES.map(r => <option key={r.value} value={r.value} style={{ background: "#0A0806", color: "#F5EFE0" }}>{r.label}</option>)}
+                        {ROLES.map(r => <option key={r.value} value={r.value} style={{ background: "#0A0A0A", color: "#F2F0EC" }}>{r.label}</option>)}
                       </select>
                     </td>
                     <td style={{ padding: "14px 16px" }}>

@@ -103,8 +103,8 @@ function ImageManager({ productId }: { productId: string }) {
   }
 
   return (
-    <div className="bg-[#0A0806] rounded-xl border border-[#C9A84C]/10 p-6 space-y-5">
-      <h2 className="font-semibold text-[#F5EFE0] border-b border-[#C9A84C]/10 pb-3">
+    <div className="bg-[#0A0A0A] rounded-xl border border-[#9BA3AA]/10 p-6 space-y-5">
+      <h2 className="font-semibold text-[#F2F0EC] border-b border-[#9BA3AA]/10 pb-3">
         صور المنتج
       </h2>
 
@@ -114,9 +114,9 @@ function ImageManager({ productId }: { productId: string }) {
           {images.map((img, i) => (
             <div key={img.id} className="relative group" style={{ width: 100, height: 100 }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={img.url} alt={img.alt_ar ?? ""} className="w-full h-full object-cover rounded-lg border border-[#C9A84C]/15" />
+              <img src={img.url} alt={img.alt_ar ?? ""} className="w-full h-full object-cover rounded-lg border border-[#9BA3AA]/15" />
               {i === 0 && (
-                <span className="absolute top-1 right-1 text-[9px] font-bold bg-[#C9A84C] text-[#0A0806] px-1.5 py-0.5 rounded">
+                <span className="absolute top-1 right-1 text-[9px] font-bold bg-[#9BA3AA] text-[#0A0A0A] px-1.5 py-0.5 rounded">
                   رئيسية
                 </span>
               )}
@@ -131,12 +131,12 @@ function ImageManager({ productId }: { productId: string }) {
           ))}
         </div>
       ) : (
-        <p className="text-sm text-[#F5EFE0]/30">لا توجد صور حتى الآن</p>
+        <p className="text-sm text-[#F2F0EC]/30">لا توجد صور حتى الآن</p>
       )}
 
       {/* Add image section */}
-      <div className="space-y-3 pt-2 border-t border-[#C9A84C]/10">
-        <p className="text-xs text-[#F5EFE0]/40 font-semibold uppercase tracking-widest">إضافة صورة</p>
+      <div className="space-y-3 pt-2 border-t border-[#9BA3AA]/10">
+        <p className="text-xs text-[#F2F0EC]/40 font-semibold uppercase tracking-widest">إضافة صورة</p>
 
         {/* Upload file */}
         <div className="flex items-center gap-3">
@@ -145,15 +145,15 @@ function ImageManager({ productId }: { productId: string }) {
           />
           <button type="button" disabled={uploading}
             onClick={() => fileRef.current?.click()}
-            className="flex items-center gap-2 px-4 py-2 text-sm border border-[#C9A84C]/25 text-[#C9A84C] rounded-lg hover:bg-[#C9A84C]/10 transition-colors disabled:opacity-50"
+            className="flex items-center gap-2 px-4 py-2 text-sm border border-[#9BA3AA]/25 text-[#9BA3AA] rounded-lg hover:bg-[#9BA3AA]/10 transition-colors disabled:opacity-50"
           >
             {uploading ? (
-              <><span className="inline-block w-3 h-3 border border-[#C9A84C]/40 border-t-[#C9A84C] rounded-full animate-spin"/>جاري الرفع...</>
+              <><span className="inline-block w-3 h-3 border border-[#9BA3AA]/40 border-t-[#9BA3AA] rounded-full animate-spin"/>جاري الرفع...</>
             ) : (
               <><span>↑</span> رفع صورة</>
             )}
           </button>
-          <span className="text-xs text-[#F5EFE0]/25">أو</span>
+          <span className="text-xs text-[#F2F0EC]/25">أو</span>
         </div>
 
         {/* URL input */}
@@ -170,7 +170,7 @@ function ImageManager({ productId }: { productId: string }) {
           />
           <button type="button" disabled={adding || !urlInput.trim()}
             onClick={addImage}
-            className="px-4 py-2 bg-[#C9A84C] hover:bg-[#B89440] disabled:opacity-40 text-[#0A0806] font-bold text-sm rounded-lg transition-colors whitespace-nowrap"
+            className="px-4 py-2 bg-[#9BA3AA] hover:bg-[#7d858c] disabled:opacity-40 text-[#0A0A0A] font-bold text-sm rounded-lg transition-colors whitespace-nowrap"
           >
             {adding ? "..." : "إضافة"}
           </button>
@@ -180,12 +180,12 @@ function ImageManager({ productId }: { productId: string }) {
         {urlInput.trim() && (
           <div className="flex items-center gap-3 mt-1">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={urlInput} alt="" className="w-16 h-16 object-cover rounded-lg border border-[#C9A84C]/20"
+            <img src={urlInput} alt="" className="w-16 h-16 object-cover rounded-lg border border-[#9BA3AA]/20"
               onError={e => (e.currentTarget.style.display = "none")}
               onLoad={e => (e.currentTarget.style.display = "block")}
               style={{ display: "none" }}
             />
-            <p className="text-xs text-[#F5EFE0]/30">معاينة الصورة</p>
+            <p className="text-xs text-[#F2F0EC]/30">معاينة الصورة</p>
           </div>
         )}
       </div>
@@ -257,10 +257,10 @@ function Frames360Manager({ productId }: { productId: string }) {
   return (
     <div className="bg-[#0A0A0A] rounded-xl border border-[#9BA3AA]/10 p-6 space-y-5">
       <div className="flex items-center justify-between border-b border-[#9BA3AA]/10 pb-3">
-        <h2 className="font-semibold text-[#F5EFE0]">عارض 360°</h2>
-        <span className="text-xs text-[#F5EFE0]/30">{frames.length} صورة</span>
+        <h2 className="font-semibold text-[#F2F0EC]">عارض 360°</h2>
+        <span className="text-xs text-[#F2F0EC]/30">{frames.length} صورة</span>
       </div>
-      <p className="text-xs text-[#F5EFE0]/40">
+      <p className="text-xs text-[#F2F0EC]/40">
         ارفع 12–36 صورة للسيارة مصوّرة بدورة كاملة حواليها (نفس المسافة والزاوية تقريبًا) — كل ما زاد عدد الصور، كل ما كان الدوران أنعم. لو مفيش صور هنا، هتظهر صفحة السيارة بمعرض الصور العادي بدل الـ 360.
       </p>
 
@@ -276,9 +276,9 @@ function Frames360Manager({ productId }: { productId: string }) {
               <div className="absolute inset-0 bg-black/65 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center gap-1 rounded-lg transition-opacity">
                 <div className="flex gap-1">
                   <button type="button" onClick={() => move(i, -1)} disabled={i === 0}
-                    className="text-[10px] px-1.5 py-0.5 rounded bg-white/10 text-[#F5EFE0] disabled:opacity-30">◀</button>
+                    className="text-[10px] px-1.5 py-0.5 rounded bg-white/10 text-[#F2F0EC] disabled:opacity-30">◀</button>
                   <button type="button" onClick={() => move(i, 1)} disabled={i === frames.length - 1}
-                    className="text-[10px] px-1.5 py-0.5 rounded bg-white/10 text-[#F5EFE0] disabled:opacity-30">▶</button>
+                    className="text-[10px] px-1.5 py-0.5 rounded bg-white/10 text-[#F2F0EC] disabled:opacity-30">▶</button>
                 </div>
                 <button type="button" onClick={() => deleteFrame(f.id)} className="text-[10px] text-red-400 font-bold">حذف</button>
               </div>
@@ -286,7 +286,7 @@ function Frames360Manager({ productId }: { productId: string }) {
           ))}
         </div>
       ) : (
-        <p className="text-sm text-[#F5EFE0]/30">لا توجد صور 360 حتى الآن</p>
+        <p className="text-sm text-[#F2F0EC]/30">لا توجد صور 360 حتى الآن</p>
       )}
 
       <div className="pt-2 border-t border-[#9BA3AA]/10">
@@ -365,10 +365,10 @@ function VariantsManager({ productId }: { productId: string }) {
   }
 
   return (
-    <div className="bg-[#0A0806] rounded-xl border border-[#C9A84C]/10 p-6 space-y-5">
-      <h2 className="font-semibold text-[#F5EFE0] border-b border-[#C9A84C]/10 pb-3">
+    <div className="bg-[#0A0A0A] rounded-xl border border-[#9BA3AA]/10 p-6 space-y-5">
+      <h2 className="font-semibold text-[#F2F0EC] border-b border-[#9BA3AA]/10 pb-3">
         متغيّرات المنتج
-        <span className="ml-2 text-xs font-normal text-[#F5EFE0]/30">(مقاسات، ألوان، مخزون)</span>
+        <span className="ml-2 text-xs font-normal text-[#F2F0EC]/30">(مقاسات، ألوان، مخزون)</span>
       </h2>
 
       {/* Variants table */}
@@ -376,7 +376,7 @@ function VariantsManager({ productId }: { productId: string }) {
         <div className="overflow-x-auto">
           <table className="w-full text-sm text-right">
             <thead>
-              <tr className="text-[#F5EFE0]/40 text-xs uppercase tracking-widest border-b border-[#C9A84C]/10">
+              <tr className="text-[#F2F0EC]/40 text-xs uppercase tracking-widest border-b border-[#9BA3AA]/10">
                 <th className="pb-2 font-normal">اللون</th>
                 <th className="pb-2 font-normal">المقاس</th>
                 <th className="pb-2 font-normal">SKU</th>
@@ -385,9 +385,9 @@ function VariantsManager({ productId }: { productId: string }) {
                 <th className="pb-2 font-normal"></th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#C9A84C]/05">
+            <tbody className="divide-y divide-[#9BA3AA]/05">
               {variants.map(v => (
-                <tr key={v.id} className="text-[#F5EFE0]/80">
+                <tr key={v.id} className="text-[#F2F0EC]/80">
                   {editId === v.id ? (
                     <>
                       <td className="py-2 pr-0 pl-2">
@@ -406,21 +406,21 @@ function VariantsManager({ productId }: { productId: string }) {
                         <input type="number" min="0" step="0.01" value={editData.price_override ?? v.price_override ?? ""} onChange={e => setEditData(d => ({ ...d, price_override: e.target.value }))} className={inputCls + " py-1 text-xs w-24"} placeholder="اتركه فارغاً" />
                       </td>
                       <td className="py-2 text-left whitespace-nowrap space-x-2 space-x-reverse">
-                        <button type="button" onClick={() => saveEdit(v.id)} className="text-xs text-[#C9A84C] hover:underline">حفظ</button>
-                        <button type="button" onClick={() => { setEditId(null); setEditData({}) }} className="text-xs text-[#F5EFE0]/30 hover:text-[#F5EFE0]/60 mr-2">إلغاء</button>
+                        <button type="button" onClick={() => saveEdit(v.id)} className="text-xs text-[#9BA3AA] hover:underline">حفظ</button>
+                        <button type="button" onClick={() => { setEditId(null); setEditData({}) }} className="text-xs text-[#F2F0EC]/30 hover:text-[#F2F0EC]/60 mr-2">إلغاء</button>
                       </td>
                     </>
                   ) : (
                     <>
-                      <td className="py-2">{v.color_ar || <span className="text-[#F5EFE0]/20">—</span>}</td>
-                      <td className="py-2 px-2">{v.size || <span className="text-[#F5EFE0]/20">—</span>}</td>
-                      <td className="py-2 px-2 text-[#F5EFE0]/40 font-mono text-xs">{v.sku || "—"}</td>
+                      <td className="py-2">{v.color_ar || <span className="text-[#F2F0EC]/20">—</span>}</td>
+                      <td className="py-2 px-2">{v.size || <span className="text-[#F2F0EC]/20">—</span>}</td>
+                      <td className="py-2 px-2 text-[#F2F0EC]/40 font-mono text-xs">{v.sku || "—"}</td>
                       <td className="py-2 px-2">
                         <span className={`font-bold ${v.stock === 0 ? "text-red-400" : v.stock < 5 ? "text-yellow-400" : "text-green-400"}`}>{v.stock}</span>
                       </td>
-                      <td className="py-2 px-2">{v.price_override ? `${Number(v.price_override).toLocaleString("ar-EG")} ج` : <span className="text-[#F5EFE0]/20">السعر الأساسي</span>}</td>
+                      <td className="py-2 px-2">{v.price_override ? `${Number(v.price_override).toLocaleString("ar-EG")} ج` : <span className="text-[#F2F0EC]/20">السعر الأساسي</span>}</td>
                       <td className="py-2 text-left whitespace-nowrap space-x-2 space-x-reverse">
-                        <button type="button" onClick={() => { setEditId(v.id); setEditData({}) }} className="text-xs text-[#C9A84C]/70 hover:text-[#C9A84C]">تعديل</button>
+                        <button type="button" onClick={() => { setEditId(v.id); setEditData({}) }} className="text-xs text-[#9BA3AA]/70 hover:text-[#9BA3AA]">تعديل</button>
                         <button type="button" onClick={() => deleteVariant(v.id)} className="text-xs text-red-400/60 hover:text-red-400 mr-2">حذف</button>
                       </td>
                     </>
@@ -431,12 +431,12 @@ function VariantsManager({ productId }: { productId: string }) {
           </table>
         </div>
       ) : (
-        <p className="text-sm text-[#F5EFE0]/30">لا توجد متغيّرات — أضف مقاسات أو ألوان أدناه</p>
+        <p className="text-sm text-[#F2F0EC]/30">لا توجد متغيّرات — أضف مقاسات أو ألوان أدناه</p>
       )}
 
       {/* Add variant row */}
-      <div className="space-y-3 pt-3 border-t border-[#C9A84C]/10">
-        <p className="text-xs text-[#F5EFE0]/40 font-semibold uppercase tracking-widest">إضافة متغيّر</p>
+      <div className="space-y-3 pt-3 border-t border-[#9BA3AA]/10">
+        <p className="text-xs text-[#F2F0EC]/40 font-semibold uppercase tracking-widest">إضافة متغيّر</p>
         <div className="grid grid-cols-2 md:grid-cols-5 gap-2">
           <input placeholder="اللون" value={form.color_ar} onChange={e => setForm(f => ({ ...f, color_ar: e.target.value }))} className={inputCls + " py-2 text-xs"} />
           <input placeholder="المقاس (M, XL…)" value={form.size} onChange={e => setForm(f => ({ ...f, size: e.target.value }))} className={inputCls + " py-2 text-xs"} />
@@ -445,7 +445,7 @@ function VariantsManager({ productId }: { productId: string }) {
           <input type="number" min="0" step="0.01" placeholder="سعر خاص (اختياري)" value={form.price_override} onChange={e => setForm(f => ({ ...f, price_override: e.target.value }))} className={inputCls + " py-2 text-xs"} />
         </div>
         <button type="button" disabled={adding} onClick={addVariant}
-          className="px-4 py-2 bg-[#C9A84C] hover:bg-[#B89440] disabled:opacity-40 text-[#0A0806] font-bold text-sm rounded-lg transition-colors">
+          className="px-4 py-2 bg-[#9BA3AA] hover:bg-[#7d858c] disabled:opacity-40 text-[#0A0A0A] font-bold text-sm rounded-lg transition-colors">
           {adding ? "..." : "+ إضافة متغيّر"}
         </button>
       </div>
@@ -521,8 +521,8 @@ export default function ProductForm({ categories, product }: { categories: Categ
   return (
     <div className="space-y-6">
       <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="bg-[#0A0806] rounded-xl border border-[#C9A84C]/10 p-6 space-y-5">
-          <h2 className="font-semibold text-[#F5EFE0] border-b border-[#C9A84C]/10 pb-3">المعلومات الأساسية</h2>
+        <div className="bg-[#0A0A0A] rounded-xl border border-[#9BA3AA]/10 p-6 space-y-5">
+          <h2 className="font-semibold text-[#F2F0EC] border-b border-[#9BA3AA]/10 pb-3">المعلومات الأساسية</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
@@ -544,7 +544,7 @@ export default function ProductForm({ categories, product }: { categories: Categ
               placeholder={`مثال:\nحالة السيارة: ممتازة، فبريكة بالكامل\nعدد الملاك: مالك واحد\nالفحص: تم الفحص الشامل\nملاحظات: صيانة دورية بالوكيل`}
               className={`${inputCls} resize-y min-h-[120px]`}
             />
-            <p className="text-xs text-[#F5EFE0]/25 mt-1">اكتب كل التفاصيل المهمة للعميل قبل الاتصال</p>
+            <p className="text-xs text-[#F2F0EC]/25 mt-1">اكتب كل التفاصيل المهمة للعميل قبل الاتصال</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -585,14 +585,14 @@ export default function ProductForm({ categories, product }: { categories: Categ
           <div className="flex items-center gap-3">
             <input type="checkbox" name="is_featured" id="is_featured"
               defaultChecked={product?.is_featured} className="w-4 h-4 accent-[#9BA3AA]" />
-            <label htmlFor="is_featured" className="text-sm text-[#F5EFE0]/60">
+            <label htmlFor="is_featured" className="text-sm text-[#F2F0EC]/60">
               سيارة مميّزة (تظهر في الصفحة الرئيسية)
             </label>
           </div>
         </div>
 
         <div className="bg-[#0A0A0A] rounded-xl border border-[#9BA3AA]/10 p-6 space-y-5">
-          <h2 className="font-semibold text-[#F5EFE0] border-b border-[#9BA3AA]/10 pb-3">مواصفات السيارة</h2>
+          <h2 className="font-semibold text-[#F2F0EC] border-b border-[#9BA3AA]/10 pb-3">مواصفات السيارة</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className={labelCls}>الموديل (الطراز)</label>
@@ -634,8 +634,8 @@ export default function ProductForm({ categories, product }: { categories: Categ
         </div>
 
         {!isEdit && (
-          <div className="bg-[#0A0806] rounded-xl border border-[#C9A84C]/10 p-5">
-            <p className="text-sm text-[#F5EFE0]/40">
+          <div className="bg-[#0A0A0A] rounded-xl border border-[#9BA3AA]/10 p-5">
+            <p className="text-sm text-[#F2F0EC]/40">
               💡 بعد حفظ المنتج ستُنقل تلقائياً لصفحة التعديل حيث يمكنك إضافة الصور.
             </p>
           </div>
@@ -643,11 +643,11 @@ export default function ProductForm({ categories, product }: { categories: Categ
 
         <div className="flex gap-3 justify-end">
           <button type="button" onClick={() => router.back()}
-            className="px-5 py-2.5 text-sm text-[#F5EFE0]/50 hover:text-[#F5EFE0] border border-[#C9A84C]/20 rounded-lg transition-colors">
+            className="px-5 py-2.5 text-sm text-[#F2F0EC]/50 hover:text-[#F2F0EC] border border-[#9BA3AA]/20 rounded-lg transition-colors">
             إلغاء
           </button>
           <button type="submit" disabled={loading}
-            className="px-6 py-2.5 bg-[#C9A84C] hover:bg-[#B89440] disabled:opacity-50 text-[#0A0806] font-bold text-sm rounded-lg transition-colors">
+            className="px-6 py-2.5 bg-[#9BA3AA] hover:bg-[#7d858c] disabled:opacity-50 text-[#0A0A0A] font-bold text-sm rounded-lg transition-colors">
             {loading ? "جاري الحفظ..." : isEdit ? "حفظ التعديلات" : "إضافة المنتج"}
           </button>
         </div>
@@ -665,5 +665,5 @@ export default function ProductForm({ categories, product }: { categories: Categ
   );
 }
 
-const labelCls = "block text-sm text-[#F5EFE0]/60 mb-1.5";
-const inputCls = "w-full bg-[#1A1310] border border-[#C9A84C]/20 rounded-lg px-4 py-2.5 text-[#F5EFE0] text-sm placeholder:text-[#F5EFE0]/20 focus:outline-none focus:border-[#C9A84C]/60 transition-colors";
+const labelCls = "block text-sm text-[#F2F0EC]/60 mb-1.5";
+const inputCls = "w-full bg-[#111111] border border-[#9BA3AA]/20 rounded-lg px-4 py-2.5 text-[#F2F0EC] text-sm placeholder:text-[#F2F0EC]/20 focus:outline-none focus:border-[#9BA3AA]/60 transition-colors";

@@ -123,7 +123,7 @@ function ProductCard({ product, index }: { product: StoreProduct; index: number 
       quality_tier: product.quality_tier,
     })
     openCart()
-    toast.success(`تمت الإضافة: ${product.name_ar}`, { duration: 2000 })
+    toast.success(`أُضيفت لقائمة المعاينة: ${product.name_ar}`, { duration: 2000 })
     setTimeout(() => setAdding(false), 600)
   }
 
@@ -137,7 +137,7 @@ function ProductCard({ product, index }: { product: StoreProduct; index: number 
     : `perspective(800px) rotateX(-4deg) rotateY(${index % 2 === 0 ? 3 : -3}deg) translateY(50px) scale(0.95)`
 
   return (
-    <Link href={`/products/${product.slug}`} className="shahy-card-wrap" style={{ textDecoration: "none", display: "block" }}>
+    <Link href={`/products/${product.slug}`} className="elfady-card-wrap" style={{ textDecoration: "none", display: "block" }}>
     <div ref={ref}>
       <div
         onMouseMove={onMove} onMouseEnter={onEnter} onMouseLeave={onLeave}
@@ -361,7 +361,7 @@ function SectionHeader() {
         color: "#9BA3AA", textTransform: "uppercase",
         opacity: visible ? 0.7 : 0, transform: visible ? "translateY(0)" : "translateY(12px)",
         transition: "all 0.7s ease", marginBottom: 16,
-      }}>✦ &nbsp; luxury collection &nbsp; ✦</div>
+      }}>✦ &nbsp; متاحة الآن في المعرض &nbsp; ✦</div>
 
       <div style={{
         fontFamily: "Tajawal,sans-serif", fontSize: "clamp(32px,4vw,46px)", fontWeight: 700,
@@ -374,7 +374,7 @@ function SectionHeader() {
         transition: "all 0.8s cubic-bezier(0.2,0,0.2,1) 0.1s", marginBottom: 8,
         animation: visible ? "pgShimmer 6s linear 1s infinite" : "none",
       }}>
-        تشكيلتنا الفاخرة
+        سيارات مستعملة موثوقة
       </div>
 
       <div style={{
@@ -383,7 +383,7 @@ function SectionHeader() {
         opacity: visible ? 0.5 : 0, transform: visible ? "translateY(0)" : "translateY(12px)",
         transition: "all 0.7s ease 0.25s", marginBottom: 20, letterSpacing: "1px",
       }}>
-        أرقى الإكسسوارات المستوردة — Curated Luxury
+        فحص شامل، حالة موثّقة، وتواصل فوري عبر واتساب
       </div>
 
       <div style={{
@@ -411,7 +411,7 @@ const PRICE_RANGES = [
   { key: "900k+", label: "أكثر من 900 ألف", min: 900000, max: Infinity },
 ]
 
-export default function ProductGrid({ initialProducts, initialCategory }: { initialProducts: StoreProduct[]; initialCategory?: string }) {
+export default function ProductGrid({ initialProducts, initialCategory, showHeader = true }: { initialProducts: StoreProduct[]; initialCategory?: string; showHeader?: boolean }) {
   const [products] = useState<StoreProduct[]>(initialProducts)
   const [activeCategory, setActiveCategory] = useState(initialCategory || "الكل")
   const [activeQuality, setActiveQuality] = useState("الكل")
@@ -435,7 +435,7 @@ export default function ProductGrid({ initialProducts, initialCategory }: { init
         .pg-cat-pill:hover { background:rgba(155,163,170,0.12)!important; color:#9BA3AA!important; border-color:#9BA3AA!important; }
       `}</style>
 
-      <SectionHeader />
+      {showHeader && <SectionHeader />}
 
       {/* Filters */}
       <div style={{ display: "flex", flexDirection: "column", gap: 12, alignItems: "center", marginBottom: 48 }}>
@@ -510,12 +510,12 @@ export default function ProductGrid({ initialProducts, initialCategory }: { init
 
       {/* Grid */}
       <style>{`
-        .shahy-grid { display:flex; flex-wrap:wrap; justify-content:center; gap:24px; max-width:1340px; margin:0 auto; }
-        .shahy-card-wrap { width:290px; }
-        @media (max-width:680px) { .shahy-grid { gap:12px; } .shahy-card-wrap { width:calc(50% - 6px); } }
-        @media (max-width:380px) { .shahy-card-wrap { width:100%; max-width:340px; } }
+        .elfady-grid { display:flex; flex-wrap:wrap; justify-content:center; gap:24px; max-width:1340px; margin:0 auto; }
+        .elfady-card-wrap { width:290px; }
+        @media (max-width:680px) { .elfady-grid { gap:12px; } .elfady-card-wrap { width:calc(50% - 6px); } }
+        @media (max-width:380px) { .elfady-card-wrap { width:100%; max-width:340px; } }
       `}</style>
-      <div className="shahy-grid">
+      <div className="elfady-grid">
         {filtered.map((p, i) => <ProductCard key={p.slug} product={p} index={i} />)}
       </div>
 

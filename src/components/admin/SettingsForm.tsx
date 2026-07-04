@@ -26,13 +26,13 @@ export default function SettingsForm({ settings }: { settings: Record<string, st
     else toast.error("فشل الحفظ");
   }
 
-  const inputCls = "w-full bg-[#1A1310] border border-[#C9A84C]/20 rounded-lg px-4 py-2.5 text-[#F5EFE0] text-sm placeholder:text-[#F5EFE0]/20 focus:outline-none focus:border-[#C9A84C]/60 transition-colors";
-  const labelCls = "block text-sm text-[#F5EFE0]/60 mb-1.5";
+  const inputCls = "w-full bg-[#111111] border border-[#9BA3AA]/20 rounded-lg px-4 py-2.5 text-[#F2F0EC] text-sm placeholder:text-[#F2F0EC]/20 focus:outline-none focus:border-[#9BA3AA]/60 transition-colors";
+  const labelCls = "block text-sm text-[#F2F0EC]/60 mb-1.5";
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="bg-[#0A0806] rounded-xl border border-[#C9A84C]/10 p-6 space-y-5">
-        <h2 className="font-semibold text-[#F5EFE0] border-b border-[#C9A84C]/10 pb-3">معلومات المتجر</h2>
+      <div className="bg-[#0A0A0A] rounded-xl border border-[#9BA3AA]/10 p-6 space-y-5">
+        <h2 className="font-semibold text-[#F2F0EC] border-b border-[#9BA3AA]/10 pb-3">معلومات المتجر</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
@@ -51,8 +51,8 @@ export default function SettingsForm({ settings }: { settings: Record<string, st
         </div>
       </div>
 
-      <div className="bg-[#0A0806] rounded-xl border border-[#C9A84C]/10 p-6 space-y-5">
-        <h2 className="font-semibold text-[#F5EFE0] border-b border-[#C9A84C]/10 pb-3">روابط السوشيال</h2>
+      <div className="bg-[#0A0A0A] rounded-xl border border-[#9BA3AA]/10 p-6 space-y-5">
+        <h2 className="font-semibold text-[#F2F0EC] border-b border-[#9BA3AA]/10 pb-3">روابط السوشيال</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <label className={labelCls}>إنستاجرام</label>
@@ -69,8 +69,8 @@ export default function SettingsForm({ settings }: { settings: Record<string, st
         </div>
       </div>
 
-      <div className="bg-[#0A0806] rounded-xl border border-[#C9A84C]/10 p-6 space-y-5">
-        <h2 className="font-semibold text-[#F5EFE0] border-b border-[#C9A84C]/10 pb-3">صفحة البداية</h2>
+      <div className="bg-[#0A0A0A] rounded-xl border border-[#9BA3AA]/10 p-6 space-y-5">
+        <h2 className="font-semibold text-[#F2F0EC] border-b border-[#9BA3AA]/10 pb-3">صفحة البداية</h2>
         <div>
           <label className={labelCls}>كلمات الهيرو (مفصولة بفواصل)</label>
           <textarea
@@ -81,7 +81,7 @@ export default function SettingsForm({ settings }: { settings: Record<string, st
             style={{ resize: "vertical", lineHeight: 1.6 }}
             placeholder="شُعوراً, هويّتكِ, قوّتكِ"
           />
-          <p className="text-xs text-[#F5EFE0]/30 mt-1">اكتبي الكلمات مفصولة بفواصل — ستظهر متعاقبة في الصفحة الرئيسية</p>
+          <p className="text-xs text-[#F2F0EC]/30 mt-1">اكتبي الكلمات مفصولة بفواصل — ستظهر متعاقبة في الصفحة الرئيسية</p>
         </div>
         <div>
           <label className={labelCls}>نص الإعلان العلوي (اتركيه فارغاً لإخفائه)</label>
@@ -98,18 +98,18 @@ export default function SettingsForm({ settings }: { settings: Record<string, st
             name="announcement_active"
             id="announcement_active"
             defaultChecked={settings.announcement_active === "true"}
-            className="w-4 h-4 accent-[#C9A84C]"
+            className="w-4 h-4 accent-[#9BA3AA]"
           />
-          <label htmlFor="announcement_active" className="text-sm text-[#F5EFE0]/60 cursor-pointer">تفعيل الإعلان العلوي</label>
+          <label htmlFor="announcement_active" className="text-sm text-[#F2F0EC]/60 cursor-pointer">تفعيل الإعلان العلوي</label>
         </div>
       </div>
 
       {/* Flash Deals */}
-      <div className="bg-[#0A0806] rounded-xl border border-[#C9A84C]/10 p-6 space-y-5">
-        <h2 className="font-semibold text-[#F5EFE0] border-b border-[#C9A84C]/10 pb-3 flex items-center gap-2">
+      <div className="bg-[#0A0A0A] rounded-xl border border-[#9BA3AA]/10 p-6 space-y-5">
+        <h2 className="font-semibold text-[#F2F0EC] border-b border-[#9BA3AA]/10 pb-3 flex items-center gap-2">
           ⚡ عروض الفلاش
         </h2>
-        <p className="text-xs text-[#F5EFE0]/30">
+        <p className="text-xs text-[#F2F0EC]/30">
           يتم عرض المنتجات المميّزة (Featured) التي لديها سعر مخفّض تلقائياً في قسم عروض الفلاش.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -126,7 +126,7 @@ export default function SettingsForm({ settings }: { settings: Record<string, st
               className={inputCls}
               style={{ colorScheme: "dark" }}
             />
-            <p className="text-xs text-[#F5EFE0]/30 mt-1">اتركيه فارغاً لعرض العروض بدون عداد</p>
+            <p className="text-xs text-[#F2F0EC]/30 mt-1">اتركيه فارغاً لعرض العروض بدون عداد</p>
           </div>
         </div>
         <div className="flex items-center gap-3">
@@ -135,9 +135,9 @@ export default function SettingsForm({ settings }: { settings: Record<string, st
             name="flash_deals_active"
             id="flash_deals_active"
             defaultChecked={settings.flash_deals_active === "true"}
-            className="w-4 h-4 accent-[#C9A84C]"
+            className="w-4 h-4 accent-[#9BA3AA]"
           />
-          <label htmlFor="flash_deals_active" className="text-sm text-[#F5EFE0]/60 cursor-pointer">تفعيل قسم عروض الفلاش</label>
+          <label htmlFor="flash_deals_active" className="text-sm text-[#F2F0EC]/60 cursor-pointer">تفعيل قسم عروض الفلاش</label>
         </div>
       </div>
 
@@ -145,7 +145,7 @@ export default function SettingsForm({ settings }: { settings: Record<string, st
         <button
           type="submit"
           disabled={loading}
-          className="px-6 py-2.5 bg-[#C9A84C] hover:bg-[#B89440] disabled:opacity-50 text-[#0A0806] font-bold text-sm rounded-lg transition-colors"
+          className="px-6 py-2.5 bg-[#9BA3AA] hover:bg-[#7d858c] disabled:opacity-50 text-[#0A0A0A] font-bold text-sm rounded-lg transition-colors"
         >
           {loading ? "جاري الحفظ..." : "حفظ الإعدادات"}
         </button>

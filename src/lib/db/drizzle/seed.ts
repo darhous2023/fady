@@ -18,10 +18,12 @@ async function seed() {
   await db
     .insert(categories)
     .values([
-      { name_ar: "شنط", slug: "bags", sort_order: 1, is_active: true },
-      { name_ar: "بوكات وساك", slug: "wallets", sort_order: 2, is_active: true },
-      { name_ar: "شوزات حريمي", slug: "shoes", sort_order: 3, is_active: true },
-      { name_ar: "منوّعات", slug: "misc", sort_order: 4, is_active: true },
+      { name_ar: "تويوتا", slug: "toyota", sort_order: 1, is_active: true },
+      { name_ar: "هيونداي", slug: "hyundai", sort_order: 2, is_active: true },
+      { name_ar: "كيا", slug: "kia", sort_order: 3, is_active: true },
+      { name_ar: "شيفروليه", slug: "chevrolet", sort_order: 4, is_active: true },
+      { name_ar: "نيسان", slug: "nissan", sort_order: 5, is_active: true },
+      { name_ar: "أم جي", slug: "mg", sort_order: 6, is_active: true },
     ])
     .onConflictDoNothing();
 

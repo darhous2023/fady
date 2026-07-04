@@ -5,7 +5,7 @@ import Link from "next/link"
 
 export interface RecentItem { id: string; slug: string; name_ar: string; price: number; image: string | null }
 
-const KEY = "shahy-recent"
+const KEY = "elfady-recent"
 const MAX = 8
 
 export function saveRecentlyViewed(item: RecentItem) {
@@ -34,7 +34,7 @@ export default function RecentlyViewed({ excludeId }: { excludeId?: string }) {
       <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 24 }}>
         <div style={{ height: 1, flex: 1, background: "linear-gradient(90deg,transparent,rgba(155,163,170,0.15))" }} />
         <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 9, letterSpacing: "5px", color: "#9BA3AA", opacity: 0.6, textTransform: "uppercase", whiteSpace: "nowrap" }}>
-          شاهدتِ مؤخراً
+          شوهد مؤخرًا
         </span>
         <div style={{ height: 1, flex: 1, background: "linear-gradient(90deg,rgba(155,163,170,0.15),transparent)" }} />
       </div>
@@ -51,7 +51,7 @@ export default function RecentlyViewed({ excludeId }: { excludeId?: string }) {
               <div style={{ aspectRatio: "1", background: "#111", overflow: "hidden" }}>
                 {item.image
                   ? <img src={item.image} alt={item.name_ar} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                  : <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28, opacity: 0.15 }}>👜</div>
+                  : <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28, opacity: 0.15 }}>🚗</div>
                 }
               </div>
               <div style={{ padding: "10px 10px 12px" }}>

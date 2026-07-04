@@ -51,40 +51,40 @@ export default function CustomersPage() {
       <style>{``}</style>
 
       <div>
-        <h1 className="text-2xl font-bold text-[#F5EFE0]">الأعضاء والعملاء</h1>
-        <p className="text-[#F5EFE0]/40 text-sm mt-1">{users.length} مستخدم مسجّل</p>
+        <h1 className="text-2xl font-bold text-[#F2F0EC]">الأعضاء والعملاء</h1>
+        <p className="text-[#F2F0EC]/40 text-sm mt-1">{users.length} مستخدم مسجّل</p>
       </div>
 
-      <div className="bg-[#0A0806] rounded-xl border border-[#C9A84C]/10 overflow-hidden">
+      <div className="bg-[#0A0A0A] rounded-xl border border-[#9BA3AA]/10 overflow-hidden">
         {loading ? (
-          <div className="p-12 text-center text-[#F5EFE0]/25 text-sm">جاري التحميل...</div>
+          <div className="p-12 text-center text-[#F2F0EC]/25 text-sm">جاري التحميل...</div>
         ) : users.length === 0 ? (
-          <div className="p-12 text-center text-[#F5EFE0]/25 text-sm">لا يوجد أعضاء مسجّلين بعد</div>
+          <div className="p-12 text-center text-[#F2F0EC]/25 text-sm">لا يوجد أعضاء مسجّلين بعد</div>
         ) : (
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-[#C9A84C]/10">
-                <th className="text-right px-6 py-3 text-[#C9A84C]/70 font-bold text-xs tracking-widest">الاسم</th>
-                <th className="text-right px-4 py-3 text-[#C9A84C]/70 font-bold text-xs tracking-widest">البريد</th>
-                <th className="text-right px-4 py-3 text-[#C9A84C]/70 font-bold text-xs tracking-widest">الهاتف</th>
-                <th className="text-right px-4 py-3 text-[#C9A84C]/70 font-bold text-xs tracking-widest">الطلبات</th>
-                <th className="text-right px-4 py-3 text-[#C9A84C]/70 font-bold text-xs tracking-widest">الدور</th>
+              <tr className="border-b border-[#9BA3AA]/10">
+                <th className="text-right px-6 py-3 text-[#9BA3AA]/70 font-bold text-xs tracking-widest">الاسم</th>
+                <th className="text-right px-4 py-3 text-[#9BA3AA]/70 font-bold text-xs tracking-widest">البريد</th>
+                <th className="text-right px-4 py-3 text-[#9BA3AA]/70 font-bold text-xs tracking-widest">الهاتف</th>
+                <th className="text-right px-4 py-3 text-[#9BA3AA]/70 font-bold text-xs tracking-widest">الطلبات</th>
+                <th className="text-right px-4 py-3 text-[#9BA3AA]/70 font-bold text-xs tracking-widest">الدور</th>
                 <th className="px-4 py-3" />
               </tr>
             </thead>
             <tbody>
               {users.map((u, i) => (
                 <tr key={u.id} style={{ borderBottom: i < users.length - 1 ? "1px solid rgba(255,255,255,0.03)" : "none" }}>
-                  <td className="px-6 py-4 text-[#F5EFE0] font-medium">{u.name}</td>
-                  <td className="px-4 py-4 text-[#F5EFE0]/50 text-xs" dir="ltr">{u.email}</td>
-                  <td className="px-4 py-4 text-[#F5EFE0]/50 font-mono text-xs" dir="ltr">{u.phone || "—"}</td>
+                  <td className="px-6 py-4 text-[#F2F0EC] font-medium">{u.name}</td>
+                  <td className="px-4 py-4 text-[#F2F0EC]/50 text-xs" dir="ltr">{u.email}</td>
+                  <td className="px-4 py-4 text-[#F2F0EC]/50 font-mono text-xs" dir="ltr">{u.phone || "—"}</td>
                   <td className="px-4 py-4">
-                    <span className="text-xs font-bold px-2 py-1 rounded-full bg-[#C9A84C]/10 text-[#C9A84C]">
+                    <span className="text-xs font-bold px-2 py-1 rounded-full bg-[#9BA3AA]/10 text-[#9BA3AA]">
                       {u.orderCount} طلب
                     </span>
                   </td>
                   <td className="px-4 py-4">
-                    <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${u.isAdmin ? "bg-[#7B1C2E]/20 text-[#E8756A] border border-[#7B1C2E]/30" : "bg-white/5 text-[#F5EFE0]/40 border border-white/10"}`}>
+                    <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${u.isAdmin ? "bg-[#7B1C2E]/20 text-[#E8756A] border border-[#7B1C2E]/30" : "bg-white/5 text-[#F2F0EC]/40 border border-white/10"}`}>
                       {u.isAdmin ? "أدمن" : "عضو"}
                     </span>
                   </td>
@@ -93,7 +93,7 @@ export default function CustomersPage() {
                       className={`text-xs px-3 py-1.5 rounded-lg border transition-colors ${
                         u.isAdmin
                           ? "border-red-400/20 text-red-400/60 hover:border-red-400/40 hover:text-red-400"
-                          : "border-[#C9A84C]/20 text-[#C9A84C]/60 hover:border-[#C9A84C]/50 hover:text-[#C9A84C]"
+                          : "border-[#9BA3AA]/20 text-[#9BA3AA]/60 hover:border-[#9BA3AA]/50 hover:text-[#9BA3AA]"
                       }`}>
                       {toggling === u.id ? "..." : u.isAdmin ? "إلغاء صلاحيات" : "ترقية لأدمن"}
                     </button>

@@ -72,27 +72,27 @@ export default function ShippingPage() {
       <style>{``}</style>
 
       <div>
-        <h1 className="text-2xl font-bold text-[#F5EFE0]">تكاليف الشحن</h1>
-        <p className="text-[#F5EFE0]/40 text-sm mt-1">اضغط على السعر لتعديله — {zones.length} محافظة</p>
+        <h1 className="text-2xl font-bold text-[#F2F0EC]">تكاليف الشحن</h1>
+        <p className="text-[#F2F0EC]/40 text-sm mt-1">اضغط على السعر لتعديله — {zones.length} محافظة</p>
       </div>
 
-      <div className="bg-[#0A0806] rounded-xl border border-[#C9A84C]/10 overflow-hidden">
+      <div className="bg-[#0A0A0A] rounded-xl border border-[#9BA3AA]/10 overflow-hidden">
         {loading ? (
-          <div className="p-12 text-center text-[#F5EFE0]/25 text-sm">جاري التحميل...</div>
+          <div className="p-12 text-center text-[#F2F0EC]/25 text-sm">جاري التحميل...</div>
         ) : (
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-[#C9A84C]/10">
-                <th className="text-right px-6 py-3 text-[#C9A84C]/70 font-bold text-xs tracking-widest">المحافظة</th>
-                <th className="text-right px-4 py-3 text-[#C9A84C]/70 font-bold text-xs tracking-widest">التكلفة (ج.م)</th>
-                <th className="text-right px-4 py-3 text-[#C9A84C]/70 font-bold text-xs tracking-widest">الحالة</th>
+              <tr className="border-b border-[#9BA3AA]/10">
+                <th className="text-right px-6 py-3 text-[#9BA3AA]/70 font-bold text-xs tracking-widest">المحافظة</th>
+                <th className="text-right px-4 py-3 text-[#9BA3AA]/70 font-bold text-xs tracking-widest">التكلفة (ج.م)</th>
+                <th className="text-right px-4 py-3 text-[#9BA3AA]/70 font-bold text-xs tracking-widest">الحالة</th>
                 <th className="px-4 py-3" />
               </tr>
             </thead>
             <tbody>
               {zones.map((z, i) => (
                 <tr key={z.id} style={{ borderBottom: i < zones.length - 1 ? "1px solid rgba(255,255,255,0.03)" : "none" }}>
-                  <td className="px-6 py-3 text-[#F5EFE0]">{z.governorate_ar}</td>
+                  <td className="px-6 py-3 text-[#F2F0EC]">{z.governorate_ar}</td>
 
                   <td className="px-4 py-3">
                     {editing === z.id ? (
@@ -104,12 +104,12 @@ export default function ShippingPage() {
                           onKeyDown={e => { if (e.key === "Enter") saveEdit(z.id); if (e.key === "Escape") setEditing(null) }}
                           autoFocus
                           style={{
-                            width: 90, background: "#0E0C09", border: "1px solid rgba(201,168,76,0.5)",
-                            borderRadius: 6, padding: "5px 10px", color: "#F5EFE0", fontSize: 14, outline: "none",
+                            width: 90, background: "#0A0A0A", border: "1px solid rgba(201,168,76,0.5)",
+                            borderRadius: 6, padding: "5px 10px", color: "#F2F0EC", fontSize: 14, outline: "none",
                           }}
                         />
                         <button onClick={() => saveEdit(z.id)} disabled={saving}
-                          style={{ padding: "4px 12px", background: "rgba(201,168,76,0.15)", border: "1px solid rgba(201,168,76,0.3)", borderRadius: 6, color: "#C9A84C", fontSize: 12, cursor: "pointer" }}>
+                          style={{ padding: "4px 12px", background: "rgba(201,168,76,0.15)", border: "1px solid rgba(201,168,76,0.3)", borderRadius: 6, color: "#9BA3AA", fontSize: 12, cursor: "pointer" }}>
                           حفظ
                         </button>
                         <button onClick={() => setEditing(null)}
@@ -122,7 +122,7 @@ export default function ShippingPage() {
                           background: "transparent", border: "none", cursor: "pointer",
                           display: "flex", alignItems: "center", gap: 8, padding: "4px 0",
                         }}>
-                        <span style={{ color: "#C9A84C", fontWeight: 700, fontSize: 14 }}>
+                        <span style={{ color: "#9BA3AA", fontWeight: 700, fontSize: 14 }}>
                           {Number(z.cost) === 0 ? "مجاني" : `${Number(z.cost)} ج.م`}
                         </span>
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(201,168,76,0.4)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -146,7 +146,7 @@ export default function ShippingPage() {
                     </button>
                   </td>
 
-                  <td className="px-4 py-3 text-[#F5EFE0]/25 text-xs">
+                  <td className="px-4 py-3 text-[#F2F0EC]/25 text-xs">
                     {editing !== z.id && "✏ تعديل"}
                   </td>
                 </tr>

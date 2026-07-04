@@ -43,10 +43,10 @@ export default function OrderStatusSelect({
       value={status}
       onChange={(e) => handleChange(e.target.value)}
       disabled={loading}
-      className={`bg-transparent border border-[#C9A84C]/20 rounded px-2 py-1 text-xs focus:outline-none ${opt?.color || "text-[#F5EFE0]"}`}
+      className={`bg-transparent border border-[#9BA3AA]/20 rounded px-2 py-1 text-xs focus:outline-none ${opt?.color || "text-[#F2F0EC]"}`}
     >
       {STATUS_OPTIONS.map((o) => (
-        <option key={o.value} value={o.value} className="bg-[#0A0806] text-[#F5EFE0]">
+        <option key={o.value} value={o.value} className="bg-[#0A0A0A] text-[#F2F0EC]">
           {o.label}
         </option>
       ))}

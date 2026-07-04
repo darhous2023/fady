@@ -56,8 +56,8 @@ export default async function ProductsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[#F5EFE0]">السيارات المستعملة</h1>
-          <p className="text-[#F5EFE0]/40 text-sm mt-1">
+          <h1 className="text-2xl font-bold text-[#F2F0EC]">السيارات المستعملة</h1>
+          <p className="text-[#F2F0EC]/40 text-sm mt-1">
             {items.length} سيارة
           </p>
         </div>
@@ -73,19 +73,19 @@ export default async function ProductsPage() {
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-[#9BA3AA]/10">
-              <th className="text-right px-6 py-3 text-[#F5EFE0]/40 font-medium">السيارة</th>
-              <th className="text-right px-4 py-3 text-[#F5EFE0]/40 font-medium">الماركة</th>
-              <th className="text-right px-4 py-3 text-[#F5EFE0]/40 font-medium">سنة / عداد</th>
-              <th className="text-right px-4 py-3 text-[#F5EFE0]/40 font-medium">الحالة</th>
-              <th className="text-right px-4 py-3 text-[#F5EFE0]/40 font-medium">السعر</th>
-              <th className="text-right px-4 py-3 text-[#F5EFE0]/40 font-medium">النشر</th>
+              <th className="text-right px-6 py-3 text-[#F2F0EC]/40 font-medium">السيارة</th>
+              <th className="text-right px-4 py-3 text-[#F2F0EC]/40 font-medium">الماركة</th>
+              <th className="text-right px-4 py-3 text-[#F2F0EC]/40 font-medium">سنة / عداد</th>
+              <th className="text-right px-4 py-3 text-[#F2F0EC]/40 font-medium">الحالة</th>
+              <th className="text-right px-4 py-3 text-[#F2F0EC]/40 font-medium">السعر</th>
+              <th className="text-right px-4 py-3 text-[#F2F0EC]/40 font-medium">النشر</th>
               <th className="px-4 py-3"></th>
             </tr>
           </thead>
           <tbody className="divide-y divide-[#9BA3AA]/5">
             {items.length === 0 ? (
               <tr>
-                <td colSpan={7} className="text-center py-12 text-[#F5EFE0]/30">
+                <td colSpan={7} className="text-center py-12 text-[#F2F0EC]/30">
                   لا توجد سيارات. أضف أول سيارة الآن.
                 </td>
               </tr>
@@ -97,13 +97,13 @@ export default async function ProductsPage() {
                       {p.is_featured && (
                         <span className="text-[#9BA3AA] text-xs">★</span>
                       )}
-                      <span className="text-[#F5EFE0] font-medium">{p.name_ar}</span>
+                      <span className="text-[#F2F0EC] font-medium">{p.name_ar}</span>
                     </div>
                   </td>
-                  <td className="px-4 py-4 text-[#F5EFE0]/60">
+                  <td className="px-4 py-4 text-[#F2F0EC]/60">
                     {p.category_name || "—"}
                   </td>
-                  <td className="px-4 py-4 text-[#F5EFE0]/60 text-xs">
+                  <td className="px-4 py-4 text-[#F2F0EC]/60 text-xs">
                     {p.year || "—"} {p.mileage_km ? `· ${Number(p.mileage_km).toLocaleString("ar-EG")} كم` : ""}
                   </td>
                   <td className="px-4 py-4">
@@ -116,7 +116,7 @@ export default async function ProductsPage() {
                   <td className="px-4 py-4 text-[#9BA3AA] font-medium">
                     {Number(p.price).toLocaleString("ar-EG")} ج
                     {p.compare_at_price && (
-                      <span className="text-[#F5EFE0]/30 line-through text-xs mr-2">
+                      <span className="text-[#F2F0EC]/30 line-through text-xs mr-2">
                         {Number(p.compare_at_price).toLocaleString("ar-EG")} ج
                       </span>
                     )}

@@ -2,10 +2,10 @@
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 
-const inputCls = "w-full bg-[#1A1310] border border-[#9BA3AA]/20 rounded-lg px-4 py-2.5 text-[#F5EFE0] text-sm placeholder:text-[#F5EFE0]/20 focus:outline-none focus:border-[#9BA3AA]/60 transition-colors";
-const labelCls = "block text-sm text-[#F5EFE0]/60 mb-1.5";
+const inputCls = "w-full bg-[#111111] border border-[#9BA3AA]/20 rounded-lg px-4 py-2.5 text-[#F2F0EC] text-sm placeholder:text-[#F2F0EC]/20 focus:outline-none focus:border-[#9BA3AA]/60 transition-colors";
+const labelCls = "block text-sm text-[#F2F0EC]/60 mb-1.5";
 const sectionCls = "bg-[#0A0A0A] rounded-xl border border-[#9BA3AA]/10 p-6 space-y-5";
-const h2Cls = "font-semibold text-[#F5EFE0] border-b border-[#9BA3AA]/10 pb-3";
+const h2Cls = "font-semibold text-[#F2F0EC] border-b border-[#9BA3AA]/10 pb-3";
 
 function ImageField({ label, name, defaultValue }: { label: string; name: string; defaultValue?: string }) {
   const [url, setUrl] = useState(defaultValue || "");
@@ -87,7 +87,7 @@ export default function HomeContentForm({ settings }: { settings: Record<string,
         <div>
           <label className={labelCls}>رابط فيديو الخلفية (MP4)</label>
           <input name="hero_video_url" defaultValue={settings.hero_video_url} placeholder="https://.../video.mp4" className={inputCls} />
-          <p className="text-xs text-[#F5EFE0]/25 mt-1">اتركه فارغًا لعرض صورة ثابتة بدلًا من الفيديو</p>
+          <p className="text-xs text-[#F2F0EC]/25 mt-1">اتركه فارغًا لعرض صورة ثابتة بدلًا من الفيديو</p>
         </div>
         <div>
           <label className={labelCls}>الشعار العلوي الصغير</label>

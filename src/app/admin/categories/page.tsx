@@ -110,7 +110,7 @@ export default function CategoriesPage() {
     } finally { setDeleting(null) }
   }
 
-  const inp = "bg-[#111009] border border-[#C9A84C]/20 rounded-lg px-3 py-2 text-[#F5EFE0] text-sm outline-none focus:border-[#C9A84C]/60 transition-colors font-[Tajawal,sans-serif]"
+  const inp = "bg-[#111111] border border-[#9BA3AA]/20 rounded-lg px-3 py-2 text-[#F2F0EC] text-sm outline-none focus:border-[#9BA3AA]/60 transition-colors font-[Tajawal,sans-serif]"
 
   return (
     <div className="space-y-6" dir="rtl" style={{ fontFamily: "Tajawal,sans-serif" }}>
@@ -118,12 +118,12 @@ export default function CategoriesPage() {
 
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[#F5EFE0]">الأقسام</h1>
-          <p className="text-[#F5EFE0]/40 text-sm mt-1">{cats.length} قسم</p>
+          <h1 className="text-2xl font-bold text-[#F2F0EC]">الأقسام</h1>
+          <p className="text-[#F2F0EC]/40 text-sm mt-1">{cats.length} قسم</p>
         </div>
         <button onClick={() => setShowAdd(true)}
           className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold transition-colors"
-          style={{ background: "linear-gradient(135deg,#C9A84C,#F0D882)", color: "#0A0806" }}>
+          style={{ background: "linear-gradient(135deg,#9BA3AA,#C9CFD4)", color: "#0A0A0A" }}>
           + قسم جديد
         </button>
       </div>
@@ -131,19 +131,19 @@ export default function CategoriesPage() {
       {/* Add modal */}
       {showAdd && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm" onClick={e => e.target === e.currentTarget && setShowAdd(false)}>
-          <div className="bg-[#0E0C09] border border-[#C9A84C]/20 rounded-2xl p-6 w-full max-w-md mx-4" dir="rtl">
-            <h2 className="text-lg font-bold text-[#F5EFE0] mb-5">قسم جديد</h2>
+          <div className="bg-[#0A0A0A] border border-[#9BA3AA]/20 rounded-2xl p-6 w-full max-w-md mx-4" dir="rtl">
+            <h2 className="text-lg font-bold text-[#F2F0EC] mb-5">قسم جديد</h2>
             <form onSubmit={handleAdd} className="space-y-4">
               <div>
-                <label className="block text-xs text-[#F5EFE0]/50 mb-2">الاسم بالعربي *</label>
+                <label className="block text-xs text-[#F2F0EC]/50 mb-2">الاسم بالعربي *</label>
                 <input required className={inp} style={{ width: "100%" }}
                   value={addForm.name_ar}
                   onChange={e => setAddForm(f => ({ ...f, name_ar: e.target.value, slug: slugify(e.target.value) }))}
-                  placeholder="مثال: شنط يد"
+                  placeholder="مثال: تويوتا"
                 />
               </div>
               <div>
-                <label className="block text-xs text-[#F5EFE0]/50 mb-2">Slug (URL)</label>
+                <label className="block text-xs text-[#F2F0EC]/50 mb-2">Slug (URL)</label>
                 <input className={inp} style={{ width: "100%", direction: "ltr" }}
                   value={addForm.slug}
                   onChange={e => setAddForm(f => ({ ...f, slug: e.target.value }))}
@@ -151,7 +151,7 @@ export default function CategoriesPage() {
                 />
               </div>
               <div>
-                <label className="block text-xs text-[#F5EFE0]/50 mb-2">الترتيب</label>
+                <label className="block text-xs text-[#F2F0EC]/50 mb-2">الترتيب</label>
                 <input type="number" className={inp} style={{ width: "100%" }}
                   value={addForm.sort_order}
                   onChange={e => setAddForm(f => ({ ...f, sort_order: e.target.value }))}
@@ -160,11 +160,11 @@ export default function CategoriesPage() {
               <div className="flex gap-3 pt-2">
                 <button type="submit" disabled={adding}
                   className="flex-1 py-2.5 rounded-lg font-bold text-sm transition-all"
-                  style={{ background: "linear-gradient(135deg,#C9A84C,#F0D882)", color: "#0A0806", opacity: adding ? 0.7 : 1 }}>
+                  style={{ background: "linear-gradient(135deg,#9BA3AA,#C9CFD4)", color: "#0A0A0A", opacity: adding ? 0.7 : 1 }}>
                   {adding ? "جاري الإضافة..." : "إضافة القسم"}
                 </button>
                 <button type="button" onClick={() => setShowAdd(false)}
-                  className="px-5 py-2.5 rounded-lg text-sm text-[#F5EFE0]/50 border border-[#C9A84C]/10 hover:border-[#C9A84C]/30 transition-colors">
+                  className="px-5 py-2.5 rounded-lg text-sm text-[#F2F0EC]/50 border border-[#9BA3AA]/10 hover:border-[#9BA3AA]/30 transition-colors">
                   إلغاء
                 </button>
               </div>
@@ -173,23 +173,23 @@ export default function CategoriesPage() {
         </div>
       )}
 
-      <div className="bg-[#0A0806] rounded-xl border border-[#C9A84C]/10 overflow-hidden">
+      <div className="bg-[#0A0A0A] rounded-xl border border-[#9BA3AA]/10 overflow-hidden">
         {loading ? (
-          <div className="p-12 text-center text-[#F5EFE0]/25 text-sm">جاري التحميل...</div>
+          <div className="p-12 text-center text-[#F2F0EC]/25 text-sm">جاري التحميل...</div>
         ) : cats.length === 0 ? (
           <div className="p-12 text-center">
-            <p className="text-[#F5EFE0]/30 text-sm mb-4">لا توجد أقسام بعد</p>
+            <p className="text-[#F2F0EC]/30 text-sm mb-4">لا توجد أقسام بعد</p>
             <button onClick={() => setShowAdd(true)}
-              className="text-[#C9A84C] text-sm underline">أضف أول قسم</button>
+              className="text-[#9BA3AA] text-sm underline">أضف أول قسم</button>
           </div>
         ) : (
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-[#C9A84C]/10">
-                <th className="text-right px-6 py-3 text-[#C9A84C]/70 font-bold text-xs tracking-widest">الاسم</th>
-                <th className="text-right px-4 py-3 text-[#C9A84C]/70 font-bold text-xs tracking-widest">Slug</th>
-                <th className="text-right px-4 py-3 text-[#C9A84C]/70 font-bold text-xs tracking-widest">الترتيب</th>
-                <th className="text-right px-4 py-3 text-[#C9A84C]/70 font-bold text-xs tracking-widest">الحالة</th>
+              <tr className="border-b border-[#9BA3AA]/10">
+                <th className="text-right px-6 py-3 text-[#9BA3AA]/70 font-bold text-xs tracking-widest">الاسم</th>
+                <th className="text-right px-4 py-3 text-[#9BA3AA]/70 font-bold text-xs tracking-widest">Slug</th>
+                <th className="text-right px-4 py-3 text-[#9BA3AA]/70 font-bold text-xs tracking-widest">الترتيب</th>
+                <th className="text-right px-4 py-3 text-[#9BA3AA]/70 font-bold text-xs tracking-widest">الحالة</th>
                 <th className="px-4 py-3" />
               </tr>
             </thead>
@@ -215,11 +215,11 @@ export default function CategoriesPage() {
                         <div className="flex gap-2">
                           <button onClick={() => saveEdit(c.id)} disabled={saving}
                             className="px-3 py-1.5 text-xs font-bold rounded-lg"
-                            style={{ background: "rgba(201,168,76,0.15)", color: "#C9A84C", border: "1px solid rgba(201,168,76,0.3)" }}>
+                            style={{ background: "rgba(201,168,76,0.15)", color: "#9BA3AA", border: "1px solid rgba(201,168,76,0.3)" }}>
                             {saving ? "..." : "حفظ"}
                           </button>
                           <button onClick={() => setEditing(null)}
-                            className="px-3 py-1.5 text-xs rounded-lg text-[#F5EFE0]/40 border border-white/5 hover:border-white/20">
+                            className="px-3 py-1.5 text-xs rounded-lg text-[#F2F0EC]/40 border border-white/5 hover:border-white/20">
                             إلغاء
                           </button>
                         </div>
@@ -227,9 +227,9 @@ export default function CategoriesPage() {
                     </>
                   ) : (
                     <>
-                      <td className="px-6 py-4 text-[#F5EFE0] font-medium">{c.name_ar}</td>
-                      <td className="px-4 py-4 text-[#F5EFE0]/50 font-mono text-xs">{c.slug}</td>
-                      <td className="px-4 py-4 text-[#F5EFE0]/50">{c.sort_order}</td>
+                      <td className="px-6 py-4 text-[#F2F0EC] font-medium">{c.name_ar}</td>
+                      <td className="px-4 py-4 text-[#F2F0EC]/50 font-mono text-xs">{c.slug}</td>
+                      <td className="px-4 py-4 text-[#F2F0EC]/50">{c.sort_order}</td>
                       <td className="px-4 py-4">
                         <button onClick={() => toggleActive(c)}
                           className={`text-xs px-3 py-1 rounded-full font-bold border ${c.is_active ? "bg-green-500/10 text-green-400 border-green-500/20" : "bg-gray-500/10 text-gray-400 border-gray-500/20"}`}>
@@ -239,7 +239,7 @@ export default function CategoriesPage() {
                       <td className="px-4 py-4">
                         <div className="flex gap-2 justify-end">
                           <button onClick={() => startEdit(c)}
-                            className="text-xs px-3 py-1.5 rounded-lg text-[#C9A84C]/70 border border-[#C9A84C]/15 hover:border-[#C9A84C]/40 hover:text-[#C9A84C] transition-colors">
+                            className="text-xs px-3 py-1.5 rounded-lg text-[#9BA3AA]/70 border border-[#9BA3AA]/15 hover:border-[#9BA3AA]/40 hover:text-[#9BA3AA] transition-colors">
                             تعديل
                           </button>
                           <button onClick={() => handleDelete(c.id, c.name_ar)} disabled={deleting === c.id}

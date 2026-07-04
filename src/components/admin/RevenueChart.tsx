@@ -44,7 +44,7 @@ export default function RevenueChart({ data }: { data: DayData[] }) {
                   transform: `translateX(${i > data.length - 6 ? "-80%" : "0"})`,
                 }}>
                   <div style={{ fontSize: 11, color: "rgba(245,239,224,0.5)", marginBottom: 2 }}>{dateLabel}</div>
-                  <div style={{ fontSize: 15, fontWeight: 700, color: "#C9A84C" }}>{d.revenue.toLocaleString("ar-EG")} ج</div>
+                  <div style={{ fontSize: 15, fontWeight: 700, color: "#9BA3AA" }}>{d.revenue.toLocaleString("ar-EG")} ج</div>
                   <div style={{ fontSize: 11, color: "rgba(245,239,224,0.4)" }}>{d.orders} طلب</div>
                 </div>
               )}
@@ -56,9 +56,9 @@ export default function RevenueChart({ data }: { data: DayData[] }) {
                 style={{
                   width: barW, height: h,
                   background: isHovered
-                    ? "linear-gradient(180deg,#F0D882,#C9A84C)"
+                    ? "linear-gradient(180deg,#C9CFD4,#9BA3AA)"
                     : d.revenue > 0
-                    ? "linear-gradient(180deg,#C9A84C88,#C9A84C44)"
+                    ? "linear-gradient(180deg,#9BA3AA88,#9BA3AA44)"
                     : "rgba(255,255,255,0.04)",
                   borderRadius: "4px 4px 2px 2px",
                   transition: "all 0.15s ease",

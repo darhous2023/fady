@@ -102,8 +102,8 @@ export default async function DashboardPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-[#F5EFE0]">الداشبورد</h1>
-        <p className="text-[#F5EFE0]/40 text-sm mt-1">نظرة عامة على المتجر</p>
+        <h1 className="text-2xl font-bold text-[#F2F0EC]">الداشبورد</h1>
+        <p className="text-[#F2F0EC]/40 text-sm mt-1">نظرة عامة على المتجر</p>
       </div>
 
       {/* Stats Grid */}
@@ -120,17 +120,17 @@ export default async function DashboardPage() {
       </div>
 
       {/* Revenue Chart */}
-      <div className="bg-[#0A0806] rounded-xl border border-[#C9A84C]/10 overflow-hidden">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[#C9A84C]/10">
+      <div className="bg-[#0A0A0A] rounded-xl border border-[#9BA3AA]/10 overflow-hidden">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[#9BA3AA]/10">
           <div>
-            <h2 className="font-semibold text-[#F5EFE0]">الإيرادات — آخر 30 يوم</h2>
-            <p className="text-xs text-[#F5EFE0]/30 mt-0.5">
+            <h2 className="font-semibold text-[#F2F0EC]">الإيرادات — آخر 30 يوم</h2>
+            <p className="text-xs text-[#F2F0EC]/30 mt-0.5">
               إجمالي: {totalChartRevenue.toLocaleString("ar-EG")} ج.م
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <span className="w-3 h-3 rounded-sm" style={{ background: "linear-gradient(135deg,#C9A84C,#F0D882)" }} />
-            <span className="text-xs text-[#F5EFE0]/40">إيرادات الطلبات المسلّمة</span>
+            <span className="w-3 h-3 rounded-sm" style={{ background: "linear-gradient(135deg,#9BA3AA,#C9CFD4)" }} />
+            <span className="text-xs text-[#F2F0EC]/40">إيرادات الطلبات المسلّمة</span>
           </div>
         </div>
         <div className="p-6">
@@ -139,27 +139,27 @@ export default async function DashboardPage() {
       </div>
 
       {/* Recent Orders */}
-      <div className="bg-[#0A0806] rounded-xl border border-[#C9A84C]/10 overflow-hidden">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[#C9A84C]/10">
-          <h2 className="font-semibold text-[#F5EFE0]">آخر الطلبات</h2>
-          <a href="/admin/orders" className="text-xs text-[#C9A84C] hover:underline">عرض الكل ←</a>
+      <div className="bg-[#0A0A0A] rounded-xl border border-[#9BA3AA]/10 overflow-hidden">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[#9BA3AA]/10">
+          <h2 className="font-semibold text-[#F2F0EC]">آخر الطلبات</h2>
+          <a href="/admin/orders" className="text-xs text-[#9BA3AA] hover:underline">عرض الكل ←</a>
         </div>
-        <div className="divide-y divide-[#C9A84C]/5">
+        <div className="divide-y divide-[#9BA3AA]/5">
           {stats.recentOrders.length === 0 ? (
-            <p className="text-center text-[#F5EFE0]/30 py-8 text-sm">لا توجد طلبات بعد</p>
+            <p className="text-center text-[#F2F0EC]/30 py-8 text-sm">لا توجد طلبات بعد</p>
           ) : (
             stats.recentOrders.map((order) => (
               <a key={order.id} href={`/admin/orders/${order.id}`}
-                className="flex items-center justify-between px-6 py-3 hover:bg-[#C9A84C]/5 transition-colors no-underline">
+                className="flex items-center justify-between px-6 py-3 hover:bg-[#9BA3AA]/5 transition-colors no-underline">
                 <div>
-                  <p className="text-sm text-[#F5EFE0]">{order.customer_name}</p>
-                  <p className="text-xs text-[#F5EFE0]/40">{order.order_number}</p>
+                  <p className="text-sm text-[#F2F0EC]">{order.customer_name}</p>
+                  <p className="text-xs text-[#F2F0EC]/40">{order.order_number}</p>
                 </div>
                 <div className="flex items-center gap-4">
                   <span className={`text-xs px-2 py-0.5 rounded-full ${STATUS_COLORS[order.status]}`}>
                     {STATUS_LABELS[order.status]}
                   </span>
-                  <span className="text-sm text-[#C9A84C] font-medium">
+                  <span className="text-sm text-[#9BA3AA] font-medium">
                     {Number(order.total).toLocaleString("ar-EG")} ج
                   </span>
                 </div>
@@ -170,18 +170,18 @@ export default async function DashboardPage() {
       </div>
       {/* Top Products */}
       {stats.topProducts.length > 0 && (
-        <div className="bg-[#0A0806] rounded-xl border border-[#C9A84C]/10 overflow-hidden">
-          <div className="px-6 py-4 border-b border-[#C9A84C]/10">
-            <h2 className="font-semibold text-[#F5EFE0]">الأكثر مبيعاً</h2>
+        <div className="bg-[#0A0A0A] rounded-xl border border-[#9BA3AA]/10 overflow-hidden">
+          <div className="px-6 py-4 border-b border-[#9BA3AA]/10">
+            <h2 className="font-semibold text-[#F2F0EC]">الأكثر مبيعاً</h2>
           </div>
-          <div className="divide-y divide-[#C9A84C]/5">
+          <div className="divide-y divide-[#9BA3AA]/5">
             {stats.topProducts.map((p, i) => (
               <div key={i} className="flex items-center justify-between px-6 py-3">
                 <div className="flex items-center gap-3">
-                  <span className="text-xs font-bold text-[#C9A84C]/40 w-5">{i + 1}</span>
-                  <span className="text-sm text-[#F5EFE0]">{p.name_ar}</span>
+                  <span className="text-xs font-bold text-[#9BA3AA]/40 w-5">{i + 1}</span>
+                  <span className="text-sm text-[#F2F0EC]">{p.name_ar}</span>
                 </div>
-                <span className="text-xs font-bold text-[#C9A84C] bg-[#C9A84C]/10 px-2 py-1 rounded-full">{p.orders} طلب</span>
+                <span className="text-xs font-bold text-[#9BA3AA] bg-[#9BA3AA]/10 px-2 py-1 rounded-full">{p.orders} طلب</span>
               </div>
             ))}
           </div>
@@ -195,12 +195,12 @@ function StatCard({ label, value, icon, highlight }: {
   label: string; value: string; icon: string; highlight?: boolean;
 }) {
   return (
-    <div className={`rounded-xl border p-5 ${highlight ? "bg-[#C9A84C]/10 border-[#C9A84C]/30" : "bg-[#0A0806] border-[#C9A84C]/10"}`}>
+    <div className={`rounded-xl border p-5 ${highlight ? "bg-[#9BA3AA]/10 border-[#9BA3AA]/30" : "bg-[#0A0A0A] border-[#9BA3AA]/10"}`}>
       <div className="flex items-center gap-2 mb-3">
         <span className="text-lg">{icon}</span>
-        <span className="text-xs text-[#F5EFE0]/40">{label}</span>
+        <span className="text-xs text-[#F2F0EC]/40">{label}</span>
       </div>
-      <p className="text-2xl font-bold text-[#F5EFE0]">{value}</p>
+      <p className="text-2xl font-bold text-[#F2F0EC]">{value}</p>
     </div>
   );
 }

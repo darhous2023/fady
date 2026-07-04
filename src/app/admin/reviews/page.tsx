@@ -27,8 +27,8 @@ export default async function AdminReviewsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-[#F5EFE0]">التقييمات</h1>
-        <p className="text-[#F5EFE0]/40 text-sm mt-1">
+        <h1 className="text-2xl font-bold text-[#F2F0EC]">التقييمات</h1>
+        <p className="text-[#F2F0EC]/40 text-sm mt-1">
           {pending.length} في الانتظار · {approved.length} معتمد
         </p>
       </div>
@@ -43,9 +43,9 @@ export default async function AdminReviewsPage() {
       )}
 
       <div>
-        <h2 className="text-sm font-semibold text-[#F5EFE0]/30 uppercase tracking-widest mb-3">✓ معتمدة ({approved.length})</h2>
+        <h2 className="text-sm font-semibold text-[#F2F0EC]/30 uppercase tracking-widest mb-3">✓ معتمدة ({approved.length})</h2>
         {approved.length === 0 ? (
-          <p className="text-[#F5EFE0]/25 text-sm py-4">لا توجد تقييمات معتمدة</p>
+          <p className="text-[#F2F0EC]/25 text-sm py-4">لا توجد تقييمات معتمدة</p>
         ) : (
           <div className="space-y-3">
             {approved.map(r => <ReviewCard key={r.id} review={r} />)}
@@ -57,7 +57,7 @@ export default async function AdminReviewsPage() {
 }
 
 function Stars({ n }: { n: number }) {
-  return <span className="text-[#F0D882] text-xs">{"★".repeat(n)}{"☆".repeat(5 - n)}</span>
+  return <span className="text-[#C9CFD4] text-xs">{"★".repeat(n)}{"☆".repeat(5 - n)}</span>
 }
 
 function ReviewCard({ review }: { review: {
@@ -66,19 +66,19 @@ function ReviewCard({ review }: { review: {
   created_at: Date | null; product_name: string | null; product_id: string
 }}) {
   return (
-    <div className={`bg-[#0A0806] rounded-xl border p-5 ${review.is_approved ? "border-[#C9A84C]/8" : "border-yellow-500/20"}`}>
+    <div className={`bg-[#0A0A0A] rounded-xl border p-5 ${review.is_approved ? "border-[#9BA3AA]/8" : "border-yellow-500/20"}`}>
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-3 flex-wrap mb-1">
-            <span className="font-semibold text-[#F5EFE0] text-sm">{review.customer_name}</span>
+            <span className="font-semibold text-[#F2F0EC] text-sm">{review.customer_name}</span>
             <Stars n={review.rating} />
-            <span className="text-xs text-[#F5EFE0]/30">
+            <span className="text-xs text-[#F2F0EC]/30">
               {review.created_at ? new Date(review.created_at).toLocaleDateString("ar-EG") : ""}
             </span>
           </div>
-          <p className="text-xs text-[#C9A84C]/60 mb-2">{review.product_name ?? review.product_id}</p>
+          <p className="text-xs text-[#9BA3AA]/60 mb-2">{review.product_name ?? review.product_id}</p>
           {review.comment_ar && (
-            <p className="text-sm text-[#F5EFE0]/55 leading-relaxed">{review.comment_ar}</p>
+            <p className="text-sm text-[#F2F0EC]/55 leading-relaxed">{review.comment_ar}</p>
           )}
         </div>
         <ReviewActions reviewId={review.id} isApproved={review.is_approved} />

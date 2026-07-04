@@ -42,11 +42,11 @@ export default async function OrderDetailPage({ params }: Props) {
       {/* Header */}
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
-          <Link href="/admin/orders" className="text-xs text-[#C9A84C]/60 hover:text-[#C9A84C] mb-2 inline-block">
+          <Link href="/admin/orders" className="text-xs text-[#9BA3AA]/60 hover:text-[#9BA3AA] mb-2 inline-block">
             ← الطلبات
           </Link>
-          <h1 className="text-2xl font-bold text-[#F5EFE0] font-mono">{order.order_number}</h1>
-          <p className="text-[#F5EFE0]/40 text-sm mt-1">
+          <h1 className="text-2xl font-bold text-[#F2F0EC] font-mono">{order.order_number}</h1>
+          <p className="text-[#F2F0EC]/40 text-sm mt-1">
             {new Date(order.created_at!).toLocaleDateString("ar-EG", {
               year: "numeric", month: "long", day: "numeric",
               hour: "2-digit", minute: "2-digit",
@@ -65,7 +65,7 @@ export default async function OrderDetailPage({ params }: Props) {
           {order.status === "delivered" && (
             <a href={`https://wa.me/${waPhone}?text=${encodeURIComponent(`السلام عليكم ${order.customer_name}\nنأمل أن تكون معاينة السيارة (طلب رقم ${order.order_number}) في معرض الفادي قد أعجبتك.\nنودّ سماع رأيك — هل يمكنك تقييم تجربتك معنا؟ رأيك يهمنا جداً`)}`}
               target="_blank" rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2 text-sm font-bold text-[#C9A84C] border border-[#C9A84C]/30 rounded-lg hover:bg-[#C9A84C]/10 transition-colors">
+              className="flex items-center gap-2 px-4 py-2 text-sm font-bold text-[#9BA3AA] border border-[#9BA3AA]/30 rounded-lg hover:bg-[#9BA3AA]/10 transition-colors">
               ⭐ اطلب تقييم
             </a>
           )}
@@ -76,8 +76,8 @@ export default async function OrderDetailPage({ params }: Props) {
       </div>
 
       {/* Status change */}
-      <div className="bg-[#0A0806] rounded-xl border border-[#C9A84C]/10 p-5">
-        <h2 className="text-sm font-semibold text-[#F5EFE0]/60 mb-3 uppercase tracking-widest">تغيير الحالة</h2>
+      <div className="bg-[#0A0A0A] rounded-xl border border-[#9BA3AA]/10 p-5">
+        <h2 className="text-sm font-semibold text-[#F2F0EC]/60 mb-3 uppercase tracking-widest">تغيير الحالة</h2>
         <OrderStatusSelect orderId={order.id} currentStatus={order.status} />
         <div className="flex gap-3 mt-3 flex-wrap">
           {["pending","confirmed","shipped","delivered","cancelled"].map(s => (
@@ -90,8 +90,8 @@ export default async function OrderDetailPage({ params }: Props) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Customer info */}
-        <div className="bg-[#0A0806] rounded-xl border border-[#C9A84C]/10 p-5 space-y-3">
-          <h2 className="text-sm font-semibold text-[#F5EFE0]/60 uppercase tracking-widest border-b border-[#C9A84C]/10 pb-3">
+        <div className="bg-[#0A0A0A] rounded-xl border border-[#9BA3AA]/10 p-5 space-y-3">
+          <h2 className="text-sm font-semibold text-[#F2F0EC]/60 uppercase tracking-widest border-b border-[#9BA3AA]/10 pb-3">
             بيانات العميل
           </h2>
           <Row label="الاسم" value={order.customer_name} />
@@ -108,15 +108,15 @@ export default async function OrderDetailPage({ params }: Props) {
         </div>
 
         {/* Order summary */}
-        <div className="bg-[#0A0806] rounded-xl border border-[#C9A84C]/10 p-5 space-y-3">
-          <h2 className="text-sm font-semibold text-[#F5EFE0]/60 uppercase tracking-widest border-b border-[#C9A84C]/10 pb-3">
+        <div className="bg-[#0A0A0A] rounded-xl border border-[#9BA3AA]/10 p-5 space-y-3">
+          <h2 className="text-sm font-semibold text-[#F2F0EC]/60 uppercase tracking-widest border-b border-[#9BA3AA]/10 pb-3">
             ملخص الحجز
           </h2>
           <Row label="طريقة الطلب" value={order.method === "cod" ? "نموذج الموقع" : "واتساب"} />
-          <div className="border-t border-[#C9A84C]/10 pt-3">
+          <div className="border-t border-[#9BA3AA]/10 pt-3">
             <Row label="الإجمالي"
               value={
-                <span className="text-[#C9A84C] font-bold text-base">
+                <span className="text-[#9BA3AA] font-bold text-base">
                   {Number(order.total).toLocaleString("ar-EG")} ج.م
                 </span>
               }
@@ -126,33 +126,33 @@ export default async function OrderDetailPage({ params }: Props) {
       </div>
 
       {/* Order items */}
-      <div className="bg-[#0A0806] rounded-xl border border-[#C9A84C]/10 overflow-hidden">
-        <h2 className="text-sm font-semibold text-[#F5EFE0]/60 uppercase tracking-widest px-6 py-4 border-b border-[#C9A84C]/10">
+      <div className="bg-[#0A0A0A] rounded-xl border border-[#9BA3AA]/10 overflow-hidden">
+        <h2 className="text-sm font-semibold text-[#F2F0EC]/60 uppercase tracking-widest px-6 py-4 border-b border-[#9BA3AA]/10">
           السيارات المطلوب معاينتها ({items.length})
         </h2>
         {items.length === 0 ? (
-          <p className="text-center text-[#F5EFE0]/30 py-8 text-sm">لا توجد سيارات</p>
+          <p className="text-center text-[#F2F0EC]/30 py-8 text-sm">لا توجد سيارات</p>
         ) : (
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-[#C9A84C]/5">
-                <th className="text-right px-6 py-3 text-[#F5EFE0]/40 font-medium">السيارة</th>
-                <th className="text-right px-4 py-3 text-[#F5EFE0]/40 font-medium">الجودة</th>
-                <th className="text-right px-4 py-3 text-[#F5EFE0]/40 font-medium">الكمية</th>
-                <th className="text-right px-4 py-3 text-[#F5EFE0]/40 font-medium">السعر</th>
-                <th className="text-right px-4 py-3 text-[#F5EFE0]/40 font-medium">الإجمالي</th>
+              <tr className="border-b border-[#9BA3AA]/5">
+                <th className="text-right px-6 py-3 text-[#F2F0EC]/40 font-medium">السيارة</th>
+                <th className="text-right px-4 py-3 text-[#F2F0EC]/40 font-medium">الجودة</th>
+                <th className="text-right px-4 py-3 text-[#F2F0EC]/40 font-medium">الكمية</th>
+                <th className="text-right px-4 py-3 text-[#F2F0EC]/40 font-medium">السعر</th>
+                <th className="text-right px-4 py-3 text-[#F2F0EC]/40 font-medium">الإجمالي</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#C9A84C]/5">
+            <tbody className="divide-y divide-[#9BA3AA]/5">
               {items.map(item => (
                 <tr key={item.id}>
-                  <td className="px-6 py-3 text-[#F5EFE0]">{item.product_name}</td>
-                  <td className="px-4 py-3 text-[#F5EFE0]/50 text-xs">
+                  <td className="px-6 py-3 text-[#F2F0EC]">{item.product_name}</td>
+                  <td className="px-4 py-3 text-[#F2F0EC]/50 text-xs">
                     {QUALITY_LABELS[item.quality_tier] ?? item.quality_tier}
                   </td>
-                  <td className="px-4 py-3 text-[#F5EFE0]/70">{item.qty}</td>
-                  <td className="px-4 py-3 text-[#F5EFE0]/70">{Number(item.unit_price).toLocaleString("ar-EG")} ج.م</td>
-                  <td className="px-4 py-3 text-[#C9A84C] font-medium">
+                  <td className="px-4 py-3 text-[#F2F0EC]/70">{item.qty}</td>
+                  <td className="px-4 py-3 text-[#F2F0EC]/70">{Number(item.unit_price).toLocaleString("ar-EG")} ج.م</td>
+                  <td className="px-4 py-3 text-[#9BA3AA] font-medium">
                     {(item.qty * Number(item.unit_price)).toLocaleString("ar-EG")} ج.م
                   </td>
                 </tr>
@@ -168,8 +168,8 @@ export default async function OrderDetailPage({ params }: Props) {
 function Row({ label, value }: { label: string; value: React.ReactNode }) {
   return (
     <div className="flex items-start justify-between gap-4">
-      <span className="text-xs text-[#F5EFE0]/40 shrink-0">{label}</span>
-      <span className="text-sm text-[#F5EFE0] text-right">{value}</span>
+      <span className="text-xs text-[#F2F0EC]/40 shrink-0">{label}</span>
+      <span className="text-sm text-[#F2F0EC] text-right">{value}</span>
     </div>
   )
 }
