@@ -5,7 +5,7 @@ import Link from "next/link"
 import { toast } from "sonner"
 import { useCart } from "@/contexts/CartContext"
 
-const WA = "201555557745"
+const DEFAULT_WA = "201555557745"
 
 const QUALITY_LABELS: Record<string, string> = {
   original: "ممتازة",
@@ -84,7 +84,7 @@ function useWishlist(productId: string) {
   return { inWl, toggle }
 }
 
-function ProductCard({ product, index }: { product: StoreProduct; index: number }) {
+function ProductCard({ product, index, waNumber }: { product: StoreProduct; index: number; waNumber: string }) {
   const { ref, visible } = useReveal()
   const [tilt, setTilt]     = useState({ x: 0, y: 0, gx: 50, gy: 50 })
   const [hovered, setHovered] = useState(false)
@@ -150,7 +150,7 @@ function ProductCard({ product, index }: { product: StoreProduct; index: number 
   }
 
   const waText = encodeURIComponent(`السلام عليكم، أريد الاستفسار عن: ${product.name_ar} (${product.price.toLocaleString("ar-EG")} ج.م)`)
-  const waHref = `https://wa.me/${WA}?text=${waText}`
+  const waHref = `https://wa.me/${waNumber}?text=${waText}`
   const qColor = QUALITY_COLORS[product.quality_tier] ?? "#4a4a4a"
   const delay  = `${index * 0.07}s`
 
@@ -418,7 +418,7 @@ function ProductCard({ product, index }: { product: StoreProduct; index: number 
 }
 
 // ── Section header ───────────────────────────────────────────────────────────
-function SectionHeader() {
+function SectionHeader({ eyebrow, title, subtitle }: { eyebrow: string; title: string; subtitle: string }) {
   const { ref, visible } = useReveal()
   return (
     <div ref={ref} style={{ textAlign: "center", marginBottom: 56 }}>
@@ -427,7 +427,7 @@ function SectionHeader() {
         color: "#9BA3AA", textTransform: "uppercase",
         opacity: visible ? 0.7 : 0, transform: visible ? "translateY(0)" : "translateY(12px)",
         transition: "all 0.7s ease", marginBottom: 16,
-      }}>✦ &nbsp; متاحة الآن في المعرض &nbsp; ✦</div>
+      }}>✦ &nbsp; {eyebrow} &nbsp; ✦</div>
 
       <div style={{
         fontFamily: "Tajawal,sans-serif", fontSize: "clamp(32px,4vw,46px)", fontWeight: 700,
@@ -440,7 +440,7 @@ function SectionHeader() {
         transition: "all 0.8s cubic-bezier(0.2,0,0.2,1) 0.1s", marginBottom: 8,
         animation: visible ? "pgShimmer 6s linear 1s infinite" : "none",
       }}>
-        سيارات مستعملة موثوقة
+        {title}
       </div>
 
       <div style={{
@@ -449,7 +449,7 @@ function SectionHeader() {
         opacity: visible ? 0.5 : 0, transform: visible ? "translateY(0)" : "translateY(12px)",
         transition: "all 0.7s ease 0.25s", marginBottom: 20, letterSpacing: "1px",
       }}>
-        فحص شامل، حالة موثّقة، وتواصل فوري عبر واتساب
+        {subtitle}
       </div>
 
       <div style={{
@@ -477,11 +477,24 @@ const PRICE_RANGES = [
   { key: "900k+", label: "أكثر من 900 ألف", min: 900000, max: Infinity },
 ]
 
-export default function ProductGrid({ initialProducts, initialCategory, showHeader = true }: { initialProducts: StoreProduct[]; initialCategory?: string; showHeader?: boolean }) {
+export default function ProductGrid({
+  initialProducts, initialCategory, showHeader = true,
+  sectionEyebrow = "متاحة الآن في المعرض",
+  sectionTitle = "سيارات مستعملة موثوقة",
+  sectionSubtitle = "فحص شامل، حالة موثّقة، وتواصل فوري عبر واتساب",
+}: {
+  initialProducts: StoreProduct[]; initialCategory?: string; showHeader?: boolean
+  sectionEyebrow?: string; sectionTitle?: string; sectionSubtitle?: string
+}) {
   const [products] = useState<StoreProduct[]>(initialProducts)
   const [activeCategory, setActiveCategory] = useState(initialCategory || "الكل")
   const [activeQuality, setActiveQuality] = useState("الكل")
   const [activePriceKey, setActivePriceKey] = useState("الكل")
+  const [waNumber, setWaNumber] = useState(DEFAULT_WA)
+
+  useEffect(() => {
+    fetch("/api/store-config").then(r => r.json()).then(d => { if (d.whatsapp_number) setWaNumber(d.whatsapp_number.replace(/\D/g, "")) }).catch(() => {})
+  }, [])
 
   const categories = ["الكل", ...Array.from(new Set(products.map(p => p.category_name).filter(Boolean) as string[]))]
 
@@ -505,7 +518,7 @@ export default function ProductGrid({ initialProducts, initialCategory, showHead
         }
       `}</style>
 
-      {showHeader && <SectionHeader />}
+      {showHeader && <SectionHeader eyebrow={sectionEyebrow} title={sectionTitle} subtitle={sectionSubtitle} />}
 
       {/* Filters */}
       <div style={{ display: "flex", flexDirection: "column", gap: 12, alignItems: "center", marginBottom: 48 }}>
@@ -586,7 +599,7 @@ export default function ProductGrid({ initialProducts, initialCategory, showHead
         @media (max-width:380px) { .elfady-card-wrap { width:100%; max-width:340px; } }
       `}</style>
       <div className="elfady-grid">
-        {filtered.map((p, i) => <ProductCard key={p.slug} product={p} index={i} />)}
+        {filtered.map((p, i) => <ProductCard key={p.slug} product={p} index={i} waNumber={waNumber} />)}
       </div>
 
       {/* Footer credit */}

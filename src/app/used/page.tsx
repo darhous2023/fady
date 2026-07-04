@@ -83,7 +83,10 @@ async function getBrands() {
 
 async function getUsedHeroSettings(): Promise<Record<string, string>> {
   const rows = await db.select().from(settings).where(
-    inArray(settings.key, ["used_hero_video_url", "used_hero_eyebrow_ar", "used_hero_headline_ar", "used_hero_subheadline_ar"])
+    inArray(settings.key, [
+      "used_hero_video_url", "used_hero_eyebrow_ar", "used_hero_headline_ar", "used_hero_subheadline_ar",
+      "whatsapp_number",
+    ])
   )
   return Object.fromEntries(rows.map(r => [r.key, r.value]))
 }
@@ -94,6 +97,7 @@ export default async function UsedCarsPage({ searchParams }: { searchParams: Pro
     getUsedCars(), getLowStockMap(), getBrandNameBySlug(brand), getBrands(), getUsedHeroSettings(),
   ])
   const carsWithStock = cars.map(c => ({ ...c, total_stock: lowStock[c.id] ?? null }))
+  const waNumber = heroSettings.whatsapp_number ? heroSettings.whatsapp_number.replace(/\D/g, "") : WA
 
   return (
     <>
@@ -104,7 +108,7 @@ export default async function UsedCarsPage({ searchParams }: { searchParams: Pro
         eyebrow={heroSettings.used_hero_eyebrow_ar || "سيارات مفحوصة وموثّقة"}
         headline={heroSettings.used_hero_headline_ar || "سيارات مستعملة"}
         subheadline={heroSettings.used_hero_subheadline_ar || "كل سيارة موجودة فعليًا في المعرض — بحالة مفحوصة وصور حقيقية"}
-        whatsapp={WA}
+        whatsapp={waNumber}
         availableCount={cars.length}
         brands={brands}
       />

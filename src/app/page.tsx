@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   description: "معرض الفادي لتجارة السيارات — سيارات جديدة ومستعملة، بثقة وشفافية، وتواصل فوري عبر واتساب",
 }
 
-const WA = "201555557745"
+const DEFAULT_WA = "201555557745"
 
 async function getProducts(): Promise<StoreProduct[]> {
   try {
@@ -172,6 +172,8 @@ export default async function StorePage() {
     total_stock: lowStockMap[p.id] ?? null,
   }))
 
+  const waNumber = cms.whatsapp_number ? cms.whatsapp_number.replace(/\D/g, "") : DEFAULT_WA
+
   const flashActive = cms.flash_deals_active === "true"
 
   return (
@@ -190,7 +192,7 @@ export default async function StorePage() {
         eyebrow={cms.hero_eyebrow_ar || "معرض سيارات موثوق"}
         headline={cms.hero_headline_ar || "الفادي"}
         subheadline={cms.hero_subheadline_ar || "سيارات جديدة ومستعملة — بثقة وشفافية"}
-        whatsapp={WA}
+        whatsapp={waNumber}
       />
 
       <MarqueeTicker text={cms.marquee_text_ar} />
@@ -218,14 +220,19 @@ export default async function StorePage() {
 
       {/* Used cars preview */}
       <div id="products">
-        <ProductGrid initialProducts={productsWithStock} />
+        <ProductGrid
+          initialProducts={productsWithStock}
+          sectionEyebrow={cms.used_section_eyebrow_ar || "متاحة الآن في المعرض"}
+          sectionTitle={cms.used_section_title_ar || "سيارات مستعملة موثوقة"}
+          sectionSubtitle={cms.used_section_subtitle_ar || "فحص شامل، حالة موثّقة، وتواصل فوري عبر واتساب"}
+        />
       </div>
 
       <ShowroomVideoSection
         videoUrl={cms.showroom_video_url}
         headline={cms.showroom_headline_ar || "زور المعرض بنفسك"}
         desc={cms.showroom_desc_ar || ""}
-        whatsapp={WA}
+        whatsapp={waNumber}
       />
 
       <HowItWorks steps={[

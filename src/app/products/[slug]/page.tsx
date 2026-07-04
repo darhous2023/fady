@@ -1,8 +1,30 @@
 import { notFound } from "next/navigation"
 import type { Metadata } from "next"
 import { db } from "@/lib/db/drizzle/connection"
-import { products, productImages, categories, productVariants, product360Frames } from "@/lib/db/drizzle/schema"
-import { eq, and, asc, ne } from "drizzle-orm"
+import { products, productImages, categories, productVariants, product360Frames, settings } from "@/lib/db/drizzle/schema"
+import { eq, and, asc, ne, inArray } from "drizzle-orm"
+
+const PAGE_SETTING_KEYS = [
+  "product_trust_1_title_ar", "product_trust_1_desc_ar",
+  "product_trust_2_title_ar", "product_trust_2_desc_ar",
+  "product_trust_3_title_ar", "product_trust_3_desc_ar",
+  "whatsapp_number",
+] as const
+
+const DEFAULT_WA = "201555557745"
+
+async function getPageSettings() {
+  const rows = await db.select().from(settings).where(inArray(settings.key, PAGE_SETTING_KEYS))
+  const map = Object.fromEntries(rows.map(r => [r.key, r.value]))
+  return {
+    trustSignals: [
+      { icon: "🔍", title: map.product_trust_1_title_ar || "معاينة كاملة", desc: map.product_trust_1_desc_ar || "زور المعرض وعاين السيارة قبل الشراء" },
+      { icon: "📋", title: map.product_trust_2_title_ar || "فحص شامل", desc: map.product_trust_2_desc_ar || "بيانات دقيقة عن الحالة والعداد والمواصفات" },
+      { icon: "💬", title: map.product_trust_3_title_ar || "دعم فوري", desc: map.product_trust_3_desc_ar || "تواصل معنا على واتساب في أي وقت" },
+    ],
+    waNumber: map.whatsapp_number ? map.whatsapp_number.replace(/\D/g, "") : DEFAULT_WA,
+  }
+}
 import ProductDetail from "@/components/store/ProductDetail"
 import ReviewsSection from "@/components/store/ReviewsSection"
 import StoreHeader from "@/components/store/StoreHeader"
@@ -75,7 +97,7 @@ export default async function ProductPage({ params }: Props) {
     compare_at_price: rows[0].compare_at_price ? Number(rows[0].compare_at_price) : null,
   }
 
-  const [imgs, frames360, relatedRows, variantRows] = await Promise.all([
+  const [imgs, frames360, relatedRows, variantRows, pageSettings] = await Promise.all([
     db.select({ id: productImages.id, url: productImages.url, alt_ar: productImages.alt_ar, sort_order: productImages.sort_order })
       .from(productImages)
       .where(eq(productImages.product_id, product.id))
@@ -111,6 +133,8 @@ export default async function ProductPage({ params }: Props) {
       .from(productVariants)
       .where(eq(productVariants.product_id, product.id))
       .orderBy(asc(productVariants.size), asc(productVariants.color_ar)),
+
+    getPageSettings(),
   ])
 
   const related = relatedRows.map(r => ({
@@ -140,6 +164,8 @@ export default async function ProductPage({ params }: Props) {
         frames360={frames360}
         related={relatedWithImages}
         variants={variantRows.map(v => ({ ...v, price_override: v.price_override ? Number(v.price_override) : null }))}
+        trustSignals={pageSettings.trustSignals}
+        waNumber={pageSettings.waNumber}
       />
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 40px 80px" }}>
         <ReviewsSection productId={product.id} />

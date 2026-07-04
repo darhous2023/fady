@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 
-const WA = "201555557745"
+const DEFAULT_WA = "201555557745"
 const FACEBOOK = "https://www.facebook.com/elfadywaelmeladcars"
 const INSTAGRAM_SHOWROOM = "https://www.instagram.com/el_fady_car_trading/"
 const INSTAGRAM_MANAGER = "https://www.instagram.com/fadywael_1/"
@@ -45,9 +45,13 @@ const DEV_EMAIL_MAILTO = "mailto:ahmeddarhous@gmail.com"
 
 export default function StoreFooter() {
   const [tagline, setTagline] = useState("حيث تلتقي الفخامة بالثقة")
+  const [WA, setWA] = useState(DEFAULT_WA)
 
   useEffect(() => {
-    fetch("/api/store-config").then(r => r.json()).then(d => { if (d.intro_tagline_ar) setTagline(d.intro_tagline_ar) }).catch(() => {})
+    fetch("/api/store-config").then(r => r.json()).then(d => {
+      if (d.intro_tagline_ar) setTagline(d.intro_tagline_ar)
+      if (d.whatsapp_number) setWA(d.whatsapp_number.replace(/\D/g, ""))
+    }).catch(() => {})
   }, [])
 
   return (

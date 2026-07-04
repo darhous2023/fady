@@ -51,6 +51,8 @@ interface ProductDetailProps {
   frames360?: { id: string; url: string; sequence_index: number }[]
   related?: RelatedProduct[]
   variants?: Variant[]
+  trustSignals?: { icon: string; title: string; desc: string }[]
+  waNumber?: string
 }
 
 const TRANSMISSION_LABELS: Record<string, string> = { automatic: "أوتوماتيك", manual: "مانيوال" }
@@ -62,7 +64,13 @@ const shareMenuItemStyle: React.CSSProperties = {
   padding: "9px 12px", borderRadius: 8, textAlign: "right",
 }
 
-export default function ProductDetail({ product, images, frames360 = [], related = [], variants = [] }: ProductDetailProps) {
+const DEFAULT_TRUST_SIGNALS = [
+  { icon: "🔍", title: "معاينة كاملة", desc: "زور المعرض وعاين السيارة قبل الشراء" },
+  { icon: "📋", title: "فحص شامل", desc: "بيانات دقيقة عن الحالة والعداد والمواصفات" },
+  { icon: "💬", title: "دعم فوري", desc: "تواصل معنا على واتساب في أي وقت" },
+]
+
+export default function ProductDetail({ product, images, frames360 = [], related = [], variants = [], trustSignals = DEFAULT_TRUST_SIGNALS, waNumber = WA }: ProductDetailProps) {
   const has360 = frames360.length > 1
   const [viewMode, setViewMode] = useState<"photos" | "360">(has360 && images.length === 0 ? "360" : "photos")
   const [activeIdx, setActiveIdx] = useState(0)
@@ -180,7 +188,7 @@ export default function ProductDetail({ product, images, frames360 = [], related
     (variantDesc ? `المواصفات: ${variantDesc}\n` : "") +
     `السعر: ${effectivePrice.toLocaleString("ar-EG")} ج.م`
   )
-  const waHref = `https://wa.me/${WA}?text=${waText}`
+  const waHref = `https://wa.me/${waNumber}?text=${waText}`
 
   return (
     <div style={{ background: "#0A0A0A", minHeight: "100vh", paddingTop: 80, direction: "rtl" }}>
@@ -587,11 +595,7 @@ export default function ProductDetail({ product, images, frames360 = [], related
 
             {/* Trust signals */}
             <div style={{ marginTop: 24, display: "flex", flexDirection: "column", gap: 8 }}>
-              {[
-                { icon: "🔍", title: "معاينة كاملة", desc: "زور المعرض وعاين السيارة قبل الشراء" },
-                { icon: "📋", title: "فحص شامل", desc: "بيانات دقيقة عن الحالة والعداد والمواصفات" },
-                { icon: "💬", title: "دعم فوري", desc: "تواصل معنا على واتساب في أي وقت" },
-              ].map(({ icon, title, desc }) => (
+              {trustSignals.map(({ icon, title, desc }) => (
                 <div key={title} style={{
                   display: "flex", alignItems: "center", gap: 12,
                   padding: "10px 14px",

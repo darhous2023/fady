@@ -12,6 +12,7 @@ export default function StoreHeader() {
   const [wlCount, setWlCount]       = useState(0)
   const [announcement, setAnnouncement] = useState<{ text: string; active: boolean } | null>(null)
   const [tagline, setTagline] = useState("حيث تلتقي الفخامة بالثقة")
+  const [waNumber, setWaNumber] = useState("201555557745")
   const { count } = useCart()
 
   useEffect(() => {
@@ -19,7 +20,10 @@ export default function StoreHeader() {
   }, [])
 
   useEffect(() => {
-    fetch("/api/store-config").then(r => r.json()).then(d => { if (d.intro_tagline_ar) setTagline(d.intro_tagline_ar) }).catch(() => {})
+    fetch("/api/store-config").then(r => r.json()).then(d => {
+      if (d.intro_tagline_ar) setTagline(d.intro_tagline_ar)
+      if (d.whatsapp_number) setWaNumber(d.whatsapp_number.replace(/\D/g, ""))
+    }).catch(() => {})
   }, [])
 
   useEffect(() => {
@@ -118,7 +122,7 @@ export default function StoreHeader() {
         <a href="/track" style={{ fontFamily: "Tajawal, sans-serif", fontSize: 13, color: "#F2F0EC", opacity: 0.6, textDecoration: "none", transition: "opacity 0.2s" }}
           onMouseEnter={e => (e.currentTarget.style.opacity = "1")} onMouseLeave={e => (e.currentTarget.style.opacity = "0.6")}>تتبّع الحجز</a>
 
-        <a href={`https://wa.me/201555557745?text=${encodeURIComponent("السلام عليكم، أريد الاستفسار عن منتجاتكم")}`}
+        <a href={`https://wa.me/${waNumber}?text=${encodeURIComponent("السلام عليكم، أريد الاستفسار عن منتجاتكم")}`}
           target="_blank" rel="noopener noreferrer"
           style={{ fontFamily: "Tajawal, sans-serif", fontSize: 13, color: "#F2F0EC", opacity: 0.6, textDecoration: "none", transition: "opacity 0.2s" }}
           onMouseEnter={e => (e.currentTarget.style.opacity = "1")} onMouseLeave={e => (e.currentTarget.style.opacity = "0.6")}>تواصل معنا</a>
@@ -212,7 +216,7 @@ export default function StoreHeader() {
         ))}
 
         <div style={{ marginTop: 24, display: "flex", gap: 12 }}>
-          <a href={`https://wa.me/201555557745?text=${encodeURIComponent("السلام عليكم، أريد الاستفسار عن منتجاتكم")}`}
+          <a href={`https://wa.me/${waNumber}?text=${encodeURIComponent("السلام عليكم، أريد الاستفسار عن منتجاتكم")}`}
             target="_blank" rel="noopener noreferrer"
             style={{ fontFamily: "Tajawal, sans-serif", fontSize: 14, color: "#25a055", textDecoration: "none", border: "1px solid rgba(37,160,85,0.4)", padding: "10px 24px", borderRadius: 8 }}>
             واتساب

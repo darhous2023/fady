@@ -62,6 +62,9 @@ export default function SettingsForm({ settings }: { settings: Record<string, st
       "whatsapp_number", "store_name_ar", "store_tagline_ar", "instagram_url", "facebook_url", "tiktok_url",
       "logo_url", "intro_tagline_ar", "announcement_text", "flash_deals_title_ar", "flash_deals_ends_at",
       ...ORDER_STATUS_KEYS.map(ORDER_STATUS_SETTING_KEY),
+      "product_trust_1_title_ar", "product_trust_1_desc_ar",
+      "product_trust_2_title_ar", "product_trust_2_desc_ar",
+      "product_trust_3_title_ar", "product_trust_3_desc_ar",
     ];
     const updates = [
       ...textKeys.map((key) => ({ key, value: (form.elements.namedItem(key) as HTMLInputElement)?.value || "" })),
@@ -170,6 +173,23 @@ export default function SettingsForm({ settings }: { settings: Record<string, st
             </div>
           ))}
         </div>
+      </div>
+
+      <div className="bg-[#0A0A0A] rounded-xl border border-[#9BA3AA]/10 p-6 space-y-5">
+        <h2 className="font-semibold text-[#F2F0EC] border-b border-[#9BA3AA]/10 pb-3">إشارات الثقة (صفحة تفاصيل السيارة)</h2>
+        <p className="text-xs text-[#F2F0EC]/30">النصوص الثلاثة اللي تظهر أسفل زر الحجز في كل صفحة سيارة.</p>
+        {[1, 2, 3].map(n => (
+          <div key={n} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className={labelCls}>العنوان {n}</label>
+              <input name={`product_trust_${n}_title_ar`} defaultValue={settings[`product_trust_${n}_title_ar`]} className={inputCls} />
+            </div>
+            <div>
+              <label className={labelCls}>الوصف {n}</label>
+              <input name={`product_trust_${n}_desc_ar`} defaultValue={settings[`product_trust_${n}_desc_ar`]} className={inputCls} />
+            </div>
+          </div>
+        ))}
       </div>
 
       {/* Flash Deals */}

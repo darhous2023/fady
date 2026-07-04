@@ -65,6 +65,7 @@ export default function HomeContentForm({ settings }: { settings: Record<string,
       "how_it_works_3_title_ar", "how_it_works_3_desc_ar",
       "showroom_video_url", "showroom_headline_ar", "showroom_desc_ar",
       "used_hero_video_url", "used_hero_eyebrow_ar", "used_hero_headline_ar", "used_hero_subheadline_ar",
+      "used_section_eyebrow_ar", "used_section_title_ar", "used_section_subtitle_ar",
     ];
     const updates = keys.map((key) => ({
       key,
@@ -194,6 +195,22 @@ export default function HomeContentForm({ settings }: { settings: Record<string,
         <div>
           <label className={labelCls}>الوصف</label>
           <textarea name="used_hero_subheadline_ar" rows={2} defaultValue={settings.used_hero_subheadline_ar || "كل سيارة موجودة فعليًا في المعرض — بحالة مفحوصة وصور حقيقية"} className={inputCls} />
+        </div>
+      </div>
+
+      <div className={sectionCls}>
+        <h2 className={h2Cls}>عنوان قسم السيارات المستعملة في الصفحة الرئيسية</h2>
+        <div>
+          <label className={labelCls}>الشعار العلوي الصغير</label>
+          <input name="used_section_eyebrow_ar" defaultValue={settings.used_section_eyebrow_ar || "متاحة الآن في المعرض"} className={inputCls} />
+        </div>
+        <div>
+          <label className={labelCls}>العنوان</label>
+          <input name="used_section_title_ar" defaultValue={settings.used_section_title_ar || "سيارات مستعملة موثوقة"} className={inputCls} />
+        </div>
+        <div>
+          <label className={labelCls}>الوصف</label>
+          <input name="used_section_subtitle_ar" defaultValue={settings.used_section_subtitle_ar || "فحص شامل، حالة موثّقة، وتواصل فوري عبر واتساب"} className={inputCls} />
         </div>
       </div>
 

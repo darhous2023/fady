@@ -3,7 +3,7 @@
 import { useMemo, useRef, useState } from "react"
 import { StaggerGroup, StaggerItem } from "./ScrollReveal"
 
-const WA = "201555557745"
+const DEFAULT_WA = "201555557745"
 const CURRENT_YEAR = new Date().getFullYear()
 
 interface Make { id: number; name: string }
@@ -31,7 +31,7 @@ function BrandLogo({ name }: { name: string }) {
 
 type Step = "make" | "model" | "year" | "trim"
 
-export default function NewCarsBrowser({ initialMakes }: { initialMakes: Make[] }) {
+export default function NewCarsBrowser({ initialMakes, waNumber = DEFAULT_WA }: { initialMakes: Make[]; waNumber?: string }) {
   const [query, setQuery] = useState("")
   const [selectedMake, setSelectedMake] = useState<string | null>(null)
   const [selectedModel, setSelectedModel] = useState<string | null>(null)
@@ -125,7 +125,7 @@ export default function NewCarsBrowser({ initialMakes }: { initialMakes: Make[] 
   function waLink(trimName?: string) {
     const parts = [selectedMake, selectedModel, selectedYear, trimName].filter(Boolean)
     const text = `السلام عليكم، أريد الاستفسار عن توفر: ${parts.join(" ")}`
-    return `https://wa.me/${WA}?text=${encodeURIComponent(text)}`
+    return `https://wa.me/${waNumber}?text=${encodeURIComponent(text)}`
   }
 
   return (

@@ -5,6 +5,20 @@ import StoreFooter from "@/components/store/StoreFooter"
 import FloatingWA from "@/components/store/FloatingWA"
 import NewCarsBrowser from "@/components/store/NewCarsBrowser"
 import { carapiFetch } from "@/lib/carapi"
+import { db } from "@/lib/db/drizzle/connection"
+import { settings } from "@/lib/db/drizzle/schema"
+import { eq } from "drizzle-orm"
+
+const DEFAULT_WA = "201555557745"
+
+async function getWaNumber(): Promise<string> {
+  try {
+    const [row] = await db.select({ value: settings.value }).from(settings).where(eq(settings.key, "whatsapp_number")).limit(1)
+    return row?.value ? row.value.replace(/\D/g, "") : DEFAULT_WA
+  } catch {
+    return DEFAULT_WA
+  }
+}
 
 export const metadata: Metadata = {
   title: "سيارات جديدة",
@@ -21,7 +35,7 @@ async function getMakes(): Promise<{ id: number; name: string }[]> {
 }
 
 export default async function NewCarsPage() {
-  const makes = await getMakes()
+  const [makes, waNumber] = await Promise.all([getMakes(), getWaNumber()])
 
   return (
     <>
@@ -39,7 +53,7 @@ export default async function NewCarsPage() {
             اختر الماركة والموديل، شوف المواصفات، وابعتلنا استفسارك عن التوفر مباشرة على واتساب — دي مش سيارات متاحة عندنا فعليًا، لكنها بوابة للتعرف على كل الموديلات وطلب توفيرها.
           </p>
         </div>
-        <NewCarsBrowser initialMakes={makes} />
+        <NewCarsBrowser initialMakes={makes} waNumber={waNumber} />
       </div>
       <StoreFooter />
       <FloatingWA />
