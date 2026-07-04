@@ -5,7 +5,23 @@ export const alt = "ELFADY — معرض سيارات"
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
 
-export default function OGImage() {
+// next/og (Satori) cannot shape Arabic script with its default fallback font —
+// it silently fails (0-byte response in production) without an explicit font
+// buffer. Bundling Tajawal locally instead of fetching Google Fonts at request
+// time avoids relying on Satori's own fragile dynamic-font-fetch pathway.
+async function loadFont(weight: "Regular" | "Bold" | "Black") {
+  const url = new URL(`../assets/fonts/Tajawal-${weight}.ttf`, import.meta.url)
+  const res = await fetch(url)
+  return res.arrayBuffer()
+}
+
+export default async function OGImage() {
+  const [regular, bold, black] = await Promise.all([
+    loadFont("Regular"),
+    loadFont("Bold"),
+    loadFont("Black"),
+  ])
+
   return new ImageResponse(
     (
       <div
@@ -19,7 +35,7 @@ export default function OGImage() {
           background: "#0A0A0A",
           position: "relative",
           overflow: "hidden",
-          fontFamily: "serif",
+          fontFamily: "Tajawal",
         }}
       >
         {/* Background radial glow */}
@@ -112,9 +128,9 @@ export default function OGImage() {
             opacity: 0.7,
             marginBottom: 28,
             textTransform: "uppercase",
-            fontFamily: "serif",
+            fontFamily: "Tajawal",
           }}>
-            ✦  TRUSTED CAR DEALERSHIP  ✦
+            TRUSTED CAR DEALERSHIP
           </div>
 
           {/* ELFADY logotype */}
@@ -137,11 +153,12 @@ export default function OGImage() {
             fontSize: 22,
             letterSpacing: "4px",
             color: "#9BA3AA",
-            fontFamily: "serif",
+            fontFamily: "Tajawal",
             marginBottom: 32,
             display: "flex",
+            textTransform: "uppercase",
           }}>
-            معرض سيارات
+            Car Dealership
           </div>
 
           {/* Gold divider */}
@@ -153,17 +170,17 @@ export default function OGImage() {
             display: "flex",
           }} />
 
-          {/* Arabic tagline */}
+          {/* Tagline */}
           <div style={{
             fontSize: 28,
             color: "#F2F0EC",
             opacity: 0.65,
-            fontFamily: "serif",
+            fontFamily: "Tajawal",
             letterSpacing: "2px",
             marginBottom: 10,
             display: "flex",
           }}>
-            معرض الفادي لتجارة السيارات
+            Mohandessin, Cairo — Egypt
           </div>
 
           {/* Sub tagline */}
@@ -171,11 +188,11 @@ export default function OGImage() {
             fontSize: 18,
             color: "#9BA3AA",
             opacity: 0.55,
-            fontFamily: "serif",
+            fontFamily: "Tajawal",
             letterSpacing: "1px",
             display: "flex",
           }}>
-            سيارات جديدة · سيارات مستعملة
+            New Cars · Used Cars
           </div>
         </div>
 
@@ -188,13 +205,20 @@ export default function OGImage() {
           gap: 8,
         }}>
           <div style={{ width: 40, height: 1, background: "rgba(155,163,170,0.3)", display: "flex" }} />
-          <div style={{ fontSize: 14, color: "#9BA3AA", opacity: 0.45, letterSpacing: "3px", fontFamily: "serif" }}>
+          <div style={{ fontSize: 14, color: "#9BA3AA", opacity: 0.45, letterSpacing: "3px", fontFamily: "Tajawal" }}>
             fady-delta.vercel.app
           </div>
           <div style={{ width: 40, height: 1, background: "rgba(155,163,170,0.3)", display: "flex" }} />
         </div>
       </div>
     ),
-    { ...size }
+    {
+      ...size,
+      fonts: [
+        { name: "Tajawal", data: regular, weight: 400, style: "normal" },
+        { name: "Tajawal", data: bold, weight: 700, style: "normal" },
+        { name: "Tajawal", data: black, weight: 900, style: "normal" },
+      ],
+    }
   )
 }
