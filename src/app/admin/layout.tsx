@@ -43,11 +43,15 @@ export default function AdminLayout({
       {/* Sidebar */}
       <aside className="w-60 shrink-0 bg-[#0A0A0A] border-l border-[#9BA3AA]/10 flex flex-col">
         {/* Logo */}
-        <div className="px-6 py-6 border-b border-[#9BA3AA]/10">
-          <span className="text-2xl font-black text-[#9BA3AA] tracking-widest">
-            ELFADY
-          </span>
-          <p className="text-xs text-[#F2F0EC]/30 mt-1">لوحة إدارة المعرض</p>
+        <div className="px-6 py-6 border-b border-[#9BA3AA]/10 flex items-center gap-2.5">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo-400.png" alt="ELFADY" width={32} height={32} className="rounded-md object-cover" />
+          <div>
+            <span className="text-xl font-black text-[#9BA3AA] tracking-widest block">
+              ELFADY
+            </span>
+            <p className="text-xs text-[#F2F0EC]/30">لوحة إدارة المعرض</p>
+          </div>
         </div>
 
         {/* Nav */}

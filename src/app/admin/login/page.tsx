@@ -32,6 +32,8 @@ function LoginForm() {
       <div className="w-full max-w-sm">
         {/* Logo */}
         <div className="text-center mb-10">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo-400.png" alt="ELFADY" width={56} height={56} className="rounded-xl object-cover mx-auto mb-4" />
           <h1 className="text-4xl font-black text-[#9BA3AA] tracking-widest">ELFADY</h1>
           <p className="text-[#F2F0EC]/40 text-sm mt-2">لوحة الإدارة</p>
         </div>

@@ -89,19 +89,8 @@ export default function StoreHeader() {
     }}>
       {/* Logo */}
       <Link href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 10 }}>
-        <svg width="28" height="16" viewBox="0 0 120 64" fill="none">
-          <path d="M5 60L18 18L38 42L60 5L82 42L102 18L115 60Z"
-            stroke="url(#hGold)" strokeWidth="2.5" fill="none" strokeLinejoin="round" strokeLinecap="round"/>
-          <circle cx="60" cy="5" r="4" fill="#C9CFD4"/>
-          <line x1="5" y1="60" x2="115" y2="60" stroke="url(#hGold)" strokeWidth="1.5"/>
-          <defs>
-            <linearGradient id="hGold" x1="0" y1="0" x2="120" y2="0">
-              <stop offset="0%" stopColor="#5C6167"/>
-              <stop offset="50%" stopColor="#C9CFD4"/>
-              <stop offset="100%" stopColor="#5C6167"/>
-            </linearGradient>
-          </defs>
-        </svg>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/logo-400.png" alt="ELFADY" width={32} height={32} style={{ borderRadius: 6, objectFit: "cover" }} />
         <div>
           <span style={{
             fontFamily: "Tajawal, sans-serif", fontSize: 20, fontWeight: 900,
