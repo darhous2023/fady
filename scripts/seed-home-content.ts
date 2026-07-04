@@ -12,6 +12,9 @@ const client = postgres(process.env.MIGRATION_DATABASE_URL!, { max: 1 });
 const db = drizzle(client);
 
 const DEFAULTS: Record<string, string> = {
+  logo_url: "/logo-400.png",
+  intro_tagline_ar: "حيث تلتقي الفخامة بالثقة",
+
   hero_video_url: "https://videos.pexels.com/video-files/14052063/14052063-hd_1920_1080_25fps.mp4",
   hero_eyebrow_ar: "معرض سيارات موثوق منذ سنوات",
   hero_headline_ar: "الفادي",

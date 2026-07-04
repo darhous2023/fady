@@ -2,7 +2,13 @@
 
 import { useEffect, useState } from "react"
 
-export default function LoadingIntro({ duration = 2200 }: { duration?: number }) {
+interface LoadingIntroProps {
+  duration?: number
+  logoUrl?: string
+  tagline?: string
+}
+
+export default function LoadingIntro({ duration = 2200, logoUrl, tagline }: LoadingIntroProps) {
   const [phase, setPhase] = useState<"in" | "out" | "gone">("in")
 
   function skip() {
@@ -48,6 +54,19 @@ export default function LoadingIntro({ duration = 2200 }: { duration?: number })
         }
         @keyframes ei-line { from { transform: translate(-50%,-50%) scaleX(0); } to { transform: translate(-50%,-50%) scaleX(1); } }
 
+        .ei-logo {
+          position: relative; z-index: 1;
+          width: clamp(52px, 8vw, 76px); height: clamp(52px, 8vw, 76px);
+          border-radius: 14px; object-fit: cover;
+          margin: 0 auto 20px; display: block;
+          opacity: 0; filter: blur(6px); transform: scale(0.9);
+          animation: ei-logo 0.8s cubic-bezier(0.22,1,0.36,1) 0.25s both;
+        }
+        @keyframes ei-logo {
+          from { opacity: 0; filter: blur(6px); transform: scale(0.9); }
+          to   { opacity: 1; filter: blur(0); transform: scale(1); }
+        }
+
         .ei-word {
           position: relative; z-index: 1;
           font-family: Tajawal, sans-serif; font-weight: 900;
@@ -84,22 +103,40 @@ export default function LoadingIntro({ duration = 2200 }: { duration?: number })
         }
         .ei-skip:hover { opacity: 0.8; }
 
+        .ei-credit {
+          position: absolute; bottom: 28px; left: 0; right: 0;
+          text-align: center;
+          font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 1px;
+          color: rgba(155,163,170,0.35);
+          opacity: 0;
+          animation: ei-credit-fade 1s ease 1.6s both;
+        }
+        @keyframes ei-credit-fade { from { opacity: 0; } to { opacity: 1; } }
+
         @media (prefers-reduced-motion: reduce) {
-          .ei-line, .ei-word, .ei-sub, .ei-bar { animation: none !important; }
+          .ei-line, .ei-logo, .ei-word, .ei-sub, .ei-bar, .ei-credit { animation: none !important; }
           .ei-line { transform: translate(-50%,-50%) scaleX(1); }
+          .ei-logo { opacity: 1; filter: blur(0); transform: scale(1); }
           .ei-word { opacity: 1; filter: blur(0); letter-spacing: 0.08em; }
           .ei-sub { opacity: 0.75; transform: none; }
           .ei-bar { width: 88px; }
+          .ei-credit { opacity: 1; }
         }
       `}</style>
 
       <div className="ei-line" />
 
       <div style={{ textAlign: "center", position: "relative" }}>
+        {logoUrl && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={logoUrl} alt="" className="ei-logo" />
+        )}
         <div className="ei-word">ELFADY</div>
-        <div className="ei-sub">معرض سيارات</div>
+        <div className="ei-sub">{tagline || "معرض سيارات"}</div>
         <div className="ei-bar" />
       </div>
+
+      <div className="ei-credit">by Ahmed Darhous</div>
 
       <button onClick={skip} className="ei-skip" aria-label="تخطي المقدمة">تخطي ›</button>
     </div>

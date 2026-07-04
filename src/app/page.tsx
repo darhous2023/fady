@@ -167,7 +167,7 @@ export default async function StorePage() {
         main { padding: 0 !important; min-height: unset !important; }
       `}</style>
 
-      <LoadingIntro />
+      <LoadingIntro logoUrl={cms.logo_url || "/logo-400.png"} tagline={cms.intro_tagline_ar || "حيث تلتقي الفخامة بالثقة"} />
 
       <CinematicHero
         videoUrl={cms.hero_video_url}
