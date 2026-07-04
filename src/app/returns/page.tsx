@@ -3,7 +3,7 @@ import StoreHeader from "@/components/store/StoreHeader"
 import StoreFooter from "@/components/store/StoreFooter"
 
 export const metadata: Metadata = {
-  title: "سياسة الحجز والإلغاء — معرض الفادي",
+  title: "سياسة الحجز والإلغاء",
   description: "تعرف على سياسة حجز معاينة السيارات وإلغائها في معرض الفادي لتجارة السيارات.",
 }
 

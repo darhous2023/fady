@@ -89,7 +89,7 @@ export default function ImageLightbox({ images, startIndex, productName, onClose
       aria-label={`معرض صور ${productName}`}
       style={{
         position: "fixed", inset: 0, zIndex: 9999,
-        background: "rgba(6,6,6,0.97)", backdropFilter: "blur(6px)",
+        background: "#050505", backdropFilter: "blur(6px)",
         display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
         animation: reducedMotion ? "none" : "ilbFadeIn 0.25s ease both",
       }}
@@ -113,7 +113,7 @@ export default function ImageLightbox({ images, startIndex, productName, onClose
 
       {/* Counter */}
       {images.length > 1 && (
-        <div style={{
+        <div dir="ltr" style={{
           position: "absolute", top: 28, right: 28, zIndex: 3,
           fontFamily: "'Space Mono',monospace", fontSize: 13, color: "#9BA3AA",
           background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)",

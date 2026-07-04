@@ -3,7 +3,7 @@ import StoreHeader from "@/components/store/StoreHeader"
 import StoreFooter from "@/components/store/StoreFooter"
 
 export const metadata: Metadata = {
-  title: "سياسة الخصوصية — معرض الفادي",
+  title: "سياسة الخصوصية",
   description: "سياسة الخصوصية وحماية البيانات في معرض الفادي لتجارة السيارات.",
 }
 

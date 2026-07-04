@@ -1,6 +1,7 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { Suspense, useEffect, useState } from "react"
+import { useSearchParams } from "next/navigation"
 import StoreHeader from "@/components/store/StoreHeader"
 import StoreFooter from "@/components/store/StoreFooter"
 import FloatingWA from "@/components/store/FloatingWA"
@@ -22,7 +23,8 @@ interface TrackedOrder {
   items: { product_name: string; quality_tier: string; qty: number; unit_price: string }[]
 }
 
-export default function TrackPage() {
+function TrackPageInner() {
+  const searchParams = useSearchParams()
   const [input, setInput] = useState("")
   const [loading, setLoading] = useState(false)
   const [results, setResults] = useState<TrackedOrder[] | null>(null)
@@ -33,14 +35,24 @@ export default function TrackPage() {
     fetch("/api/order-status-labels").then(r => r.json()).then(setLabels).catch(() => {})
   }, [])
 
-  async function handleTrack(e: React.FormEvent) {
-    e.preventDefault()
-    if (!input.trim()) return
+  // Auto-lookup when arriving from a link like /track?n=FADY-XXXXXXXX
+  // (order-confirmed, account/orders, account/profile all link here this way).
+  useEffect(() => {
+    const n = searchParams.get("n")
+    if (n) {
+      setInput(n)
+      runTrack(n)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  async function runTrack(value: string) {
+    if (!value.trim()) return
     setLoading(true); setError(""); setResults(null)
     try {
-      const digits = input.replace(/\D/g, "")
+      const digits = value.replace(/\D/g, "")
       const isPhone = digits.length >= 8
-      const param = isPhone ? `phone=${encodeURIComponent(input.trim())}` : `number=${encodeURIComponent(input.trim())}`
+      const param = isPhone ? `phone=${encodeURIComponent(value.trim())}` : `number=${encodeURIComponent(value.trim())}`
       const res = await fetch(`/api/orders/track?${param}`)
       const data = await res.json()
       if (!res.ok) { setError(data.error || "حدث خطأ"); return }
@@ -48,6 +60,11 @@ export default function TrackPage() {
     } finally {
       setLoading(false)
     }
+  }
+
+  async function handleTrack(e: React.FormEvent) {
+    e.preventDefault()
+    await runTrack(input)
   }
 
   return (
@@ -225,5 +242,13 @@ export default function TrackPage() {
       <StoreFooter />
       <FloatingWA />
     </>
+  )
+}
+
+export default function TrackPage() {
+  return (
+    <Suspense>
+      <TrackPageInner />
+    </Suspense>
   )
 }

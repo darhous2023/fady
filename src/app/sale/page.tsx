@@ -8,7 +8,7 @@ import StoreFooter from "@/components/store/StoreFooter"
 import FloatingWA from "@/components/store/FloatingWA"
 
 export const metadata: Metadata = {
-  title: "عروض السيارات — معرض الفادي",
+  title: "عروض السيارات",
   description: "سيارات مستعملة بأسعار مخفّضة في معرض الفادي لتجارة السيارات — عروض حصرية لفترة محدودة",
 }
 

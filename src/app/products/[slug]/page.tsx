@@ -46,7 +46,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     .where(and(eq(productImages.product_id, rows[0].id), eq(productImages.sort_order, 0)))
     .limit(1)
 
-  const title = `${rows[0].name_ar} — ELFADY`
+  // Bare title: the root layout's title.template ("%s — ELFADY") already appends the suffix.
+  // openGraph/twitter titles aren't template-wrapped, so they keep the full branded string.
+  const title = rows[0].name_ar
+  const ogTitle = `${rows[0].name_ar} — ELFADY`
   const desc = rows[0].description_ar
     ? rows[0].description_ar.slice(0, 155)
     : `${rows[0].name_ar} بسعر ${Number(rows[0].price).toLocaleString("ar-EG")} ج.م — معرض الفادي لتجارة السيارات`
@@ -55,11 +58,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title,
     description: desc,
     openGraph: {
-      title, description: desc, type: "website",
+      title: ogTitle, description: desc, type: "website",
       images: firstImg?.url ? [{ url: firstImg.url, width: 800, height: 800, alt: rows[0].name_ar }] : [],
     },
     twitter: {
-      card: "summary_large_image", title, description: desc,
+      card: "summary_large_image", title: ogTitle, description: desc,
       images: firstImg?.url ? [firstImg.url] : [],
     },
   }
