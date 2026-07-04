@@ -353,7 +353,7 @@ function ProductCard({ product, index }: { product: StoreProduct; index: number 
           <div style={{ height: 1, margin: "8px 0", background: "linear-gradient(90deg,#9BA3AA44,transparent)" }} />
 
           {/* Dual CTAs */}
-          <div style={{ display: "flex", gap: 8 }} onClick={e => e.preventDefault()}>
+          <div className="pg-cta-row" style={{ display: "flex", gap: 8 }} onClick={e => e.preventDefault()}>
             {/* Add to cart */}
             <button
               onClick={handleAddToCart}
@@ -499,6 +499,10 @@ export default function ProductGrid({ initialProducts, initialCategory, showHead
                 @keyframes pgShimmer { from{background-position:200% center} to{background-position:-200% center} }
         .pg-cat-pill { cursor:pointer; transition:all 0.3s ease; background:transparent; border:none; }
         .pg-cat-pill:hover { background:rgba(155,163,170,0.12)!important; color:#9BA3AA!important; border-color:#9BA3AA!important; }
+        @media (max-width: 680px) {
+          .pg-cta-row { flex-direction: column; }
+          .pg-cta-row button { width: 100%; }
+        }
       `}</style>
 
       {showHeader && <SectionHeader />}

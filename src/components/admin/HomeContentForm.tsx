@@ -64,6 +64,7 @@ export default function HomeContentForm({ settings }: { settings: Record<string,
       "how_it_works_2_title_ar", "how_it_works_2_desc_ar",
       "how_it_works_3_title_ar", "how_it_works_3_desc_ar",
       "showroom_video_url", "showroom_headline_ar", "showroom_desc_ar",
+      "used_hero_video_url", "used_hero_eyebrow_ar", "used_hero_headline_ar", "used_hero_subheadline_ar",
     ];
     const updates = keys.map((key) => ({
       key,
@@ -172,6 +173,27 @@ export default function HomeContentForm({ settings }: { settings: Record<string,
         <div>
           <label className={labelCls}>الوصف</label>
           <textarea name="showroom_desc_ar" rows={2} defaultValue={settings.showroom_desc_ar || "تجربة معاينة حقيقية لكل سيارة قبل القرار"} className={inputCls} />
+        </div>
+      </div>
+
+      <div className={sectionCls}>
+        <h2 className={h2Cls}>هيرو صفحة السيارات المستعملة (/used)</h2>
+        <div>
+          <label className={labelCls}>رابط فيديو الخلفية (MP4)</label>
+          <input name="used_hero_video_url" defaultValue={settings.used_hero_video_url} placeholder="https://.../video.mp4" className={inputCls} />
+          <p className="text-xs text-[#F2F0EC]/25 mt-1">اتركه فارغًا لعرض خلفية داكنة بدون فيديو</p>
+        </div>
+        <div>
+          <label className={labelCls}>الشعار العلوي الصغير</label>
+          <input name="used_hero_eyebrow_ar" defaultValue={settings.used_hero_eyebrow_ar || "سيارات مفحوصة وموثّقة"} className={inputCls} />
+        </div>
+        <div>
+          <label className={labelCls}>العنوان الكبير</label>
+          <input name="used_hero_headline_ar" defaultValue={settings.used_hero_headline_ar || "سيارات مستعملة"} className={inputCls} />
+        </div>
+        <div>
+          <label className={labelCls}>الوصف</label>
+          <textarea name="used_hero_subheadline_ar" rows={2} defaultValue={settings.used_hero_subheadline_ar || "كل سيارة موجودة فعليًا في المعرض — بحالة مفحوصة وصور حقيقية"} className={inputCls} />
         </div>
       </div>
 

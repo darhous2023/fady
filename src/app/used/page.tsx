@@ -1,12 +1,15 @@
 export const dynamic = "force-dynamic"
 import type { Metadata } from "next"
 import { db } from "@/lib/db/drizzle/connection"
-import { products, productImages, categories, productVariants, product360Frames } from "@/lib/db/drizzle/schema"
+import { products, productImages, categories, productVariants, product360Frames, settings } from "@/lib/db/drizzle/schema"
 import { eq, and, gt, asc, inArray } from "drizzle-orm"
 import StoreHeader from "@/components/store/StoreHeader"
 import StoreFooter from "@/components/store/StoreFooter"
 import FloatingWA from "@/components/store/FloatingWA"
 import ProductGrid, { type StoreProduct } from "@/components/store/ProductGrid"
+import CinematicUsedHero from "@/components/store/CinematicUsedHero"
+
+const WA = "201555557745"
 
 export const metadata: Metadata = {
   title: "سيارات مستعملة",
@@ -74,24 +77,38 @@ async function getBrandNameBySlug(slug?: string): Promise<string | undefined> {
   return row?.name_ar
 }
 
+async function getBrands() {
+  return db.select({ id: categories.id, name_ar: categories.name_ar, slug: categories.slug }).from(categories).orderBy(asc(categories.name_ar))
+}
+
+async function getUsedHeroSettings(): Promise<Record<string, string>> {
+  const rows = await db.select().from(settings).where(
+    inArray(settings.key, ["used_hero_video_url", "used_hero_eyebrow_ar", "used_hero_headline_ar", "used_hero_subheadline_ar"])
+  )
+  return Object.fromEntries(rows.map(r => [r.key, r.value]))
+}
+
 export default async function UsedCarsPage({ searchParams }: { searchParams: Promise<{ brand?: string }> }) {
   const { brand } = await searchParams
-  const [cars, lowStock, initialCategory] = await Promise.all([getUsedCars(), getLowStockMap(), getBrandNameBySlug(brand)])
+  const [cars, lowStock, initialCategory, brands, heroSettings] = await Promise.all([
+    getUsedCars(), getLowStockMap(), getBrandNameBySlug(brand), getBrands(), getUsedHeroSettings(),
+  ])
   const carsWithStock = cars.map(c => ({ ...c, total_stock: lowStock[c.id] ?? null }))
 
   return (
     <>
       <StoreHeader />
       <style>{`body { margin: 0; background: #0A0A0A; } main { padding: 0 !important; min-height: unset !important; }`}</style>
-      <div style={{ paddingTop: 64 }}>
-        <div style={{ textAlign: "center", padding: "56px 24px 0", direction: "rtl" }}>
-          <div style={{ fontFamily: "'Space Mono',monospace", fontSize: 11, letterSpacing: "4px", color: "#9BA3AA", textTransform: "uppercase", marginBottom: 12 }}>
-            متاحة الآن في المعرض
-          </div>
-          <h1 style={{ fontFamily: "Tajawal,sans-serif", fontWeight: 900, fontSize: "clamp(30px,5vw,52px)", color: "#F5F5F5", margin: 0 }}>
-            سيارات مستعملة
-          </h1>
-        </div>
+      <CinematicUsedHero
+        videoUrl={heroSettings.used_hero_video_url || undefined}
+        eyebrow={heroSettings.used_hero_eyebrow_ar || "سيارات مفحوصة وموثّقة"}
+        headline={heroSettings.used_hero_headline_ar || "سيارات مستعملة"}
+        subheadline={heroSettings.used_hero_subheadline_ar || "كل سيارة موجودة فعليًا في المعرض — بحالة مفحوصة وصور حقيقية"}
+        whatsapp={WA}
+        availableCount={cars.length}
+        brands={brands}
+      />
+      <div id="used-grid">
         <ProductGrid initialProducts={carsWithStock} initialCategory={initialCategory} showHeader={false} />
       </div>
       <StoreFooter />
