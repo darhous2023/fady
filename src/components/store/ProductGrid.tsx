@@ -33,6 +33,8 @@ export interface StoreProduct {
   category_name: string | null
   is_featured: boolean
   image: { url: string; alt_ar: string | null } | null
+  images?: { url: string; alt_ar: string | null }[]
+  has360?: boolean
   total_stock?: number | null
   year?: number | null
   mileage_km?: number | null
@@ -88,9 +90,28 @@ function ProductCard({ product, index }: { product: StoreProduct; index: number 
   const [hovered, setHovered] = useState(false)
   const [shimmer, setShimmer] = useState(false)
   const [adding, setAdding]   = useState(false)
+  const [imgIdx, setImgIdx]   = useState(0)
   const raf = useRef<number>(0)
+  const cycleRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const { addItem, openCart } = useCart()
   const { inWl, toggle: toggleWl } = useWishlist(product.id)
+
+  const gallery = product.images && product.images.length > 0 ? product.images : (product.image ? [product.image] : [])
+
+  const startCycle = useCallback(() => {
+    if (gallery.length <= 1) return
+    if (cycleRef.current) clearInterval(cycleRef.current)
+    cycleRef.current = setInterval(() => {
+      setImgIdx(i => (i + 1) % gallery.length)
+    }, 900)
+  }, [gallery.length])
+
+  const stopCycle = useCallback(() => {
+    if (cycleRef.current) { clearInterval(cycleRef.current); cycleRef.current = null }
+    setImgIdx(0)
+  }, [])
+
+  useEffect(() => () => { if (cycleRef.current) clearInterval(cycleRef.current) }, [])
 
   const onMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     const r = e.currentTarget.getBoundingClientRect()
@@ -107,8 +128,9 @@ function ProductCard({ product, index }: { product: StoreProduct; index: number 
     setShimmer(false)
     setTimeout(() => setShimmer(true), 20)
     setTimeout(() => setShimmer(false), 700)
+    startCycle()
   }
-  const onLeave = () => { setHovered(false); setTilt({ x: 0, y: 0, gx: 50, gy: 50 }) }
+  const onLeave = () => { setHovered(false); setTilt({ x: 0, y: 0, gx: 50, gy: 50 }); stopCycle() }
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault()
@@ -174,16 +196,19 @@ function ProductCard({ product, index }: { product: StoreProduct; index: number 
 
         {/* Image */}
         <div style={{ position: "relative", overflow: "hidden", paddingBottom: "100%" }}>
-          {product.image?.url ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={product.image.url} alt={product.image.alt_ar ?? product.name_ar}
-              loading="lazy"
-              style={{
-                position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover",
-                transform: hovered ? "scale(1.09)" : "scale(1)",
-                transition: "transform 0.65s cubic-bezier(0.2,0,0.2,1)",
-                filter: hovered ? "brightness(1.08) saturate(1.1)" : "brightness(1)",
-              }} />
+          {gallery.length > 0 ? (
+            gallery.map((img, i) => (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img key={img.url + i} src={img.url} alt={img.alt_ar ?? product.name_ar}
+                loading="lazy"
+                style={{
+                  position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover",
+                  opacity: i === imgIdx ? 1 : 0,
+                  transform: hovered && i === imgIdx ? "scale(1.09)" : "scale(1)",
+                  transition: "opacity 0.35s ease, transform 0.65s cubic-bezier(0.2,0,0.2,1)",
+                  filter: hovered ? "brightness(1.08) saturate(1.1)" : "brightness(1)",
+                }} />
+            ))
           ) : (
             <div style={{
               position: "absolute", inset: 0,
@@ -196,6 +221,16 @@ function ProductCard({ product, index }: { product: StoreProduct; index: number 
             position: "absolute", inset: 0, zIndex: 1,
             background: "linear-gradient(to bottom,transparent 55%,rgba(10,10,10,0.55) 100%)",
           }} />
+
+          {/* Image count dots */}
+          {gallery.length > 1 && (
+            <div style={{ position: "absolute", bottom: 12, left: "50%", transform: "translateX(-50%)", zIndex: 2, display: "flex", gap: 4 }}>
+              {gallery.map((_, i) => (
+                <div key={i} style={{ width: i === imgIdx ? 14 : 5, height: 5, borderRadius: 3, background: i === imgIdx ? "#F2F0EC" : "rgba(242,240,236,0.35)", transition: "all 0.3s" }} />
+              ))}
+            </div>
+          )}
+
           <div style={{
             position: "absolute", top: 12, right: 12, zIndex: 2,
             background: qColor, color: "#fff",
@@ -203,6 +238,37 @@ function ProductCard({ product, index }: { product: StoreProduct; index: number 
             padding: "3px 10px", borderRadius: 20,
           }}>
             {QUALITY_LABELS[product.quality_tier] ?? product.quality_tier}
+          </div>
+
+          {/* Photo count + 360 badges */}
+          <div style={{ position: "absolute", top: 12, right: 12, zIndex: 2, marginTop: 26, display: "flex", flexDirection: "column", gap: 5, alignItems: "flex-end" }}>
+            {gallery.length > 1 && (
+              <span style={{
+                display: "flex", alignItems: "center", gap: 4,
+                background: "rgba(10,10,10,0.75)", backdropFilter: "blur(4px)", color: "#F2F0EC",
+                fontSize: 10, fontFamily: "Tajawal,sans-serif", fontWeight: 700,
+                padding: "3px 9px", borderRadius: 20, border: "1px solid rgba(155,163,170,0.2)",
+              }}>
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="2" y="6" width="20" height="14" rx="2"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/>
+                </svg>
+                {gallery.length}
+              </span>
+            )}
+            {product.has360 && (
+              <span style={{
+                display: "flex", alignItems: "center", gap: 4,
+                background: "rgba(10,10,10,0.75)", backdropFilter: "blur(4px)", color: "#9BA3AA",
+                fontSize: 10, fontFamily: "Tajawal,sans-serif", fontWeight: 700,
+                padding: "3px 9px", borderRadius: 20, border: "1px solid rgba(155,163,170,0.3)",
+              }}>
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/>
+                  <path d="M3.27 6.96 12 12l8.73-5.04"/><path d="M12 22.08V12"/>
+                </svg>
+                360°
+              </span>
+            )}
           </div>
 
           {/* Wishlist heart */}

@@ -1,6 +1,21 @@
 "use client"
 import { useState } from "react"
 import Link from "next/link"
+import { toast } from "sonner"
+
+const IMAGE_ENHANCE_PROMPT = `Enhance this car photo for a premium car dealership website called ELFADY.
+
+Do NOT change the car itself in any way: keep its exact make, model, shape, proportions, color, badges, plate, and every real detail 100% unchanged. This must stay a truthful photo of the real car — no redesigning, no adding/removing parts, no changing the body color.
+
+Apply these enhancements only:
+1. Lighting: correct exposure so the car is evenly and naturally lit, remove harsh shadows, blown highlights, or dull flatness — make it look like a professional studio shoot.
+2. Quality: increase sharpness, clarity, and resolution. Remove noise, blur, and compression artifacts. Photorealistic result, not artificial or painterly.
+3. Background: completely and cleanly remove the original background (street, garage, wall, people, clutter — everything behind and around the car).
+4. New backdrop: replace it with a seamless studio gradient background that fades from deep black (#0A0A0A) at the outer edges into a soft metallic silver-gray glow (#9BA3AA) directly behind the car, with a subtle, softly reflective dark floor beneath the wheels (like a high-end showroom floor, not a mirror).
+5. Color grading: keep colors natural and true-to-life — no oversaturation, no unnatural filters.
+6. Framing: keep the car centered and fully visible, same angle as the original photo, with clean edges suitable for a product gallery (square or landscape).
+
+Output: one high-resolution, photorealistic image ready for an e-commerce car listing — consistent with a premium, minimalist, black-and-silver brand identity.`
 
 // ── Shared mockup shell (illustrative fake UI, not a real screenshot) ───────
 function MockShell({ children, title }: { children: React.ReactNode; title: string }) {
@@ -78,6 +93,41 @@ function ProductFormMockup() {
 
 interface Section { id: string; icon: string; title: string; steps: string[]; tips?: string[]; mockup?: React.ReactNode }
 
+function ImageEnhancePromptCard() {
+  const [copied, setCopied] = useState(false)
+
+  async function copy() {
+    try {
+      await navigator.clipboard.writeText(IMAGE_ENHANCE_PROMPT)
+      setCopied(true)
+      toast.success("تم نسخ البرومبت")
+      setTimeout(() => setCopied(false), 2000)
+    } catch {
+      toast.error("تعذّر النسخ — انسخه يدويًا من الصندوق")
+    }
+  }
+
+  return (
+    <div style={{ background: "#0A0A0A", border: "1px solid rgba(155,163,170,0.15)", borderRadius: 10, overflow: "hidden" }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 14px", borderBottom: "1px solid rgba(155,163,170,0.1)" }}>
+        <span style={{ fontSize: 12, color: "rgba(242,240,236,0.4)" }}>برومبت تحسين الصور — للنسخ في أي أداة صور بالذكاء الاصطناعي</span>
+        <button onClick={copy} style={{
+          fontSize: 12, fontWeight: 700, color: copied ? "#27ae60" : "#9BA3AA",
+          background: "rgba(155,163,170,0.1)", border: "1px solid rgba(155,163,170,0.25)",
+          padding: "5px 14px", borderRadius: 8, cursor: "pointer", whiteSpace: "nowrap",
+        }}>
+          {copied ? "✓ تم النسخ" : "📋 نسخ"}
+        </button>
+      </div>
+      <pre style={{
+        margin: 0, padding: 16, fontSize: 12, lineHeight: 1.7, color: "rgba(242,240,236,0.7)",
+        whiteSpace: "pre-wrap", direction: "ltr", textAlign: "left", fontFamily: "'Space Mono', monospace",
+        maxHeight: 320, overflowY: "auto",
+      }}>{IMAGE_ENHANCE_PROMPT}</pre>
+    </div>
+  )
+}
+
 const SECTIONS: Section[] = [
   {
     id: "dashboard", icon: "📊", title: "الداشبورد",
@@ -98,6 +148,18 @@ const SECTIONS: Section[] = [
     ],
     tips: ["فعّل \"مميّز\" على السيارات اللي عايز تبرزها في الصفحة الرئيسية.", "سعر المقارنة (أعلى من السعر الحالي) بيظهر شرطة خصم تلقائيًا على كارت السيارة."],
     mockup: <ProductFormMockup />,
+  },
+  {
+    id: "image-prep", icon: "✨", title: "تجهيز صور السيارات قبل الرفع (لهوية بصرية موحّدة)",
+    steps: [
+      "قبل ما ترفع أي صورة سيارة على الموقع، حسّنها الأول بأي أداة توليد/تحسين صور بالذكاء الاصطناعي (ChatGPT بالصور، Gemini، Photoroom، أو أي أداة مشابهة).",
+      "الصق البرومبت الجاهز اللي تحت مع الصورة الأصلية للسيارة في الأداة.",
+      "البرومبت بيخلّي كل الصور: إضاءة أحسن، جودة ووضوح أعلى، وخلفية استوديو متدرّجة من الأسود للفضي (نفس هوية الموقع) بدل الخلفية الأصلية — من غير ما يغيّر أي تفصيلة حقيقية في شكل العربية.",
+      "بعد التحسين، ارفع الصورة الناتجة زي أي صورة عادية من قسم \"الصور\" أو \"عارض 360°\" في صفحة السيارة.",
+      "النتيجة: كل صور المعرض تبقى متسقة بصريًا وبمظهر بريميوم موحّد، حتى لو الصور الأصلية اتصورت في أماكن وإضاءات مختلفة.",
+    ],
+    tips: ["كرّر نفس البرومبت مع كل صورة عشان الهوية البصرية تفضل موحّدة.", "احتفظ بالصورة الأصلية دايمًا قبل التحسين — ارفع النسخة المحسّنة فقط."],
+    mockup: <ImageEnhancePromptCard />,
   },
   {
     id: "new-cars", icon: "🔍", title: "بوابة السيارات الجديدة",

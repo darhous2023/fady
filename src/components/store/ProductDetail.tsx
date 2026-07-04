@@ -9,6 +9,7 @@ import { saveRecentlyViewed } from "./RecentlyViewed"
 import RecentlyViewed from "./RecentlyViewed"
 
 const Product360Viewer = dynamic(() => import("./Product360Viewer"), { ssr: false })
+const ImageLightbox = dynamic(() => import("./ImageLightbox"), { ssr: false })
 
 const WL_KEY = "elfady-wishlist"
 
@@ -54,9 +55,16 @@ interface ProductDetailProps {
 
 const TRANSMISSION_LABELS: Record<string, string> = { automatic: "أوتوماتيك", manual: "مانيوال" }
 const DRIVETRAIN_LABELS: Record<string, string> = { fwd: "دفع أمامي", rwd: "دفع خلفي", awd: "دفع رباعي" }
+const shareMenuItemStyle: React.CSSProperties = {
+  display: "flex", alignItems: "center", gap: 10, width: "100%",
+  background: "transparent", border: "none", cursor: "pointer",
+  fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "#F2F0EC",
+  padding: "9px 12px", borderRadius: 8, textAlign: "right",
+}
 
 export default function ProductDetail({ product, images, frames360 = [], related = [], variants = [] }: ProductDetailProps) {
   const has360 = frames360.length > 1
+  const [viewMode, setViewMode] = useState<"photos" | "360">(has360 && images.length === 0 ? "360" : "photos")
   const [activeIdx, setActiveIdx] = useState(0)
   const [tilt, setTilt] = useState({ x: 0, y: 0, gx: 50, gy: 50 })
   const [hovered, setHovered] = useState(false)
@@ -64,6 +72,8 @@ export default function ProductDetail({ product, images, frames360 = [], related
   const [adding, setAdding] = useState(false)
   const [wishlisted, setWishlisted] = useState(false)
   const [selectedVariant, setSelectedVariant] = useState<Variant | null>(null)
+  const [lightboxOpen, setLightboxOpen] = useState(false)
+  const [shareMenuOpen, setShareMenuOpen] = useState(false)
   const raf = useRef<number>(0)
   const { addItem } = useCart()
 
@@ -138,15 +148,25 @@ export default function ProductDetail({ product, images, frames360 = [], related
     setTimeout(() => setAdding(false), 700)
   }
 
+  const shareUrl = typeof window !== "undefined" ? window.location.href : ""
+  const shareText = `شوف السيارة دي في ELFADY 🚗\n${product.name_ar} — ${product.price.toLocaleString("ar-EG")} ج.م`
+
   const handleShare = () => {
-    const url = window.location.href
-    const text = `شوف السيارة دي في ELFADY 🚗\n${product.name_ar} — ${product.price.toLocaleString("ar-EG")} ج.م\n${url}`
     if (navigator.share) {
-      navigator.share({ title: product.name_ar, text, url }).catch(() => {})
+      navigator.share({ title: product.name_ar, text: shareText, url: shareUrl }).catch(() => {})
     } else {
-      const waUrl = `https://wa.me/?text=${encodeURIComponent(text)}`
-      window.open(waUrl, "_blank")
+      setShareMenuOpen(v => !v)
     }
+  }
+
+  async function copyLink() {
+    try {
+      await navigator.clipboard.writeText(shareUrl)
+      toast.success("تم نسخ الرابط")
+    } catch {
+      toast.error("تعذّر نسخ الرابط")
+    }
+    setShareMenuOpen(false)
   }
 
   const activeImg = images[activeIdx]
@@ -192,11 +212,30 @@ export default function ProductDetail({ product, images, frames360 = [], related
 
           {/* ── Left: Image gallery ── */}
           <div style={{ flex: "1 1 420px", minWidth: 320 }}>
-            {has360 ? (
+            {has360 && images.length > 0 && (
+              <div style={{ display: "flex", gap: 8, marginBottom: 14 }}>
+                <button onClick={() => setViewMode("photos")} style={{
+                  fontFamily: "Tajawal,sans-serif", fontWeight: 700, fontSize: 13, cursor: "pointer",
+                  padding: "8px 18px", borderRadius: 20,
+                  border: `1.5px solid ${viewMode === "photos" ? "#9BA3AA" : "rgba(155,163,170,0.2)"}`,
+                  background: viewMode === "photos" ? "rgba(155,163,170,0.12)" : "transparent",
+                  color: viewMode === "photos" ? "#9BA3AA" : "rgba(242,240,236,0.5)",
+                }}>📷 صور</button>
+                <button onClick={() => setViewMode("360")} style={{
+                  fontFamily: "Tajawal,sans-serif", fontWeight: 700, fontSize: 13, cursor: "pointer",
+                  padding: "8px 18px", borderRadius: 20,
+                  border: `1.5px solid ${viewMode === "360" ? "#9BA3AA" : "rgba(155,163,170,0.2)"}`,
+                  background: viewMode === "360" ? "rgba(155,163,170,0.12)" : "transparent",
+                  color: viewMode === "360" ? "#9BA3AA" : "rgba(242,240,236,0.5)",
+                }}>🔄 360°</button>
+              </div>
+            )}
+            {has360 && viewMode === "360" ? (
               <Product360Viewer frames={frames360} productName={product.name_ar} />
             ) : (
             <div
               onMouseMove={onMove} onMouseEnter={onEnter} onMouseLeave={onLeave}
+              onClick={() => images.length > 0 && setLightboxOpen(true)}
               style={{
                 borderRadius: 20, overflow: "hidden", position: "relative", paddingBottom: "100%",
                 transform: `perspective(900px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) scale(${hovered ? 1.02 : 1})`,
@@ -232,12 +271,27 @@ export default function ProductDetail({ product, images, frames360 = [], related
               <div style={{ position: "absolute", top: 16, right: 16, zIndex: 5, background: qColor, color: "#fff", fontFamily: "Tajawal,sans-serif", fontSize: 11, fontWeight: 700, padding: "4px 14px", borderRadius: 20 }}>
                 {QUALITY_LABELS[product.quality_tier] ?? product.quality_tier}
               </div>
+              {/* Zoom hint */}
+              {images.length > 0 && (
+                <div style={{
+                  position: "absolute", bottom: 16, right: 16, zIndex: 5,
+                  display: "flex", alignItems: "center", gap: 6,
+                  background: "rgba(10,10,10,0.6)", color: "#F2F0EC", opacity: hovered ? 0.9 : 0,
+                  fontFamily: "Tajawal,sans-serif", fontSize: 11, padding: "5px 12px", borderRadius: 20,
+                  transition: "opacity 0.25s ease", pointerEvents: "none",
+                }}>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/>
+                  </svg>
+                  اضغط للتكبير
+                </div>
+              )}
               {/* Arrow navigation */}
               {images.length > 1 && (
                 <>
-                  <button onClick={() => setActiveIdx(i => (i - 1 + images.length) % images.length)}
+                  <button onClick={e => { e.stopPropagation(); setActiveIdx(i => (i - 1 + images.length) % images.length) }}
                     style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", zIndex: 6, background: "rgba(10,10,10,0.6)", border: "1px solid rgba(155,163,170,0.3)", borderRadius: "50%", width: 36, height: 36, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "#9BA3AA", fontSize: 16 }}>‹</button>
-                  <button onClick={() => setActiveIdx(i => (i + 1) % images.length)}
+                  <button onClick={e => { e.stopPropagation(); setActiveIdx(i => (i + 1) % images.length) }}
                     style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", zIndex: 6, background: "rgba(10,10,10,0.6)", border: "1px solid rgba(155,163,170,0.3)", borderRadius: "50%", width: 36, height: 36, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "#9BA3AA", fontSize: 16 }}>›</button>
                   <div style={{ position: "absolute", bottom: 12, left: "50%", transform: "translateX(-50%)", zIndex: 6, display: "flex", gap: 5 }}>
                     {images.map((_, i) => <div key={i} style={{ width: i === activeIdx ? 18 : 6, height: 6, borderRadius: 3, background: i === activeIdx ? "#9BA3AA" : "rgba(242,240,236,0.3)", transition: "all 0.3s" }} />)}
@@ -245,6 +299,14 @@ export default function ProductDetail({ product, images, frames360 = [], related
                 </>
               )}
             </div>
+            )}
+            {lightboxOpen && images.length > 0 && (
+              <ImageLightbox
+                images={images.map(img => ({ url: img.url, alt_ar: img.alt_ar }))}
+                startIndex={activeIdx}
+                productName={product.name_ar}
+                onClose={() => setLightboxOpen(false)}
+              />
             )}
 
             {images.length > 1 && (
@@ -480,19 +542,47 @@ export default function ProductDetail({ product, images, frames360 = [], related
                 {wishlisted ? "في قائمتك" : "أضف للأمنيات"}
               </button>
 
-              <button onClick={handleShare} className="pd-share-btn"
-                style={{
-                  flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
-                  background: "transparent", border: "1px solid rgba(155,163,170,0.15)",
-                  color: "#F2F0EC", fontFamily: "Tajawal,sans-serif", fontSize: 13, opacity: 0.55,
-                  padding: "11px 20px", borderRadius: 10, cursor: "pointer", transition: "all 0.25s ease",
-                }}>
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
-                  <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
-                </svg>
-                شارك
-              </button>
+              <div style={{ flex: 1, position: "relative" }}>
+                <button onClick={handleShare} className="pd-share-btn"
+                  style={{
+                    width: "100%", display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+                    background: "transparent", border: "1px solid rgba(155,163,170,0.15)",
+                    color: "#F2F0EC", fontFamily: "Tajawal,sans-serif", fontSize: 13, opacity: 0.55,
+                    padding: "11px 20px", borderRadius: 10, cursor: "pointer", transition: "all 0.25s ease",
+                  }}>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                  </svg>
+                  شارك
+                </button>
+                {shareMenuOpen && (
+                  <>
+                    <div onClick={() => setShareMenuOpen(false)} style={{ position: "fixed", inset: 0, zIndex: 20 }} />
+                    <div style={{
+                      position: "absolute", bottom: "calc(100% + 8px)", left: 0, right: 0, zIndex: 21,
+                      background: "#141414", border: "1px solid rgba(155,163,170,0.2)", borderRadius: 12,
+                      padding: 6, display: "flex", flexDirection: "column", gap: 2,
+                      boxShadow: "0 12px 40px rgba(0,0,0,0.6)",
+                    }}>
+                      <button onClick={copyLink} style={shareMenuItemStyle}>
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        نسخ الرابط
+                      </button>
+                      <a href={`https://wa.me/?text=${encodeURIComponent(shareText + "\n" + shareUrl)}`} target="_blank" rel="noopener noreferrer"
+                        onClick={() => setShareMenuOpen(false)} style={{ ...shareMenuItemStyle, textDecoration: "none", color: "#25D366" }}>
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/></svg>
+                        واتساب
+                      </a>
+                      <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`} target="_blank" rel="noopener noreferrer"
+                        onClick={() => setShareMenuOpen(false)} style={{ ...shareMenuItemStyle, textDecoration: "none" }}>
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                        فيسبوك
+                      </a>
+                    </div>
+                  </>
+                )}
+              </div>
             </div>
 
             {/* Trust signals */}

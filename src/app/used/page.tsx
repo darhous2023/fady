@@ -1,8 +1,8 @@
 export const dynamic = "force-dynamic"
 import type { Metadata } from "next"
 import { db } from "@/lib/db/drizzle/connection"
-import { products, productImages, categories, productVariants } from "@/lib/db/drizzle/schema"
-import { eq, and, gt } from "drizzle-orm"
+import { products, productImages, categories, productVariants, product360Frames } from "@/lib/db/drizzle/schema"
+import { eq, and, gt, asc, inArray } from "drizzle-orm"
 import StoreHeader from "@/components/store/StoreHeader"
 import StoreFooter from "@/components/store/StoreFooter"
 import FloatingWA from "@/components/store/FloatingWA"
@@ -27,18 +27,37 @@ async function getUsedCars(): Promise<StoreProduct[]> {
     .where(eq(products.status, "active"))
 
   const ids = rows.map(r => r.id)
-  const images = ids.length
-    ? await db.select({ product_id: productImages.product_id, url: productImages.url, alt_ar: productImages.alt_ar })
-        .from(productImages).where(eq(productImages.sort_order, 0))
-    : []
-  const imageMap = Object.fromEntries(images.map(i => [i.product_id, i]))
+  const [allImages, frameCounts] = await Promise.all([
+    ids.length
+      ? db.select({ product_id: productImages.product_id, url: productImages.url, alt_ar: productImages.alt_ar })
+          .from(productImages).where(inArray(productImages.product_id, ids)).orderBy(asc(productImages.sort_order))
+      : Promise.resolve([]),
+    ids.length
+      ? db.select({ product_id: product360Frames.product_id })
+          .from(product360Frames).where(inArray(product360Frames.product_id, ids))
+      : Promise.resolve([]),
+  ])
 
-  return rows.map(r => ({
-    ...r,
-    price: Number(r.price),
-    compare_at_price: r.compare_at_price ? Number(r.compare_at_price) : null,
-    image: imageMap[r.id] ?? null,
-  }))
+  const imagesByProduct = new Map<string, { url: string; alt_ar: string | null }[]>()
+  for (const img of allImages) {
+    const list = imagesByProduct.get(img.product_id) ?? []
+    list.push({ url: img.url, alt_ar: img.alt_ar })
+    imagesByProduct.set(img.product_id, list)
+  }
+  const frameCountByProduct = new Map<string, number>()
+  for (const f of frameCounts) frameCountByProduct.set(f.product_id, (frameCountByProduct.get(f.product_id) ?? 0) + 1)
+
+  return rows.map(r => {
+    const images = imagesByProduct.get(r.id) ?? []
+    return {
+      ...r,
+      price: Number(r.price),
+      compare_at_price: r.compare_at_price ? Number(r.compare_at_price) : null,
+      image: images[0] ?? null,
+      images,
+      has360: (frameCountByProduct.get(r.id) ?? 0) >= 2,
+    }
+  })
 }
 
 async function getLowStockMap(): Promise<Record<string, number>> {
