@@ -1,8 +1,9 @@
 export const dynamic = "force-dynamic";
 import { db } from "@/lib/db/drizzle/connection";
-import { orders, products, customers } from "@/lib/db/drizzle/schema";
-import { eq, count, sum, desc, sql } from "drizzle-orm";
+import { orders, products, customers, settings } from "@/lib/db/drizzle/schema";
+import { eq, count, sum, desc, sql, inArray } from "drizzle-orm";
 import RevenueChart from "@/components/admin/RevenueChart";
+import { ORDER_STATUS_KEYS, ORDER_STATUS_SETTING_KEY, getOrderStatusLabels } from "@/lib/orderStatusLabels";
 
 async function getStats() {
   const [totalOrders] = await db.select({ count: count() }).from(orders);
@@ -79,14 +80,6 @@ async function getStats() {
   };
 }
 
-const STATUS_LABELS: Record<string, string> = {
-  pending: "قيد الانتظار",
-  confirmed: "مؤكد",
-  shipped: "تم الشحن",
-  delivered: "تم التسليم",
-  cancelled: "ملغي",
-};
-
 const STATUS_COLORS: Record<string, string> = {
   pending: "bg-yellow-500/20 text-yellow-400",
   confirmed: "bg-blue-500/20 text-blue-400",
@@ -96,7 +89,11 @@ const STATUS_COLORS: Record<string, string> = {
 };
 
 export default async function DashboardPage() {
-  const stats = await getStats();
+  const [stats, statusSettingRows] = await Promise.all([
+    getStats(),
+    db.select().from(settings).where(inArray(settings.key, ORDER_STATUS_KEYS.map(ORDER_STATUS_SETTING_KEY))),
+  ]);
+  const STATUS_LABELS = getOrderStatusLabels(Object.fromEntries(statusSettingRows.map(r => [r.key, r.value])));
   const totalChartRevenue = stats.revenueByDay.reduce((s, d) => s + d.revenue, 0);
 
   return (

@@ -2,17 +2,15 @@ export const dynamic = "force-dynamic"
 
 import { notFound } from "next/navigation"
 import { db } from "@/lib/db/drizzle/connection"
-import { orders, orderItems } from "@/lib/db/drizzle/schema"
-import { eq } from "drizzle-orm"
+import { orders, orderItems, settings } from "@/lib/db/drizzle/schema"
+import { eq, inArray } from "drizzle-orm"
 import Link from "next/link"
 import OrderStatusSelect from "@/components/admin/OrderStatusSelect"
+import OrderStatusStepper from "@/components/admin/OrderStatusStepper"
+import { ORDER_STATUS_KEYS, ORDER_STATUS_SETTING_KEY, getOrderStatusLabels } from "@/lib/orderStatusLabels"
 
 interface Props { params: Promise<{ id: string }> }
 
-const STATUS_LABELS: Record<string, string> = {
-  pending: "بانتظار التأكيد", confirmed: "تم تأكيد الموعد",
-  shipped: "تم التواصل", delivered: "تمت المعاينة", cancelled: "ملغي",
-}
 const STATUS_COLORS: Record<string, string> = {
   pending: "bg-yellow-500/20 text-yellow-400",
   confirmed: "bg-blue-500/20 text-blue-400",
@@ -30,7 +28,11 @@ export default async function OrderDetailPage({ params }: Props) {
   const [order] = await db.select().from(orders).where(eq(orders.id, id)).limit(1)
   if (!order) notFound()
 
-  const items = await db.select().from(orderItems).where(eq(orderItems.order_id, id))
+  const [items, statusSettingRows] = await Promise.all([
+    db.select().from(orderItems).where(eq(orderItems.order_id, id)),
+    db.select().from(settings).where(inArray(settings.key, ORDER_STATUS_KEYS.map(ORDER_STATUS_SETTING_KEY))),
+  ])
+  const STATUS_LABELS = getOrderStatusLabels(Object.fromEntries(statusSettingRows.map(r => [r.key, r.value])))
 
   const waPhone = order.phone.replace(/\D/g, "")
   const waMsg = encodeURIComponent(
@@ -76,15 +78,14 @@ export default async function OrderDetailPage({ params }: Props) {
       </div>
 
       {/* Status change */}
-      <div className="bg-[#0A0A0A] rounded-xl border border-[#9BA3AA]/10 p-5">
-        <h2 className="text-sm font-semibold text-[#F2F0EC]/60 mb-3 uppercase tracking-widest">تغيير الحالة</h2>
-        <OrderStatusSelect orderId={order.id} currentStatus={order.status} />
-        <div className="flex gap-3 mt-3 flex-wrap">
-          {["pending","confirmed","shipped","delivered","cancelled"].map(s => (
-            <span key={s} className={`text-xs px-2 py-0.5 rounded-full ${STATUS_COLORS[s]}`}>
-              {STATUS_LABELS[s]}
-            </span>
-          ))}
+      <div className="bg-[#0A0A0A] rounded-xl border border-[#9BA3AA]/10 p-5 space-y-5">
+        <div>
+          <h2 className="text-sm font-semibold text-[#F2F0EC]/60 mb-3 uppercase tracking-widest">مراحل الحجز</h2>
+          <OrderStatusStepper orderId={order.id} currentStatus={order.status} labels={STATUS_LABELS} />
+        </div>
+        <div className="border-t border-[#9BA3AA]/10 pt-4">
+          <h2 className="text-xs font-semibold text-[#F2F0EC]/40 mb-2 uppercase tracking-widest">تغيير مباشر</h2>
+          <OrderStatusSelect orderId={order.id} currentStatus={order.status} />
         </div>
       </div>
 

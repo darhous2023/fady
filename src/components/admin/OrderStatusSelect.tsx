@@ -1,14 +1,15 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { DEFAULT_ORDER_STATUS_LABELS, ORDER_STATUS_KEYS, type OrderStatusKey } from "@/lib/orderStatusLabels";
 
-const STATUS_OPTIONS = [
-  { value: "pending", label: "بانتظار التأكيد", color: "text-yellow-400" },
-  { value: "confirmed", label: "تم تأكيد الموعد", color: "text-blue-400" },
-  { value: "shipped", label: "تم التواصل", color: "text-purple-400" },
-  { value: "delivered", label: "تمت المعاينة", color: "text-green-400" },
-  { value: "cancelled", label: "ملغي", color: "text-red-400" },
-];
+const STATUS_COLORS: Record<OrderStatusKey, string> = {
+  pending: "text-yellow-400",
+  confirmed: "text-blue-400",
+  shipped: "text-purple-400",
+  delivered: "text-green-400",
+  cancelled: "text-red-400",
+};
 
 export default function OrderStatusSelect({
   orderId,
@@ -19,6 +20,13 @@ export default function OrderStatusSelect({
 }) {
   const [status, setStatus] = useState(currentStatus);
   const [loading, setLoading] = useState(false);
+  const [labels, setLabels] = useState<Record<OrderStatusKey, string>>(DEFAULT_ORDER_STATUS_LABELS);
+
+  useEffect(() => {
+    fetch("/api/order-status-labels").then(r => r.json()).then(setLabels).catch(() => {});
+  }, []);
+
+  const STATUS_OPTIONS = ORDER_STATUS_KEYS.map(value => ({ value, label: labels[value], color: STATUS_COLORS[value] }));
 
   async function handleChange(newStatus: string) {
     setLoading(true);
