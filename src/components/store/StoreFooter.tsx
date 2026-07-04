@@ -134,6 +134,7 @@ export default function StoreFooter() {
               <a href="/new" className="sf-link">سيارات جديدة</a>
               <a href="/used" className="sf-link">سيارات مستعملة</a>
               <a href="/about" className="sf-link">من نحن</a>
+              <a href="/guide" className="sf-link">دليل المعرض</a>
               <a href={`https://wa.me/${WA}?text=${encodeURIComponent("السلام عليكم، أريد الاستفسار")}`}
                 target="_blank" rel="noopener noreferrer" className="sf-link">تواصل معنا</a>
             </div>

@@ -39,7 +39,7 @@ export default function AdminLayout({
   }
 
   return (
-    <div className="flex min-h-screen bg-[#0F0C0A] text-[#F2F0EC]">
+    <div className="flex min-h-screen bg-[#0A0A0A] text-[#F2F0EC]">
       {/* Sidebar */}
       <aside className="w-60 shrink-0 bg-[#0A0A0A] border-l border-[#9BA3AA]/10 flex flex-col">
         {/* Logo */}

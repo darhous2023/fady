@@ -84,7 +84,7 @@ export default function CustomersPage() {
                     </span>
                   </td>
                   <td className="px-4 py-4">
-                    <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${u.isAdmin ? "bg-[#7B1C2E]/20 text-[#E8756A] border border-[#7B1C2E]/30" : "bg-white/5 text-[#F2F0EC]/40 border border-white/10"}`}>
+                    <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${u.isAdmin ? "bg-[#A5342C]/20 text-[#E8756A] border border-[#A5342C]/30" : "bg-white/5 text-[#F2F0EC]/40 border border-white/10"}`}>
                       {u.isAdmin ? "أدمن" : "عضو"}
                     </span>
                   </td>

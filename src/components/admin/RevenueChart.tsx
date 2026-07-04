@@ -37,7 +37,7 @@ export default function RevenueChart({ data }: { data: DayData[] }) {
               {isHovered && (
                 <div style={{
                   position: "absolute", bottom: chartH + 48,
-                  background: "#1A1510", border: "1px solid rgba(201,168,76,0.3)",
+                  background: "#111111", border: "1px solid rgba(201,168,76,0.3)",
                   borderRadius: 8, padding: "8px 12px", zIndex: 10,
                   fontFamily: "Tajawal,sans-serif", textAlign: "center",
                   boxShadow: "0 8px 24px rgba(0,0,0,0.6)", whiteSpace: "nowrap",
