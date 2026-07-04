@@ -30,7 +30,7 @@ export default function HomeReviews() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch("/api/reviews?featured=true")
+    fetch("/api/reviews?showroom=true")
       .then(r => r.json())
       .then(data => { setReviews(Array.isArray(data) ? data : []); setLoading(false) })
       .catch(() => setLoading(false))

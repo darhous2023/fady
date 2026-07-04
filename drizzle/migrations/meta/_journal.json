@@ -43,6 +43,13 @@
       "when": 1783152156992,
       "tag": "0005_stale_microbe",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1783154997224,
+      "tag": "0006_blue_abomination",
+      "breakpoints": true
     }
   ]
 }

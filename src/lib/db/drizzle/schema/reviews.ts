@@ -20,7 +20,8 @@ export const reviews = pgTable(
   "reviews",
   {
     id: uuid("id").primaryKey().defaultRandom(),
-    product_id: uuid("product_id").notNull(),
+    // Nullable: null means a showroom-wide review, not tied to a specific car.
+    product_id: uuid("product_id"),
     customer_name: text("customer_name").notNull(),
     rating: integer("rating").notNull(),
     comment_ar: text("comment_ar"),
@@ -62,6 +63,7 @@ export const selectReviewSchema = createSelectSchema(reviews);
 export const insertReviewSchema = createInsertSchema(reviews, {
   customer_name: z.string().min(1),
   rating: z.number().int().min(1).max(5),
+  product_id: z.string().uuid().nullable().optional(),
 }).omit({ id: true, is_approved: true, created_at: true });
 
 export type Review = z.infer<typeof selectReviewSchema>;
