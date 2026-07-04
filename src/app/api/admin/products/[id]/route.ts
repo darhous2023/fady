@@ -18,13 +18,17 @@ export async function PATCH(
     "name_ar", "slug", "description_ar", "category_id",
     "quality_tier", "price", "compare_at_price", "status", "is_featured",
     "make", "model", "year", "mileage_km", "transmission", "fuel_type", "body_type",
+    "exterior_color", "interior_color", "engine_cc", "cylinders", "horsepower",
+    "drivetrain", "doors", "seats", "previous_owners", "plate_type",
+    "inspection_status", "warranty", "features_ar",
   ];
+  const numericFields = ["year", "mileage_km", "engine_cc", "cylinders", "horsepower", "doors", "seats", "previous_owners"];
   const updates: Record<string, unknown> = {};
   for (const key of allowed) {
     if (key in body) {
       if (key === "price" || key === "compare_at_price") {
         updates[key] = body[key] ? String(body[key]) : null;
-      } else if (key === "year" || key === "mileage_km") {
+      } else if (numericFields.includes(key)) {
         updates[key] = body[key] ? Number(body[key]) : null;
       } else {
         updates[key] = body[key];

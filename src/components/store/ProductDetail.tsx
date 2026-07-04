@@ -40,6 +40,11 @@ interface ProductDetailProps {
     is_featured: boolean; category_name: string | null
     year?: number | null; mileage_km?: number | null
     transmission?: string | null; fuel_type?: string | null; body_type?: string | null
+    exterior_color?: string | null; interior_color?: string | null
+    engine_cc?: number | null; cylinders?: number | null; horsepower?: number | null
+    drivetrain?: string | null; doors?: number | null; seats?: number | null
+    previous_owners?: number | null; plate_type?: string | null
+    inspection_status?: string | null; warranty?: string | null; features_ar?: string | null
   }
   images: { id: string; url: string; alt_ar: string | null; sort_order: number }[]
   frames360?: { id: string; url: string; sequence_index: number }[]
@@ -48,6 +53,7 @@ interface ProductDetailProps {
 }
 
 const TRANSMISSION_LABELS: Record<string, string> = { automatic: "أوتوماتيك", manual: "مانيوال" }
+const DRIVETRAIN_LABELS: Record<string, string> = { fwd: "دفع أمامي", rwd: "دفع خلفي", awd: "دفع رباعي" }
 
 export default function ProductDetail({ product, images, frames360 = [], related = [], variants = [] }: ProductDetailProps) {
   const has360 = frames360.length > 1
@@ -294,7 +300,10 @@ export default function ProductDetail({ product, images, frames360 = [], related
               </div>
             )}
 
-            {(product.year || product.mileage_km != null || product.transmission || product.fuel_type || product.body_type) && (
+            {(product.year || product.mileage_km != null || product.transmission || product.fuel_type || product.body_type
+              || product.exterior_color || product.interior_color || product.engine_cc || product.cylinders
+              || product.horsepower || product.drivetrain || product.doors || product.seats
+              || product.previous_owners || product.plate_type || product.inspection_status || product.warranty) && (
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(110px, 1fr))", gap: 12, marginBottom: 24 }}>
                 {[
                   { label: "سنة الصنع", value: product.year },
@@ -302,12 +311,45 @@ export default function ProductDetail({ product, images, frames360 = [], related
                   { label: "ناقل الحركة", value: product.transmission ? (TRANSMISSION_LABELS[product.transmission] ?? product.transmission) : null },
                   { label: "الوقود", value: product.fuel_type },
                   { label: "الهيكل", value: product.body_type },
+                  { label: "اللون الخارجي", value: product.exterior_color },
+                  { label: "اللون الداخلي", value: product.interior_color },
+                  { label: "سعة المحرك", value: product.engine_cc ? `${product.engine_cc.toLocaleString("ar-EG")} سي سي` : null },
+                  { label: "الأسطوانات", value: product.cylinders },
+                  { label: "قوة الحصان", value: product.horsepower ? `${product.horsepower} HP` : null },
+                  { label: "نظام الدفع", value: product.drivetrain ? (DRIVETRAIN_LABELS[product.drivetrain] ?? product.drivetrain) : null },
+                  { label: "الأبواب", value: product.doors },
+                  { label: "المقاعد", value: product.seats },
+                  { label: "عدد الملاك", value: product.previous_owners },
+                  { label: "نوع اللوحة", value: product.plate_type },
+                  { label: "حالة الفحص", value: product.inspection_status },
+                  { label: "الضمان", value: product.warranty },
                 ].filter(s => s.value).map(s => (
                   <div key={s.label} style={{ background: "rgba(155,163,170,0.05)", border: "1px solid rgba(155,163,170,0.1)", borderRadius: 10, padding: "10px 14px" }}>
                     <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 10, color: "#9BA3AA", opacity: 0.7, marginBottom: 3 }}>{s.label}</div>
                     <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 14, fontWeight: 700, color: "#F2F0EC" }}>{s.value}</div>
                   </div>
                 ))}
+              </div>
+            )}
+
+            {product.features_ar && (
+              <div style={{ marginBottom: 28 }}>
+                <h3 style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, fontWeight: 700, color: "#9BA3AA", letterSpacing: "2px", textTransform: "uppercase", marginBottom: 12 }}>المزايا</h3>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                  {product.features_ar.split("\n").map(f => f.trim()).filter(Boolean).map((f, i) => (
+                    <span key={i} style={{
+                      display: "flex", alignItems: "center", gap: 6,
+                      fontFamily: "Tajawal,sans-serif", fontSize: 12.5, color: "#F2F0EC", opacity: 0.75,
+                      background: "rgba(155,163,170,0.06)", border: "1px solid rgba(155,163,170,0.12)",
+                      borderRadius: 20, padding: "6px 14px",
+                    }}>
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9BA3AA" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="20 6 9 17 4 12"/>
+                      </svg>
+                      {f}
+                    </span>
+                  ))}
+                </div>
               </div>
             )}
 

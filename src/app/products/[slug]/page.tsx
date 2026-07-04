@@ -56,6 +56,11 @@ export default async function ProductPage({ params }: Props) {
       category_id: products.category_id,
       year: products.year, mileage_km: products.mileage_km,
       transmission: products.transmission, fuel_type: products.fuel_type, body_type: products.body_type,
+      exterior_color: products.exterior_color, interior_color: products.interior_color,
+      engine_cc: products.engine_cc, cylinders: products.cylinders, horsepower: products.horsepower,
+      drivetrain: products.drivetrain, doors: products.doors, seats: products.seats,
+      previous_owners: products.previous_owners, plate_type: products.plate_type,
+      inspection_status: products.inspection_status, warranty: products.warranty, features_ar: products.features_ar,
     })
     .from(products)
     .leftJoin(categories, eq(products.category_id, categories.id))

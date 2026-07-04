@@ -20,6 +20,9 @@ export async function POST(request: NextRequest) {
   const {
     name_ar, slug, description_ar, category_id, quality_tier, price, compare_at_price, status, is_featured,
     make, model, year, mileage_km, transmission, fuel_type, body_type,
+    exterior_color, interior_color, engine_cc, cylinders, horsepower,
+    drivetrain, doors, seats, previous_owners, plate_type,
+    inspection_status, warranty, features_ar,
   } = body;
 
   if (!name_ar || !slug || !category_id || !quality_tier || !price) {
@@ -43,6 +46,19 @@ export async function POST(request: NextRequest) {
     transmission: transmission || null,
     fuel_type: fuel_type || null,
     body_type: body_type || null,
+    exterior_color: exterior_color || null,
+    interior_color: interior_color || null,
+    engine_cc: engine_cc ? Number(engine_cc) : null,
+    cylinders: cylinders ? Number(cylinders) : null,
+    horsepower: horsepower ? Number(horsepower) : null,
+    drivetrain: drivetrain || null,
+    doors: doors ? Number(doors) : null,
+    seats: seats ? Number(seats) : null,
+    previous_owners: previous_owners ? Number(previous_owners) : null,
+    plate_type: plate_type || null,
+    inspection_status: inspection_status || null,
+    warranty: warranty || null,
+    features_ar: features_ar || null,
   }).returning();
 
   return NextResponse.json(product, { status: 201 });

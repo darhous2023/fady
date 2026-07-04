@@ -22,6 +22,19 @@ type ProductRow = {
   transmission?: string | null;
   fuel_type?: string | null;
   body_type?: string | null;
+  exterior_color?: string | null;
+  interior_color?: string | null;
+  engine_cc?: number | null;
+  cylinders?: number | null;
+  horsepower?: number | null;
+  drivetrain?: string | null;
+  doors?: number | null;
+  seats?: number | null;
+  previous_owners?: number | null;
+  plate_type?: string | null;
+  inspection_status?: string | null;
+  warranty?: string | null;
+  features_ar?: string | null;
 };
 
 type ImageRow = { id: string; url: string; alt_ar: string | null; sort_order: number };
@@ -47,6 +60,15 @@ const STATUS_OPTIONS = [
   { value: "draft",    label: "مسودة" },
   { value: "archived", label: "مؤرشف" },
 ];
+const DRIVETRAIN_OPTIONS = [
+  { value: "fwd", label: "دفع أمامي" },
+  { value: "rwd", label: "دفع خلفي" },
+  { value: "awd", label: "دفع رباعي" },
+];
+const COLOR_PRESETS = ["أبيض", "أسود", "فضي", "رمادي", "أحمر", "أزرق", "بني", "بيج"];
+const PLATE_TYPE_PRESETS = ["ملاكي", "نقل خفيف", "أجرة"];
+const INSPECTION_PRESETS = ["تم الفحص الشامل", "متاح الفحص عند الطلب", "لم يتم الفحص بعد"];
+const WARRANTY_PRESETS = ["بدون ضمان", "ضمان المعرض 3 أشهر", "ضمان المعرض 6 أشهر", "ساري ضمان الوكيل"];
 
 // ── Image manager (only shown when editing existing product) ─────────────────
 function ImageManager({ productId }: { productId: string }) {
@@ -487,6 +509,19 @@ export default function ProductForm({ categories, product }: { categories: Categ
       transmission:    getValue("transmission") || null,
       fuel_type:       getValue("fuel_type") || null,
       body_type:       getValue("body_type") || null,
+      exterior_color:  getValue("exterior_color") || null,
+      interior_color:  getValue("interior_color") || null,
+      engine_cc:       getValue("engine_cc") || null,
+      cylinders:       getValue("cylinders") || null,
+      horsepower:      getValue("horsepower") || null,
+      drivetrain:      getValue("drivetrain") || null,
+      doors:           getValue("doors") || null,
+      seats:           getValue("seats") || null,
+      previous_owners: getValue("previous_owners") || null,
+      plate_type:      getValue("plate_type") || null,
+      inspection_status: getValue("inspection_status") || null,
+      warranty:        getValue("warranty") || null,
+      features_ar:     getValue("features_ar") || null,
     };
 
     const url    = isEdit ? `/api/admin/products/${product!.id}` : "/api/admin/products";
@@ -630,6 +665,97 @@ export default function ProductForm({ categories, product }: { categories: Categ
               <label className={labelCls}>نوع الهيكل</label>
               <input name="body_type" defaultValue={product?.body_type || ""} placeholder="سيدان" className={inputCls} />
             </div>
+          </div>
+        </div>
+
+        <div className="bg-[#0A0A0A] rounded-xl border border-[#9BA3AA]/10 p-6 space-y-5">
+          <h2 className="font-semibold text-[#F2F0EC] border-b border-[#9BA3AA]/10 pb-3">مواصفات إضافية</h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className={labelCls}>اللون الخارجي</label>
+              <input name="exterior_color" list="color-presets" defaultValue={product?.exterior_color || ""} placeholder="أبيض" className={inputCls} />
+            </div>
+            <div>
+              <label className={labelCls}>اللون الداخلي</label>
+              <input name="interior_color" list="color-presets" defaultValue={product?.interior_color || ""} placeholder="أسود" className={inputCls} />
+            </div>
+          </div>
+          <datalist id="color-presets">
+            {COLOR_PRESETS.map(c => <option key={c} value={c} />)}
+          </datalist>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <label className={labelCls}>سعة المحرك (سي سي)</label>
+              <input name="engine_cc" type="number" min="0" defaultValue={product?.engine_cc ?? ""} placeholder="1600" className={inputCls} />
+            </div>
+            <div>
+              <label className={labelCls}>عدد الأسطوانات</label>
+              <input name="cylinders" type="number" min="0" defaultValue={product?.cylinders ?? ""} placeholder="4" className={inputCls} />
+            </div>
+            <div>
+              <label className={labelCls}>قوة الحصان (HP)</label>
+              <input name="horsepower" type="number" min="0" defaultValue={product?.horsepower ?? ""} placeholder="120" className={inputCls} />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <label className={labelCls}>نظام الدفع</label>
+              <select name="drivetrain" defaultValue={product?.drivetrain || ""} className={inputCls}>
+                <option value="">— غير محدد —</option>
+                {DRIVETRAIN_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+              </select>
+            </div>
+            <div>
+              <label className={labelCls}>عدد الأبواب</label>
+              <input name="doors" type="number" min="0" max="6" defaultValue={product?.doors ?? ""} placeholder="4" className={inputCls} />
+            </div>
+            <div>
+              <label className={labelCls}>عدد المقاعد</label>
+              <input name="seats" type="number" min="0" max="12" defaultValue={product?.seats ?? ""} placeholder="5" className={inputCls} />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className={labelCls}>عدد الملاك السابقين</label>
+              <input name="previous_owners" type="number" min="0" defaultValue={product?.previous_owners ?? ""} placeholder="1" className={inputCls} />
+            </div>
+            <div>
+              <label className={labelCls}>نوع اللوحة</label>
+              <input name="plate_type" list="plate-type-presets" defaultValue={product?.plate_type || ""} placeholder="ملاكي" className={inputCls} />
+              <datalist id="plate-type-presets">
+                {PLATE_TYPE_PRESETS.map(p => <option key={p} value={p} />)}
+              </datalist>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className={labelCls}>حالة الفحص</label>
+              <input name="inspection_status" list="inspection-presets" defaultValue={product?.inspection_status || ""} placeholder="تم الفحص الشامل" className={inputCls} />
+              <datalist id="inspection-presets">
+                {INSPECTION_PRESETS.map(p => <option key={p} value={p} />)}
+              </datalist>
+            </div>
+            <div>
+              <label className={labelCls}>الضمان</label>
+              <input name="warranty" list="warranty-presets" defaultValue={product?.warranty || ""} placeholder="بدون ضمان" className={inputCls} />
+              <datalist id="warranty-presets">
+                {WARRANTY_PRESETS.map(p => <option key={p} value={p} />)}
+              </datalist>
+            </div>
+          </div>
+
+          <div>
+            <label className={labelCls}>المزايا (سطر لكل ميزة)</label>
+            <textarea name="features_ar" defaultValue={product?.features_ar || ""} rows={5}
+              placeholder={"مثال:\nفتحة سقف\nشاشة تعمل باللمس\nكاميرا خلفية\nحساسات ركن\nمثبت سرعة"}
+              className={`${inputCls} resize-y min-h-[110px]`}
+            />
+            <p className="text-xs text-[#F2F0EC]/25 mt-1">كل سطر يظهر كميزة منفصلة في صفحة السيارة</p>
           </div>
         </div>
 
