@@ -48,3 +48,12 @@ create table if not exists "verification" (
 create index if not exists "session_userId_idx" on "session" ("userId");
 create index if not exists "account_userId_idx" on "account" ("userId");
 create index if not exists "verification_identifier_idx" on "verification" ("identifier");
+
+-- These tables hold session tokens, OAuth/password credentials, and email
+-- verification tokens. Supabase exposes every public table via PostgREST
+-- by default, including to the public anon key — enable RLS with zero
+-- policies so PostgREST default-denies. The app's own backend connects as
+-- the `postgres` role (BYPASSRLS), so this has no effect on real app access.
+alter table "session" enable row level security;
+alter table "account" enable row level security;
+alter table "verification" enable row level security;

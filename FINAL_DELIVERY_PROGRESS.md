@@ -1,6 +1,31 @@
 # FINAL_DELIVERY_PROGRESS.md
 
 > Working memory for the Master Final Delivery campaign. Updated after every station. Committed with every checkpoint.
+
+## Stage H — CRITICAL: public database exposure via broken RLS "backend" policies, found and fixed live (commit `adef1b8`)
+
+**Found while doing #86 (Vercel + Supabase infra review).** Checked `pg_class.relrowsecurity` across all 21 public tables: `session`, `account`, `verification` had RLS **disabled entirely**. Direct test against Supabase's PostgREST REST endpoint using the public `NEXT_PUBLIC_SUPABASE_ANON_KEY` (the key shipped to every browser) returned real rows from `session` and `account`.
+
+Investigated further — `pg_policies` showed 18 tables (`admins`, `banners`, `cart_items`, `categories`, `customers`, `discount_codes`, `order_items`, `orders`, `page_views`, `product_360_frames`, `product_images`, `product_variants`, `products`, `reviews`, `settings`, `shipping_zones`, `user`, `wishlist`) each had a permissive `for: "all"` policy named `"Backend can manage X"` with `using: current_setting('request.jwt.claim.role', true) IS NULL`. This was meant to mean "not a PostgREST request, must be our own backend" — but tested it directly: `GET /rest/v1/user?select=id,email` via the anon key returned the real owner row (`ahmeddarhous@gmail.com`), and `count(*)` confirmed it returned 100% of the table, not a coincidental partial match.
+
+**Root cause**: this check assumes Supabase's legacy JWT-based key system (where PostgREST sets a `request.jwt.claim.role` GUC). This project uses Supabase's **new-format keys** (`sb_publishable_...`/`sb_secret_...`, confirmed via `.env.local` — not JWTs, decoding confirmed no `role` claim to decode in the first place). Under the new key format that GUC is never set even for genuine public/anon PostgREST requests, so `IS NULL` evaluates true for everyone — the exact opposite of its intent. Net effect: **the public anon key had full SELECT/INSERT/UPDATE/DELETE on `admins`, `user`, `customers`, `orders`, `order_items`, `discount_codes`, `cart_items`, `wishlist`, `page_views` directly via Supabase's REST API, bypassing the Next.js app entirely** — real customer PII, real bookings, admin account list, and (via the unrelated RLS-disabled session/account tables) session tokens and OAuth/password-hash rows.
+
+**Why the fix is safe and purely subtractive**: confirmed the app's own `DATABASE_URL` connects as Postgres role `postgres`, which has `rolbypassrls = true` — our backend was never governed by RLS in the first place, policy or no policy. The "Backend can manage X" policies were unnecessary for legitimate access from day one; they only ever mattered for (accidentally) letting PostgREST through too. Every table's actual intended-public policy (e.g. `products`: `"Anyone can view active products"`, `using: status = 'active'`) is separate, correctly scoped, and untouched.
+
+**Fix applied**:
+1. Removed all 18 `pgPolicy("Backend can manage ...")` blocks from the Drizzle schema files (`admins.ts`, `banners.ts`, `cart.ts`, `categories.ts`, `customers.ts`, `discounts.ts`, `orders.ts` [x2], `pageViews.ts`, `products.ts` [x4], `reviews.ts`, `settings.ts`, `shipping.ts`, `users.ts`, `wishlist.ts`).
+2. Generated migration `drizzle/migrations/0008_abandoned_santa_claus.sql` (18 clean `DROP POLICY` statements, nothing else — reviewed before applying).
+3. Manually appended `ALTER TABLE session/account/verification ENABLE ROW LEVEL SECURITY` to the same migration (those 3 tables are Better-Auth-managed, provisioned outside the Drizzle schema originally via `scripts/better-auth-schema.sql` — not touched by `drizzle-kit generate`).
+4. `npm run build` clean → `npx drizzle-kit migrate` applied directly to production (real business DB, no separate staging DB exists) → committed and pushed (`adef1b8`) → deployed → polled to `READY`.
+
+**Verified after the fix (real, live, both directions)**:
+- Anon key now gets `[]` (empty) for `session`, `account`, `user`, `admins`, `orders`, `customers`.
+- Anon key still correctly gets real data for legitimate public reads: `products`, `settings`.
+- Full route smoke test (`/`, `/used`, `/new`, `/new/browse`, `/admin/login`, `/faq`, `/privacy`, `/returns`, `/track`, `/cart`, a real product page, `/api/store-config`, `/api/check-admin`, `/api/reviews?showroom=true`) — all `200`.
+- **Re-ran the full E2E admin-session test from Stage G after this fix specifically** (since it touches the exact tables admin auth depends on): fresh disposable test account via the real production sign-up endpoint → session cookie → 1 + 15 concurrent `/api/check-admin` calls → **16/16 `{"isAdmin":true}`**. Torn down completely after.
+
+## Stage I — Backend can manage X — one open follow-up
+`scripts/better-auth-schema.sql` (the original provisioning script for `session`/`account`/`verification`) should be updated to `ENABLE ROW LEVEL SECURITY` on those 3 tables too, so a from-scratch DB rebuild doesn't silently reintroduce this exposure. Not yet done — low urgency since the live DB is already fixed and this script isn't re-run against production in the normal workflow, but worth doing before this campaign's final report.
 > **Final acceptance is based on the live Vercel deployment, not localhost.**
 
 ## Goal
