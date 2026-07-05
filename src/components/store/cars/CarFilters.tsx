@@ -1,13 +1,13 @@
 "use client"
 
 import { useRouter, useSearchParams } from "next/navigation"
-import type { CarsFacetCounts } from "@/lib/cars/types"
+import type { CarsBrandListItem, CarsFacetCounts } from "@/lib/cars/types"
 
 const LABELS: Record<string, string> = {
   bodyType: "نوع الهيكل", fuelType: "نوع الوقود", transmission: "ناقل الحركة", drivetrain: "نظام الدفع",
 }
 
-export default function CarFilters({ facets }: { facets: CarsFacetCounts }) {
+export default function CarFilters({ facets, brands }: { facets: CarsFacetCounts; brands?: CarsBrandListItem[] }) {
   const router = useRouter()
   const searchParams = useSearchParams()
 
@@ -47,6 +47,27 @@ export default function CarFilters({ facets }: { facets: CarsFacetCounts }) {
           <button onClick={clearAll} style={{ fontFamily: "Tajawal,sans-serif", fontSize: 12, color: "#9BA3AA", background: "none", border: "none", cursor: "pointer" }}>
             مسح الكل
           </button>
+        </div>
+      )}
+
+      {brands && brands.length > 0 && (
+        <div style={{ marginBottom: 20 }}>
+          <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, fontWeight: 700, color: "#F2F0EC", marginBottom: 8 }}>
+            الماركة
+          </div>
+          <select
+            value={searchParams.get("brand") ?? ""}
+            onChange={(e) => setParam("brand", e.target.value || null)}
+            style={{
+              width: "100%", background: "#111214", color: "#F2F0EC", border: "1px solid rgba(255,255,255,0.12)",
+              borderRadius: 8, padding: "8px 10px", fontFamily: "Tajawal,sans-serif", fontSize: 13, cursor: "pointer",
+            }}
+          >
+            <option value="">كل الماركات</option>
+            {brands.map((b) => (
+              <option key={b.id} value={b.slug}>{b.nameEn} ({b.modelCount})</option>
+            ))}
+          </select>
         </div>
       )}
 

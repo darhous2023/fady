@@ -9,6 +9,7 @@ export type CarsBrandListItem = {
 
 export type CarsFilters = {
   brandSlug?: string;
+  brandId?: string;
   modelSlug?: string;
   bodyType?: string;
   fuelType?: string;
@@ -21,7 +22,7 @@ export type CarsFilters = {
   q?: string;
   page?: number;
   pageSize?: number;
-  sort?: "newest" | "power_desc" | "power_asc" | "name_asc";
+  sort?: "newest" | "power_desc" | "power_asc" | "name_asc" | "year_desc" | "year_asc";
 };
 
 export type CarsBrowseResult = {

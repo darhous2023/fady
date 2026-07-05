@@ -43,7 +43,7 @@ export default function FavoritesPage() {
             لا توجد سيارات في المفضلة بعد. اضغط أيقونة القلب على أي سيارة لإضافتها.
           </div>
         ) : (
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: 16 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(220px, 100%), 1fr))", gap: 16, alignItems: "start" }}>
             {cars.map((c) => (
               <CarCard
                 key={c.normalizedKey}

@@ -87,7 +87,7 @@ export default async function NewCarsPage() {
               <h2 style={{ fontFamily: "Tajawal,sans-serif", fontWeight: 700, fontSize: 18, color: "#F2F0EC" }}>سيارات من الكتالوج</h2>
               <Link href="/new/browse" style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "#9BA3AA", textDecoration: "none" }}>عرض الكل ←</Link>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: 16 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(220px, 100%), 1fr))", gap: 16, alignItems: "start" }}>
               {featured.items.map((car) => <CarCard key={car.normalizedKey} car={car} />)}
             </div>
           </div>

@@ -51,7 +51,14 @@ export default function CarCard({ car }: { car: CarsBrowseItem | CarsSearchResul
           <div style={{ fontFamily: "'Space Mono',monospace", fontSize: 11, color: "#9BA3AA", marginBottom: 4 }}>
             {car.brandName}{car.modelName ? ` · ${car.modelName}` : ""}
           </div>
-          <div style={{ fontFamily: "Tajawal,sans-serif", fontWeight: 700, fontSize: 15, color: "#F2F0EC", lineHeight: 1.4 }}>
+          <div
+            style={{
+              fontFamily: "Tajawal,sans-serif", fontWeight: 700, fontSize: 15, color: "#F2F0EC", lineHeight: 1.4,
+              display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden",
+              minHeight: "calc(1.4em * 2)",
+            }}
+            title={car.displayName}
+          >
             {car.displayName}
           </div>
           <div style={{ display: "flex", gap: 10, marginTop: 8, fontFamily: "Tajawal,sans-serif", fontSize: 12, color: "rgba(242,240,236,0.55)" }}>

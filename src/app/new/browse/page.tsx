@@ -6,7 +6,8 @@ import StoreFooter from "@/components/store/StoreFooter"
 import FloatingWA from "@/components/store/FloatingWA"
 import CarCard from "@/components/store/cars/CarCard"
 import CarFilters from "@/components/store/cars/CarFilters"
-import { browseCars, getFacetCounts, getBrandBySlug } from "@/lib/cars/repository"
+import SortSelect from "@/components/store/cars/SortSelect"
+import { browseCars, getFacetCounts, getBrandBySlug, getPublicBrands } from "@/lib/cars/repository"
 import { isCarsDbConfigured } from "@/lib/cars/db"
 import CarsCatalogUnavailable from "@/components/store/cars/CarsCatalogUnavailable"
 import type { CarsFilters } from "@/lib/cars/types"
@@ -40,27 +41,40 @@ export default async function BrowseCarsPage({
   const brandSlug = Array.isArray(sp.brand) ? sp.brand[0] : sp.brand
 
   const brand = brandSlug ? await getBrandBySlug(brandSlug) : null
+  if (brand) filters.brandId = brand.id
 
-  const [result, facets] = await Promise.all([
+  const [result, facets, brands] = await Promise.all([
     browseCars(filters),
     getFacetCounts(filters),
+    getPublicBrands(),
   ])
 
   return (
     <>
       <StoreHeader />
-      <style>{`body { margin: 0; background: #0A0A0A; } main { padding: 0 !important; min-height: unset !important; }`}</style>
+      <style>{`
+        body { margin: 0; background: #0A0A0A; }
+        main { padding: 0 !important; min-height: unset !important; }
+        .ncb-layout { display: grid; grid-template-columns: 220px 1fr; gap: 32px; align-items: start; }
+        .ncb-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr)); gap: 16px; align-items: start; }
+        @media (max-width: 720px) {
+          .ncb-layout { grid-template-columns: 1fr; }
+        }
+      `}</style>
       <div style={{ paddingTop: 64, maxWidth: 1200, margin: "0 auto", padding: "88px 24px 64px", direction: "rtl" }}>
         <div style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "rgba(242,240,236,0.5)", marginBottom: 8 }}>
           <Link href="/new" style={{ color: "#9BA3AA", textDecoration: "none" }}>سيارات جديدة</Link> ← تصفّح
         </div>
-        <h1 style={{ fontFamily: "Tajawal,sans-serif", fontWeight: 900, fontSize: 26, color: "#F5F5F5", marginBottom: 24 }}>
-          {brand ? brand.nameEn : "كل السيارات"} — {result.total.toLocaleString("ar-EG")} نتيجة
-        </h1>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: 12, marginBottom: 24 }}>
+          <h1 style={{ fontFamily: "Tajawal,sans-serif", fontWeight: 900, fontSize: 26, color: "#F5F5F5", margin: 0 }}>
+            {brand ? brand.nameEn : "كل السيارات"} — {result.total.toLocaleString("ar-EG")} نتيجة
+          </h1>
+          <SortSelect currentSort={filters.sort ?? "newest"} />
+        </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "220px 1fr", gap: 32, alignItems: "start" }}>
+        <div className="ncb-layout">
           <aside>
-            <CarFilters facets={facets} />
+            <CarFilters facets={facets} brands={brands} />
           </aside>
 
           <div>
@@ -69,7 +83,7 @@ export default async function BrowseCarsPage({
                 لا توجد سيارات مطابقة لهذه الفلاتر. جرّب إزالة أحد الفلاتر.
               </div>
             ) : (
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: 16 }}>
+              <div className="ncb-grid">
                 {result.items.map((car) => <CarCard key={car.normalizedKey} car={car} />)}
               </div>
             )}

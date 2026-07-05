@@ -55,7 +55,7 @@ export default async function SearchCarsPage({
               <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "rgba(242,240,236,0.4)", marginBottom: 16 }}>
                 {results.length.toLocaleString("ar-EG")} نتيجة
               </p>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: 16 }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(220px, 100%), 1fr))", gap: 16, alignItems: "start" }}>
                 {results.map((car) => <CarCard key={car.normalizedKey} car={car} />)}
               </div>
             </>

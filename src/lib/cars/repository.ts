@@ -71,6 +71,7 @@ function buildBrowseWhere(filters: CarsFilters) {
     // A hidden model must hide every car under it too, not just the model dropdown.
     sql`(${carsCanonical.modelId} IS NULL OR ${carsCanonical.modelId} NOT IN (SELECT id FROM models WHERE admin_hidden = true))`,
   ];
+  if (filters.brandId) conditions.push(eq(carsCanonical.brandId, filters.brandId));
   if (filters.bodyType) conditions.push(eq(carsCanonical.bodyType, filters.bodyType));
   if (filters.fuelType) conditions.push(eq(carsCanonical.fuelType, filters.fuelType));
   if (filters.transmission) conditions.push(eq(carsCanonical.transmission, filters.transmission));
@@ -107,6 +108,8 @@ export async function browseCars(filters: CarsFilters): Promise<CarsBrowseResult
     filters.sort === "power_desc" ? desc(carsCanonical.powerHp)
     : filters.sort === "power_asc" ? asc(carsCanonical.powerHp)
     : filters.sort === "name_asc" ? asc(carsCanonical.displayName)
+    : filters.sort === "year_desc" ? desc(carsCanonical.year)
+    : filters.sort === "year_asc" ? asc(carsCanonical.year)
     : desc(carsCanonical.lastSyncedAt);
 
   const [countRow] = await carsDb.select({ count: sql<number>`count(*)::int` }).from(carsCanonical).where(where);
@@ -164,7 +167,9 @@ export async function browseCars(filters: CarsFilters): Promise<CarsBrowseResult
 
 export async function getFacetCounts(baseFilters: CarsFilters): Promise<CarsFacetCounts> {
   async function facet(column: PgColumn) {
-    const where = and(eq(carsCanonical.publicationEligible, true), eq(carsCanonical.adminHidden, false), sql`${column} IS NOT NULL`);
+    const conditions = [eq(carsCanonical.publicationEligible, true), eq(carsCanonical.adminHidden, false), sql`${column} IS NOT NULL`];
+    if (baseFilters.brandId) conditions.push(eq(carsCanonical.brandId, baseFilters.brandId));
+    const where = and(...conditions);
     const rows = await carsDb
       .select({ value: column, count: sql<number>`count(*)::int` })
       .from(carsCanonical)
