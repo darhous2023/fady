@@ -9,12 +9,20 @@ import { config } from "dotenv";
 config({ path: ".env.local" });
 
 import { randomBytes } from "crypto";
-import { auth } from "../src/utils/auth";
-import { db } from "../src/lib/db/drizzle/connection";
-import { admins } from "../src/lib/db/drizzle/schema";
 import { writeFileSync } from "fs";
 
 async function main() {
+  // Dynamic imports: static ESM imports hoist above this file's own top-level
+  // statements, so a static `import { auth } from "../src/utils/auth"` would
+  // run auth.ts's module-scope `new Pool({ connectionString: process.env.DATABASE_URL })`
+  // before the config() call above ever populates DATABASE_URL — resulting in
+  // pg trying to connect with an empty connection string and failing with a
+  // misleading "SASL: client password must be a string" error. Deferring these
+  // imports until after config() has run fixes it.
+  const { auth } = await import("../src/utils/auth");
+  const { db } = await import("../src/lib/db/drizzle/connection");
+  const { admins } = await import("../src/lib/db/drizzle/schema");
+
   const suffix = randomBytes(4).toString("hex");
   const email = `e2e-temp-${suffix}@elfady-test.internal`;
   const password = randomBytes(18).toString("base64url");

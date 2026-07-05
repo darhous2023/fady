@@ -6,8 +6,6 @@ import { config } from "dotenv";
 config({ path: ".env.local" });
 
 import { existsSync, readFileSync, unlinkSync } from "fs";
-import { db } from "../src/lib/db/drizzle/connection";
-import { admins } from "../src/lib/db/drizzle/schema";
 import { eq } from "drizzle-orm";
 import { sql } from "drizzle-orm";
 
@@ -16,6 +14,13 @@ async function main() {
     console.log("No .e2e-session.local.json found — nothing to tear down.");
     return;
   }
+
+  // See e2e-admin-session-setup.ts's comment: static imports of modules that
+  // read process.env.DATABASE_URL at module scope must be deferred until
+  // after dotenv's config() above has actually run.
+  const { db } = await import("../src/lib/db/drizzle/connection");
+  const { admins } = await import("../src/lib/db/drizzle/schema");
+
   const { email, userId } = JSON.parse(readFileSync(".e2e-session.local.json", "utf8"));
 
   await db.delete(admins).where(eq(admins.email, email));

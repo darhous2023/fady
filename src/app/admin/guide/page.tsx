@@ -2,6 +2,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { toast } from "sonner"
+import { downloadAdminGuidePdf } from "@/lib/guidePdf"
 
 const IMAGE_ENHANCE_PROMPT = `Enhance this car photo for a premium car dealership website called ELFADY.
 
@@ -245,6 +246,20 @@ const SECTIONS: Section[] = [
 
 export default function AdminGuidePage() {
   const [open, setOpen] = useState<string>("dashboard")
+  const [downloading, setDownloading] = useState(false)
+
+  async function handleDownloadPdf() {
+    if (downloading) return
+    setDownloading(true)
+    try {
+      await downloadAdminGuidePdf()
+    } catch (err) {
+      console.error(err)
+      toast.error("تعذر إنشاء ملف PDF. حاول مرة أخرى.")
+    } finally {
+      setDownloading(false)
+    }
+  }
 
   return (
     <div style={{ direction: "rtl", fontFamily: "Tajawal, sans-serif" }}>
@@ -253,10 +268,17 @@ export default function AdminGuidePage() {
         <p style={{ fontSize: 14, color: "rgba(242,240,236,0.4)", margin: 0 }}>
           دليل شامل لإدارة معرض الفادي من لوحة التحكم — اضغط على أي قسم لعرض التفاصيل.
         </p>
-        <div style={{ marginTop: 12 }}>
+        <div style={{ marginTop: 12, display: "flex", gap: 10, flexWrap: "wrap" }}>
           <Link href="/admin/guide/print" style={{ fontSize: 12, color: "#9BA3AA", textDecoration: "none", border: "1px solid rgba(155,163,170,0.3)", padding: "6px 14px", borderRadius: 8 }}>
             🖨️ نسخة للطباعة
           </Link>
+          <button
+            onClick={handleDownloadPdf}
+            disabled={downloading}
+            style={{ fontSize: 12, color: "#0A0A0A", background: "#9BA3AA", border: "none", cursor: downloading ? "default" : "pointer", opacity: downloading ? 0.7 : 1, padding: "6px 14px", borderRadius: 8, fontFamily: "Tajawal, sans-serif", fontWeight: 700 }}
+          >
+            {downloading ? "⏳ جارِ التحضير..." : "⬇️ تحميل PDF"}
+          </button>
         </div>
       </div>
 
