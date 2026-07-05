@@ -8,36 +8,40 @@ export async function GET(req: NextRequest) {
   const featured  = req.nextUrl.searchParams.get("featured")
   const showroom  = req.nextUrl.searchParams.get("showroom")
 
-  if (showroom === "true") {
+  try {
+    if (showroom === "true") {
+      const rows = await db
+        .select()
+        .from(reviews)
+        .where(and(isNull(reviews.product_id), eq(reviews.is_approved, true)))
+        .orderBy(desc(reviews.created_at))
+        .limit(12)
+      return NextResponse.json(rows)
+    }
+
+    if (featured === "true") {
+      const rows = await db
+        .select()
+        .from(reviews)
+        .where(and(eq(reviews.is_approved, true)))
+        .orderBy(desc(reviews.rating), desc(reviews.created_at))
+        .limit(8)
+      return NextResponse.json(rows)
+    }
+
+    if (!productId) return NextResponse.json([], { status: 200 })
+
     const rows = await db
       .select()
       .from(reviews)
-      .where(and(isNull(reviews.product_id), eq(reviews.is_approved, true)))
+      .where(and(eq(reviews.product_id, productId), eq(reviews.is_approved, true)))
       .orderBy(desc(reviews.created_at))
-      .limit(12)
+      .limit(20)
+
     return NextResponse.json(rows)
+  } catch {
+    return NextResponse.json([])
   }
-
-  if (featured === "true") {
-    const rows = await db
-      .select()
-      .from(reviews)
-      .where(and(eq(reviews.is_approved, true)))
-      .orderBy(desc(reviews.rating), desc(reviews.created_at))
-      .limit(8)
-    return NextResponse.json(rows)
-  }
-
-  if (!productId) return NextResponse.json([], { status: 200 })
-
-  const rows = await db
-    .select()
-    .from(reviews)
-    .where(and(eq(reviews.product_id, productId), eq(reviews.is_approved, true)))
-    .orderBy(desc(reviews.created_at))
-    .limit(20)
-
-  return NextResponse.json(rows)
 }
 
 export async function POST(req: NextRequest) {
@@ -51,13 +55,17 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "التقييم يجب أن يكون بين 1 و 5" }, { status: 400 })
   }
 
-  const [review] = await db.insert(reviews).values({
-    product_id: product_id || null,
-    customer_name: customer_name.trim(),
-    rating: Number(rating),
-    comment_ar: comment_ar?.trim() || null,
-    is_approved: false,
-  }).returning()
+  try {
+    const [review] = await db.insert(reviews).values({
+      product_id: product_id || null,
+      customer_name: customer_name.trim(),
+      rating: Number(rating),
+      comment_ar: comment_ar?.trim() || null,
+      is_approved: false,
+    }).returning()
 
-  return NextResponse.json({ ok: true, id: review.id }, { status: 201 })
+    return NextResponse.json({ ok: true, id: review.id }, { status: 201 })
+  } catch {
+    return NextResponse.json({ error: "تعذّر إرسال التقييم، حاول مرة أخرى" }, { status: 500 })
+  }
 }
