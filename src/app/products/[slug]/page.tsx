@@ -146,17 +146,19 @@ export default async function ProductPage({ params }: Props) {
     compare_at_price: r.compare_at_price ? Number(r.compare_at_price) : null,
   }))
 
-  // Fetch first image for each related product
-  const relatedWithImages = await Promise.all(
-    related.map(async r => {
-      const [img] = await db
-        .select({ url: productImages.url, alt_ar: productImages.alt_ar })
+  // Fetch first image for all related products in one batched query (avoids N+1).
+  const relatedIds = related.map(r => r.id)
+  const relatedImages = relatedIds.length
+    ? await db
+        .select({ product_id: productImages.product_id, url: productImages.url, alt_ar: productImages.alt_ar })
         .from(productImages)
-        .where(and(eq(productImages.product_id, r.id), eq(productImages.sort_order, 0)))
-        .limit(1)
-      return { ...r, image: img ?? null }
-    })
-  )
+        .where(and(inArray(productImages.product_id, relatedIds), eq(productImages.sort_order, 0)))
+    : []
+  const relatedImageByProductId = new Map(relatedImages.map(img => [img.product_id, img]))
+  const relatedWithImages = related.map(r => ({
+    ...r,
+    image: relatedImageByProductId.get(r.id) ?? null,
+  }))
 
   return (
     <>
