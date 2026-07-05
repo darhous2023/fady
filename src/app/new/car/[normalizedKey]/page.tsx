@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const { normalizedKey: raw } = await params
   const normalizedKey = decodeNormalizedKey(raw)
   const car = await getCanonicalCarDetail(normalizedKey)
-  if (!car) return { title: "سيارة غير موجودة" }
+  if (!car || car.adminHidden || !car.publicationEligible) return { title: "سيارة غير موجودة" }
   return {
     title: car.displayName,
     description: `مواصفات ${car.displayName} كاملة — ${car.bodyType ?? ""} ${car.fuelType ?? ""}`.trim(),
@@ -62,7 +62,7 @@ export default async function CarDetailPage({ params }: { params: Promise<Params
   const { normalizedKey: raw } = await params
   const normalizedKey = decodeNormalizedKey(raw)
   const car = await getCanonicalCarDetail(normalizedKey)
-  if (!car) notFound()
+  if (!car || car.adminHidden || !car.publicationEligible) notFound()
 
   const similar = await getSimilarCars(normalizedKey, 4)
 

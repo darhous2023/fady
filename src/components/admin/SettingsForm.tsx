@@ -60,7 +60,7 @@ export default function SettingsForm({ settings }: { settings: Record<string, st
     const form = e.currentTarget;
     const textKeys = [
       "whatsapp_number", "store_name_ar", "store_tagline_ar",
-      "instagram_showroom_url", "instagram_manager_url", "facebook_url", "tiktok_url", "maps_url", "address_ar",
+      "instagram_showroom_url", "instagram_manager_url", "facebook_url", "maps_url", "address_ar",
       "logo_url", "intro_tagline_ar", "announcement_text", "flash_deals_title_ar", "flash_deals_ends_at",
       ...ORDER_STATUS_KEYS.map(ORDER_STATUS_SETTING_KEY),
       "product_trust_1_title_ar", "product_trust_1_desc_ar",
@@ -137,15 +137,9 @@ export default function SettingsForm({ settings }: { settings: Record<string, st
             <input name="instagram_manager_url" defaultValue={settings.instagram_manager_url || "https://www.instagram.com/fadywael_1/"} placeholder="https://instagram.com/..." className={inputCls} dir="ltr" />
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className={labelCls}>فيسبوك</label>
-            <input name="facebook_url" defaultValue={settings.facebook_url || "https://www.facebook.com/elfadywaelmeladcars"} placeholder="https://facebook.com/..." className={inputCls} dir="ltr" />
-          </div>
-          <div>
-            <label className={labelCls}>تيك توك (اختياري)</label>
-            <input name="tiktok_url" defaultValue={settings.tiktok_url} placeholder="https://tiktok.com/@..." className={inputCls} dir="ltr" />
-          </div>
+        <div>
+          <label className={labelCls}>فيسبوك</label>
+          <input name="facebook_url" defaultValue={settings.facebook_url || "https://www.facebook.com/elfadywaelmeladcars"} placeholder="https://facebook.com/..." className={inputCls} dir="ltr" />
         </div>
       </div>
 

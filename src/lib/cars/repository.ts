@@ -30,15 +30,27 @@ export function applyCarOverrides<T extends Record<string, unknown>>(row: T, ove
   return result as T;
 }
 
-/** Only brands with real catalog data behind them — never the 314 logo-only rows. */
+/**
+ * Only brands with real catalog data behind them — never the 314 logo-only
+ * rows, and never a brand whose every car is currently ineligible/hidden
+ * (Station 2 audit found 9 such "public" brands — e.g. Tesla, Volvo,
+ * Mercedes — that pass the sync's isPublic=modelCount>0 flag but have zero
+ * publication-eligible cars, so picking them from the UI led to a real
+ * dead-end "0 results" page). isPublic itself is sync-owned and untouched;
+ * this filter is purely additive on the read side.
+ */
 export async function getPublicBrands(): Promise<CarsBrandListItem[]> {
   const rows = await carsDb
     .select({
       id: carsBrands.id, slug: carsBrands.slug, nameEn: carsBrands.nameEn,
       nameAr: carsBrands.nameAr, logoUrl: carsBrands.logoUrl, modelCount: carsBrands.modelCount,
+      eligibleCarCount: sql<number>`count(${carsCanonical.normalizedKey}) filter (where ${carsCanonical.publicationEligible} = true and ${carsCanonical.adminHidden} = false)::int`,
     })
     .from(carsBrands)
+    .leftJoin(carsCanonical, eq(carsCanonical.brandId, carsBrands.id))
     .where(eq(carsBrands.isPublic, true))
+    .groupBy(carsBrands.id, carsBrands.slug, carsBrands.nameEn, carsBrands.nameAr, carsBrands.logoUrl, carsBrands.modelCount)
+    .having(sql`count(${carsCanonical.normalizedKey}) filter (where ${carsCanonical.publicationEligible} = true and ${carsCanonical.adminHidden} = false) > 0`)
     .orderBy(desc(carsBrands.modelCount));
   return rows;
 }
@@ -257,6 +269,7 @@ export async function getCanonicalCarDetail(normalizedKey: string): Promise<Cars
     lastScrapedAt: car.lastScrapedAt,
     publicationEligible: car.publicationEligible,
     publicationReason: car.publicationReason,
+    adminHidden: car.adminHidden,
   };
 }
 

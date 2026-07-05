@@ -74,6 +74,7 @@ export type CarsCanonicalDetail = {
   lastScrapedAt: Date | null;
   publicationEligible: boolean;
   publicationReason: string | null;
+  adminHidden: boolean;
 };
 
 export type CarsSearchResultItem = {

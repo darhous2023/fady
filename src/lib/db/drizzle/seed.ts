@@ -76,10 +76,7 @@ async function seed() {
       { key: "whatsapp_number", value: "+201555557745" },
       { key: "store_name_ar", value: "الفادي" },
       { key: "store_tagline_ar", value: "معرض سيارات — المهندسين، شارع أحمد عرابي" },
-      { key: "instagram_url", value: "" },
       { key: "facebook_url", value: "" },
-      { key: "tiktok_url", value: "" },
-      { key: "free_shipping_threshold", value: "0" },
     ])
     .onConflictDoNothing();
 
