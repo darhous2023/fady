@@ -59,6 +59,20 @@ Static code audit (no login performed — I never enter a password into a login 
 ## Vercel API token (provided by user in chat this session)
 Stored in `.env.local` as `VERCEL_TOKEN` (gitignored, never committed, never echoed). Verified via direct REST call (`GET /v2/user`) — real, valid token, but **scoped to the personal account only** (`darhous2023@gmail.com`, 0 projects), not the `fady-7caa1c41` team that actually owns the `fady` project (`GET /v2/teams` → 403 forbidden; `GET /v9/projects/{id}?teamId=...` → 404 not_found). So this token doesn't add API capability beyond what's already available — **the authenticated browser session remains the real working access path** for the `fady` project this session (confirmed: Overview, Environment Variables, and other project pages load real data).
 
+## Stage B — Used-car photo audit: Evidence Matrix (commit `dd90294`)
+Script-level check (`scripts/audit-used-cars.ts`, keyword/filename heuristics) found 0 mismatches — proved insufficient. Direct visual inspection (downloaded + viewed every one of the 6 demo cover photos) found **all 6 were wrong**:
+
+| Vehicle | Labeled | Photo actually showed | Evidence | Fix | Live verification |
+|---|---|---|---|---|---|
+| car-toyota-dmkjed | Toyota Corolla 2021 | Thai taxi cab (green/yellow livery) | Viewed image directly | New photo, Toyota badge visible | Screenshot on Production `/products/car-toyota-dmkjed` — confirmed correct |
+| car-hyundai-efxcsi | Hyundai Elantra 2020 | A Mazda (Mazda grille/badge visible) | Viewed image directly | New photo, Hyundai logo + "...NTRA Limited" badge visible | Not re-screenshotted individually, DB confirmed via re-run audit |
+| car-kia-jvkkoh | Kia Cerato 2019 | Mercedes-AMG (AMG badge visible) | Viewed image directly | New photo, literal "KIA" grille badge visible | Screenshot on Production `/products/car-kia-jvkkoh` — confirmed correct |
+| car-chevrolet-o0l2n1 | Chevrolet Aveo 2018 | Night street/building scene, barely a car | Viewed image directly | New photo, Chevrolet bowtie visible | DB confirmed via re-run audit |
+| car-nissan-5lgvoy | Nissan Sunny 2022 | A second, different Mercedes-AMG | Viewed image directly | New photo, literal "NISSAN" grille text visible | DB confirmed via re-run audit |
+| car-mg-21u4fj | MG5 2021 | Crowded parking lot, zero MG cars visible | Viewed image directly | New photo, MG octagon badge visible | DB confirmed via re-run audit |
+
+**This directly contradicts an earlier session's claim** ("Toyota Corolla and Hyundai Elantra now show real, caption-confirmed photos of those exact models") — that check trusted Unsplash captions/metadata, never the actual pixels. Lesson applied: for this class of bug, always view the image directly before trusting any metadata-based verification.
+
 ## Real blockers (confirmed, not assumed)
 - Supabase account at free-tier project limit — blocks provisioning the cloud cars-catalog DB. Per explicit instruction, this is the ONE allowed remaining blocker; everything else must be completed against the local stand-in DB.
 - Vercel dashboard/CLI access has been inconsistent in past sessions — being re-verified now, this session, before relying on it for any deployment step.
