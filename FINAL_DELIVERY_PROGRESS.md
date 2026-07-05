@@ -9,8 +9,13 @@ Execute the full audit → fix → complete → test → deploy → prove campai
 ## Branch / commits
 - Branch: `main`
 - Baseline commit (session start): `6dcde26` (2 commits ahead of `origin/main`: `0d37d65`, `6dcde26` — unpushed from prior session)
-- Latest commit: (update after each checkpoint)
-- Last pushed to origin: TBD this session
+- Latest commit: `7c9ea3d`
+- Commits this campaign so far:
+  - `006497f` chore(audit): establish final delivery baseline
+  - `cc272bc` fix(branding): remove remaining gold accent and ShahY residue (8 admin files, discount code generator, 404 page icon+grammar, error.tsx wording)
+  - `7c9ea3d` fix(branding): remove dangerous ShahY-era data-writing scripts (deleted scripts/fix-settings.ts, fixed scripts/seed-demo-data.ts, renamed public/sw.js cache key)
+- Last pushed to origin: not yet pushed this session (still local, will push after a coherent checkpoint + user confirmation per push policy)
+- Vercel API token provided by user in chat this session, stored in `.env.local` as `VERCEL_TOKEN` (gitignored, confirmed via `git check-ignore`). Never echoed in any tool output or report.
 
 ## Working tree at session start
 - Untracked (pre-existing, known, not touched by this session unless directed): `src/components/store/NewCarsFinder.tsx`, `NewCarsHero.tsx`, `UsedCarsHero.tsx` — orphaned files awaiting user direction, left alone.
@@ -43,6 +48,16 @@ Execute the full audit → fix → complete → test → deploy → prove campai
 - [ ] Dispatch parallel read-only audit agents (tracks: codebase/security, live routes/links, Vercel+Supabase infra, admin/CMS coverage, new-cars portal, used-cars portal, images/media, tests).
 - [ ] Requirement Traceability Matrix.
 - [ ] Route Inventory + Route Matrix.
+
+## New finding: admin "session drop" and EMAXCONNSESSION are likely the same bug
+Static code audit (no login performed — I never enter a password into a login field myself, regardless of who supplies it):
+- `src/utils/auth.ts`: Better Auth is configured with its own raw `pg.Pool({ connectionString: process.env.DATABASE_URL })`, entirely separate from the app's own `postgres-js` pool in `src/lib/db/drizzle/connection.ts`. Both draw from the same `DATABASE_URL` against the same 15-connection session-mode pooler cap — this is direct code confirmation of the EMAXCONNSESSION root cause already found in the logs, not just an inference.
+- `src/lib/auth/middleware.ts`'s `getSessionFromRequest()` catches ANY error from `auth.api.getSession()` (including a pool-exhaustion error) and silently returns `null`.
+- `src/app/api/check-admin/route.ts` does the same: any thrown error → `{ isAdmin: false }`.
+- **Conclusion: a transient EMAXCONNSESSION failure during a session check looks indistinguishable from "you got logged out"**, even though the real Better Auth cookie is still valid. This is very likely the actual cause of the "admin randomly loses session" symptom — not a separate cookie/SameSite/domain bug. Task #78 is folded into #75: fixing EMAXCONNSESSION should fix this too. Will re-verify live once #75 lands on Preview.
+
+## Vercel API token (provided by user in chat this session)
+Stored in `.env.local` as `VERCEL_TOKEN` (gitignored, never committed, never echoed). Verified via direct REST call (`GET /v2/user`) — real, valid token, but **scoped to the personal account only** (`darhous2023@gmail.com`, 0 projects), not the `fady-7caa1c41` team that actually owns the `fady` project (`GET /v2/teams` → 403 forbidden; `GET /v9/projects/{id}?teamId=...` → 404 not_found). So this token doesn't add API capability beyond what's already available — **the authenticated browser session remains the real working access path** for the `fady` project this session (confirmed: Overview, Environment Variables, and other project pages load real data).
 
 ## Real blockers (confirmed, not assumed)
 - Supabase account at free-tier project limit — blocks provisioning the cloud cars-catalog DB. Per explicit instruction, this is the ONE allowed remaining blocker; everything else must be completed against the local stand-in DB.
