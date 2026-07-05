@@ -76,8 +76,12 @@ function ImageManager({ productId }: { productId: string }) {
   const [urlInput, setUrlInput]   = useState("");
   const [altInput, setAltInput]   = useState("");
   const [uploading, setUploading] = useState(false);
+  const [uploadCount, setUploadCount] = useState({ done: 0, total: 0 });
   const [adding, setAdding]       = useState(false);
+  const [dragId, setDragId]       = useState<string | null>(null);
+  const [replaceId, setReplaceId] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
+  const replaceFileRef = useRef<HTMLInputElement>(null);
 
   const load = useCallback(async () => {
     const r = await fetch(`/api/admin/products/${productId}/images`);
@@ -86,16 +90,58 @@ function ImageManager({ productId }: { productId: string }) {
 
   useEffect(() => { load(); }, [load]);
 
-  async function uploadFile(file: File) {
-    setUploading(true);
+  async function uploadOne(file: File): Promise<string | null> {
     const fd = new FormData();
     fd.append("file", file);
     const r = await fetch("/api/admin/upload", { method: "POST", body: fd });
     const data = await r.json();
+    if (!r.ok) { toast.error(data.error || `فشل رفع ${file.name}`); return null; }
+    return data.url as string;
+  }
+
+  // Multiple files at once: each uploads then is saved as its own image row immediately.
+  async function uploadFiles(files: FileList) {
+    const list = Array.from(files);
+    setUploading(true);
+    setUploadCount({ done: 0, total: list.length });
+    let nextOrder = images.length;
+    for (const file of list) {
+      const url = await uploadOne(file);
+      if (url) {
+        await fetch(`/api/admin/products/${productId}/images`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ url, alt_ar: null, sort_order: nextOrder }),
+        });
+        nextOrder += 1;
+      }
+      setUploadCount(c => ({ ...c, done: c.done + 1 }));
+    }
     setUploading(false);
-    if (!r.ok) { toast.error(data.error || "فشل الرفع"); return; }
-    setUrlInput(data.url);
-    toast.success("تم رفع الصورة — اضغط إضافة لحفظها");
+    toast.success(list.length > 1 ? `تم رفع ${list.length} صورة` : "تم رفع الصورة");
+    load();
+  }
+
+  // No PUT-by-id route exists for images, so "replace" is delete-old + insert-new at the same slot.
+  async function replaceImage(imgId: string, file: File) {
+    const old = images.find(i => i.id === imgId);
+    if (!old) return;
+    setUploading(true);
+    const url = await uploadOne(file);
+    setUploading(false);
+    if (!url) return;
+    await fetch(`/api/admin/products/${productId}/images`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ image_id: imgId }),
+    });
+    await fetch(`/api/admin/products/${productId}/images`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ url, alt_ar: old.alt_ar, sort_order: old.sort_order }),
+    });
+    toast.success("تم استبدال الصورة");
+    load();
   }
 
   async function addImage() {
@@ -124,55 +170,119 @@ function ImageManager({ productId }: { productId: string }) {
     load();
   }
 
+  async function persistOrder(ordered: ImageRow[]) {
+    setImages(ordered.map((img, i) => ({ ...img, sort_order: i })));
+    await fetch(`/api/admin/products/${productId}/images`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ images: ordered.map((img, i) => ({ id: img.id, sort_order: i })) }),
+    });
+  }
+
+  function makeCover(imgId: string) {
+    const target = images.find(i => i.id === imgId);
+    if (!target) return;
+    const rest = images.filter(i => i.id !== imgId);
+    persistOrder([target, ...rest]);
+    toast.success("أصبحت الصورة الرئيسية");
+  }
+
+  function onDrop(targetId: string) {
+    if (!dragId || dragId === targetId) return;
+    const fromIdx = images.findIndex(i => i.id === dragId);
+    const toIdx = images.findIndex(i => i.id === targetId);
+    if (fromIdx === -1 || toIdx === -1) return;
+    const reordered = [...images];
+    const [moved] = reordered.splice(fromIdx, 1);
+    reordered.splice(toIdx, 0, moved);
+    persistOrder(reordered);
+    setDragId(null);
+  }
+
   return (
     <div className="bg-[#0A0A0A] rounded-xl border border-[#9BA3AA]/10 p-6 space-y-5">
       <h2 className="font-semibold text-[#F2F0EC] border-b border-[#9BA3AA]/10 pb-3">
         صور المنتج
       </h2>
 
-      {/* Existing images */}
+      {/* Existing images — drag to reorder, first = cover */}
       {images.length > 0 ? (
         <div className="flex gap-3 flex-wrap">
           {images.map((img, i) => (
-            <div key={img.id} className="relative group" style={{ width: 100, height: 100 }}>
+            <div
+              key={img.id}
+              className="relative group"
+              style={{ width: 100, height: 100, cursor: "grab" }}
+              draggable
+              onDragStart={() => setDragId(img.id)}
+              onDragOver={e => e.preventDefault()}
+              onDrop={() => onDrop(img.id)}
+              title="اسحب لإعادة الترتيب"
+            >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={img.url} alt={img.alt_ar ?? ""} className="w-full h-full object-cover rounded-lg border border-[#9BA3AA]/15" />
-              {i === 0 && (
+              {i === 0 ? (
                 <span className="absolute top-1 right-1 text-[9px] font-bold bg-[#9BA3AA] text-[#0A0A0A] px-1.5 py-0.5 rounded">
                   رئيسية
                 </span>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => makeCover(img.id)}
+                  className="absolute top-1 right-1 text-[9px] font-bold bg-black/70 text-[#F2F0EC] px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity"
+                >
+                  اجعلها الغلاف
+                </button>
               )}
-              <button
-                type="button"
-                onClick={() => deleteImage(img.id)}
-                className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center rounded-lg transition-opacity text-red-400 text-xs font-bold"
-              >
-                حذف
-              </button>
+              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center gap-1 rounded-lg transition-opacity">
+                <button
+                  type="button"
+                  onClick={() => { setReplaceId(img.id); replaceFileRef.current?.click(); }}
+                  className="text-[10px] font-bold text-[#9BA3AA]"
+                >
+                  استبدال
+                </button>
+                <button
+                  type="button"
+                  onClick={() => deleteImage(img.id)}
+                  className="text-[10px] font-bold text-red-400"
+                >
+                  حذف
+                </button>
+              </div>
             </div>
           ))}
         </div>
       ) : (
         <p className="text-sm text-[#F2F0EC]/30">لا توجد صور حتى الآن</p>
       )}
+      <input
+        ref={replaceFileRef} type="file" accept="image/*" className="hidden"
+        onChange={e => {
+          const f = e.target.files?.[0];
+          if (f && replaceId) replaceImage(replaceId, f);
+          e.target.value = ""; setReplaceId(null);
+        }}
+      />
 
       {/* Add image section */}
       <div className="space-y-3 pt-2 border-t border-[#9BA3AA]/10">
-        <p className="text-xs text-[#F2F0EC]/40 font-semibold uppercase tracking-widest">إضافة صورة</p>
+        <p className="text-xs text-[#F2F0EC]/40 font-semibold uppercase tracking-widest">إضافة صور</p>
 
-        {/* Upload file */}
+        {/* Upload files (multiple) */}
         <div className="flex items-center gap-3">
-          <input ref={fileRef} type="file" accept="image/*" className="hidden"
-            onChange={e => { const f = e.target.files?.[0]; if (f) uploadFile(f); e.target.value = ""; }}
+          <input ref={fileRef} type="file" accept="image/*" multiple className="hidden"
+            onChange={e => { const files = e.target.files; if (files && files.length) uploadFiles(files); e.target.value = ""; }}
           />
           <button type="button" disabled={uploading}
             onClick={() => fileRef.current?.click()}
             className="flex items-center gap-2 px-4 py-2 text-sm border border-[#9BA3AA]/25 text-[#9BA3AA] rounded-lg hover:bg-[#9BA3AA]/10 transition-colors disabled:opacity-50"
           >
             {uploading ? (
-              <><span className="inline-block w-3 h-3 border border-[#9BA3AA]/40 border-t-[#9BA3AA] rounded-full animate-spin"/>جاري الرفع...</>
+              <><span className="inline-block w-3 h-3 border border-[#9BA3AA]/40 border-t-[#9BA3AA] rounded-full animate-spin"/>
+              جاري الرفع... {uploadCount.total > 1 ? `(${uploadCount.done}/${uploadCount.total})` : ""}</>
             ) : (
-              <><span>↑</span> رفع صورة</>
+              <><span>↑</span> رفع صور (يمكن اختيار أكثر من صورة)</>
             )}
           </button>
           <span className="text-xs text-[#F2F0EC]/25">أو</span>

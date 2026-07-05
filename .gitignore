@@ -47,3 +47,6 @@ execution/destination-initial-backup-*/
 
 # local validation output
 docs/verification/*.tmp
+
+# temporary E2E test-session artifacts (never committed)
+.e2e-session.local.json

@@ -40,6 +40,27 @@ export async function POST(req: NextRequest, { params }: Ctx) {
   return NextResponse.json(img, { status: 201 })
 }
 
+export async function PATCH(req: NextRequest, { params }: Ctx) {
+  const session = await getSessionFromRequest(req)
+  if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+
+  const { id } = await params
+  const body = await req.json()
+  const { images } = body as { images: { id: string; sort_order: number; alt_ar?: string | null }[] }
+
+  if (!Array.isArray(images)) return NextResponse.json({ error: "images مطلوبة" }, { status: 400 })
+
+  await Promise.all(
+    images.map(img =>
+      db.update(productImages)
+        .set({ sort_order: img.sort_order, ...(img.alt_ar !== undefined ? { alt_ar: img.alt_ar } : {}) })
+        .where(and(eq(productImages.id, img.id), eq(productImages.product_id, id)))
+    )
+  )
+
+  return NextResponse.json({ success: true })
+}
+
 export async function DELETE(req: NextRequest, { params }: Ctx) {
   const session = await getSessionFromRequest(req)
   if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
