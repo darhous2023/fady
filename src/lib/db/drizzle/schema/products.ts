@@ -81,13 +81,6 @@ export const products = pgTable(
     index("idx_products_status").on(table.status),
     index("idx_products_featured").on(table.is_featured),
     check("price_positive", sql`price > 0`),
-    pgPolicy("Backend can manage products", {
-      as: "permissive",
-      for: "all",
-      to: "public",
-      using: sql`current_setting('request.jwt.claim.role', true) is null`,
-      withCheck: sql`current_setting('request.jwt.claim.role', true) is null`,
-    }),
     pgPolicy("Anyone can view active products", {
       as: "permissive",
       for: "select",
@@ -118,13 +111,6 @@ export const productVariants = pgTable(
     }).onDelete("cascade"),
     index("idx_variants_product_id").on(table.product_id),
     check("stock_non_negative", sql`stock >= 0`),
-    pgPolicy("Backend can manage variants", {
-      as: "permissive",
-      for: "all",
-      to: "public",
-      using: sql`current_setting('request.jwt.claim.role', true) is null`,
-      withCheck: sql`current_setting('request.jwt.claim.role', true) is null`,
-    }),
     pgPolicy("Anyone can view variants", {
       as: "permissive",
       for: "select",
@@ -157,13 +143,6 @@ export const productImages = pgTable(
       name: "product_images_variant_id_fkey",
     }).onDelete("set null"),
     index("idx_images_product_id").on(table.product_id),
-    pgPolicy("Backend can manage images", {
-      as: "permissive",
-      for: "all",
-      to: "public",
-      using: sql`current_setting('request.jwt.claim.role', true) is null`,
-      withCheck: sql`current_setting('request.jwt.claim.role', true) is null`,
-    }),
     pgPolicy("Anyone can view images", {
       as: "permissive",
       for: "select",
@@ -189,13 +168,6 @@ export const product360Frames = pgTable(
       name: "product_360_frames_product_id_fkey",
     }).onDelete("cascade"),
     index("idx_360_frames_product_id").on(table.product_id),
-    pgPolicy("Backend can manage 360 frames", {
-      as: "permissive",
-      for: "all",
-      to: "public",
-      using: sql`current_setting('request.jwt.claim.role', true) is null`,
-      withCheck: sql`current_setting('request.jwt.claim.role', true) is null`,
-    }),
     pgPolicy("Anyone can view 360 frames", {
       as: "permissive",
       for: "select",

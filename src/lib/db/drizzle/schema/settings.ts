@@ -18,13 +18,6 @@ export const settings = pgTable(
     updated_at: timestamp("updated_at", { withTimezone: true }).defaultNow(),
   },
   () => [
-    pgPolicy("Backend can manage settings", {
-      as: "permissive",
-      for: "all",
-      to: "public",
-      using: sql`current_setting('request.jwt.claim.role', true) is null`,
-      withCheck: sql`current_setting('request.jwt.claim.role', true) is null`,
-    }),
     pgPolicy("Anyone can read settings", {
       as: "permissive",
       for: "select",

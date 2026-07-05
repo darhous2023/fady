@@ -57,13 +57,6 @@ export const cartItems = pgTable(
       using: sql`app.current_user_id() = user_id`,
       withCheck: sql`app.current_user_id() = user_id`,
     }),
-    pgPolicy("Backend can manage all cart items", {
-      as: "permissive",
-      for: "all",
-      to: "public",
-      using: sql`current_setting('request.jwt.claim.role', true) is null`,
-      withCheck: sql`current_setting('request.jwt.claim.role', true) is null`,
-    }),
   ]
 ).enableRLS();
 

@@ -28,13 +28,6 @@ export const customers = pgTable(
   (table) => [
     index("idx_customers_phone").on(table.phone),
     index("idx_customers_auth_user_id").on(table.auth_user_id),
-    pgPolicy("Backend can manage customers", {
-      as: "permissive",
-      for: "all",
-      to: "public",
-      using: sql`current_setting('request.jwt.claim.role', true) is null`,
-      withCheck: sql`current_setting('request.jwt.claim.role', true) is null`,
-    }),
   ]
 ).enableRLS();
 

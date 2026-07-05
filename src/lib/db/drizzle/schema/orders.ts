@@ -73,13 +73,6 @@ export const orders = pgTable(
     index("idx_orders_phone").on(table.phone),
     check("subtotal_positive", sql`subtotal >= 0`),
     check("total_positive", sql`total >= 0`),
-    pgPolicy("Backend can manage orders", {
-      as: "permissive",
-      for: "all",
-      to: "public",
-      using: sql`current_setting('request.jwt.claim.role', true) is null`,
-      withCheck: sql`current_setting('request.jwt.claim.role', true) is null`,
-    }),
   ]
 ).enableRLS();
 
@@ -114,13 +107,6 @@ export const orderItems = pgTable(
     }).onDelete("set null"),
     index("idx_order_items_order_id").on(table.order_id),
     check("qty_positive", sql`qty > 0`),
-    pgPolicy("Backend can manage order items", {
-      as: "permissive",
-      for: "all",
-      to: "public",
-      using: sql`current_setting('request.jwt.claim.role', true) is null`,
-      withCheck: sql`current_setting('request.jwt.claim.role', true) is null`,
-    }),
   ]
 ).enableRLS();
 

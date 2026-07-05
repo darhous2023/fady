@@ -16,13 +16,6 @@ export const pageViews = pgTable(
     index("idx_page_views_created_at").on(table.created_at),
     index("idx_page_views_path").on(table.path),
     index("idx_page_views_visitor_id").on(table.visitor_id),
-    pgPolicy("Backend can manage page views", {
-      as: "permissive",
-      for: "all",
-      to: "public",
-      using: sql`current_setting('request.jwt.claim.role', true) is null`,
-      withCheck: sql`current_setting('request.jwt.claim.role', true) is null`,
-    }),
     pgPolicy("Anyone can record a page view", {
       as: "permissive",
       for: "insert",

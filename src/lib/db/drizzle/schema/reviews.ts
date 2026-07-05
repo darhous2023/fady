@@ -37,13 +37,6 @@ export const reviews = pgTable(
     index("idx_reviews_product_id").on(table.product_id),
     index("idx_reviews_approved").on(table.is_approved),
     check("rating_range", sql`rating >= 1 AND rating <= 5`),
-    pgPolicy("Backend can manage reviews", {
-      as: "permissive",
-      for: "all",
-      to: "public",
-      using: sql`current_setting('request.jwt.claim.role', true) is null`,
-      withCheck: sql`current_setting('request.jwt.claim.role', true) is null`,
-    }),
     pgPolicy("Anyone can view approved reviews", {
       as: "permissive",
       for: "select",

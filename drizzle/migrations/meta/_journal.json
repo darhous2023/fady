@@ -57,6 +57,13 @@
       "when": 1783156615415,
       "tag": "0007_steep_killmonger",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1783262877265,
+      "tag": "0008_abandoned_santa_claus",
+      "breakpoints": true
     }
   ]
 }

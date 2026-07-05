@@ -33,13 +33,6 @@ export const admins = pgTable(
   (table) => [
     index("idx_admins_auth_user_id").on(table.auth_user_id),
     index("idx_admins_email").on(table.email),
-    pgPolicy("Backend can manage admins", {
-      as: "permissive",
-      for: "all",
-      to: "public",
-      using: sql`current_setting('request.jwt.claim.role', true) is null`,
-      withCheck: sql`current_setting('request.jwt.claim.role', true) is null`,
-    }),
   ]
 ).enableRLS();
 

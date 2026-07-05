@@ -24,13 +24,6 @@ export const users = pgTable(
   (table) => [
     index("idx_user_email").on(table.email),
     index("idx_user_created_at").on(table.createdAt),
-    pgPolicy("Backend can manage auth users", {
-      as: "permissive",
-      for: "all",
-      to: "public",
-      using: sql`current_setting('request.jwt.claim.role', true) is null`,
-      withCheck: sql`current_setting('request.jwt.claim.role', true) is null`,
-    }),
     pgPolicy("Users can view own profile", {
       as: "permissive",
       for: "select",

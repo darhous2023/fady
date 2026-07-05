@@ -36,13 +36,6 @@ export const discountCodes = pgTable(
   (table) => [
     check("value_positive", sql`value > 0`),
     check("used_count_non_negative", sql`used_count >= 0`),
-    pgPolicy("Backend can manage discount codes", {
-      as: "permissive",
-      for: "all",
-      to: "public",
-      using: sql`current_setting('request.jwt.claim.role', true) is null`,
-      withCheck: sql`current_setting('request.jwt.claim.role', true) is null`,
-    }),
   ]
 ).enableRLS();
 
