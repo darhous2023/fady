@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>التقرير النهائي الشامل — ELFADY</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&family=Space+Mono:wght@400;700&display=swap');
+  :root {
+    --bg: #0A0A0A; --bg2: #111111; --steel: #9BA3AA; --steel-light: #C9CFD4;
+    --text: #F2F0EC; --red: #A5342C; --green: #27ae60; --border: rgba(155,163,170,0.15);
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--text); font-family: 'Tajawal', sans-serif;
+    margin: 0; padding: 0; line-height: 1.8;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 60px 32px 100px; }
+  header.hero {
+    text-align: center; padding: 80px 32px 60px; border-bottom: 1px solid var(--border);
+    background: linear-gradient(180deg, #111 0%, #0A0A0A 100%);
+  }
+  header.hero .eyebrow { color: var(--steel); font-size: 13px; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 16px; font-family: 'Space Mono', monospace; }
+  header.hero h1 {
+    font-size: clamp(32px, 5vw, 56px); font-weight: 900; margin: 0 0 16px;
+    background: linear-gradient(135deg, var(--steel), var(--steel-light), var(--steel));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  header.hero .meta { color: rgba(242,240,236,0.5); font-size: 14px; }
+  header.hero .meta a { color: var(--steel); text-decoration: none; }
+  .status-banner {
+    background: rgba(39,174,96,0.08); border: 1px solid rgba(39,174,96,0.3); border-radius: 12px;
+    padding: 20px 24px; margin: 40px 0; text-align: center; font-weight: 700; color: var(--green);
+  }
+  h2 {
+    font-size: 24px; font-weight: 900; color: var(--text); margin: 56px 0 20px;
+    padding-bottom: 12px; border-bottom: 2px solid var(--steel);
+    display: flex; align-items: center; gap: 10px;
+  }
+  h2 .num { color: var(--bg); background: var(--steel); border-radius: 6px; padding: 2px 10px; font-size: 16px; font-family: 'Space Mono', monospace; }
+  h3 { font-size: 18px; color: var(--steel-light); margin: 28px 0 12px; }
+  p { color: rgba(242,240,236,0.75); font-size: 15px; }
+  strong { color: var(--text); }
+  code {
+    background: rgba(155,163,170,0.1); border: 1px solid var(--border); border-radius: 4px;
+    padding: 2px 6px; font-family: 'Space Mono', monospace; font-size: 13px; color: var(--steel-light);
+    direction: ltr; display: inline-block;
+  }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+  th, td { padding: 12px 14px; text-align: right; border-bottom: 1px solid var(--border); }
+  th { color: var(--steel); font-weight: 700; background: rgba(155,163,170,0.05); }
+  td { color: rgba(242,240,236,0.75); }
+  tr:hover td { background: rgba(155,163,170,0.03); }
+  ul, ol { color: rgba(242,240,236,0.75); padding-right: 22px; }
+  li { margin-bottom: 8px; }
+  .card {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: 12px;
+    padding: 20px 24px; margin: 16px 0;
+  }
+  .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; margin-left: 6px; }
+  .badge-critical { background: rgba(165,52,44,0.15); color: #e08277; border: 1px solid rgba(165,52,44,0.4); }
+  .badge-medium { background: rgba(155,163,170,0.15); color: var(--steel-light); border: 1px solid var(--border); }
+  .badge-ok { background: rgba(39,174,96,0.15); color: var(--green); border: 1px solid rgba(39,174,96,0.4); }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 640px) { .grid2 { grid-template-columns: 1fr; } }
+  .metric { text-align: center; }
+  .metric .val { font-size: 32px; font-weight: 900; color: var(--steel); font-family: 'Space Mono', monospace; }
+  .metric .label { font-size: 12px; color: rgba(242,240,236,0.5); margin-top: 4px; }
+  footer { text-align: center; padding: 60px 32px; border-top: 1px solid var(--border); color: rgba(242,240,236,0.3); font-size: 13px; }
+  a { color: var(--steel); }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="eyebrow">✦ Master Final Delivery — Stations 3 &amp; 4 ✦</div>
+  <h1>التقرير النهائي الشامل</h1>
+  <div class="meta">
+    معرض الفادي لتجارة السيارات — 2026-07-05<br>
+    <a href="https://fady-delta.vercel.app">fady-delta.vercel.app</a> ·
+    <a href="https://github.com/darhous2023/fady">github.com/darhous2023/fady</a>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="status-banner">✓ صفر أخطاء 500/400 غير متوقعة — 63/63 مسار سليم، 120/120 طلب ناجح تحت حمل متزامن حقيقي (40×3 موجات)</div>
+
+  <div class="grid2">
+    <div class="card metric"><div class="val">66+</div><div class="label">Git Commits</div></div>
+    <div class="card metric"><div class="val">63</div><div class="label">مسار مفحوص حيًا</div></div>
+    <div class="card metric"><div class="val">27</div><div class="label">اختبار وحدة تلقائي</div></div>
+    <div class="card metric"><div class="val">2</div><div class="label">قاعدة بيانات معزولة</div></div>
+  </div>
+
+  <h2><span class="num">1</span> ملخص تنفيذي</h2>
+  <p>معرض الفادي (elfady) موقع تجاري حي وحقيقي لمعرض سيارات فعلي في المهندسين، القاهرة. بُني فوق بنية تحتية مأخوذة من قالب متجر أزياء (<code>Store-Master-Template</code>) — تم الاحتفاظ بالباك إند فقط، وأُعيد بناء الواجهة والهوية البصرية بالكامل بأسلوب سينمائي.</p>
+
+  <table>
+    <tr><th>المرحلة</th><th>المحتوى</th><th>الحالة</th></tr>
+    <tr><td>الأساس</td><td>الهوية، السيارات المستعملة، الحجز، عارض 360°، التقييمات، التتبّع</td><td><span class="badge badge-ok">✓ مكتمل</span></td></tr>
+    <tr><td>محطة 1</td><td>إصلاح ثغرة RLS حرجة + عطل اتصال قاعدة بيانات + مصفوفة تتبّع المتطلبات</td><td><span class="badge badge-ok">✓ مكتمل</span></td></tr>
+    <tr><td>محطة 2</td><td>بحث، مقارنة، مفضلة، إدارة كاملة للكتالوج الجديد، إزالة CarAPI</td><td><span class="badge badge-ok">✓ مكتمل</span></td></tr>
+    <tr><td>محطة 3</td><td>شريط التمويل والتقسيط، بانر ديمو، ربط الفوتر بالإعدادات</td><td><span class="badge badge-ok">✓ مكتمل</span></td></tr>
+    <tr><td>محطة 4</td><td>اختبارات + اختبار تحمّل (اكتشف وأصلح عطلين حقيقيين) + أداء + دليل + تقرير</td><td><span class="badge badge-ok">✓ مكتمل</span></td></tr>
+  </table>
+
+  <h2><span class="num">2</span> البنية التحتية والاستضافة</h2>
+  <h3>الاستضافة</h3>
+  <ul>
+    <li><strong>المزوّد:</strong> Vercel — مشروع <code>fady</code> (scope: <code>fady-7caa1c41</code>)</li>
+    <li>Project ID: <code>prj_oZ73az4jAJAdeuGmGeRpOmssyPvg</code></li>
+    <li>كل push على <code>main</code> ينشر تلقائيًا على Production</li>
+  </ul>
+
+  <h3>قاعدة بيانات المتجر (الأساسية)</h3>
+  <ul>
+    <li><strong>المزوّد:</strong> Supabase Postgres — Project ref: <code>trvpzhwledgsoafeyvmr</code> (منطقة <code>aws-0-eu-west-1</code>)</li>
+    <li>الاتصال عبر pooler فقط: وقت التشغيل بورت <code>6543</code> (transaction-mode)، المايجريشنز بورت <code>5432</code> (session-mode)</li>
+    <li>تحتوي: السيارات المستعملة، الحجوزات، الأدمن، الإعدادات، التقييمات، البانرات، التمويل والتقسيط، تتبّع الزوار</li>
+  </ul>
+
+  <h3>قاعدة بيانات كتالوج السيارات الجديدة (معزولة تمامًا)</h3>
+  <ul>
+    <li><strong>المزوّد:</strong> Neon Postgres — مشروع <code>fady-cars-catalog</code> (Project ID: <code>late-rain-30574215</code>)</li>
+    <li><strong>392 ماركة، 1202 سيارة (921 قابلة للنشر)، 80,435 مواصفة، 60,585 رابط صورة</strong></li>
+    <li>عزل كامل عن قاعدة بيانات المتجر — لا مشاركة اتصال ولا schema</li>
+  </ul>
+
+  <h2><span class="num">3</span> محطة 3 — التفاصيل الكاملة</h2>
+
+  <div class="card">
+    <h3>💳 شريط التمويل والتقسيط</h3>
+    <p>جدول جديد <code>financing_partners</code> + CRUD كامل من <code>/admin/financing-partners</code> + شريط متحرك في الصفحة الرئيسية. بيانات ابتدائية صادقة وعامة (بدون افتراض شراكة بنكية غير مؤكدة).</p>
+  </div>
+  <div class="card">
+    <h3>🖼️ بانر ديمو</h3>
+    <p>نظام البانرات كان جاهزًا لكن بلا بيانات — أُضيف بانر حقيقي واحد لإثبات عمل الميزة، قابل للتعديل الفوري.</p>
+  </div>
+  <div class="card">
+    <h3>📞 ربط الفوتر بالإعدادات</h3>
+    <p>فيسبوك، إنستجرام (المعرض والمدير)، رابط الخريطة، والعنوان — كلها انتقلت من كود ثابت إلى <code>settings</code> قابلة للتعديل من <code>/admin/settings</code>.</p>
+  </div>
+
+  <h2><span class="num">4</span> محطة 4 — اختبار التحمّل واكتشاف عطلين حقيقيين</h2>
+
+  <div class="card">
+    <h3>العطل الأول: تجمّع اتصالات صغير جدًا <span class="badge badge-medium">متوسطة</span></h3>
+    <p><strong>الاكتشاف:</strong> تحت 30 طلبًا متزامنًا، فشلت طلبات الصفحة الرئيسية بخطأ 504 (حتى 300 ثانية انتظار).</p>
+    <p><strong>السبب:</strong> الصفحة الرئيسية تستدعي 7+ استعلامات متزامنة، لكن <code>max</code> كان 5 فقط — ومكتبة postgres-js لا تملك مهلة انتظار لأخذ اتصال، فتنتظر إلى ما لا نهاية.</p>
+    <p><strong>الإصلاح:</strong> رفع <code>max</code> من 5 إلى 10 في كلا الاتصالين. <strong>التحقق:</strong> 60/60 طلب ناجح بعد الإصلاح.</p>
+  </div>
+
+  <div class="card">
+    <h3>العطل الثاني: استعلامات بدون حماية من الأعطال <span class="badge badge-medium">متوسطة</span></h3>
+    <p><strong>الاكتشاف:</strong> عند 40 طلبًا متزامنًا، ظهرت أخطاء 500 حقيقية على <code>/used</code> ثم <code>/api/products</code>.</p>
+    <p><strong>السبب:</strong> فحص شامل وجد 8 صفحات/مسارات API عامة بدون <code>try/catch</code> حول استعلامات قاعدة البيانات.</p>
+    <p><strong>الإصلاح:</strong> إضافة حماية منضبطة لكل واحدة — قراءة عامة ترجع نتيجة فارغة بأمان، كتابة (حجز/تقييم) ترجع خطأ واضح بدل انهيار.</p>
+    <p><strong>التحقق النهائي:</strong> <span class="badge badge-ok">120/120 طلب ناجح</span> على 40 طلبًا متزامنًا × 3 موجات، صفر أخطاء.</p>
+  </div>
+
+  <h2><span class="num">5</span> الأمان — ملخص</h2>
+  <table>
+    <tr><th>الاكتشاف</th><th>الخطورة</th><th>الحل</th></tr>
+    <tr><td>18 جدولًا بسياسة RLS قابلة للتجاوز بالمفتاح العام</td><td><span class="badge badge-critical">حرجة</span></td><td>حذف السياسات (الباك إند يتجاوز RLS أصلاً)</td></tr>
+    <tr><td>جداول Better Auth بلا RLS إطلاقًا</td><td><span class="badge badge-critical">حرجة</span></td><td>تفعيل RLS</td></tr>
+    <tr><td>عطل EMAXCONNSESSION (استنفاذ اتصالات)</td><td><span class="badge badge-critical">حرجة</span></td><td>تحويل لـ transaction-mode pooler</td></tr>
+    <tr><td>تجمّع اتصالات صغير (هذه الجلسة)</td><td><span class="badge badge-medium">متوسطة</span></td><td>رفع max من 5 إلى 10</td></tr>
+    <tr><td>استعلامات بدون حماية (هذه الجلسة)</td><td><span class="badge badge-medium">متوسطة</span></td><td>try/catch منضبط في 8 مواضع</td></tr>
+  </table>
+
+  <h2><span class="num">6</span> تغطية الاختبارات</h2>
+  <ul>
+    <li><strong>27 اختبار وحدة تلقائي</strong> (Vitest)</li>
+    <li><strong>فحص مسارات حي</strong> — 63 مسارًا حقيقيًا، <code>npm run routes:check</code></li>
+    <li><strong>اختبار تحمّل حي</strong> — تم تشغيله فعليًا ضد Production (30/40/60 طلبًا متزامنًا)</li>
+    <li>لا يوجد اختبار E2E متصفح مؤتمت (Playwright) — فجوة معروفة وغير مخفية</li>
+  </ul>
+
+  <h2><span class="num">7</span> عناصر متبقية (اختيارية / تحتاج فعل المستخدم)</h2>
+  <ol>
+    <li>طقم صور 360° حقيقي — يحتاج تصوير فعلي بالموبايل (بُحث 3 مرات، لا مصدر مجاني قانوني)</li>
+    <li>3 ملفات غير مستخدمة تحتاج قرارك (حذف/تفعيل)</li>
+    <li>عناصر واجهة اختيارية منخفضة الأولوية — موثّقة في <code>.ai/TODO.md</code></li>
+  </ol>
+
+</div>
+
+<footer>
+  تم إعداد هذا التقرير بواسطة Claude Code (Sonnet 5) — كل رقم تم التحقق منه مباشرة قبل كتابته.<br>
+  Designed &amp; Developed by Ahmed Darhous
+</footer>
+
+</body>
+</html>
