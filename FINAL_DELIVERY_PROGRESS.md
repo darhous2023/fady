@@ -79,6 +79,36 @@ Pushed all pending commits (including the prior session's unpushed `0d37d65`/`6d
 - Verified: typecheck clean; production build re-tested locally with `CARS_DATABASE_URL` deliberately unset (in progress/pending final confirmation) to reproduce Vercel's exact condition before pushing again.
 - **Lesson**: "npm run build passes locally" was never sufficient proof of a working deployment — the prior session's claims of a clean build were true locally only, since CARS_DATABASE_URL was set in `.env.local` but never added to Vercel. Real deployment verification must always happen against Vercel, matching the master mandate's own core principle.
 
+## Stage D — EMAXCONNSESSION: Connection Inventory + Evidence Matrix
+
+### Connection Inventory
+| Client | File | URL variable | Runtime/Migration | Pool size (before → after) | Singleton/cached | Risk |
+|---|---|---|---|---|---|---|
+| postgres-js (app queries) | `src/lib/db/drizzle/connection.ts` | `DATABASE_URL` | Runtime | 10 → 5 | Was NOT cached on globalThis (dev-mode leak) → now cached, matching `cars/db.ts` | HIGH — main contributor, now improved |
+| `pg.Pool` (Better Auth) | `src/utils/auth.ts` | `DATABASE_URL` | Runtime | unset (pg default 10) → 5 | Not cached (Better Auth owns it internally) | HIGH — second full pool against the same DB, doubled real usage |
+| postgres-js (migrations/seed) | `src/lib/db/drizzle/seed.ts` | `MIGRATION_DATABASE_URL` | Migration/seed script | 1 | N/A (short-lived process) | LOW — correct env var already |
+| postgres-js (cars catalog) | `src/lib/cars/db.ts` | `CARS_DATABASE_URL` | Runtime, separate DB | 5 | Cached (fixed earlier session) | LOW — isolated DB, doesn't contend for the store's 15-connection cap |
+| Supabase JS client | `src/lib/db/supabase/server.ts` | Supabase URL/anon key | Runtime | N/A (REST, not raw pg wire protocol) | New per call | LOW |
+| One-off scripts (`scripts/*.ts`) | various | mostly `DATABASE_URL` | Ad-hoc/manual | 1 each | N/A | LOW individually, MEDIUM if run concurrently (self-observed below) |
+
+### Evidence Matrix
+| Test | Expected | Actual | Logs | Root cause | Status |
+|---|---|---|---|---|---|
+| Direct local script query against production `DATABASE_URL` (before fix) | Succeeds | Failed twice in a row: `EMAXCONNSESSION` | Local terminal output, this session | Session-mode pooler (5432), 15-connection cap, exhausted by real concurrent load | CONFIRMED live |
+| `/used` on Preview deployment (`fix/connection-pooling-emaxconnsession` branch, after code fix applied) | 200 | 500 (x2, at 13:42:06 and 13:42:56) | Vercel runtime logs, deployment `HXhsc6ZGL...`, exact stack trace: `Failed query: select ... from "settings" ... [cause]: EMAXCONNSESSION` | Preview environment's `DATABASE_URL` is ALSO still on port 5432 — same misconfiguration as Production, not a regression from the code fix | CONFIRMED — env var itself still needs the port change on Vercel |
+| Admin session check (`/api/check-admin`) with a valid Better Auth cookie, repeated over ~90s + across 7 different admin routes | Stays `isAdmin:true` throughout | Flipped to `isAdmin:false` / 401 once, later returned to `isAdmin:true` after retries | Direct curl output, this session | Consistent with (not 100% isolated proof of) the hypothesis that a transient EMAXCONNSESSION during `getSession()` gets silently converted to "unauthenticated" — occurred in the same session where EMAXCONNSESSION was independently confirmed live | PLAUSIBLE, strongly circumstantial (not a clean isolated repro of this exact path, since real concurrent traffic/other causes can't be fully ruled out) |
+| `npm run build` with `CARS_DATABASE_URL` unset (reproducing Vercel's actual env) | Passes | Passes (after the separate build-crash fix) | Local build output | N/A — this was the separate critical build-breaking bug, now fixed | FIXED |
+| `npm run build` locally with `DATABASE_URL` switched to port 6543 | Passes, connects | Passes; direct `select 1` query succeeded | Local terminal output | N/A | CONFIRMED working |
+
+### Fix applied so far (commit `4e91fc7`, branch `fix/connection-pooling-emaxconnsession`, NOT merged to main)
+- Cached the app's postgres-js client on `globalThis` in dev (fixes a real hot-reload connection leak, previously only fixed for the cars-catalog client).
+- Reduced both pools' `max` from the previous 10/unset down to 5 each.
+- Added `prepare: false` (required for correctness once `DATABASE_URL` moves to a transaction-mode pooler).
+- Fixed `.env.local` (gitignored, not committed) to point `DATABASE_URL` at port 6543 — confirmed connects and builds locally.
+
+### What's still blocking full resolution
+The code fix alone reduces pressure but **cannot fully fix this** — the Preview deployment test above proves the env var itself (on Vercel, both Production and Preview) is still pointing at the session-mode pooler. This is the "Credential Scope Blocker" class of issue: I do not have and will not view the current secret value, so I cannot safely edit it myself. **Needs either**: (a) the user changes `DATABASE_URL`'s port from 5432 to 6543 directly in Vercel's Environment Variables page (for both Production and Preview scopes), or (b) provides the corrected connection string. Branch is ready to merge once that's done and re-verified.
+
 ## Real blockers (confirmed, not assumed)
 - Supabase account at free-tier project limit — blocks provisioning the cloud cars-catalog DB. Per explicit instruction, this is the ONE allowed remaining blocker; everything else must be completed against the local stand-in DB.
 - Vercel dashboard/CLI access has been inconsistent in past sessions — being re-verified now, this session, before relying on it for any deployment step.
