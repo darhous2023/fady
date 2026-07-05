@@ -24,7 +24,18 @@ declare global {
 const queryClient =
   globalThis.__storeQueryClient ??
   postgres(connectionString, {
-    max: 5,
+    // A single request to `/` fans out to 7+ concurrent queries (see
+    // src/app/page.tsx's top-level Promise.all plus each helper's own nested
+    // queries) — with max=5, every single homepage load already self-queued
+    // for a free connection even with zero concurrent traffic. postgres-js
+    // has no acquire/queue timeout (confirmed: no such option exists), so a
+    // saturated pool queues indefinitely rather than failing fast, which
+    // surfaced as an intermittent 504 (Vercel's own function timeout, not
+    // EMAXCONNSESSION) under a synthetic 30-concurrent-request load test.
+    // Raised to 10 — safe under the transaction-mode pooler (port 6543,
+    // designed for many short-lived connections), unlike the old 15-hard-cap
+    // session-mode pooler this project was on before.
+    max: 10,
     idle_timeout: 20,
     connect_timeout: 10,
     prepare: false,

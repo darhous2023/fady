@@ -19,7 +19,7 @@ import { normalizeQuery, expandQueryWithAliases } from "./arabicSearch";
  * the reverse — an override always wins. Numeric fields are stored as text
  * in admin_overrides (a generic key/value table) and coerced back here.
  */
-function applyCarOverrides<T extends Record<string, unknown>>(row: T, overrides: { field: string; overrideValue: string }[]): T {
+export function applyCarOverrides<T extends Record<string, unknown>>(row: T, overrides: { field: string; overrideValue: string }[]): T {
   if (overrides.length === 0) return row;
   const result: Record<string, unknown> = { ...row };
   const NUMERIC_FIELDS = new Set(["year", "seatingCapacity", "doors", "powerHp", "torqueNm"]);

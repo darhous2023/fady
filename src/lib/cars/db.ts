@@ -46,7 +46,13 @@ declare global {
 const carsQueryClient =
   globalThis.__carsQueryClient ??
   postgres(connectionString ?? "postgres://not-configured@localhost:5432/not-configured", {
-    max: 5,
+    // Raised from 5 to 10 for the same reason as src/lib/db/drizzle/connection.ts:
+    // a single request can fan out to more concurrent queries than a small pool
+    // allows, and postgres-js queues indefinitely (no acquire timeout) once
+    // saturated — confirmed via a load test that this class of pool sizing
+    // causes intermittent 504s under concurrent traffic. Safe under the Neon
+    // connection, which is pooled independently of the store's Supabase pooler.
+    max: 10,
     idle_timeout: 20,
     connect_timeout: 10,
     prepare: false, // safe default for pooled/transaction-mode Postgres connections
