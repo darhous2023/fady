@@ -12,7 +12,7 @@ import type {
   CarsSearchResultItem,
 } from "./types";
 import { isOverridableCarField } from "./adminRepository";
-import { normalizeQuery } from "./arabicSearch";
+import { normalizeQuery, expandQueryWithAliases } from "./arabicSearch";
 
 /**
  * Merges admin_overrides on top of a synced row's own field values, never
@@ -270,8 +270,16 @@ export async function getSimilarCars(normalizedKey: string, limit = 6) {
  * mirroring the same normalization used by arabicSearch.test.ts.
  */
 export async function searchCars(rawQuery: string, limit = 24): Promise<CarsSearchResultItem[]> {
-  const q = normalizeQuery(rawQuery);
-  if (!q) return [];
+  const trimmed = rawQuery.trim();
+  if (!trimmed) return [];
+  // searchTextAr on search_index stays empty until an alias is registered
+  // (per the schema's own comment) — so a pure Arabic query like "بي ام
+  // دبليو" must be expanded to its English brand name ("BMW") before
+  // matching searchTextEn, or it silently returns zero rows. Search both
+  // the normalized original and the expanded term so an already-English
+  // or already-matching-Arabic query still works.
+  const q = normalizeQuery(trimmed);
+  const expanded = normalizeQuery(expandQueryWithAliases(trimmed));
 
   const mainImage = carsDb
     .select({ canonicalKey: carsCanonicalImages.canonicalKey, url: carsImages.objectStorageUrl, remoteUrl: carsImages.remoteUrl })
@@ -301,7 +309,10 @@ export async function searchCars(rawQuery: string, limit = 24): Promise<CarsSear
       or(
         ilike(carsSearchIndex.searchTextEn, `%${q}%`),
         ilike(carsSearchIndex.searchTextAr, `%${q}%`),
-        ilike(carsCanonical.displayName, `%${rawQuery}%`),
+        ilike(carsCanonical.displayName, `%${trimmed}%`),
+        ...(expanded !== q
+          ? [ilike(carsSearchIndex.searchTextEn, `%${expanded}%`), ilike(carsCanonical.displayName, `%${expanded}%`)]
+          : []),
       ),
     ))
     .orderBy(desc(carsCanonical.lastSyncedAt))
