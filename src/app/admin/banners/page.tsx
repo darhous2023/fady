@@ -117,7 +117,7 @@ export default function AdminBannersPage() {
           {form.image_url && (
             <div style={{ marginTop: 8 }}>
               <p className="text-xs text-[#F2F0EC]/40 mb-2">معاينة:</p>
-              <img src={form.image_url} alt="preview" style={{ maxHeight: 160, borderRadius: 8, border: "1px solid rgba(201,168,76,0.15)", objectFit: "cover", maxWidth: "100%" }} onError={e => { e.currentTarget.style.display = "none" }} />
+              <img src={form.image_url} alt="preview" style={{ maxHeight: 160, borderRadius: 8, border: "1px solid rgba(155, 163, 170,0.15)", objectFit: "cover", maxWidth: "100%" }} onError={e => { e.currentTarget.style.display = "none" }} />
             </div>
           )}
           <div className="flex gap-3">
@@ -141,7 +141,7 @@ export default function AdminBannersPage() {
           <div className="divide-y divide-[#9BA3AA]/5">
             {banners.map(b => (
               <div key={b.id} className="flex items-center gap-4 p-4">
-                <img src={b.image_url} alt={b.title_ar ?? ""} style={{ width: 80, height: 50, objectFit: "cover", borderRadius: 8, flexShrink: 0, background: "#111", border: "1px solid rgba(201,168,76,0.1)" }} onError={e => { e.currentTarget.style.opacity = "0.2" }} />
+                <img src={b.image_url} alt={b.title_ar ?? ""} style={{ width: 80, height: 50, objectFit: "cover", borderRadius: 8, flexShrink: 0, background: "#111", border: "1px solid rgba(155, 163, 170,0.1)" }} onError={e => { e.currentTarget.style.opacity = "0.2" }} />
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-bold text-[#F2F0EC] truncate">{b.title_ar ?? "—"}</p>
                   {b.link && <p className="text-xs text-[#F2F0EC]/40 truncate mt-0.5" dir="ltr">{b.link}</p>}

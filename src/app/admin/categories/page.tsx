@@ -215,7 +215,7 @@ export default function CategoriesPage() {
                         <div className="flex gap-2">
                           <button onClick={() => saveEdit(c.id)} disabled={saving}
                             className="px-3 py-1.5 text-xs font-bold rounded-lg"
-                            style={{ background: "rgba(201,168,76,0.15)", color: "#9BA3AA", border: "1px solid rgba(201,168,76,0.3)" }}>
+                            style={{ background: "rgba(155, 163, 170,0.15)", color: "#9BA3AA", border: "1px solid rgba(155, 163, 170,0.3)" }}>
                             {saving ? "..." : "حفظ"}
                           </button>
                           <button onClick={() => setEditing(null)}

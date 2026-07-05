@@ -33,7 +33,7 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
           حدث خطأ ما
         </div>
         <p style={{ fontFamily: "Tajawal, sans-serif", fontSize: 14, color: "#F2F0EC", opacity: 0.45, lineHeight: 1.8, marginBottom: 32 }}>
-          حدثت مشكلة مؤقتة في المتجر. يمكنك المحاولة مرة أخرى أو العودة للرئيسية.
+          حدثت مشكلة مؤقتة في الموقع. يمكنك المحاولة مرة أخرى أو العودة للرئيسية.
         </p>
         <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
           <button

@@ -15,19 +15,7 @@ export default function NotFound() {
       `}</style>
 
       <div style={{ animation: "floatIcon 3s ease-in-out infinite", marginBottom: 32 }}>
-        <svg width="80" height="44" viewBox="0 0 120 64" fill="none">
-          <path d="M5 60L18 18L38 42L60 5L82 42L102 18L115 60Z"
-            stroke="url(#nfGold)" strokeWidth="2.5" fill="none" strokeLinejoin="round" strokeLinecap="round"/>
-          <circle cx="60" cy="5" r="4" fill="#C9CFD4"/>
-          <line x1="5" y1="60" x2="115" y2="60" stroke="url(#nfGold)" strokeWidth="1.5"/>
-          <defs>
-            <linearGradient id="nfGold" x1="0" y1="0" x2="120" y2="0">
-              <stop offset="0%" stopColor="#5C6167"/>
-              <stop offset="50%" stopColor="#C9CFD4"/>
-              <stop offset="100%" stopColor="#5C6167"/>
-            </linearGradient>
-          </defs>
-        </svg>
+        <img src="/logo-400.png" alt="ELFADY" width={72} height={72} style={{ borderRadius: 14, objectFit: "cover" }} />
       </div>
 
       <div style={{
@@ -47,7 +35,7 @@ export default function NotFound() {
         الصفحة غير موجودة
       </h1>
       <p style={{ fontFamily: "Tajawal, sans-serif", fontSize: 15, color: "rgba(242,240,236,0.45)", marginBottom: 40, maxWidth: 360, lineHeight: 1.8 }}>
-        يبدو إن الصفحة دي اتنقلت أو مش موجودة. ارجعي للصفحة الرئيسية وابدأي من هناك.
+        يبدو إن الصفحة دي اتنقلت أو مش موجودة. يمكنك العودة للصفحة الرئيسية والبدء من هناك.
       </p>
 
       <div style={{ display: "flex", gap: 16, flexWrap: "wrap", justifyContent: "center" }}>

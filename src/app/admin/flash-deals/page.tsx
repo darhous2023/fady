@@ -216,7 +216,7 @@ export default function FlashDealsPage() {
                             className="w-24 bg-[#111111] border border-[#9BA3AA]/40 rounded-lg px-2 py-1.5 text-[#F2F0EC] text-sm outline-none" dir="ltr"
                           />
                           <button onClick={() => saveComparePrice(p.id)} disabled={savingPrice}
-                            className="text-xs px-2 py-1.5 rounded" style={{ background: "rgba(201,168,76,0.15)", color: "#9BA3AA" }}>
+                            className="text-xs px-2 py-1.5 rounded" style={{ background: "rgba(155, 163, 170,0.15)", color: "#9BA3AA" }}>
                             {savingPrice ? "..." : "حفظ"}
                           </button>
                           <button onClick={() => setEditingPrice(null)} className="text-[#F2F0EC]/30 text-lg leading-none">×</button>

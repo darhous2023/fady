@@ -17,7 +17,7 @@ interface DiscountCode {
 }
 
 const inputStyle: React.CSSProperties = {
-  width: "100%", background: "#0A0A0A", border: "1px solid rgba(201,168,76,0.2)",
+  width: "100%", background: "#0A0A0A", border: "1px solid rgba(155, 163, 170,0.2)",
   borderRadius: 8, padding: "10px 14px", color: "#F2F0EC",
   fontFamily: "Tajawal,sans-serif", fontSize: 14, outline: "none",
 }
@@ -96,7 +96,7 @@ export default function DiscountsPage() {
   function generateCode() {
     const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"
     const rand = Array.from({ length: 8 }, () => chars[Math.floor(Math.random() * chars.length)]).join("")
-    setForm(f => ({ ...f, code: `SHAHY${rand}` }))
+    setForm(f => ({ ...f, code: `FADY${rand}` }))
   }
 
   return (
@@ -104,7 +104,7 @@ export default function DiscountsPage() {
       <style>{`
                 input,select { background: #0A0A0A !important; color: #F2F0EC !important; }
         input::placeholder { color: rgba(245,239,224,0.25) !important; }
-        input:focus, select:focus { border-color: rgba(201,168,76,0.5) !important; outline: none; }
+        input:focus, select:focus { border-color: rgba(155, 163, 170,0.5) !important; outline: none; }
         .badge-active { background: rgba(34,197,94,0.1); color: #4ade80; border: 1px solid rgba(34,197,94,0.2); }
         .badge-inactive { background: rgba(239,68,68,0.1); color: #f87171; border: 1px solid rgba(239,68,68,0.2); }
       `}</style>
@@ -120,10 +120,10 @@ export default function DiscountsPage() {
         <button
           onClick={() => setShowForm(v => !v)}
           style={{
-            background: showForm ? "rgba(201,168,76,0.08)" : "linear-gradient(135deg,#9BA3AA,#C9CFD4)",
+            background: showForm ? "rgba(155, 163, 170,0.08)" : "linear-gradient(135deg,#9BA3AA,#C9CFD4)",
             color: showForm ? "#9BA3AA" : "#0A0A0A", fontFamily: "Tajawal,sans-serif",
             fontWeight: 700, fontSize: 14, padding: "10px 20px", borderRadius: 8,
-            border: showForm ? "1px solid rgba(201,168,76,0.3)" : "none", cursor: "pointer",
+            border: showForm ? "1px solid rgba(155, 163, 170,0.3)" : "none", cursor: "pointer",
           }}
         >
           {showForm ? "إلغاء" : "+ كود جديد"}
@@ -134,7 +134,7 @@ export default function DiscountsPage() {
       {showForm && (
         <form onSubmit={handleCreate} style={{
           background: "linear-gradient(145deg,#0A0A0A,#111111)",
-          border: "1px solid rgba(201,168,76,0.15)", borderRadius: 14, padding: "24px 20px",
+          border: "1px solid rgba(155, 163, 170,0.15)", borderRadius: 14, padding: "24px 20px",
         }}>
           <h2 style={{ fontSize: 15, fontWeight: 700, color: "#9BA3AA", margin: "0 0 20px" }}>إنشاء كود خصم جديد</h2>
 
@@ -142,10 +142,10 @@ export default function DiscountsPage() {
             <div>
               <label style={{ display: "block", fontSize: 12, color: "rgba(245,239,224,0.45)", marginBottom: 6 }}>الكود *</label>
               <div style={{ display: "flex", gap: 6 }}>
-                <input style={inputStyle} placeholder="SHAHY2025" value={form.code}
+                <input style={inputStyle} placeholder="FADY2026" value={form.code}
                   onChange={e => setForm(f => ({ ...f, code: e.target.value.toUpperCase() }))} />
                 <button type="button" onClick={generateCode}
-                  style={{ padding: "0 12px", background: "rgba(201,168,76,0.1)", border: "1px solid rgba(201,168,76,0.2)", borderRadius: 8, color: "#9BA3AA", cursor: "pointer", fontSize: 12, whiteSpace: "nowrap" }}>
+                  style={{ padding: "0 12px", background: "rgba(155, 163, 170,0.1)", border: "1px solid rgba(155, 163, 170,0.2)", borderRadius: 8, color: "#9BA3AA", cursor: "pointer", fontSize: 12, whiteSpace: "nowrap" }}>
                   عشوائي
                 </button>
               </div>
@@ -200,7 +200,7 @@ export default function DiscountsPage() {
       )}
 
       {/* Table */}
-      <div style={{ background: "#0A0A0A", border: "1px solid rgba(201,168,76,0.1)", borderRadius: 14, overflow: "hidden" }}>
+      <div style={{ background: "#0A0A0A", border: "1px solid rgba(155, 163, 170,0.1)", borderRadius: 14, overflow: "hidden" }}>
         {loading ? (
           <div style={{ padding: 48, textAlign: "center", color: "rgba(245,239,224,0.25)", fontSize: 14 }}>جاري التحميل...</div>
         ) : codes.length === 0 ? (
@@ -211,9 +211,9 @@ export default function DiscountsPage() {
         ) : (
           <table style={{ width: "100%", borderCollapse: "collapse" }}>
             <thead>
-              <tr style={{ borderBottom: "1px solid rgba(201,168,76,0.1)" }}>
+              <tr style={{ borderBottom: "1px solid rgba(155, 163, 170,0.1)" }}>
                 {["الكود", "النوع", "القيمة", "الاستخدام", "الحد الأدنى", "الانتهاء", "الحالة", ""].map(h => (
-                  <th key={h} style={{ padding: "12px 16px", fontSize: 11, color: "rgba(201,168,76,0.7)", fontWeight: 700, letterSpacing: "1.5px", textAlign: "right" }}>{h}</th>
+                  <th key={h} style={{ padding: "12px 16px", fontSize: 11, color: "rgba(155, 163, 170,0.7)", fontWeight: 700, letterSpacing: "1.5px", textAlign: "right" }}>{h}</th>
                 ))}
               </tr>
             </thead>
@@ -226,7 +226,7 @@ export default function DiscountsPage() {
                     <td style={{ padding: "14px 16px" }}>
                       <span style={{
                         fontFamily: "monospace", fontSize: 13, fontWeight: 700, letterSpacing: "1px",
-                        background: "rgba(201,168,76,0.08)", color: "#9BA3AA",
+                        background: "rgba(155, 163, 170,0.08)", color: "#9BA3AA",
                         padding: "3px 10px", borderRadius: 6,
                       }}>{c.code}</span>
                     </td>

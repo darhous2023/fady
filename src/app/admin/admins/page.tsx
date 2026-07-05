@@ -19,7 +19,7 @@ const ROLES = [
 ]
 
 const inputStyle: React.CSSProperties = {
-  width: "100%", background: "#0A0A0A", border: "1px solid rgba(201,168,76,0.2)",
+  width: "100%", background: "#0A0A0A", border: "1px solid rgba(155, 163, 170,0.2)",
   borderRadius: 8, padding: "10px 14px", color: "#F2F0EC",
   fontFamily: "Tajawal,sans-serif", fontSize: 14, outline: "none",
 }
@@ -103,7 +103,7 @@ export default function AdminsPage() {
       <style>{`
                 input,select { background: #0A0A0A !important; color: #F2F0EC !important; }
         input::placeholder { color: rgba(245,239,224,0.25) !important; }
-        input:focus,select:focus { border-color: rgba(201,168,76,0.5) !important; outline: none; }
+        input:focus,select:focus { border-color: rgba(155, 163, 170,0.5) !important; outline: none; }
       `}</style>
 
       {/* Header */}
@@ -116,10 +116,10 @@ export default function AdminsPage() {
         </div>
         <button onClick={() => setShowForm(v => !v)}
           style={{
-            background: showForm ? "rgba(201,168,76,0.08)" : "linear-gradient(135deg,#9BA3AA,#C9CFD4)",
+            background: showForm ? "rgba(155, 163, 170,0.08)" : "linear-gradient(135deg,#9BA3AA,#C9CFD4)",
             color: showForm ? "#9BA3AA" : "#0A0A0A", fontFamily: "Tajawal,sans-serif",
             fontWeight: 700, fontSize: 14, padding: "10px 20px", borderRadius: 8,
-            border: showForm ? "1px solid rgba(201,168,76,0.3)" : "none", cursor: "pointer",
+            border: showForm ? "1px solid rgba(155, 163, 170,0.3)" : "none", cursor: "pointer",
           }}>
           {showForm ? "إلغاء" : "+ مستخدم جديد"}
         </button>
@@ -145,7 +145,7 @@ export default function AdminsPage() {
       {showForm && (
         <form onSubmit={handleCreate} style={{
           background: "linear-gradient(145deg,#0A0A0A,#111111)",
-          border: "1px solid rgba(201,168,76,0.15)", borderRadius: 14, padding: "24px 20px",
+          border: "1px solid rgba(155, 163, 170,0.15)", borderRadius: 14, padding: "24px 20px",
         }}>
           <h2 style={{ fontSize: 15, fontWeight: 700, color: "#9BA3AA", margin: "0 0 20px" }}>إضافة مستخدم جديد</h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))", gap: 14, marginBottom: 14 }}>
@@ -184,7 +184,7 @@ export default function AdminsPage() {
       )}
 
       {/* Admins Table */}
-      <div style={{ background: "#0A0A0A", border: "1px solid rgba(201,168,76,0.1)", borderRadius: 14, overflow: "hidden" }}>
+      <div style={{ background: "#0A0A0A", border: "1px solid rgba(155, 163, 170,0.1)", borderRadius: 14, overflow: "hidden" }}>
         {loading ? (
           <div style={{ padding: 48, textAlign: "center", color: "rgba(245,239,224,0.25)", fontSize: 14 }}>جاري التحميل...</div>
         ) : admins.length === 0 ? (
@@ -195,9 +195,9 @@ export default function AdminsPage() {
         ) : (
           <table style={{ width: "100%", borderCollapse: "collapse" }}>
             <thead>
-              <tr style={{ borderBottom: "1px solid rgba(201,168,76,0.1)" }}>
+              <tr style={{ borderBottom: "1px solid rgba(155, 163, 170,0.1)" }}>
                 {["المستخدم", "الصلاحية", "الحالة", "تاريخ الإضافة", ""].map(h => (
-                  <th key={h} style={{ padding: "12px 16px", fontSize: 11, color: "rgba(201,168,76,0.7)", fontWeight: 700, letterSpacing: "1.5px", textAlign: "right" }}>{h}</th>
+                  <th key={h} style={{ padding: "12px 16px", fontSize: 11, color: "rgba(155, 163, 170,0.7)", fontWeight: 700, letterSpacing: "1.5px", textAlign: "right" }}>{h}</th>
                 ))}
               </tr>
             </thead>
