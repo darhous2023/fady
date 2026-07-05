@@ -2,6 +2,12 @@
 
 > Working memory for the Master Final Delivery campaign. Updated after every station. Committed with every checkpoint.
 
+## STATION 1 — COMPLETE (commits `9e0f997`..`016c46e`)
+EMAXCONNSESSION root-cause fix live + verified under real concurrency (Stage F/G); critical public-RLS-bypass security vulnerability found and fixed across 18 tables + session/account/verification (Stage H/I); Requirement Traceability Matrix + Route Inventory built (`REQUIREMENT_TRACEABILITY_MATRIX.md`); dead-code cleanup + N+1 fix; Neon sync confirmed complete and verified. Full detail in the Stage sections above and in the full report: see `STATION_1_2_REPORT.md`.
+
+## STATION 2 — COMPLETE (commits `ec33bb2`, `9b8c249`)
+Full admin CRUD for the cars catalog (brands/models/canonical cars — edit/archive/add; hard-delete only for admin-created rows, since synced rows would just reappear on the next sync), search (with a real bug found and fixed: Arabic alias expansion wasn't actually being called), compare (localStorage, 4-car cap), favorites (localStorage), unified image gallery (reused the existing `ImageLightbox` for parity with used-cars), and full CarAPI removal (code + 3 Vercel env vars). All verified with a real E2E admin session against Production: list/create/edit/archive/delete tested live, catalog counts confirmed back to exact pre-test state (392 brands, 1202 cars) after teardown. Full detail: `STATION_1_2_REPORT.md`.
+
 ## Stage H — CRITICAL: public database exposure via broken RLS "backend" policies, found and fixed live (commit `adef1b8`)
 
 **Found while doing #86 (Vercel + Supabase infra review).** Checked `pg_class.relrowsecurity` across all 21 public tables: `session`, `account`, `verification` had RLS **disabled entirely**. Direct test against Supabase's PostgREST REST endpoint using the public `NEXT_PUBLIC_SUPABASE_ANON_KEY` (the key shipped to every browser) returned real rows from `session` and `account`.
