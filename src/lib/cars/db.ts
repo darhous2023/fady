@@ -23,12 +23,30 @@ if (!connectionString) {
   );
 }
 
-const carsQueryClient = postgres(connectionString, {
-  max: 5,
-  idle_timeout: 20,
-  connect_timeout: 10,
-  prepare: false, // safe default for pooled/transaction-mode Postgres connections
-});
+// Cache the client on globalThis in development: Next.js/Turbopack hot
+// reloads re-execute this module on every file change, and without this
+// guard each reload creates a brand-new postgres() client/pool without
+// closing the previous one — a real connection-leak observed locally
+// during development (transient CONNECT_TIMEOUT against the local
+// stand-in Postgres after repeated edits). Production serverless
+// invocations are short-lived processes, so this only matters for dev.
+declare global {
+  // eslint-disable-next-line no-var
+  var __carsQueryClient: ReturnType<typeof postgres> | undefined;
+}
+
+const carsQueryClient =
+  globalThis.__carsQueryClient ??
+  postgres(connectionString, {
+    max: 5,
+    idle_timeout: 20,
+    connect_timeout: 10,
+    prepare: false, // safe default for pooled/transaction-mode Postgres connections
+  });
+
+if (process.env.NODE_ENV !== "production") {
+  globalThis.__carsQueryClient = carsQueryClient;
+}
 
 export const carsDb = drizzle(carsQueryClient, { schema: carsSchema });
 export { carsSchema };

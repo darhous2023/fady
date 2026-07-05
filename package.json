@@ -17,7 +17,8 @@
     "db:seed": "tsx src/lib/db/drizzle/seed.ts",
     "cars:db:generate": "drizzle-kit generate --config=drizzle.cars.config.ts",
     "cars:db:migrate": "drizzle-kit migrate --config=drizzle.cars.config.ts",
-    "cars:db:studio": "drizzle-kit studio --config=drizzle.cars.config.ts"
+    "cars:db:studio": "drizzle-kit studio --config=drizzle.cars.config.ts",
+    "test": "vitest run"
   },
   "dependencies": {
     "@auth/supabase-adapter": "^1.9.0",
@@ -78,6 +79,7 @@
     "eslint": "9.39.1",
     "eslint-config-next": "16.0.1",
     "tsx": "^4.20.6",
-    "typescript": "5.9.3"
+    "typescript": "5.9.3",
+    "vitest": "^4.1.9"
   }
 }
