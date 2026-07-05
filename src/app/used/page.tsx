@@ -17,78 +17,88 @@ export const metadata: Metadata = {
 }
 
 async function getUsedCars(): Promise<StoreProduct[]> {
-  const rows = await db
-    .select({
-      id: products.id, slug: products.slug, name_ar: products.name_ar,
-      description_ar: products.description_ar, price: products.price,
-      compare_at_price: products.compare_at_price, quality_tier: products.quality_tier,
-      is_featured: products.is_featured, category_name: categories.name_ar,
-      year: products.year, mileage_km: products.mileage_km, transmission: products.transmission,
-    })
-    .from(products)
-    .leftJoin(categories, eq(products.category_id, categories.id))
-    .where(eq(products.status, "active"))
+  try {
+    const rows = await db
+      .select({
+        id: products.id, slug: products.slug, name_ar: products.name_ar,
+        description_ar: products.description_ar, price: products.price,
+        compare_at_price: products.compare_at_price, quality_tier: products.quality_tier,
+        is_featured: products.is_featured, category_name: categories.name_ar,
+        year: products.year, mileage_km: products.mileage_km, transmission: products.transmission,
+      })
+      .from(products)
+      .leftJoin(categories, eq(products.category_id, categories.id))
+      .where(eq(products.status, "active"))
 
-  const ids = rows.map(r => r.id)
-  const [allImages, frameCounts] = await Promise.all([
-    ids.length
-      ? db.select({ product_id: productImages.product_id, url: productImages.url, alt_ar: productImages.alt_ar })
-          .from(productImages).where(inArray(productImages.product_id, ids)).orderBy(asc(productImages.sort_order))
-      : Promise.resolve([]),
-    ids.length
-      ? db.select({ product_id: product360Frames.product_id })
-          .from(product360Frames).where(inArray(product360Frames.product_id, ids))
-      : Promise.resolve([]),
-  ])
+    const ids = rows.map(r => r.id)
+    const [allImages, frameCounts] = await Promise.all([
+      ids.length
+        ? db.select({ product_id: productImages.product_id, url: productImages.url, alt_ar: productImages.alt_ar })
+            .from(productImages).where(inArray(productImages.product_id, ids)).orderBy(asc(productImages.sort_order))
+        : Promise.resolve([]),
+      ids.length
+        ? db.select({ product_id: product360Frames.product_id })
+            .from(product360Frames).where(inArray(product360Frames.product_id, ids))
+        : Promise.resolve([]),
+    ])
 
-  const imagesByProduct = new Map<string, { url: string; alt_ar: string | null }[]>()
-  for (const img of allImages) {
-    const list = imagesByProduct.get(img.product_id) ?? []
-    list.push({ url: img.url, alt_ar: img.alt_ar })
-    imagesByProduct.set(img.product_id, list)
-  }
-  const frameCountByProduct = new Map<string, number>()
-  for (const f of frameCounts) frameCountByProduct.set(f.product_id, (frameCountByProduct.get(f.product_id) ?? 0) + 1)
-
-  return rows.map(r => {
-    const images = imagesByProduct.get(r.id) ?? []
-    return {
-      ...r,
-      price: Number(r.price),
-      compare_at_price: r.compare_at_price ? Number(r.compare_at_price) : null,
-      image: images[0] ?? null,
-      images,
-      has360: (frameCountByProduct.get(r.id) ?? 0) >= 2,
+    const imagesByProduct = new Map<string, { url: string; alt_ar: string | null }[]>()
+    for (const img of allImages) {
+      const list = imagesByProduct.get(img.product_id) ?? []
+      list.push({ url: img.url, alt_ar: img.alt_ar })
+      imagesByProduct.set(img.product_id, list)
     }
-  })
+    const frameCountByProduct = new Map<string, number>()
+    for (const f of frameCounts) frameCountByProduct.set(f.product_id, (frameCountByProduct.get(f.product_id) ?? 0) + 1)
+
+    return rows.map(r => {
+      const images = imagesByProduct.get(r.id) ?? []
+      return {
+        ...r,
+        price: Number(r.price),
+        compare_at_price: r.compare_at_price ? Number(r.compare_at_price) : null,
+        image: images[0] ?? null,
+        images,
+        has360: (frameCountByProduct.get(r.id) ?? 0) >= 2,
+      }
+    })
+  } catch { return [] }
 }
 
 async function getLowStockMap(): Promise<Record<string, number>> {
-  const rows = await db.select({ product_id: productVariants.product_id, stock: productVariants.stock })
-    .from(productVariants).where(gt(productVariants.stock, 0))
-  const map: Record<string, number> = {}
-  for (const r of rows) map[r.product_id] = (map[r.product_id] ?? 0) + r.stock
-  return map
+  try {
+    const rows = await db.select({ product_id: productVariants.product_id, stock: productVariants.stock })
+      .from(productVariants).where(gt(productVariants.stock, 0))
+    const map: Record<string, number> = {}
+    for (const r of rows) map[r.product_id] = (map[r.product_id] ?? 0) + r.stock
+    return map
+  } catch { return {} }
 }
 
 async function getBrandNameBySlug(slug?: string): Promise<string | undefined> {
   if (!slug) return undefined
-  const [row] = await db.select({ name_ar: categories.name_ar }).from(categories).where(eq(categories.slug, slug)).limit(1)
-  return row?.name_ar
+  try {
+    const [row] = await db.select({ name_ar: categories.name_ar }).from(categories).where(eq(categories.slug, slug)).limit(1)
+    return row?.name_ar
+  } catch { return undefined }
 }
 
 async function getBrands() {
-  return db.select({ id: categories.id, name_ar: categories.name_ar, slug: categories.slug }).from(categories).orderBy(asc(categories.name_ar))
+  try {
+    return await db.select({ id: categories.id, name_ar: categories.name_ar, slug: categories.slug }).from(categories).orderBy(asc(categories.name_ar))
+  } catch { return [] }
 }
 
 async function getUsedHeroSettings(): Promise<Record<string, string>> {
-  const rows = await db.select().from(settings).where(
-    inArray(settings.key, [
-      "used_hero_video_url", "used_hero_eyebrow_ar", "used_hero_headline_ar", "used_hero_subheadline_ar",
-      "whatsapp_number",
-    ])
-  )
-  return Object.fromEntries(rows.map(r => [r.key, r.value]))
+  try {
+    const rows = await db.select().from(settings).where(
+      inArray(settings.key, [
+        "used_hero_video_url", "used_hero_eyebrow_ar", "used_hero_headline_ar", "used_hero_subheadline_ar",
+        "whatsapp_number",
+      ])
+    )
+    return Object.fromEntries(rows.map(r => [r.key, r.value]))
+  } catch { return {} }
 }
 
 export default async function UsedCarsPage({ searchParams }: { searchParams: Promise<{ brand?: string }> }) {

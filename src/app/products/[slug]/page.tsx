@@ -14,8 +14,11 @@ const PAGE_SETTING_KEYS = [
 const DEFAULT_WA = "201555557745"
 
 async function getPageSettings() {
-  const rows = await db.select().from(settings).where(inArray(settings.key, PAGE_SETTING_KEYS))
-  const map = Object.fromEntries(rows.map(r => [r.key, r.value]))
+  let map: Record<string, string> = {}
+  try {
+    const rows = await db.select().from(settings).where(inArray(settings.key, PAGE_SETTING_KEYS))
+    map = Object.fromEntries(rows.map(r => [r.key, r.value]))
+  } catch { /* fall through to defaults below — a settings hiccup shouldn't 500 the product page */ }
   return {
     trustSignals: [
       { icon: "🔍", title: map.product_trust_1_title_ar || "معاينة كاملة", desc: map.product_trust_1_desc_ar || "زور المعرض وعاين السيارة قبل الشراء" },
