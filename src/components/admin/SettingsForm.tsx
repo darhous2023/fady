@@ -59,7 +59,8 @@ export default function SettingsForm({ settings }: { settings: Record<string, st
     setLoading(true);
     const form = e.currentTarget;
     const textKeys = [
-      "whatsapp_number", "store_name_ar", "store_tagline_ar", "instagram_url", "facebook_url", "tiktok_url",
+      "whatsapp_number", "store_name_ar", "store_tagline_ar",
+      "instagram_showroom_url", "instagram_manager_url", "facebook_url", "tiktok_url", "maps_url", "address_ar",
       "logo_url", "intro_tagline_ar", "announcement_text", "flash_deals_title_ar", "flash_deals_ends_at",
       ...ORDER_STATUS_KEYS.map(ORDER_STATUS_SETTING_KEY),
       "product_trust_1_title_ar", "product_trust_1_desc_ar",
@@ -113,22 +114,37 @@ export default function SettingsForm({ settings }: { settings: Record<string, st
           <label className={labelCls}>الشعار الفرعي</label>
           <input name="store_tagline_ar" defaultValue={settings.store_tagline_ar} className={inputCls} />
         </div>
+
+        <div>
+          <label className={labelCls}>العنوان (يظهر في الفوتر ومع لينك الخريطة)</label>
+          <input name="address_ar" defaultValue={settings.address_ar || "المهندسين — شارع أحمد عرابي — معرض الفادي لتجارة السيارات"} className={inputCls} />
+        </div>
+        <div>
+          <label className={labelCls}>رابط الموقع على خرائط جوجل</label>
+          <input name="maps_url" defaultValue={settings.maps_url || "https://share.google/LGW6xLBwVygbOUn0I"} placeholder="https://maps.google.com/..." className={inputCls} dir="ltr" />
+        </div>
       </div>
 
       <div className="bg-[#0A0A0A] rounded-xl border border-[#9BA3AA]/10 p-6 space-y-5">
-        <h2 className="font-semibold text-[#F2F0EC] border-b border-[#9BA3AA]/10 pb-3">روابط السوشيال</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <h2 className="font-semibold text-[#F2F0EC] border-b border-[#9BA3AA]/10 pb-3">روابط السوشيال (تظهر في الفوتر بكل الموقع)</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className={labelCls}>إنستاجرام</label>
-            <input name="instagram_url" defaultValue={settings.instagram_url} placeholder="https://instagram.com/..." className={inputCls} />
+            <label className={labelCls}>إنستاجرام المعرض</label>
+            <input name="instagram_showroom_url" defaultValue={settings.instagram_showroom_url || "https://www.instagram.com/el_fady_car_trading/"} placeholder="https://instagram.com/..." className={inputCls} dir="ltr" />
           </div>
+          <div>
+            <label className={labelCls}>إنستاجرام المدير</label>
+            <input name="instagram_manager_url" defaultValue={settings.instagram_manager_url || "https://www.instagram.com/fadywael_1/"} placeholder="https://instagram.com/..." className={inputCls} dir="ltr" />
+          </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label className={labelCls}>فيسبوك</label>
-            <input name="facebook_url" defaultValue={settings.facebook_url} placeholder="https://facebook.com/..." className={inputCls} />
+            <input name="facebook_url" defaultValue={settings.facebook_url || "https://www.facebook.com/elfadywaelmeladcars"} placeholder="https://facebook.com/..." className={inputCls} dir="ltr" />
           </div>
           <div>
-            <label className={labelCls}>تيك توك</label>
-            <input name="tiktok_url" defaultValue={settings.tiktok_url} placeholder="https://tiktok.com/@..." className={inputCls} />
+            <label className={labelCls}>تيك توك (اختياري)</label>
+            <input name="tiktok_url" defaultValue={settings.tiktok_url} placeholder="https://tiktok.com/@..." className={inputCls} dir="ltr" />
           </div>
         </div>
       </div>

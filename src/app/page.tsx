@@ -1,7 +1,7 @@
 export const dynamic = "force-dynamic"
 import type { Metadata } from "next"
 import { db } from "@/lib/db/drizzle/connection"
-import { products, productImages, categories, settings, productVariants, banners, product360Frames } from "@/lib/db/drizzle/schema"
+import { products, productImages, categories, settings, productVariants, banners, product360Frames, financingPartners } from "@/lib/db/drizzle/schema"
 import { eq, and, gt, isNotNull, asc, inArray } from "drizzle-orm"
 import LoadingIntro from "@/components/store/LoadingIntro"
 import ProductGrid, { type StoreProduct } from "@/components/store/ProductGrid"
@@ -17,6 +17,7 @@ import HowItWorks from "@/components/store/HowItWorks"
 import BrandsStrip from "@/components/store/BrandsStrip"
 import ShowroomVideoSection from "@/components/store/ShowroomVideoSection"
 import BannersCarousel from "@/components/store/BannersCarousel"
+import FinancingMarquee from "@/components/store/FinancingMarquee"
 import FlashDeals from "@/components/store/FlashDeals"
 import HomeReviews from "@/components/store/HomeReviews"
 
@@ -103,6 +104,16 @@ async function getActiveBanners() {
   } catch { return [] }
 }
 
+async function getActiveFinancingPartners() {
+  try {
+    return await db
+      .select({ id: financingPartners.id, name_ar: financingPartners.name_ar, subtitle_ar: financingPartners.subtitle_ar, logo_url: financingPartners.logo_url, link: financingPartners.link })
+      .from(financingPartners)
+      .where(eq(financingPartners.is_active, true))
+      .orderBy(financingPartners.sort_order)
+  } catch { return [] }
+}
+
 interface FlashDeal { id: string; slug: string; name_ar: string; price: number; compare_at_price: number; discount: number; image: string | null; quality_tier: string }
 
 async function getFlashDeals(): Promise<FlashDeal[]> {
@@ -162,8 +173,8 @@ async function getLowStockMap(): Promise<Record<string, number>> {
 }
 
 export default async function StorePage() {
-  const [initialProducts, cms, activeBanners, lowStockMap, flashDeals, storeCategories] = await Promise.all([
-    getProducts(), getSettingsMap(), getActiveBanners(), getLowStockMap(),
+  const [initialProducts, cms, activeBanners, activeFinancingPartners, lowStockMap, flashDeals, storeCategories] = await Promise.all([
+    getProducts(), getSettingsMap(), getActiveBanners(), getActiveFinancingPartners(), getLowStockMap(),
     getFlashDeals(), getCategories(),
   ])
 
@@ -211,6 +222,8 @@ export default async function StorePage() {
         { title: cms.trust_pillar_2_title_ar, desc: cms.trust_pillar_2_desc_ar },
         { title: cms.trust_pillar_3_title_ar, desc: cms.trust_pillar_3_desc_ar },
       ]} />
+
+      <FinancingMarquee partners={activeFinancingPartners} title={cms.financing_marquee_title_ar || "التمويل والتقسيط"} />
 
       {flashActive && flashDeals.length > 0 && (
         <FlashDeals deals={flashDeals} title={cms.flash_deals_title_ar || "عروض الفلاش"} endsAt={cms.flash_deals_ends_at || null} />

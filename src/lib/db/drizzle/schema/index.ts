@@ -127,6 +127,15 @@ export {
   type InsertBanner,
 } from "./banners";
 
+// Financing partners
+export {
+  financingPartners,
+  selectFinancingPartnerSchema,
+  insertFinancingPartnerSchema,
+  type FinancingPartner,
+  type InsertFinancingPartner,
+} from "./financingPartners";
+
 // Settings
 export {
   settings,

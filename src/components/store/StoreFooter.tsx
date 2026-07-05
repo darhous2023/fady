@@ -2,12 +2,15 @@
 
 import { useEffect, useState } from "react"
 
+// Defaults below are only a fallback for the instant before /api/store-config
+// resolves (and if a key was never seeded) — the real, editable values live in
+// `settings` (see /admin/settings) and are fetched at runtime.
 const DEFAULT_WA = "201555557745"
-const FACEBOOK = "https://www.facebook.com/elfadywaelmeladcars"
-const INSTAGRAM_SHOWROOM = "https://www.instagram.com/el_fady_car_trading/"
-const INSTAGRAM_MANAGER = "https://www.instagram.com/fadywael_1/"
-const MAPS = "https://share.google/LGW6xLBwVygbOUn0I"
-const ADDRESS = "المهندسين — شارع أحمد عرابي — معرض الفادي لتجارة السيارات"
+const DEFAULT_FACEBOOK = "https://www.facebook.com/elfadywaelmeladcars"
+const DEFAULT_INSTAGRAM_SHOWROOM = "https://www.instagram.com/el_fady_car_trading/"
+const DEFAULT_INSTAGRAM_MANAGER = "https://www.instagram.com/fadywael_1/"
+const DEFAULT_MAPS = "https://share.google/LGW6xLBwVygbOUn0I"
+const DEFAULT_ADDRESS = "المهندسين — شارع أحمد عرابي — معرض الفادي لتجارة السيارات"
 
 // Developer credit — Ahmed Darhous (site builder), separate from the elfady business socials above.
 const DEV_SOCIALS = [
@@ -46,11 +49,21 @@ const DEV_EMAIL_MAILTO = "mailto:ahmeddarhous@gmail.com"
 export default function StoreFooter() {
   const [tagline, setTagline] = useState("حيث تلتقي الفخامة بالثقة")
   const [WA, setWA] = useState(DEFAULT_WA)
+  const [FACEBOOK, setFacebook] = useState(DEFAULT_FACEBOOK)
+  const [INSTAGRAM_SHOWROOM, setInstagramShowroom] = useState(DEFAULT_INSTAGRAM_SHOWROOM)
+  const [INSTAGRAM_MANAGER, setInstagramManager] = useState(DEFAULT_INSTAGRAM_MANAGER)
+  const [MAPS, setMaps] = useState(DEFAULT_MAPS)
+  const [ADDRESS, setAddress] = useState(DEFAULT_ADDRESS)
 
   useEffect(() => {
     fetch("/api/store-config").then(r => r.json()).then(d => {
       if (d.intro_tagline_ar) setTagline(d.intro_tagline_ar)
       if (d.whatsapp_number) setWA(d.whatsapp_number.replace(/\D/g, ""))
+      if (d.facebook_url) setFacebook(d.facebook_url)
+      if (d.instagram_showroom_url) setInstagramShowroom(d.instagram_showroom_url)
+      if (d.instagram_manager_url) setInstagramManager(d.instagram_manager_url)
+      if (d.maps_url) setMaps(d.maps_url)
+      if (d.address_ar) setAddress(d.address_ar)
     }).catch(() => {})
   }, [])
 
