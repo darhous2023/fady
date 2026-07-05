@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, boolean } from "drizzle-orm/pg-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { carsBrands } from "./brands";
 
@@ -9,6 +9,10 @@ export const carsModels = pgTable("models", {
   nameEn: text("name_en").notNull(),
   nameAr: text("name_ar"),
   bodyType: text("body_type"),
+  // Admin-only moderation flag — never written by the sync engine (confirmed:
+  // its ON CONFLICT clause for models never touches this column), so it
+  // survives re-syncs the same way canonical_cars.adminHidden does.
+  adminHidden: boolean("admin_hidden").notNull().default(false),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });

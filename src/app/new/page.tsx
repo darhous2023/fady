@@ -47,7 +47,10 @@ export default async function NewCarsPage() {
               تصفّح كل السيارات
             </Link>
             <Link href="/new/compare" style={{ padding: "12px 24px", borderRadius: 8, border: "1px solid rgba(255,255,255,0.2)", color: "#F2F0EC", fontFamily: "Tajawal,sans-serif", fontWeight: 700, fontSize: 14, textDecoration: "none" }}>
-              قارن بين سيارتين
+              قارن بين السيارات
+            </Link>
+            <Link href="/new/favorites" style={{ padding: "12px 24px", borderRadius: 8, border: "1px solid rgba(255,255,255,0.2)", color: "#F2F0EC", fontFamily: "Tajawal,sans-serif", fontWeight: 700, fontSize: 14, textDecoration: "none" }}>
+              المفضلة
             </Link>
           </div>
         </div>

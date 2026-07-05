@@ -6,6 +6,7 @@ import StoreHeader from "@/components/store/StoreHeader"
 import StoreFooter from "@/components/store/StoreFooter"
 import FloatingWA from "@/components/store/FloatingWA"
 import CarCard from "@/components/store/cars/CarCard"
+import CarDetailGallery from "@/components/store/cars/CarDetailGallery"
 import { getCanonicalCarDetail, getSimilarCars } from "@/lib/cars/repository"
 import { isCarsDbConfigured } from "@/lib/cars/db"
 import CarsCatalogUnavailable from "@/components/store/cars/CarsCatalogUnavailable"
@@ -64,7 +65,6 @@ export default async function CarDetailPage({ params }: { params: Promise<Params
   if (!car) notFound()
 
   const similar = await getSimilarCars(normalizedKey, 4)
-  const mainImage = car.images.find((i) => i.isMain) ?? car.images[0]
 
   return (
     <>
@@ -78,24 +78,7 @@ export default async function CarDetailPage({ params }: { params: Promise<Params
 
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32, marginBottom: 40 }}>
           <div>
-            <div style={{ aspectRatio: "4/3", borderRadius: 10, overflow: "hidden", background: "#111214", marginBottom: 10 }}>
-              {mainImage ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={mainImage.url} alt={mainImage.altText ?? car.displayName} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-              ) : (
-                <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", color: "rgba(242,240,236,0.3)", fontFamily: "Tajawal,sans-serif" }}>
-                  لا توجد صورة متاحة بعد
-                </div>
-              )}
-            </div>
-            {car.images.length > 1 && (
-              <div style={{ display: "flex", gap: 8, overflowX: "auto" }}>
-                {car.images.slice(0, 8).map((img, i) => (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img key={i} src={img.url} alt="" style={{ width: 64, height: 64, borderRadius: 6, objectFit: "cover", flexShrink: 0 }} />
-                ))}
-              </div>
-            )}
+            <CarDetailGallery normalizedKey={car.normalizedKey} displayName={car.displayName} images={car.images} />
           </div>
 
           <div>

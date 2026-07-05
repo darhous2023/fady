@@ -7,7 +7,8 @@ import { useRouter } from "next/navigation";
 const NAV = [
   { href: "/admin/dashboard", label: "الداشبورد", icon: "📊" },
   { href: "/admin/home", label: "محتوى الرئيسية", icon: "🏠" },
-  { href: "/admin/products", label: "السيارات", icon: "🚗" },
+  { href: "/admin/products", label: "السيارات المستعملة", icon: "🚗" },
+  { href: "/admin/cars-catalog", label: "بوابة السيارات الجديدة", icon: "🆕" },
   { href: "/admin/orders", label: "طلبات الحجز", icon: "🧾" },
   { href: "/admin/reviews", label: "التقييمات", icon: "⭐" },
   { href: "/admin/categories", label: "الأقسام", icon: "🏷️" },

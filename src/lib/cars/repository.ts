@@ -1,14 +1,34 @@
-import { and, asc, desc, eq, gte, lte, sql, ilike, or } from "drizzle-orm";
+import { and, asc, desc, eq, gte, lte, sql, ilike, or, inArray } from "drizzle-orm";
 import type { PgColumn } from "drizzle-orm/pg-core";
 import { carsDb } from "./db";
 import {
   carsBrands, carsModels, carsGenerations, carsTrims,
   carsCanonical, carsCanonicalImages, carsImages, carsSpecs, carsSearchIndex,
+  carsAdminOverrides,
 } from "../db/carsCatalog/schema";
 import type {
   CarsBrandListItem, CarsFilters, CarsBrowseResult, CarsBrowseItem,
   CarsCanonicalDetail, CarsFacetCounts, CarsPortalStats, CarsSpecSection,
+  CarsSearchResultItem,
 } from "./types";
+import { isOverridableCarField } from "./adminRepository";
+import { normalizeQuery } from "./arabicSearch";
+
+/**
+ * Merges admin_overrides on top of a synced row's own field values, never
+ * the reverse — an override always wins. Numeric fields are stored as text
+ * in admin_overrides (a generic key/value table) and coerced back here.
+ */
+function applyCarOverrides<T extends Record<string, unknown>>(row: T, overrides: { field: string; overrideValue: string }[]): T {
+  if (overrides.length === 0) return row;
+  const result: Record<string, unknown> = { ...row };
+  const NUMERIC_FIELDS = new Set(["year", "seatingCapacity", "doors", "powerHp", "torqueNm"]);
+  for (const o of overrides) {
+    if (!isOverridableCarField(o.field)) continue;
+    result[o.field] = NUMERIC_FIELDS.has(o.field) ? Number(o.overrideValue) : o.overrideValue;
+  }
+  return result as T;
+}
 
 /** Only brands with real catalog data behind them — never the 314 logo-only rows. */
 export async function getPublicBrands(): Promise<CarsBrandListItem[]> {
@@ -29,7 +49,11 @@ export async function getBrandBySlug(slug: string) {
 }
 
 export async function getModelsForBrand(brandId: string) {
-  return carsDb.select().from(carsModels).where(eq(carsModels.brandId, brandId)).orderBy(asc(carsModels.nameEn));
+  return carsDb
+    .select()
+    .from(carsModels)
+    .where(and(eq(carsModels.brandId, brandId), eq(carsModels.adminHidden, false)))
+    .orderBy(asc(carsModels.nameEn));
 }
 
 export async function getGenerationsForModel(modelId: string) {
@@ -41,7 +65,12 @@ export async function getTrimsForGeneration(generationId: string) {
 }
 
 function buildBrowseWhere(filters: CarsFilters) {
-  const conditions = [eq(carsCanonical.publicationEligible, true), eq(carsCanonical.adminHidden, false)];
+  const conditions = [
+    eq(carsCanonical.publicationEligible, true),
+    eq(carsCanonical.adminHidden, false),
+    // A hidden model must hide every car under it too, not just the model dropdown.
+    sql`(${carsCanonical.modelId} IS NULL OR ${carsCanonical.modelId} NOT IN (SELECT id FROM models WHERE admin_hidden = true))`,
+  ];
   if (filters.bodyType) conditions.push(eq(carsCanonical.bodyType, filters.bodyType));
   if (filters.fuelType) conditions.push(eq(carsCanonical.fuelType, filters.fuelType));
   if (filters.transmission) conditions.push(eq(carsCanonical.transmission, filters.transmission));
@@ -167,8 +196,14 @@ export function sectionLabelAr(sectionKey: string): string {
 
 /** Full car-detail read — only ever returns fields that have real data; empty sections/images are simply absent, never rendered as placeholders. */
 export async function getCanonicalCarDetail(normalizedKey: string): Promise<CarsCanonicalDetail | null> {
-  const [car] = await carsDb.select().from(carsCanonical).where(eq(carsCanonical.normalizedKey, normalizedKey)).limit(1);
-  if (!car) return null;
+  const [rawCar] = await carsDb.select().from(carsCanonical).where(eq(carsCanonical.normalizedKey, normalizedKey)).limit(1);
+  if (!rawCar) return null;
+
+  const overrideRows = await carsDb
+    .select({ field: carsAdminOverrides.field, overrideValue: carsAdminOverrides.overrideValue })
+    .from(carsAdminOverrides)
+    .where(and(eq(carsAdminOverrides.entityType, "canonical_car"), eq(carsAdminOverrides.entityId, normalizedKey)));
+  const car = applyCarOverrides(rawCar, overrideRows);
 
   const [brand, model, generation, trim, images, specRows] = await Promise.all([
     car.brandId ? carsDb.select().from(carsBrands).where(eq(carsBrands.id, car.brandId)).limit(1).then((r) => r[0] ?? null) : null,
@@ -226,6 +261,73 @@ export async function getSimilarCars(normalizedKey: string, limit = 6) {
   return browseCars({ page: 1, pageSize: limit }).then((r) =>
     r.items.filter((i) => i.normalizedKey !== normalizedKey)
   );
+}
+
+/**
+ * Free-text search across brand/model/generation/trim/year via search_index
+ * (already covers 100% of eligible cars, per the audit). Arabic queries are
+ * normalized + alias-expanded before matching (e.g. "بي ام دبليو" -> "BMW"),
+ * mirroring the same normalization used by arabicSearch.test.ts.
+ */
+export async function searchCars(rawQuery: string, limit = 24): Promise<CarsSearchResultItem[]> {
+  const q = normalizeQuery(rawQuery);
+  if (!q) return [];
+
+  const mainImage = carsDb
+    .select({ canonicalKey: carsCanonicalImages.canonicalKey, url: carsImages.objectStorageUrl, remoteUrl: carsImages.remoteUrl })
+    .from(carsCanonicalImages)
+    .innerJoin(carsImages, eq(carsCanonicalImages.imageId, carsImages.id))
+    .where(eq(carsCanonicalImages.isMain, true))
+    .as("main_image");
+
+  const rows = await carsDb
+    .select({
+      normalizedKey: carsCanonical.normalizedKey,
+      displayName: carsCanonical.displayName,
+      brandName: carsBrands.nameEn,
+      modelName: carsModels.nameEn,
+      year: carsCanonical.year,
+      mainImageUrl: mainImage.url,
+      mainImageRemoteUrl: mainImage.remoteUrl,
+    })
+    .from(carsCanonical)
+    .innerJoin(carsSearchIndex, eq(carsSearchIndex.canonicalKey, carsCanonical.normalizedKey))
+    .leftJoin(carsBrands, eq(carsCanonical.brandId, carsBrands.id))
+    .leftJoin(carsModels, eq(carsCanonical.modelId, carsModels.id))
+    .leftJoin(mainImage, eq(mainImage.canonicalKey, carsCanonical.normalizedKey))
+    .where(and(
+      eq(carsCanonical.publicationEligible, true),
+      eq(carsCanonical.adminHidden, false),
+      or(
+        ilike(carsSearchIndex.searchTextEn, `%${q}%`),
+        ilike(carsSearchIndex.searchTextAr, `%${q}%`),
+        ilike(carsCanonical.displayName, `%${rawQuery}%`),
+      ),
+    ))
+    .orderBy(desc(carsCanonical.lastSyncedAt))
+    .limit(limit);
+
+  return rows.map((r) => ({
+    normalizedKey: r.normalizedKey,
+    displayName: r.displayName,
+    brandName: r.brandName ?? "",
+    modelName: r.modelName,
+    year: r.year,
+    mainImageUrl: r.mainImageUrl ?? r.mainImageRemoteUrl ?? null,
+  }));
+}
+
+/**
+ * Compare-page lookup. Reuses getCanonicalCarDetail (full detail incl.
+ * overrides/images/specs) per key rather than duplicating that query in a
+ * batched form — deliberate: the compare UI caps selection at 4 cars (see
+ * MAX_COMPARE in ComparePage), so this is a handful of parallelized queries,
+ * not an unbounded N+1.
+ */
+export async function getCarsByKeys(normalizedKeys: string[]): Promise<CarsCanonicalDetail[]> {
+  if (normalizedKeys.length === 0) return [];
+  const results = await Promise.all(normalizedKeys.map((k) => getCanonicalCarDetail(k)));
+  return results.filter((c): c is CarsCanonicalDetail => c !== null);
 }
 
 export async function getPortalStats(): Promise<CarsPortalStats> {

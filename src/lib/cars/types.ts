@@ -75,6 +75,15 @@ export type CarsCanonicalDetail = {
   publicationReason: string | null;
 };
 
+export type CarsSearchResultItem = {
+  normalizedKey: string;
+  displayName: string;
+  brandName: string;
+  modelName: string | null;
+  year: number | null;
+  mainImageUrl: string | null;
+};
+
 export type CarsFacetCounts = {
   bodyType: { value: string; count: number }[];
   fuelType: { value: string; count: number }[];
