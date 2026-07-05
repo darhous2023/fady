@@ -7,6 +7,8 @@ import FloatingWA from "@/components/store/FloatingWA"
 import CarCard from "@/components/store/cars/CarCard"
 import CarFilters from "@/components/store/cars/CarFilters"
 import { browseCars, getFacetCounts, getBrandBySlug } from "@/lib/cars/repository"
+import { isCarsDbConfigured } from "@/lib/cars/db"
+import CarsCatalogUnavailable from "@/components/store/cars/CarsCatalogUnavailable"
 import type { CarsFilters } from "@/lib/cars/types"
 
 export const metadata: Metadata = {
@@ -31,6 +33,8 @@ export default async function BrowseCarsPage({
 }: {
   searchParams: Promise<Record<string, string | string[] | undefined>>
 }) {
+  if (!isCarsDbConfigured) return <CarsCatalogUnavailable />
+
   const sp = await searchParams
   const filters = parseFilters(sp)
   const brandSlug = Array.isArray(sp.brand) ? sp.brand[0] : sp.brand

@@ -7,6 +7,8 @@ import StoreFooter from "@/components/store/StoreFooter"
 import FloatingWA from "@/components/store/FloatingWA"
 import CarCard from "@/components/store/cars/CarCard"
 import { getCanonicalCarDetail, getSimilarCars } from "@/lib/cars/repository"
+import { isCarsDbConfigured } from "@/lib/cars/db"
+import CarsCatalogUnavailable from "@/components/store/cars/CarsCatalogUnavailable"
 
 type Params = { normalizedKey: string }
 
@@ -31,6 +33,7 @@ function decodeNormalizedKey(raw: string): string {
 }
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
+  if (!isCarsDbConfigured) return { title: "سيارات جديدة" }
   const { normalizedKey: raw } = await params
   const normalizedKey = decodeNormalizedKey(raw)
   const car = await getCanonicalCarDetail(normalizedKey)
@@ -53,6 +56,8 @@ function InfoRow({ label, value }: { label: string; value: string | number | nul
 }
 
 export default async function CarDetailPage({ params }: { params: Promise<Params> }) {
+  if (!isCarsDbConfigured) return <CarsCatalogUnavailable />
+
   const { normalizedKey: raw } = await params
   const normalizedKey = decodeNormalizedKey(raw)
   const car = await getCanonicalCarDetail(normalizedKey)

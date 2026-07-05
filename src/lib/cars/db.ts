@@ -17,11 +17,16 @@ import * as carsSchema from "../db/carsCatalog/schema";
  */
 const connectionString = process.env.CARS_DATABASE_URL;
 
-if (!connectionString) {
-  throw new Error(
-    "CARS_DATABASE_URL is not set. The cars-catalog database is separate from DATABASE_URL — see .env.example."
-  );
-}
+// IMPORTANT: do not throw here. This module is imported at the top level of
+// /new, /new/browse, and /new/car/[normalizedKey] — Next.js evaluates those
+// route modules during `next build`'s "Collecting page data" step, before any
+// real request ever happens. Throwing at import time crashes the ENTIRE
+// production build/deployment (confirmed: this exact throw broke deploy
+// 91452f6 on Vercel, where CARS_DATABASE_URL isn't set yet pending the cloud
+// catalog DB). Instead, fail lazily — only when a query is actually attempted
+// at request time — so a missing catalog DB degrades to a runtime error on
+// the 3 catalog routes instead of taking down the whole site.
+export const isCarsDbConfigured = Boolean(connectionString);
 
 // Cache the client on globalThis in development: Next.js/Turbopack hot
 // reloads re-execute this module on every file change, and without this
@@ -35,9 +40,12 @@ declare global {
   var __carsQueryClient: ReturnType<typeof postgres> | undefined;
 }
 
+// `postgres()` doesn't connect eagerly — the placeholder below only ever
+// gets used if a query actually runs while CARS_DATABASE_URL is unset, and
+// that query will fail with a real connection error at that point, not here.
 const carsQueryClient =
   globalThis.__carsQueryClient ??
-  postgres(connectionString, {
+  postgres(connectionString ?? "postgres://not-configured@localhost:5432/not-configured", {
     max: 5,
     idle_timeout: 20,
     connect_timeout: 10,

@@ -7,6 +7,8 @@ import FloatingWA from "@/components/store/FloatingWA"
 import CarsQuickSearch from "@/components/store/cars/CarsQuickSearch"
 import CarCard from "@/components/store/cars/CarCard"
 import { getPublicBrands, getPortalStats, browseCars } from "@/lib/cars/repository"
+import { isCarsDbConfigured } from "@/lib/cars/db"
+import CarsCatalogUnavailable from "@/components/store/cars/CarsCatalogUnavailable"
 
 export const metadata: Metadata = {
   title: "سيارات جديدة",
@@ -14,6 +16,8 @@ export const metadata: Metadata = {
 }
 
 export default async function NewCarsPage() {
+  if (!isCarsDbConfigured) return <CarsCatalogUnavailable />
+
   const [brands, stats, featured] = await Promise.all([
     getPublicBrands(),
     getPortalStats(),
