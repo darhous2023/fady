@@ -17,15 +17,15 @@ async function seed() {
   console.log(`✅ Flash deals end: ${flashEndStr}`)
 
   // 2. Set announcement
-  await db.update(settings).set({ value: "🚚 شحن مجاني على الطلبات فوق 500 ج" }).where(eq(settings.key, "announcement_text"))
+  await db.update(settings).set({ value: "🚗 عروض خاصة على مجموعة مختارة من السيارات هذا الشهر" }).where(eq(settings.key, "announcement_text"))
   await db.update(settings).set({ value: "true" }).where(eq(settings.key, "announcement_active"))
   console.log(`✅ Announcement set`)
 
   // 3. Add demo discount code
-  const existing = await db.select().from(discountCodes).where(eq(discountCodes.code, "SHAHY10")).limit(1)
+  const existing = await db.select().from(discountCodes).where(eq(discountCodes.code, "FADY10")).limit(1)
   if (!existing.length) {
     await db.insert(discountCodes).values({
-      code: "SHAHY10",
+      code: "FADY10",
       type: "percent",
       value: "10",
       min_order: "200",
@@ -34,10 +34,10 @@ async function seed() {
       max_uses: null,
       used_count: 0,
     })
-    console.log("✅ Discount code SHAHY10 created (10% off, min order 200ج)")
+    console.log("✅ Discount code FADY10 created (10% off, min order 200ج)")
   } else {
-    await db.update(discountCodes).set({ is_active: true, value: "10", type: "percent", min_order: "200" }).where(eq(discountCodes.code, "SHAHY10"))
-    console.log("✅ Discount code SHAHY10 updated")
+    await db.update(discountCodes).set({ is_active: true, value: "10", type: "percent", min_order: "200" }).where(eq(discountCodes.code, "FADY10"))
+    console.log("✅ Discount code FADY10 updated")
   }
 
   // Also add WELCOME50 fixed discount

@@ -1,4 +1,4 @@
-const CACHE = "shahy-v1"
+const CACHE = "elfady-v2"
 const STATIC = ["/", "/sale", "/track", "/about"]
 
 self.addEventListener("install", e => {
