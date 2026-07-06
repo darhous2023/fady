@@ -16,6 +16,13 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
+      # GitHub-hosted Ubuntu runners have unreliable/no outbound IPv6.
+      # postgres-js's dual-stack (Happy Eyeballs) connection attempt failed
+      # on both addresses in CI even though a plain `pg` connection to the
+      # exact same freshly-created Neon endpoint succeeded moments earlier --
+      # forcing IPv4-first DNS resolution is the standard fix for this class
+      # of failure on GitHub Actions.
+      NODE_OPTIONS: --dns-result-order=ipv4first
       NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
       TEST_BRANCH_NAME: gh-${{ github.run_id }}
       BETTER_AUTH_URL: http://localhost:3000
