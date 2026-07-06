@@ -16,13 +16,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
-      # GitHub-hosted Ubuntu runners have unreliable/no outbound IPv6.
-      # postgres-js's dual-stack (Happy Eyeballs) connection attempt failed
-      # on both addresses in CI even though a plain `pg` connection to the
-      # exact same freshly-created Neon endpoint succeeded moments earlier --
-      # forcing IPv4-first DNS resolution is the standard fix for this class
-      # of failure on GitHub Actions.
-      NODE_OPTIONS: --dns-result-order=ipv4first
       NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
       TEST_BRANCH_NAME: gh-${{ github.run_id }}
       BETTER_AUTH_URL: http://localhost:3000
@@ -51,31 +44,22 @@ jobs:
       # for why two Neon *projects* are used (fady-cars-catalog is branched
       # for real, read-only-safe cars data; fady-store-test-harness is a
       # dedicated empty project since the store's real DB is on Supabase,
-      # not Neon, and can't be branched directly).
+      # not Neon, and can't be branched directly). MIGRATION_DATABASE_URL is
+      # set to the same isolated store connection string -- src/lib/db/drizzle/seed.ts
+      # reads that var specifically, not DATABASE_URL.
       - name: Create isolated Neon test branches
         run: |
           npx tsx scripts/test-env-neon-branch.ts create store "$TEST_BRANCH_NAME" | tee /tmp/store-branch.log
           npx tsx scripts/test-env-neon-branch.ts create cars "$TEST_BRANCH_NAME" | tee /tmp/cars-branch.log
           grep '^DATABASE_URL=' /tmp/store-branch.log >> "$GITHUB_ENV"
+          grep '^DATABASE_URL=' /tmp/store-branch.log | sed 's/^DATABASE_URL=/MIGRATION_DATABASE_URL=/' >> "$GITHUB_ENV"
           grep '^CARS_DATABASE_URL=' /tmp/cars-branch.log >> "$GITHUB_ENV"
 
-      # A brand-new Neon test branch's pooled endpoint has been observed
-      # (across several CI runs while building this harness) to intermittently
-      # refuse a *new* connection attempt from a freshly-spawned process even
-      # moments after a different process's connection to the exact same
-      # endpoint already succeeded -- not reproducible locally, likely a
-      # connection-establishment burst limit specific to this network path /
-      # compute size. A short retry absorbs it without masking a real,
-      # persistent failure (which would still fail after 3 attempts).
       - name: Bootstrap store schema on the isolated branch
-        run: |
-          for i in 1 2 3; do npx tsx scripts/test-env-bootstrap-db.ts && exit 0; echo "attempt $i failed, retrying..."; sleep 5; done
-          exit 1
+        run: npx tsx scripts/test-env-bootstrap-db.ts
 
       - name: Seed baseline settings
-        run: |
-          for i in 1 2 3; do npm run db:seed && exit 0; echo "attempt $i failed, retrying..."; sleep 5; done
-          exit 1
+        run: npm run db:seed
 
       - name: Build app against isolated databases
         run: npm run build
@@ -90,9 +74,7 @@ jobs:
           curl -sf http://localhost:3000/ > /dev/null || (cat /tmp/server.log && exit 1)
 
       - name: Seed disposable Playwright test admin
-        run: |
-          for i in 1 2 3; do npx tsx scripts/test-env-seed-admin.ts && exit 0; echo "attempt $i failed, retrying..."; sleep 5; done
-          exit 1
+        run: npx tsx scripts/test-env-seed-admin.ts
 
       - name: Install Playwright browsers
         run: npm run test:e2e:install
