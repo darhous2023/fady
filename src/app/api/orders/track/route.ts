@@ -3,6 +3,7 @@ import { db } from "@/lib/db/drizzle/connection"
 import { orders, orderItems } from "@/lib/db/drizzle/schema"
 import { eq, or, desc } from "drizzle-orm"
 import { checkRateLimit, getClientIp, hashIdentifier } from "@/lib/rateLimit"
+import { stripControlChars } from "@/lib/sanitizeInput"
 
 // Full detail (customer name, exact preferred date, branch) is only ever
 // returned for a lookup by the *specific* order number the customer was
@@ -42,8 +43,10 @@ async function withItems<T extends { id: string }>(order: T) {
 }
 
 export async function GET(req: NextRequest) {
-  const phoneRaw = req.nextUrl.searchParams.get("phone")?.trim()
-  const numberRaw = req.nextUrl.searchParams.get("number")?.trim().toUpperCase()
+  const phoneParam = req.nextUrl.searchParams.get("phone")
+  const numberParam = req.nextUrl.searchParams.get("number")
+  const phoneRaw = phoneParam ? stripControlChars(phoneParam).trim() : phoneParam
+  const numberRaw = numberParam ? stripControlChars(numberParam).trim().toUpperCase() : numberParam
 
   const rateIdentifier = hashIdentifier(phoneRaw || numberRaw || "")
   const { limited, retryAfterSeconds } = await checkRateLimit("tracking", `${getClientIp(req)}:${rateIdentifier}`)

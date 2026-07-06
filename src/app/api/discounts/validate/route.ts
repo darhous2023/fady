@@ -3,9 +3,10 @@ import { db } from "@/lib/db/drizzle/connection"
 import { discountCodes } from "@/lib/db/drizzle/schema"
 import { eq } from "drizzle-orm"
 import { checkRateLimit, getClientIp } from "@/lib/rateLimit"
+import { stripControlChars } from "@/lib/sanitizeInput"
 
 export async function GET(req: NextRequest) {
-  const code = req.nextUrl.searchParams.get("code")?.toUpperCase().trim()
+  const code = stripControlChars(req.nextUrl.searchParams.get("code") ?? "").toUpperCase().trim()
   const orderTotal = Number(req.nextUrl.searchParams.get("total") ?? 0)
 
   if (!code) return NextResponse.json({ error: "الكود مطلوب" }, { status: 400 })

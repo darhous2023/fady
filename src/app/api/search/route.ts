@@ -3,9 +3,10 @@ import { db } from "@/lib/db/drizzle/connection"
 import { products, productImages, categories } from "@/lib/db/drizzle/schema"
 import { eq, and, ilike } from "drizzle-orm"
 import { checkRateLimit, getClientIp } from "@/lib/rateLimit"
+import { stripControlChars } from "@/lib/sanitizeInput"
 
 export async function GET(req: NextRequest) {
-  const q = req.nextUrl.searchParams.get("q")?.trim()
+  const q = stripControlChars(req.nextUrl.searchParams.get("q") ?? "").trim()
   if (!q || q.length < 2) return NextResponse.json([])
 
   const { limited } = await checkRateLimit("search", getClientIp(req))
@@ -29,6 +30,6 @@ export async function GET(req: NextRequest) {
     return NextResponse.json(rows.map(r => ({ ...r, price: Number(r.price), image: imgMap[r.id] ?? null })))
   } catch (err) {
     console.error("[api/search] failed:", err)
-    return NextResponse.json({ error: "تعذر البحث حاليًا" }, { status: 500 })
+    return NextResponse.json([])
   }
 }
