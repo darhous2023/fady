@@ -73,11 +73,15 @@ export default function CarDetailGallery({
       {ordered.length > 1 && (
         <div style={{ display: "flex", gap: 8, overflowX: "auto" }}>
           {ordered.slice(0, 8).map((img, i) => (
+            // Each thumbnail opens a different photo of the same car in the
+            // lightbox -- not decorative/redundant, so it needs real alt text
+            // (a screen-reader user stepping through the strip otherwise hears
+            // "image" x8 with no way to tell them apart).
             // eslint-disable-next-line @next/next/no-img-element
             <img
               key={i}
               src={img.url}
-              alt=""
+              alt={img.altText || `${displayName} — صورة ${i + 1}`}
               onClick={() => setLightboxIndex(i)}
               style={{ width: 64, height: 64, borderRadius: 6, objectFit: "cover", flexShrink: 0, cursor: "zoom-in" }}
             />

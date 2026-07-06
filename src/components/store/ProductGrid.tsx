@@ -429,7 +429,7 @@ function SectionHeader({ eyebrow, title, subtitle }: { eyebrow: string; title: s
         transition: "all 0.7s ease", marginBottom: 16,
       }}>✦ &nbsp; {eyebrow} &nbsp; ✦</div>
 
-      <div style={{
+      <div className={visible ? "pg-title-shimmer" : undefined} style={{
         fontFamily: "Tajawal,sans-serif", fontSize: "clamp(32px,4vw,46px)", fontWeight: 700,
         background: "linear-gradient(135deg,#6E747A,#9BA3AA,#C9CFD4,#9BA3AA,#6E747A)",
         backgroundSize: "300% auto", WebkitBackgroundClip: "text",
@@ -438,7 +438,6 @@ function SectionHeader({ eyebrow, title, subtitle }: { eyebrow: string; title: s
         transform: visible ? "translateY(0) rotate(0deg)" : "translateY(30px) rotate(-1.5deg)",
         filter: visible ? "blur(0)" : "blur(4px)",
         transition: "all 0.8s cubic-bezier(0.2,0,0.2,1) 0.1s", marginBottom: 8,
-        animation: visible ? "pgShimmer 6s linear 1s infinite" : "none",
       }}>
         {title}
       </div>
@@ -510,6 +509,8 @@ export default function ProductGrid({
     <section style={{ background: "#0A0A0A", padding: "96px 40px 80px", direction: "rtl" }}>
       <style>{`
                 @keyframes pgShimmer { from{background-position:200% center} to{background-position:-200% center} }
+        .pg-title-shimmer { animation: pgShimmer 6s linear 1s infinite; }
+        @media (prefers-reduced-motion: reduce) { .pg-title-shimmer { animation: none; } }
         .pg-cat-pill { cursor:pointer; transition:all 0.3s ease; background:transparent; border:none; }
         .pg-cat-pill:hover { background:rgba(155,163,170,0.12)!important; color:#9BA3AA!important; border-color:#9BA3AA!important; }
         @media (max-width: 680px) {

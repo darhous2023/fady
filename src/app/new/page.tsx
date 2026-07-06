@@ -6,39 +6,61 @@ import StoreFooter from "@/components/store/StoreFooter"
 import FloatingWA from "@/components/store/FloatingWA"
 import CarsQuickSearch from "@/components/store/cars/CarsQuickSearch"
 import CarCard from "@/components/store/cars/CarCard"
+import NewCarsHero from "@/components/store/NewCarsHero"
 import { getPublicBrands, getPortalStats, browseCars } from "@/lib/cars/repository"
 import { isCarsDbConfigured } from "@/lib/cars/db"
 import CarsCatalogUnavailable from "@/components/store/cars/CarsCatalogUnavailable"
+import { db } from "@/lib/db/drizzle/connection"
+import { settings } from "@/lib/db/drizzle/schema"
+import { inArray } from "drizzle-orm"
 
 export const metadata: Metadata = {
   title: "سيارات جديدة",
   description: "تصفّح كتالوج السيارات الجديدة الكامل — الماركات والموديلات والمواصفات الحقيقية، وابعتلنا استفسارك عن التوفر عبر واتساب",
 }
 
+const WA = "201555557745"
+
+async function getNewHeroSettings(): Promise<Record<string, string>> {
+  try {
+    const rows = await db.select().from(settings).where(
+      inArray(settings.key, [
+        "new_hero_video_url", "new_hero_eyebrow_ar", "new_hero_headline_ar", "new_hero_subheadline_ar",
+        "whatsapp_number",
+      ])
+    )
+    return Object.fromEntries(rows.map(r => [r.key, r.value]))
+  } catch { return {} }
+}
+
 export default async function NewCarsPage() {
   if (!isCarsDbConfigured) return <CarsCatalogUnavailable />
 
-  const [brands, stats, featured] = await Promise.all([
+  const [brands, stats, featured, heroSettings] = await Promise.all([
     getPublicBrands(),
     getPortalStats(),
     browseCars({ page: 1, pageSize: 8, sort: "newest" }),
+    getNewHeroSettings(),
   ])
   const topBrands = brands.slice(0, 10)
+  const waNumber = heroSettings.whatsapp_number ? heroSettings.whatsapp_number.replace(/\D/g, "") : WA
 
   return (
     <>
       <StoreHeader />
       <style>{`body { margin: 0; background: #0A0A0A; } main { padding: 0 !important; min-height: unset !important; }`}</style>
-      <div style={{ paddingTop: 64 }}>
-        {/* Hero */}
-        <div style={{ textAlign: "center", padding: "56px 24px 40px", direction: "rtl" }}>
-          <div style={{ fontFamily: "'Space Mono',monospace", fontSize: 11, letterSpacing: "4px", color: "#9BA3AA", textTransform: "uppercase", marginBottom: 12 }}>
-            كتالوج السيارات الجديدة
-          </div>
-          <h1 style={{ fontFamily: "Tajawal,sans-serif", fontWeight: 900, fontSize: "clamp(30px,5vw,52px)", color: "#F5F5F5", margin: "0 0 16px" }}>
-            سيارات جديدة
-          </h1>
-          <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 15, color: "rgba(245,245,245,0.5)", maxWidth: 560, margin: "0 auto", lineHeight: 1.9 }}>
+      <NewCarsHero
+        videoUrl={heroSettings.new_hero_video_url || undefined}
+        eyebrow={heroSettings.new_hero_eyebrow_ar || "كتالوج السيارات الجديدة"}
+        headline={heroSettings.new_hero_headline_ar || "سيارات جديدة"}
+        subheadline={heroSettings.new_hero_subheadline_ar || "تصفّح كتالوج السيارات الجديدة الكامل — الماركات والموديلات والمواصفات الحقيقية"}
+        whatsapp={waNumber}
+        makesCount={stats.publicBrandCount}
+      />
+      <div>
+        {/* Quick search / actions (hero's "ابدأ البحث في الكتالوج" scrolls here) */}
+        <div id="finder" style={{ textAlign: "center", padding: "56px 24px 40px", direction: "rtl" }}>
+          <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 15, color: "rgba(245,245,245,0.5)", maxWidth: 560, margin: "0 auto 20px", lineHeight: 1.9 }}>
             تصفّح {stats.publicCarCount.toLocaleString("ar-EG")} سيارة حقيقية من {stats.publicBrandCount} ماركة، بمواصفات كاملة وصور — وابعتلنا استفسارك عن التوفر مباشرة على واتساب.
           </p>
           <CarsQuickSearch />

@@ -66,6 +66,7 @@ export default function HomeContentForm({ settings }: { settings: Record<string,
       "showroom_video_url", "showroom_headline_ar", "showroom_desc_ar",
       "used_hero_video_url", "used_hero_eyebrow_ar", "used_hero_headline_ar", "used_hero_subheadline_ar",
       "used_section_eyebrow_ar", "used_section_title_ar", "used_section_subtitle_ar",
+      "new_hero_video_url", "new_hero_eyebrow_ar", "new_hero_headline_ar", "new_hero_subheadline_ar",
     ];
     const updates = keys.map((key) => ({
       key,
@@ -200,6 +201,27 @@ export default function HomeContentForm({ settings }: { settings: Record<string,
         <div>
           <label className={labelCls}>الوصف</label>
           <textarea name="used_hero_subheadline_ar" rows={2} defaultValue={settings.used_hero_subheadline_ar || "كل سيارة موجودة فعليًا في المعرض — بحالة مفحوصة وصور حقيقية"} className={inputCls} />
+        </div>
+      </div>
+
+      <div className={sectionCls}>
+        <h2 className={h2Cls}>هيرو صفحة السيارات الجديدة (/new)</h2>
+        <div>
+          <label className={labelCls}>رابط فيديو الخلفية (MP4)</label>
+          <input name="new_hero_video_url" defaultValue={settings.new_hero_video_url} placeholder="https://.../video.mp4" className={inputCls} />
+          <p className="text-xs text-[#F2F0EC]/25 mt-1">اتركه فارغًا لعرض خلفية داكنة بدون فيديو — فيديو مستقل عن فيديو الصفحة الرئيسية وفيديو هيرو السيارات المستعملة</p>
+        </div>
+        <div>
+          <label className={labelCls}>الشعار العلوي الصغير</label>
+          <input name="new_hero_eyebrow_ar" defaultValue={settings.new_hero_eyebrow_ar || "كتالوج السيارات الجديدة"} className={inputCls} />
+        </div>
+        <div>
+          <label className={labelCls}>العنوان الكبير</label>
+          <input name="new_hero_headline_ar" defaultValue={settings.new_hero_headline_ar || "سيارات جديدة"} className={inputCls} />
+        </div>
+        <div>
+          <label className={labelCls}>الوصف</label>
+          <textarea name="new_hero_subheadline_ar" rows={2} defaultValue={settings.new_hero_subheadline_ar || "تصفّح كتالوج السيارات الجديدة الكامل — الماركات والموديلات والمواصفات الحقيقية"} className={inputCls} />
         </div>
       </div>
 

@@ -7,6 +7,7 @@ import StoreFooter from "@/components/store/StoreFooter"
 import FloatingWA from "@/components/store/FloatingWA"
 import { useCompareSelection } from "@/lib/cars/useCarLists"
 import type { CarsCanonicalDetail } from "@/lib/cars/types"
+import { touchTarget } from "@/lib/designTokens"
 
 const ROWS: { label: string; get: (c: CarsCanonicalDetail) => string | number | null }[] = [
   { label: "السنة", get: (c) => c.year },
@@ -62,13 +63,13 @@ export default function ComparePage() {
                   <th style={{ textAlign: "right", padding: "10px 12px", fontFamily: "Tajawal,sans-serif", fontSize: 12, color: "#9BA3AA" }} />
                   {cars.map((c) => (
                     <th key={c.normalizedKey} style={{ padding: "10px 12px", minWidth: 200 }}>
-                      <div style={{ position: "relative" }}>
+                      <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 2 }}>
                         <button
                           onClick={() => toggle(c.normalizedKey)}
-                          style={{ position: "absolute", top: -4, insetInlineEnd: -4, background: "rgba(165,52,44,0.2)", color: "#A5342C", border: "none", borderRadius: 6, width: 22, height: 22, cursor: "pointer", fontSize: 12 }}
+                          style={{ background: "rgba(165,52,44,0.2)", color: "#A5342C", border: "none", borderRadius: 8, width: touchTarget.comfortable, height: touchTarget.comfortable, cursor: "pointer", fontSize: 18, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}
                           aria-label="إزالة من المقارنة"
                         >×</button>
-                        <Link href={`/new/car/${encodeURIComponent(c.normalizedKey)}`} style={{ fontFamily: "Tajawal,sans-serif", fontWeight: 700, fontSize: 14, color: "#F2F0EC", textDecoration: "none" }}>
+                        <Link href={`/new/car/${encodeURIComponent(c.normalizedKey)}`} style={{ fontFamily: "Tajawal,sans-serif", fontWeight: 700, fontSize: 14, color: "#F2F0EC", textDecoration: "none", textAlign: "center" }}>
                           {c.displayName}
                         </Link>
                       </div>
