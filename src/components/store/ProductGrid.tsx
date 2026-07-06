@@ -599,9 +599,18 @@ export default function ProductGrid({
         @media (max-width:680px) { .elfady-grid { gap:12px; } .elfady-card-wrap { width:calc(50% - 6px); } }
         @media (max-width:380px) { .elfady-card-wrap { width:100%; max-width:340px; } }
       `}</style>
-      <div className="elfady-grid">
-        {filtered.map((p, i) => <ProductCard key={p.slug} product={p} index={i} waNumber={waNumber} />)}
-      </div>
+      {filtered.length === 0 ? (
+        <div style={{ textAlign: "center", padding: "60px 20px" }}>
+          <div style={{ fontSize: 32, marginBottom: 14, opacity: 0.2 }}>🚗</div>
+          <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 14, color: "rgba(242,240,236,0.4)", margin: 0 }}>
+            {products.length === 0 ? "لا توجد سيارات متاحة حاليًا" : "لا توجد سيارات مطابقة لهذا الفلتر"}
+          </p>
+        </div>
+      ) : (
+        <div className="elfady-grid">
+          {filtered.map((p, i) => <ProductCard key={p.slug} product={p} index={i} waNumber={waNumber} />)}
+        </div>
+      )}
 
       {/* Footer credit */}
       <div style={{ textAlign: "center", marginTop: 80, paddingTop: 40, borderTop: "1px solid #171717" }}>

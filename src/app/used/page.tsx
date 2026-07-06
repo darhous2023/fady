@@ -8,6 +8,7 @@ import StoreFooter from "@/components/store/StoreFooter"
 import FloatingWA from "@/components/store/FloatingWA"
 import ProductGrid, { type StoreProduct } from "@/components/store/ProductGrid"
 import CinematicUsedHero from "@/components/store/CinematicUsedHero"
+import StoreErrorState from "@/components/store/StoreErrorState"
 
 const WA = "201555557745"
 
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
   description: "تصفّح السيارات المستعملة المتاحة فعليًا في معرض الفادي — صور حقيقية، حالة مفحوصة، وتواصل فوري",
 }
 
-async function getUsedCars(): Promise<StoreProduct[]> {
+async function getUsedCars(): Promise<{ cars: StoreProduct[]; failed: boolean }> {
   try {
     const rows = await db
       .select({
@@ -51,7 +52,7 @@ async function getUsedCars(): Promise<StoreProduct[]> {
     const frameCountByProduct = new Map<string, number>()
     for (const f of frameCounts) frameCountByProduct.set(f.product_id, (frameCountByProduct.get(f.product_id) ?? 0) + 1)
 
-    return rows.map(r => {
+    const cars = rows.map(r => {
       const images = imagesByProduct.get(r.id) ?? []
       return {
         ...r,
@@ -62,7 +63,11 @@ async function getUsedCars(): Promise<StoreProduct[]> {
         has360: (frameCountByProduct.get(r.id) ?? 0) >= 2,
       }
     })
-  } catch { return [] }
+    return { cars, failed: false }
+  } catch (err) {
+    console.error("[/used] getUsedCars failed:", err)
+    return { cars: [], failed: true }
+  }
 }
 
 async function getLowStockMap(): Promise<Record<string, number>> {
@@ -103,7 +108,7 @@ async function getUsedHeroSettings(): Promise<Record<string, string>> {
 
 export default async function UsedCarsPage({ searchParams }: { searchParams: Promise<{ brand?: string }> }) {
   const { brand } = await searchParams
-  const [cars, lowStock, initialCategory, brands, heroSettings] = await Promise.all([
+  const [{ cars, failed }, lowStock, initialCategory, brands, heroSettings] = await Promise.all([
     getUsedCars(), getLowStockMap(), getBrandNameBySlug(brand), getBrands(), getUsedHeroSettings(),
   ])
   const carsWithStock = cars.map(c => ({ ...c, total_stock: lowStock[c.id] ?? null }))
@@ -123,7 +128,11 @@ export default async function UsedCarsPage({ searchParams }: { searchParams: Pro
         brands={brands}
       />
       <div id="used-grid">
-        <ProductGrid initialProducts={carsWithStock} initialCategory={initialCategory} showHeader={false} />
+        {failed ? (
+          <StoreErrorState message="تعذر تحميل السيارات حاليًا. يرجى المحاولة مرة أخرى بعد قليل." minHeight="50vh" />
+        ) : (
+          <ProductGrid initialProducts={carsWithStock} initialCategory={initialCategory} showHeader={false} />
+        )}
       </div>
       <StoreFooter />
       <FloatingWA />

@@ -26,6 +26,7 @@ export default function SearchOverlay({ onClose }: { onClose: () => void }) {
   const [q, setQ] = useState("")
   const [results, setResults] = useState<Result[]>([])
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(false)
   const [recent, setRecent] = useState<string[]>([])
   const inputRef = useRef<HTMLInputElement>(null)
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -43,13 +44,17 @@ export default function SearchOverlay({ onClose }: { onClose: () => void }) {
 
   useEffect(() => {
     if (timer.current) clearTimeout(timer.current)
-    if (q.trim().length < 2) { setResults([]); setLoading(false); return }
+    if (q.trim().length < 2) { setResults([]); setLoading(false); setError(false); return }
     setLoading(true)
     timer.current = setTimeout(async () => {
+      setError(false)
       try {
         const res = await fetch(`/api/search?q=${encodeURIComponent(q.trim())}`)
+        if (!res.ok) { setResults([]); setError(true); return }
         const data = await res.json()
-        setResults(data)
+        setResults(Array.isArray(data) ? data : [])
+      } catch {
+        setResults([]); setError(true)
       } finally { setLoading(false) }
     }, 250)
   }, [q])
@@ -185,8 +190,18 @@ export default function SearchOverlay({ onClose }: { onClose: () => void }) {
           </div>
         )}
 
+        {/* Error */}
+        {!showSuggestions && !loading && error && (
+          <div style={{ textAlign: "center", padding: "32px 20px" }}>
+            <div style={{ fontSize: 32, opacity: 0.2, marginBottom: 12 }}>⚠️</div>
+            <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 14, color: "#D9776A", margin: 0 }}>
+              تعذر البحث حاليًا، حاول مرة أخرى
+            </p>
+          </div>
+        )}
+
         {/* No results */}
-        {!showSuggestions && !loading && results.length === 0 && (
+        {!showSuggestions && !loading && !error && results.length === 0 && (
           <div style={{ textAlign: "center", padding: "32px 20px" }}>
             <div style={{ fontSize: 32, opacity: 0.12, marginBottom: 12 }}>🔍</div>
             <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 14, color: "rgba(242,240,236,0.3)", margin: "0 0 6px" }}>

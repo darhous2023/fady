@@ -31,7 +31,8 @@ export async function GET(req: NextRequest) {
       : Math.min(Number(dc.value), orderTotal)
 
     return NextResponse.json({ id: dc.id, code: dc.code, type: dc.type, value: Number(dc.value), discount })
-  } catch {
+  } catch (err) {
+    console.error("[api/discounts/validate] failed:", err)
     return NextResponse.json({ error: "حدث خطأ، حاول مرة أخرى" }, { status: 500 })
   }
 }

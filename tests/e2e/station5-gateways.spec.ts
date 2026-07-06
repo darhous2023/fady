@@ -103,14 +103,17 @@ test.describe("/used gateway (Batch B — unchanged, regression check)", () => {
 
 test.describe("/new/compare (Batch C — touch target fix)", () => {
   test("remove button meets the 44x44 comfortable touch target", async ({ page }) => {
-    await page.goto("/new");
     // Seed a real compare selection the same way a customer would (via the
     // app's own localStorage-backed hook), then load the compare page.
-    const carHref = await page.evaluate(async () => {
-      const html = await (await fetch("/new")).text();
-      const m = html.match(/\/new\/car\/([^"]+)"/);
-      return m ? decodeURIComponent(m[1]) : null;
-    });
+    // Reads the car link from a real rendered page via a locator (auto-
+    // waiting) rather than an in-page fetch()+regex, which proved flaky
+    // under a long single-worker Playwright session (Station 6 finding --
+    // see STATION_6_REPORT.md).
+    await page.goto("/new/browse");
+    const firstLink = page.locator('a[href^="/new/car/"]').first();
+    await expect(firstLink).toBeVisible();
+    const href = await firstLink.getAttribute("href");
+    const carHref = href ? decodeURIComponent(href.replace(/^\/new\/car\//, "")) : null;
     test.skip(!carHref, "No car link found in the isolated test catalog");
     await page.evaluate((key) => {
       window.localStorage.setItem("elfady_new_cars_compare", JSON.stringify([key]));

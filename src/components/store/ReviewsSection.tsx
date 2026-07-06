@@ -40,6 +40,7 @@ function StarRating({ rating, interactive = false, onRate }: {
 export default function ReviewsSection({ productId }: { productId: string }) {
   const [reviewsList, setReviewsList] = useState<Review[]>([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(false)
   const [name, setName] = useState("")
   const [rating, setRating] = useState(0)
   const [comment, setComment] = useState("")
@@ -47,10 +48,15 @@ export default function ReviewsSection({ productId }: { productId: string }) {
   const [submitted, setSubmitted] = useState(false)
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- resetting loading/error before a re-fetch on productId change, matches existing pattern in this codebase
+    setLoading(true); setError(false)
     fetch(`/api/reviews?product_id=${productId}`)
-      .then(r => r.json())
-      .then(data => { setReviewsList(data); setLoading(false) })
-      .catch(() => setLoading(false))
+      .then(async r => {
+        if (!r.ok) throw new Error("failed")
+        return r.json()
+      })
+      .then(data => { setReviewsList(Array.isArray(data) ? data : []); setLoading(false) })
+      .catch(() => { setError(true); setLoading(false) })
   }, [productId])
 
   const avg = reviewsList.length
@@ -133,6 +139,13 @@ export default function ReviewsSection({ productId }: { productId: string }) {
           {loading ? (
             <div style={{ textAlign: "center", padding: "32px", color: "#9BA3AA", opacity: 0.4 }}>
               <div style={{ display: "inline-block", width: 20, height: 20, border: "2px solid rgba(155,163,170,0.2)", borderTopColor: "#9BA3AA", borderRadius: "50%", animation: "spin 0.7s linear infinite" }} />
+            </div>
+          ) : error ? (
+            <div style={{ textAlign: "center", padding: "32px 0" }}>
+              <div style={{ fontSize: 32, marginBottom: 12, opacity: 0.25 }}>⚠️</div>
+              <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 14, color: "#D9776A" }}>
+                تعذر تحميل التقييمات حاليًا. يرجى المحاولة مرة أخرى بعد قليل.
+              </p>
             </div>
           ) : reviewsList.length === 0 ? (
             <div style={{ textAlign: "center", padding: "32px 0" }}>

@@ -76,13 +76,21 @@ jobs:
       - name: Seed disposable Playwright test admin
         run: npx tsx scripts/test-env-seed-admin.ts
 
+      - name: Seed demo product for Station 6 write-path/critical-journey tests
+        run: npx tsx scripts/test-env-seed-demo-product.ts
+
       - name: Install Playwright browsers
         run: npm run test:e2e:install
 
-      - name: Run Playwright smoke test
+      - name: Run Playwright suite (Station 4 smoke + Station 5 gateways + Station 6 full suite)
         run: npm run test:e2e
         env:
           PLAYWRIGHT_BASE_URL: http://localhost:3000
+
+      - name: Run admin_overrides-survives-resync integration test (isolated cars-catalog branch only)
+        run: npm run test -- src/lib/cars/adminOverridesResync.integration.test.ts
+        env:
+          E2E_ISOLATED_CARS_DB: "true"
 
       - name: Upload Playwright report
         if: always()

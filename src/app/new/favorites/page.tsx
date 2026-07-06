@@ -13,15 +13,26 @@ export default function FavoritesPage() {
   const { keys } = useFavorites()
   const [cars, setCars] = useState<CarsCanonicalDetail[]>([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(false)
 
   useEffect(() => {
-    if (keys.length === 0) { setCars([]); setLoading(false); return }
+    if (keys.length === 0) { setCars([]); setLoading(false); setError(false); return }
     setLoading(true)
+    setError(false)
+    // A hard client-side timeout so a stalled fetch (dropped connection,
+    // server hiccup) shows a real error state instead of leaving the
+    // customer on "جاري التحميل..." forever -- Station 6 finding.
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), 12000)
     // Reuses the compare endpoint's batched lookup — same full-detail shape works fine for cards too.
-    fetch(`/api/new-cars/compare?keys=${keys.map(encodeURIComponent).join(",")}`)
-      .then((r) => r.json())
+    fetch(`/api/new-cars/compare?keys=${keys.map(encodeURIComponent).join(",")}`, { signal: controller.signal })
+      .then((r) => {
+        if (!r.ok) throw new Error("failed")
+        return r.json()
+      })
       .then((data) => setCars(data.cars ?? []))
-      .finally(() => setLoading(false))
+      .catch(() => setError(true))
+      .finally(() => { clearTimeout(timeoutId); setLoading(false) })
   }, [keys])
 
   return (
@@ -38,6 +49,10 @@ export default function FavoritesPage() {
 
         {loading ? (
           <p style={{ color: "rgba(242,240,236,0.4)", fontFamily: "Tajawal,sans-serif" }}>جاري التحميل...</p>
+        ) : error ? (
+          <div style={{ padding: "48px 24px", textAlign: "center", color: "#D9776A", fontFamily: "Tajawal,sans-serif" }}>
+            تعذر تحميل السيارات المفضلة حاليًا. يرجى المحاولة مرة أخرى بعد قليل.
+          </div>
         ) : cars.length === 0 ? (
           <div style={{ padding: "48px 24px", textAlign: "center", color: "rgba(242,240,236,0.4)", fontFamily: "Tajawal,sans-serif" }}>
             لا توجد سيارات في المفضلة بعد. اضغط أيقونة القلب على أي سيارة لإضافتها.

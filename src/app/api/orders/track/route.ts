@@ -62,7 +62,8 @@ export async function GET(req: NextRequest) {
     }
 
     return NextResponse.json({ error: "رقم التليفون أو رقم الطلب مطلوب" }, { status: 400 })
-  } catch {
+  } catch (err) {
+    console.error("[api/orders/track] failed:", err)
     return NextResponse.json({ error: "حدث خطأ، حاول مرة أخرى" }, { status: 500 })
   }
 }

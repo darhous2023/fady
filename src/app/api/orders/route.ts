@@ -60,7 +60,8 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json({ order_number: order.order_number, id: order.id }, { status: 201 });
-  } catch {
+  } catch (err) {
+    console.error("[api/orders POST] failed:", err);
     return NextResponse.json({ error: "تعذّر إتمام الحجز، حاول مرة أخرى" }, { status: 500 });
   }
 }

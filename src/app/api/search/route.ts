@@ -23,7 +23,8 @@ export async function GET(req: NextRequest) {
     const imgMap = Object.fromEntries(imgs.map(i => [i.product_id, i.url]))
 
     return NextResponse.json(rows.map(r => ({ ...r, price: Number(r.price), image: imgMap[r.id] ?? null })))
-  } catch {
-    return NextResponse.json([])
+  } catch (err) {
+    console.error("[api/search] failed:", err)
+    return NextResponse.json({ error: "تعذر البحث حاليًا" }, { status: 500 })
   }
 }

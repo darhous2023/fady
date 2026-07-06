@@ -39,8 +39,9 @@ export async function GET(req: NextRequest) {
       .limit(20)
 
     return NextResponse.json(rows)
-  } catch {
-    return NextResponse.json([])
+  } catch (err) {
+    console.error("[api/reviews GET] failed:", err)
+    return NextResponse.json({ error: "تعذر تحميل التقييمات" }, { status: 500 })
   }
 }
 
@@ -65,7 +66,8 @@ export async function POST(req: NextRequest) {
     }).returning()
 
     return NextResponse.json({ ok: true, id: review.id }, { status: 201 })
-  } catch {
+  } catch (err) {
+    console.error("[api/reviews POST] failed:", err)
     return NextResponse.json({ error: "تعذّر إرسال التقييم، حاول مرة أخرى" }, { status: 500 })
   }
 }

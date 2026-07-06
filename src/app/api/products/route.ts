@@ -59,7 +59,8 @@ export async function GET(request: Request) {
     return NextResponse.json(result, {
       headers: { "Access-Control-Allow-Origin": "*" },
     });
-  } catch {
+  } catch (err) {
+    console.error("[api/products] failed:", err);
     return NextResponse.json([], { headers: { "Access-Control-Allow-Origin": "*" } });
   }
 }
