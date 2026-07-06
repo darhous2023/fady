@@ -164,8 +164,14 @@ test.describe("Admin settings change reflects in the footer", () => {
 
     await page.goto("/");
     // StoreFooter fetches /api/store-config client-side and rebuilds its
-    // wa.me link from the fresh number -- wait for it to settle.
-    await expect(page.locator('a[href*="wa.me/201234567890"]').first()).toBeVisible({ timeout: 10000 });
+    // wa.me link from the fresh number. /api/store-config sets
+    // `Cache-Control: s-maxage=60, stale-while-revalidate=120` (deliberate,
+    // pre-existing) -- an earlier navigation in this same run can leave a
+    // shared-cache entry that only clears after revalidation, so this can
+    // legitimately take longer than a couple of seconds. Give it real room
+    // rather than relying on CI's retry to paper over it (found via a flaky
+    // first-attempt failure in real CI, passed on retry -- Station 6).
+    await expect(page.locator('a[href*="wa.me/201234567890"]').first()).toBeVisible({ timeout: 25000 });
 
     // Restore the original number so this test is repeatable against a
     // long-lived branch (harmless no-op against a throwaway CI branch that
