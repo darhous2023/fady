@@ -1,7 +1,7 @@
 export const dynamic = "force-dynamic"
 import type { Metadata } from "next"
 import { db } from "@/lib/db/drizzle/connection"
-import { products, productImages, categories, settings, productVariants, banners, product360Frames, financingPartners } from "@/lib/db/drizzle/schema"
+import { products, productImages, categories, settings, productVariants, banners, product360Frames, financingPartners, partnerLogos } from "@/lib/db/drizzle/schema"
 import { eq, and, gt, isNotNull, asc, inArray } from "drizzle-orm"
 import LoadingIntro from "@/components/store/LoadingIntro"
 import ProductGrid, { type StoreProduct } from "@/components/store/ProductGrid"
@@ -18,6 +18,7 @@ import BrandsStrip from "@/components/store/BrandsStrip"
 import ShowroomVideoSection from "@/components/store/ShowroomVideoSection"
 import BannersCarousel from "@/components/store/BannersCarousel"
 import FinancingMarquee from "@/components/store/FinancingMarquee"
+import PartnerLogosMarquee from "@/components/store/PartnerLogosMarquee"
 import FlashDeals from "@/components/store/FlashDeals"
 import HomeReviews from "@/components/store/HomeReviews"
 
@@ -114,6 +115,16 @@ async function getActiveFinancingPartners() {
   } catch { return [] }
 }
 
+async function getActivePartnerLogos() {
+  try {
+    return await db
+      .select({ id: partnerLogos.id, name: partnerLogos.name, logo_url: partnerLogos.logo_url, link: partnerLogos.link })
+      .from(partnerLogos)
+      .where(eq(partnerLogos.is_active, true))
+      .orderBy(partnerLogos.sort_order)
+  } catch { return [] }
+}
+
 interface FlashDeal { id: string; slug: string; name_ar: string; price: number; compare_at_price: number; discount: number; image: string | null; quality_tier: string }
 
 async function getFlashDeals(): Promise<FlashDeal[]> {
@@ -173,8 +184,8 @@ async function getLowStockMap(): Promise<Record<string, number>> {
 }
 
 export default async function StorePage() {
-  const [initialProducts, cms, activeBanners, activeFinancingPartners, lowStockMap, flashDeals, storeCategories] = await Promise.all([
-    getProducts(), getSettingsMap(), getActiveBanners(), getActiveFinancingPartners(), getLowStockMap(),
+  const [initialProducts, cms, activeBanners, activeFinancingPartners, activePartnerLogos, lowStockMap, flashDeals, storeCategories] = await Promise.all([
+    getProducts(), getSettingsMap(), getActiveBanners(), getActiveFinancingPartners(), getActivePartnerLogos(), getLowStockMap(),
     getFlashDeals(), getCategories(),
   ])
 
@@ -205,6 +216,8 @@ export default async function StorePage() {
         subheadline={cms.hero_subheadline_ar || "سيارات جديدة ومستعملة — بثقة وشفافية"}
         whatsapp={waNumber}
       />
+
+      <PartnerLogosMarquee logos={activePartnerLogos} title={cms.partner_logos_title_ar || "شركاؤنا في التمويل"} />
 
       <MarqueeTicker text={cms.marquee_text_ar} />
 

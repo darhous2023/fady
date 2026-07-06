@@ -15,6 +15,7 @@ const NAV = [
   { href: "/admin/discounts", label: "الخصومات", icon: "🎁" },
   { href: "/admin/banners", label: "البانرات", icon: "🖼️" },
   { href: "/admin/financing-partners", label: "التمويل والتقسيط", icon: "💳" },
+  { href: "/admin/partner-logos", label: "شعارات الشركاء", icon: "🏦" },
   { href: "/admin/flash-deals", label: "عروض الفلاش", icon: "⚡" },
   { href: "/admin/customers", label: "العملاء", icon: "🧑‍💼" },
   { href: "/admin/admins", label: "الصلاحيات", icon: "👥" },

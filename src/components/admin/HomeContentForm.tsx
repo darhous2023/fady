@@ -56,7 +56,7 @@ export default function HomeContentForm({ settings }: { settings: Record<string,
       "hero_video_url", "hero_eyebrow_ar", "hero_headline_ar", "hero_subheadline_ar",
       "gateway_new_title_ar", "gateway_new_desc_ar", "gateway_new_image",
       "gateway_used_title_ar", "gateway_used_desc_ar", "gateway_used_image",
-      "marquee_text_ar", "statement_headline_ar", "financing_marquee_title_ar",
+      "marquee_text_ar", "statement_headline_ar", "financing_marquee_title_ar", "partner_logos_title_ar",
       "trust_pillar_1_title_ar", "trust_pillar_1_desc_ar",
       "trust_pillar_2_title_ar", "trust_pillar_2_desc_ar",
       "trust_pillar_3_title_ar", "trust_pillar_3_desc_ar",
@@ -138,6 +138,11 @@ export default function HomeContentForm({ settings }: { settings: Record<string,
           <label className={labelCls}>عنوان شريط التمويل والتقسيط</label>
           <input name="financing_marquee_title_ar" defaultValue={settings.financing_marquee_title_ar || "التمويل والتقسيط"} className={inputCls} />
           <p className="text-xs text-[#F2F0EC]/25 mt-1">العروض نفسها تُدار من صفحة «التمويل والتقسيط» في القائمة الجانبية</p>
+        </div>
+        <div>
+          <label className={labelCls}>عنوان شريط شعارات الشركاء (أسفل الهيرو مباشرة)</label>
+          <input name="partner_logos_title_ar" defaultValue={settings.partner_logos_title_ar || "شركاؤنا في التمويل"} className={inputCls} />
+          <p className="text-xs text-[#F2F0EC]/25 mt-1">الشعارات نفسها تُدار من صفحة «شعارات الشركاء» في القائمة الجانبية</p>
         </div>
       </div>
 
