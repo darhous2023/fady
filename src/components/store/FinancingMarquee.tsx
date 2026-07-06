@@ -24,7 +24,12 @@ function PartnerCard({ p }: { p: Partner }) {
 
 export default function FinancingMarquee({ partners, title }: { partners: Partner[]; title?: string }) {
   if (!partners.length) return null
-  const track = [...partners, ...partners]
+  // Doubled twice (not just once): with only a handful of real partners, a
+  // single doubling makes the loop-back point visually obvious on wide
+  // screens (the whole track fits on screen with barely any scroll before
+  // jumping) even though the translateX(-50%) math is already seamless.
+  const doubled = [...partners, ...partners]
+  const track = [...doubled, ...doubled]
 
   return (
     <div style={{ background: "#0D0D0D", borderTop: "1px solid rgba(155,163,170,0.08)", borderBottom: "1px solid rgba(155,163,170,0.08)", padding: "36px 0", overflow: "hidden" }}>

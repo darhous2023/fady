@@ -48,6 +48,7 @@ const STATIC_ROUTES: RouteCheck[] = [
   { path: "/admin/categories", expect: [200, 307, 308] },
   { path: "/admin/banners", expect: [200, 307, 308] },
   { path: "/admin/financing-partners", expect: [200, 307, 308] },
+  { path: "/admin/partner-logos", expect: [200, 307, 308] },
   { path: "/admin/discounts", expect: [200, 307, 308] },
   { path: "/admin/orders", expect: [200, 307, 308] },
   { path: "/admin/reviews", expect: [200, 307, 308] },
@@ -66,6 +67,7 @@ const STATIC_ROUTES: RouteCheck[] = [
   // Admin-gated APIs with no session must be 401, never 500.
   { path: "/api/admin/banners", expect: [401] },
   { path: "/api/admin/financing-partners", expect: [401] },
+  { path: "/api/admin/partner-logos", expect: [401] },
   { path: "/api/admin/products", expect: [401] },
   { path: "/api/admin/categories", expect: [401] },
   { path: "/api/admin/discounts", expect: [401] },

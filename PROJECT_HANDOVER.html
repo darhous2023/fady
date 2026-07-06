@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ملف تسليم مشروع ELFADY</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    background: #0A0A0A; color: #F2F0EC; font-family: Tahoma, Arial, sans-serif;
+    margin: 0; padding: 0; line-height: 1.8;
+  }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 48px 24px 100px; }
+  header { text-align: center; margin-bottom: 56px; padding-bottom: 32px; border-bottom: 2px solid #9BA3AA; }
+  header h1 { font-size: 32px; font-weight: 900; margin: 0 0 10px; letter-spacing: 1px; }
+  header p { color: rgba(242,240,236,0.5); font-size: 15px; margin: 0; }
+  .badge { display: inline-block; background: rgba(155,163,170,0.12); border: 1px solid rgba(155,163,170,0.3); color: #9BA3AA; font-size: 12px; padding: 4px 14px; border-radius: 20px; margin-top: 14px; }
+  section { margin-bottom: 40px; background: #111; border: 1px solid rgba(155,163,170,0.1); border-radius: 14px; padding: 28px 32px; }
+  section h2 { font-size: 20px; font-weight: 800; margin: 0 0 6px; display: flex; align-items: center; gap: 10px; }
+  section .desc { color: rgba(242,240,236,0.5); font-size: 14px; margin: 0 0 20px; }
+  .link-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; background: #0A0A0A; border: 1px solid rgba(155,163,170,0.15); border-radius: 10px; padding: 14px 18px; margin-bottom: 12px; }
+  .link-row .label { font-size: 13px; color: rgba(242,240,236,0.6); font-weight: 700; }
+  .link-row a { color: #9BA3AA; text-decoration: none; font-size: 14px; direction: ltr; unicode-bidi: embed; word-break: break-all; }
+  .link-row a:hover { text-decoration: underline; }
+  .status { font-size: 11px; font-weight: 800; padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+  .status.active { background: rgba(39,174,96,0.15); color: #27ae60; }
+  .status.pending { background: rgba(165,52,44,0.15); color: #d16e66; }
+  .note { font-size: 13px; color: rgba(242,240,236,0.55); background: rgba(155,163,170,0.06); border-right: 3px solid #9BA3AA; padding: 12px 16px; border-radius: 6px; margin-top: 14px; }
+  ul.tasks { margin: 12px 0 0; padding-right: 20px; font-size: 14px; color: rgba(242,240,236,0.7); }
+  ul.tasks li { margin-bottom: 8px; }
+  footer { text-align: center; margin-top: 60px; padding-top: 24px; border-top: 1px solid rgba(155,163,170,0.15); color: rgba(242,240,236,0.3); font-size: 12px; }
+  .toc { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 20px; }
+  .toc a { font-size: 12px; color: #9BA3AA; text-decoration: none; border: 1px solid rgba(155,163,170,0.25); padding: 5px 12px; border-radius: 20px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>معرض الفادي لتجارة السيارات — ELFADY</h1>
+    <p>ملف تسليم شامل: الموقع، كل الحسابات والخدمات المستخدمة، وشرح كل حاجة بالعربي</p>
+    <span class="badge">آخر تحديث: يوليو 2026 — نهاية خطة "9/10 → 10/10"</span>
+    <div class="toc">
+      <a href="#site">الموقع نفسه</a>
+      <a href="#admin">لوحة التحكم</a>
+      <a href="#github">GitHub</a>
+      <a href="#vercel">Vercel</a>
+      <a href="#supabase">Supabase</a>
+      <a href="#neon">Neon</a>
+      <a href="#sentry">Sentry</a>
+      <a href="#upstash">Upstash</a>
+      <a href="#open">المتبقي</a>
+    </div>
+  </header>
+
+  <section id="site">
+    <h2>🌐 الموقع (اللي شغال دلوقتي)</h2>
+    <p class="desc">ده الموقع الحقيقي اللي بيشوفه أي عميل يدخل يبحث عن سيارة.</p>
+    <div class="link-row">
+      <span class="label">الرابط المباشر للموقع</span>
+      <a href="https://fady-delta.vercel.app" target="_blank">fady-delta.vercel.app</a>
+    </div>
+    <div class="note">ملحوظة: الدومين لسه على subdomain مجاني من Vercel (fady-delta.vercel.app). لو حابب دومين خاص بيك (زي elfady.com)، ده متاح كخطوة منفصلة اختيارية مش جزء من الشغل الحالي — تقدر تشتري الدومين وتربطه من إعدادات Vercel في أي وقت.</div>
+  </section>
+
+  <section id="admin">
+    <h2>🔐 لوحة تحكم الأدمن</h2>
+    <p class="desc">من هنا بتتحكم في كل حاجة في الموقع — كل السيارات، الصور، الأسعار، الحجوزات، التقييمات، الإعدادات، وأي محتوى تاني. الدليل الكامل خطوة بخطوة موجود جوه اللوحة نفسها في قسم "دليل الأدمن".</p>
+    <div class="link-row">
+      <span class="label">رابط تسجيل الدخول</span>
+      <a href="https://fady-delta.vercel.app/admin/login" target="_blank">fady-delta.vercel.app/admin/login</a>
+    </div>
+    <div class="note">بيانات الدخول (الإيميل وكلمة المرور) اتسلّمتلك في الشات في وقت سابق. لو نسيتها أو عايز تغيّرها، قولّي في أي وقت.</div>
+  </section>
+
+  <section id="github">
+    <h2>💻 كود المشروع — GitHub</h2>
+    <p class="desc">هنا كل كود الموقع بالكامل، وتاريخ كل تعديل اتعمل من أول يوم. أي تحديث مستقبلي (سواء مني أو من أي مطوّر تاني) بيحصل هنا الأول قبل ما يوصل للموقع اللايف.</p>
+    <div class="link-row">
+      <span class="label">الريبو (Repository)</span>
+      <a href="https://github.com/darhous2023/fady" target="_blank">github.com/darhous2023/fady</a>
+    </div>
+    <div class="note">
+      <strong>حماية مفعّلة على الفرع الرئيسي (main):</strong> من الآن، مفيش حد (حتى أنا) يقدر يرفع تعديل مباشر على الموقع من غير ما يعدي على اختبار تلقائي كامل بيتأكد إن الموقع مش هيتكسر. ده معناه أي تحديث جديد للموقع لازم يعدي مراجعة آمنة الأول.
+    </div>
+  </section>
+
+  <section id="vercel">
+    <h2>▲ الاستضافة — Vercel</h2>
+    <p class="desc">هي الشركة اللي بتشغّل الموقع فعليًا على الإنترنت 24 ساعة. أي تحديث في الكود بيتنزّل هنا تلقائيًا خلال دقايق.</p>
+    <div class="link-row">
+      <span class="label">لوحة تحكم Vercel</span>
+      <a href="https://vercel.com/fady-7caa1c41/fady" target="_blank">vercel.com/fady-7caa1c41/fady</a>
+      <span class="status active">شغّال</span>
+    </div>
+    <div class="note">ده على الخطة المجانية (Hobby) — كفاية تمامًا لحجم الزيارات الحالي. لو الزيارات كبرت جدًا في المستقبل، فيه خطط مدفوعة أعلى بس مش محتاجينها دلوقتي.</div>
+  </section>
+
+  <section id="supabase">
+    <h2>🗄️ قاعدة بيانات المتجر — Supabase</h2>
+    <p class="desc">هنا متخزّن كل حاجة خاصة بالمتجر نفسه: السيارات المستعملة وصورها، الحجوزات، التقييمات، إعدادات الموقع، حسابات العملاء، وحسابات الأدمن.</p>
+    <div class="link-row">
+      <span class="label">لوحة تحكم Supabase</span>
+      <a href="https://supabase.com/dashboard/project/trvpzhwledgsoafeyvmr" target="_blank">supabase.com/dashboard/project/trvpzhwledgsoafeyvmr</a>
+      <span class="status active">شغّال</span>
+    </div>
+    <div class="note">دي على الخطة المجانية برضه. النسخ الاحتياطي التلقائي (Backup) والاسترجاع الفوري (PITR) متاحين كخطوة مستقبلية اختيارية لو حبيت — مش مفعّلين دلوقتي بطلب صريح منك.</div>
+  </section>
+
+  <section id="neon">
+    <h2>🚗 قاعدة بيانات كتالوج السيارات الجديدة — Neon</h2>
+    <p class="desc">قاعدة بيانات منفصلة تمامًا عن بيانات المتجر، مخصصة بس لبوابة "السيارات الجديدة" (/new) — فيها كل الماركات والموديلات والمواصفات الحقيقية اللي بتظهر للعميل.</p>
+    <div class="link-row">
+      <span class="label">لوحة تحكم Neon</span>
+      <a href="https://console.neon.tech/app/projects/late-rain-30574215" target="_blank">console.neon.tech (مشروع fady-cars-catalog)</a>
+      <span class="status active">شغّال</span>
+    </div>
+    <div class="note">فيها بيانات حقيقية لأكتر من 1200 سيارة و392 ماركة، بما فيها صور حقيقية من مواقع الشركات المصنّعة الرسمية (تويوتا، هيونداي، جي إم سي...) بدل الصور المشوّهة اللي كانت موجودة الأول.</div>
+  </section>
+
+  <section id="sentry">
+    <h2>🛡️ مراقبة الأخطاء — Sentry <span class="status pending">محتاج خطوة منك</span></h2>
+    <p class="desc">أداة بتراقب الموقع تلقائيًا وتنبّهك فورًا لو حصل أي خطأ حقيقي عند أي عميل — بدل ما تعرف بالصدفة أو من شكوى عميل.</p>
+    <div class="note">
+      <strong>الكود جاهز بالكامل ومربوط، بس مش شغال لسه</strong> لأنه محتاج حساب مجاني تعمله بنفسك على <a href="https://sentry.io" target="_blank" style="color:#9BA3AA">sentry.io</a> (خطوتين بس):
+      <ul class="tasks">
+        <li>اعمل حساب مجاني + مشروع جديد نوعه "Next.js".</li>
+        <li>من إعدادات المشروع → Client Keys (DSN)، انسخ القيمة اللي شكلها رابط طويل يبدأ بـ <code>https://...@...ingest.sentry.io/...</code> — <strong>ده هو المطلوب</strong>، مش الـ "Personal Token" اللي شكله مختلف (الـ Personal Token ده لحاجة تانية تمامًا، مش لازم دلوقتي).</li>
+        <li>ابعتلي القيمة دي في الشات وأنا هضيفها لإعدادات الموقع مباشرة — أو ضيفها بنفسك في Vercel باسم <code>NEXT_PUBLIC_SENTRY_DSN</code>.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="upstash">
+    <h2>🚦 حماية من إساءة الاستخدام — Upstash <span class="status pending">محتاج خطوة منك</span></h2>
+    <p class="desc">بيمنع أي حد يحاول يبعت كميات كبيرة من الطلبات على الموقع بسرعة غير طبيعية (زي محاولات تسجيل دخول متكررة، أو حجوزات وهمية بالجملة).</p>
+    <div class="note">
+      <strong>الكود جاهز بالكامل ومربوط، بس مش شغال لسه</strong> لنفس السبب — محتاج حساب مجاني:
+      <ul class="tasks">
+        <li>اعمل حساب مجاني على <a href="https://upstash.com" target="_blank" style="color:#9BA3AA">upstash.com</a> وقاعدة بيانات Redis جديدة.</li>
+        <li>من صفحة القاعدة، انسخ <code>UPSTASH_REDIS_REST_URL</code> و <code>UPSTASH_REDIS_REST_TOKEN</code>.</li>
+        <li>ابعتهملي في الشات أو ضيفهم بنفسك في إعدادات Vercel.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="open">
+    <h2>📋 المتبقي (اختياري، مش عاجل)</h2>
+    <ul class="tasks">
+      <li><strong>تصوير طقم صور 360° حقيقي</strong> لسيارة واحدة على الأقل من المعرض (يحتاج تصوير فعلي بالموبايل، 12-24 صورة حوالين العربية).</li>
+      <li><strong>قرار بخصوص صورة Jetta VS7</strong> في كتالوج السيارات الجديدة — المصدر الرسمي بتاعها عنده استقرار DNS متقطّع من بره الصين، ممكن تظهر متقطعة أحيانًا لعملاء حقيقيين. اتقالك التفاصيل في الشات.</li>
+      <li>دومين خاص للموقع (اختياري) بدل fady-delta.vercel.app.</li>
+      <li>تحسينات بسيطة جدًا في أحجام بعض الأزرار على الموبايل (منخفضة الأولوية جدًا).</li>
+    </ul>
+  </section>
+
+  <footer>
+    <p>هذا الملف من إنشاء Claude (المساعد الذي بنى المشروع) — لأي سؤال أو تعديل مستقبلي، ابدأ محادثة جديدة واذكر أنك صاحب مشروع ELFADY.</p>
+    <p>Developed by Ahmed Darhous — elfady.vercel.app</p>
+  </footer>
+
+</div>
+</body>
+</html>

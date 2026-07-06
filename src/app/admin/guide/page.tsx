@@ -18,6 +18,18 @@ Apply these enhancements only:
 
 Output: one high-resolution, photorealistic image ready for an e-commerce car listing — consistent with a premium, minimalist, black-and-silver brand identity.`
 
+const CAR_BRANDING_PROMPT = `Take this car photo (ideally already background-enhanced for ELFADY, a premium car dealership) and add a small, tasteful ELFADY brand mark to it — without touching the car itself.
+
+Do NOT change the car in any way: same make, model, shape, proportions, real color, badges, plate, and every real detail 100% unchanged. Do not cover any part of the car's body, wheels, badges, or the real license plate with the brand mark.
+
+Add ONE of the following, whichever fits the composition best:
+1. A small, elegant "ELFADY" wordmark in the lower corner of the image (like a photographer's watermark) — clean sans-serif, white or steel-gray (#9BA3AA) color, subtle drop shadow or slight transparency (about 70-85% opacity) so it reads as a brand mark, not a sticker slapped on the car.
+2. OR, if the photo has a visible showroom floor/backdrop, a subtle "ELFADY" text reflection or floor decal beneath the car, consistent with the studio lighting.
+
+Keep it minimal and premium — this is a discreet brand credit, not a loud logo. Never place it over the car's windshield, headlights, or license plate. Keep the rest of the image exactly as it was (same background, lighting, and framing as the input).
+
+Output: the same photo with a small, tasteful "ELFADY" brand mark added, ready for the website gallery.`
+
 // ── Shared mockup shell (illustrative fake UI, not a real screenshot) ───────
 function MockShell({ children, title }: { children: React.ReactNode; title: string }) {
   return (
@@ -248,6 +260,7 @@ const SECTIONS: Section[] = [
 export default function AdminGuidePage() {
   const [open, setOpen] = useState<string>("dashboard")
   const [downloading, setDownloading] = useState(false)
+  const [brandingCopied, setBrandingCopied] = useState(false)
 
   async function handleDownloadPdf() {
     if (downloading) return
@@ -259,6 +272,17 @@ export default function AdminGuidePage() {
       toast.error("تعذر إنشاء ملف PDF. حاول مرة أخرى.")
     } finally {
       setDownloading(false)
+    }
+  }
+
+  async function handleCopyBrandingPrompt() {
+    try {
+      await navigator.clipboard.writeText(CAR_BRANDING_PROMPT)
+      setBrandingCopied(true)
+      toast.success("تم نسخ برومبت العلامة التجارية")
+      setTimeout(() => setBrandingCopied(false), 2000)
+    } catch {
+      toast.error("تعذّر النسخ — انسخه يدويًا من قسم \"تجهيز صور السيارات\" بالأسفل")
     }
   }
 
@@ -279,6 +303,12 @@ export default function AdminGuidePage() {
             style={{ fontSize: 12, color: "#0A0A0A", background: "#9BA3AA", border: "none", cursor: downloading ? "default" : "pointer", opacity: downloading ? 0.7 : 1, padding: "6px 14px", borderRadius: 8, fontFamily: "Tajawal, sans-serif", fontWeight: 700 }}
           >
             {downloading ? "⏳ جارِ التحضير..." : "⬇️ تحميل PDF"}
+          </button>
+          <button
+            onClick={handleCopyBrandingPrompt}
+            style={{ fontSize: 12, fontWeight: 700, color: brandingCopied ? "#27ae60" : "#9BA3AA", background: "rgba(155,163,170,0.1)", border: "1px solid rgba(155,163,170,0.3)", cursor: "pointer", padding: "6px 14px", borderRadius: 8, fontFamily: "Tajawal, sans-serif" }}
+          >
+            {brandingCopied ? "✓ تم النسخ" : "🏷️ برومبت علامة ELFADY على الصور"}
           </button>
         </div>
       </div>

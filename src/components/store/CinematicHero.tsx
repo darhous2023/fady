@@ -20,7 +20,7 @@ export default function CinematicHero({ videoUrl, eyebrow, headline, subheadline
                 .ch-video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0.55; }
         .ch-headline {
           font-family: Tajawal, sans-serif; font-weight: 900;
-          font-size: clamp(64px, 15vw, 200px); line-height: 0.92; letter-spacing: normal;
+          font-size: clamp(76px, 18vw, 260px); line-height: 0.9; letter-spacing: normal;
           color: #F5F5F5; margin: 0;
         }
         .ch-scrollhint { animation: chBounce 2s ease-in-out infinite; }

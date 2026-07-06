@@ -136,6 +136,15 @@ export {
   type InsertFinancingPartner,
 } from "./financingPartners";
 
+// Partner logos (independent strip under the Hero)
+export {
+  partnerLogos,
+  selectPartnerLogoSchema,
+  insertPartnerLogoSchema,
+  type PartnerLogo,
+  type InsertPartnerLogo,
+} from "./partnerLogos";
+
 // Settings
 export {
   settings,

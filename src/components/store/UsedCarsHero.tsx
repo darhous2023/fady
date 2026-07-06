@@ -111,7 +111,7 @@ export default function UsedCarsHero({ videoUrl, eyebrow, headline, subheadline,
             padding: "15px 36px", borderRadius: 8, textDecoration: "none",
             background: "rgba(10,10,10,0.35)", color: "#F5F5F5", border: "1px solid rgba(245,245,245,0.35)",
             backdropFilter: "blur(8px)",
-          }}>احجز معاينة</a>
+          }}>احجز معاينة مجانية</a>
         </motion.div>
 
         <div className="uch-scrollhint" style={{ position: "absolute", bottom: 28, display: "flex", flexDirection: "column", alignItems: "center", gap: 8, opacity: 0.5 }}>
