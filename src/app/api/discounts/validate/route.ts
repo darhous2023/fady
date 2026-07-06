@@ -2,12 +2,21 @@ import { NextRequest, NextResponse } from "next/server"
 import { db } from "@/lib/db/drizzle/connection"
 import { discountCodes } from "@/lib/db/drizzle/schema"
 import { eq } from "drizzle-orm"
+import { checkRateLimit, getClientIp } from "@/lib/rateLimit"
 
 export async function GET(req: NextRequest) {
   const code = req.nextUrl.searchParams.get("code")?.toUpperCase().trim()
   const orderTotal = Number(req.nextUrl.searchParams.get("total") ?? 0)
 
   if (!code) return NextResponse.json({ error: "الكود مطلوب" }, { status: 400 })
+
+  const { limited, retryAfterSeconds } = await checkRateLimit("discount", getClientIp(req))
+  if (limited) {
+    return NextResponse.json(
+      { error: "عدد كبير من المحاولات، حاول مرة أخرى بعد قليل" },
+      { status: 429, headers: retryAfterSeconds ? { "Retry-After": String(retryAfterSeconds) } : undefined },
+    )
+  }
 
   try {
     const [dc] = await db.select().from(discountCodes).where(eq(discountCodes.code, code)).limit(1)

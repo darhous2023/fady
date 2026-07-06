@@ -13,6 +13,18 @@ const STATUS_KEY_DESCRIPTIONS_AR: Record<string, string> = {
   cancelled: "عند الإلغاء",
 };
 
+type RateLimitRuleName = "login" | "booking" | "tracking" | "search" | "reviews" | "discount" | "upload";
+const RATE_LIMIT_LABELS_AR: Record<RateLimitRuleName, string> = {
+  login: "محاولات تسجيل دخول الأدمن",
+  booking: "طلبات حجز المعاينة",
+  tracking: "محاولات تتبّع الحجز",
+  search: "عمليات البحث",
+  reviews: "إرسال تقييم",
+  discount: "التحقق من كود خصم",
+  upload: "رفع صور (من الأدمن)",
+};
+const RATE_LIMIT_ORDER: RateLimitRuleName[] = ["login", "booking", "tracking", "search", "reviews", "discount", "upload"];
+
 function LogoField({ defaultValue }: { defaultValue?: string }) {
   const [url, setUrl] = useState(defaultValue || "/logo-400.png");
   const [uploading, setUploading] = useState(false);
@@ -51,7 +63,13 @@ function LogoField({ defaultValue }: { defaultValue?: string }) {
   );
 }
 
-export default function SettingsForm({ settings }: { settings: Record<string, string> }) {
+export default function SettingsForm({
+  settings, rateLimitDefaults, rateLimitConfigured,
+}: {
+  settings: Record<string, string>;
+  rateLimitDefaults?: Record<RateLimitRuleName, { max: number; windowSeconds: number }>;
+  rateLimitConfigured?: boolean;
+}) {
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -66,6 +84,7 @@ export default function SettingsForm({ settings }: { settings: Record<string, st
       "product_trust_1_title_ar", "product_trust_1_desc_ar",
       "product_trust_2_title_ar", "product_trust_2_desc_ar",
       "product_trust_3_title_ar", "product_trust_3_desc_ar",
+      ...RATE_LIMIT_ORDER.flatMap((name) => [`ratelimit_${name}_max`, `ratelimit_${name}_window_sec`]),
     ];
     const updates = [
       ...textKeys.map((key) => ({ key, value: (form.elements.namedItem(key) as HTMLInputElement)?.value || "" })),
@@ -236,6 +255,47 @@ export default function SettingsForm({ settings }: { settings: Record<string, st
             className="w-4 h-4 accent-[#9BA3AA]"
           />
           <label htmlFor="flash_deals_active" className="text-sm text-[#F2F0EC]/60 cursor-pointer">تفعيل قسم عروض الفلاش</label>
+        </div>
+      </div>
+
+      {/* Rate limiting (Station 7) */}
+      <div className="bg-[#0A0A0A] rounded-xl border border-[#9BA3AA]/10 p-6 space-y-5">
+        <h2 className="font-semibold text-[#F2F0EC] border-b border-[#9BA3AA]/10 pb-3">حماية الموقع — تحديد معدل الطلبات</h2>
+        <p className="text-xs text-[#F2F0EC]/30">
+          الحد الأقصى لعدد المحاولات المسموح بها لكل زائر خلال المدة المحددة، لمنع إساءة الاستخدام الآلي (بوتات) على كل نقطة من نقاط الموقع.
+        </p>
+        {rateLimitConfigured === false && (
+          <div className="text-xs text-amber-400/80 bg-amber-400/10 border border-amber-400/20 rounded-lg px-4 py-3">
+            ⚠️ لم يتم إعداد Upstash Redis بعد — القيم أدناه محفوظة لكنها لن تُطبَّق فعليًا حتى يتم توصيل الموقع بحساب Upstash (يحتاج المطوّر لإضافة بيانات الاتصال).
+          </div>
+        )}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {RATE_LIMIT_ORDER.map((name) => {
+            const d = rateLimitDefaults?.[name];
+            return (
+              <div key={name} className="border border-[#9BA3AA]/10 rounded-lg p-4 space-y-3">
+                <div className="text-sm text-[#F2F0EC] font-medium">{RATE_LIMIT_LABELS_AR[name]}</div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className={labelCls}>الحد الأقصى</label>
+                    <input
+                      type="number" min={1} name={`ratelimit_${name}_max`}
+                      defaultValue={settings[`ratelimit_${name}_max`] || String(d?.max ?? "")}
+                      className={inputCls}
+                    />
+                  </div>
+                  <div>
+                    <label className={labelCls}>كل (ثانية)</label>
+                    <input
+                      type="number" min={1} name={`ratelimit_${name}_window_sec`}
+                      defaultValue={settings[`ratelimit_${name}_window_sec`] || String(d?.windowSeconds ?? "")}
+                      className={inputCls}
+                    />
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
 

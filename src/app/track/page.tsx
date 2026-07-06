@@ -14,9 +14,11 @@ const QUALITY: Record<string, string> = { original: "ممتازة", mirror: "ج�
 
 interface TrackedOrder {
   order_number: string
-  customer_name: string
-  branch: string | null
-  preferred_date: string | null
+  // Only present for an order-number lookup -- a phone-only lookup returns
+  // a privacy-hardened summary without these (Station 7).
+  customer_name?: string
+  branch?: string | null
+  preferred_date?: string | null
   status: string
   total: string
   created_at: string
@@ -147,11 +149,18 @@ function TrackPageInner() {
                           </div>
                         </div>
                       </div>
-                      <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
-                        <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "rgba(242,240,236,0.5)" }}>👤 {result.customer_name}</span>
-                        {result.branch && <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "rgba(242,240,236,0.5)" }}>📍 {result.branch}</span>}
-                        {result.preferred_date && <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "rgba(242,240,236,0.5)" }}>📅 {result.preferred_date}</span>}
-                      </div>
+                      {(result.customer_name || result.branch || result.preferred_date) && (
+                        <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
+                          {result.customer_name && <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "rgba(242,240,236,0.5)" }}>👤 {result.customer_name}</span>}
+                          {result.branch && <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "rgba(242,240,236,0.5)" }}>📍 {result.branch}</span>}
+                          {result.preferred_date && <span style={{ fontFamily: "Tajawal,sans-serif", fontSize: 13, color: "rgba(242,240,236,0.5)" }}>📅 {result.preferred_date}</span>}
+                        </div>
+                      )}
+                      {!result.customer_name && (
+                        <p style={{ fontFamily: "Tajawal,sans-serif", fontSize: 12, color: "rgba(242,240,236,0.3)", marginTop: 10, marginBottom: 0 }}>
+                          لعرض تفاصيل أكثر (الاسم والموعد والفرع)، ابحث برقم الطلب مباشرة: <span style={{ fontFamily: "monospace", color: "#9BA3AA" }}>{result.order_number}</span>
+                        </p>
+                      )}
                     </div>
 
                     {/* Status stepper */}

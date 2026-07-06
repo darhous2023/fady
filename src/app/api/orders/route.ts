@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db/drizzle/connection";
 import { orders, orderItems } from "@/lib/db/drizzle/schema";
+import { checkRateLimit, getClientIp, hashIdentifier } from "@/lib/rateLimit";
+
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
@@ -20,26 +23,46 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "بيانات ناقصة" }, { status: 400 });
   }
 
+  // Never use the raw phone digits as a rate-limit/Redis key -- hash first.
+  const rateKey = `${getClientIp(request)}:${hashIdentifier(String(phone))}`;
+  const { limited, retryAfterSeconds } = await checkRateLimit("booking", rateKey);
+  if (limited) {
+    return NextResponse.json(
+      { error: "عدد كبير من طلبات الحجز، حاول مرة أخرى بعد قليل" },
+      { status: 429, headers: retryAfterSeconds ? { "Retry-After": String(retryAfterSeconds) } : undefined },
+    );
+  }
+  if (customer_id && !UUID_RE.test(customer_id)) {
+    return NextResponse.json({ error: "بيانات غير صحيحة" }, { status: 400 });
+  }
+  if (!items.every((item: { product_id?: string }) => item.product_id && UUID_RE.test(item.product_id))) {
+    return NextResponse.json({ error: "بيانات غير صحيحة" }, { status: 400 });
+  }
+
   const order_number = `FADY-${Date.now().toString(36).toUpperCase()}`;
 
   try {
-    const [order] = await db.insert(orders).values({
-      order_number,
-      customer_id: customer_id || null,
-      customer_name,
-      phone,
-      preferred_date: preferred_date || null,
-      branch: branch || null,
-      subtotal: String(subtotal),
-      shipping_cost: "0",
-      total: String(total),
-      method: "whatsapp",
-      status: "pending",
-      notes: notes || null,
-    }).returning();
+    // Both inserts must succeed together -- an order row with no items (or
+    // vice versa) is a real, confirmed bug found this station: a malformed
+    // item left an orphaned order row in production even though the
+    // customer was told the booking failed.
+    const order = await db.transaction(async (tx) => {
+      const [created] = await tx.insert(orders).values({
+        order_number,
+        customer_id: customer_id || null,
+        customer_name,
+        phone,
+        preferred_date: preferred_date || null,
+        branch: branch || null,
+        subtotal: String(subtotal),
+        shipping_cost: "0",
+        total: String(total),
+        method: "whatsapp",
+        status: "pending",
+        notes: notes || null,
+      }).returning();
 
-    if (items?.length > 0) {
-      await db.insert(orderItems).values(
+      await tx.insert(orderItems).values(
         items.map((item: {
           product_id: string;
           variant_id?: string;
@@ -48,7 +71,7 @@ export async function POST(request: NextRequest) {
           qty: number;
           unit_price: number;
         }) => ({
-          order_id: order.id,
+          order_id: created.id,
           product_id: item.product_id,
           variant_id: item.variant_id || null,
           product_name: item.product_name,
@@ -57,7 +80,9 @@ export async function POST(request: NextRequest) {
           unit_price: String(item.unit_price),
         }))
       );
-    }
+
+      return created;
+    });
 
     return NextResponse.json({ order_number: order.order_number, id: order.id }, { status: 201 });
   } catch (err) {

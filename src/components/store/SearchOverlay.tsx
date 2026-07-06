@@ -30,6 +30,7 @@ export default function SearchOverlay({ onClose }: { onClose: () => void }) {
   const [recent, setRecent] = useState<string[]>([])
   const inputRef = useRef<HTMLInputElement>(null)
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const abortRef = useRef<AbortController | null>(null)
 
   useEffect(() => {
     inputRef.current?.focus()
@@ -44,19 +45,27 @@ export default function SearchOverlay({ onClose }: { onClose: () => void }) {
 
   useEffect(() => {
     if (timer.current) clearTimeout(timer.current)
+    // Abort any in-flight request from a previous keystroke -- otherwise a
+    // slow response for an earlier, shorter query can land after a newer
+    // one and overwrite it (the same class of race fixed in the new-cars
+    // browser's make/model picker in an earlier phase).
+    abortRef.current?.abort()
     if (q.trim().length < 2) { setResults([]); setLoading(false); setError(false); return }
     setLoading(true)
     timer.current = setTimeout(async () => {
       setError(false)
+      const controller = new AbortController()
+      abortRef.current = controller
       try {
-        const res = await fetch(`/api/search?q=${encodeURIComponent(q.trim())}`)
+        const res = await fetch(`/api/search?q=${encodeURIComponent(q.trim())}`, { signal: controller.signal })
         if (!res.ok) { setResults([]); setError(true); return }
         const data = await res.json()
         setResults(Array.isArray(data) ? data : [])
-      } catch {
+      } catch (err) {
+        if (err instanceof DOMException && err.name === "AbortError") return
         setResults([]); setError(true)
       } finally { setLoading(false) }
-    }, 250)
+    }, 400)
   }, [q])
 
   const handleSelect = useCallback((term: string) => {

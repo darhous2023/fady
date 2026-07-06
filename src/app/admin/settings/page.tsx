@@ -2,6 +2,7 @@ export const dynamic = "force-dynamic";
 import { db } from "@/lib/db/drizzle/connection";
 import { settings } from "@/lib/db/drizzle/schema";
 import SettingsForm from "@/components/admin/SettingsForm";
+import { RATE_LIMIT_DEFAULTS, isRateLimitConfigured } from "@/lib/rateLimit";
 
 export default async function SettingsPage() {
   const allSettings = await db.select().from(settings);
@@ -13,7 +14,7 @@ export default async function SettingsPage() {
         <h1 className="text-2xl font-bold text-[#F2F0EC]">الإعدادات</h1>
         <p className="text-[#F2F0EC]/40 text-sm mt-1">إعدادات المتجر العامة</p>
       </div>
-      <SettingsForm settings={map} />
+      <SettingsForm settings={map} rateLimitDefaults={RATE_LIMIT_DEFAULTS} rateLimitConfigured={isRateLimitConfigured} />
     </div>
   );
 }

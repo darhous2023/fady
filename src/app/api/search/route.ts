@@ -2,10 +2,14 @@ import { NextRequest, NextResponse } from "next/server"
 import { db } from "@/lib/db/drizzle/connection"
 import { products, productImages, categories } from "@/lib/db/drizzle/schema"
 import { eq, and, ilike } from "drizzle-orm"
+import { checkRateLimit, getClientIp } from "@/lib/rateLimit"
 
 export async function GET(req: NextRequest) {
   const q = req.nextUrl.searchParams.get("q")?.trim()
   if (!q || q.length < 2) return NextResponse.json([])
+
+  const { limited } = await checkRateLimit("search", getClientIp(req))
+  if (limited) return NextResponse.json([])
 
   try {
     const rows = await db
