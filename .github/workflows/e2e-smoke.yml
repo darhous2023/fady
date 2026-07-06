@@ -1,0 +1,100 @@
+name: E2E smoke test (isolated harness)
+
+# Station 4 of the "9/10 -> 10/10" plan: proves the shared Playwright
+# harness works end-to-end against fully isolated test databases. Manual
+# trigger for now -- Station 8 wires this in as a required check for branch
+# protection on main once the fuller Station 6 suite exists.
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: e2e-smoke-${{ github.run_id }}
+  cancel-in-progress: false
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
+      TEST_BRANCH_NAME: gh-${{ github.run_id }}
+      BETTER_AUTH_URL: http://localhost:3000
+      NEXT_PUBLIC_APP_URL: http://localhost:3000
+      # Placeholders only -- this harness never touches real Supabase Storage,
+      # it only needs these to exist so client-side createClient() calls don't
+      # throw on an undefined URL. Never real secrets.
+      NEXT_PUBLIC_SUPABASE_URL: https://test-placeholder.supabase.co
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: test-placeholder-anon-key
+      SUPABASE_SERVICE_ROLE_KEY: test-placeholder-service-role-key
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate a throwaway BETTER_AUTH_SECRET
+        run: echo "BETTER_AUTH_SECRET=$(openssl rand -hex 32)" >> "$GITHUB_ENV"
+
+      # Full isolation: two throwaway Neon branches, never the real
+      # DATABASE_URL/CARS_DATABASE_URL. See scripts/test-env-neon-branch.ts
+      # for why two Neon *projects* are used (fady-cars-catalog is branched
+      # for real, read-only-safe cars data; fady-store-test-harness is a
+      # dedicated empty project since the store's real DB is on Supabase,
+      # not Neon, and can't be branched directly).
+      - name: Create isolated Neon test branches
+        run: |
+          npx tsx scripts/test-env-neon-branch.ts create store "$TEST_BRANCH_NAME" | tee /tmp/store-branch.log
+          npx tsx scripts/test-env-neon-branch.ts create cars "$TEST_BRANCH_NAME" | tee /tmp/cars-branch.log
+          grep '^DATABASE_URL=' /tmp/store-branch.log >> "$GITHUB_ENV"
+          grep '^CARS_DATABASE_URL=' /tmp/cars-branch.log >> "$GITHUB_ENV"
+
+      - name: Bootstrap store schema on the isolated branch
+        run: npx tsx scripts/test-env-bootstrap-db.ts
+
+      - name: Seed baseline settings
+        run: npm run db:seed
+
+      - name: Build app against isolated databases
+        run: npm run build
+
+      - name: Start app
+        run: |
+          nohup npm run start > /tmp/server.log 2>&1 &
+          for i in $(seq 1 30); do
+            curl -sf http://localhost:3000/ > /dev/null && break
+            sleep 1
+          done
+          curl -sf http://localhost:3000/ > /dev/null || (cat /tmp/server.log && exit 1)
+
+      - name: Seed disposable Playwright test admin
+        run: npx tsx scripts/test-env-seed-admin.ts
+
+      - name: Install Playwright browsers
+        run: npm run test:e2e:install
+
+      - name: Run Playwright smoke test
+        run: npm run test:e2e
+        env:
+          PLAYWRIGHT_BASE_URL: http://localhost:3000
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
+
+      - name: Teardown disposable test admin
+        if: always()
+        run: npx tsx scripts/test-env-teardown-admin.ts || true
+
+      - name: Delete isolated Neon test branches
+        if: always()
+        run: |
+          npx tsx scripts/test-env-neon-branch.ts delete store "$TEST_BRANCH_NAME" || true
+          npx tsx scripts/test-env-neon-branch.ts delete cars "$TEST_BRANCH_NAME" || true
