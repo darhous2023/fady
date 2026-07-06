@@ -59,11 +59,23 @@ jobs:
           grep '^DATABASE_URL=' /tmp/store-branch.log >> "$GITHUB_ENV"
           grep '^CARS_DATABASE_URL=' /tmp/cars-branch.log >> "$GITHUB_ENV"
 
+      # A brand-new Neon test branch's pooled endpoint has been observed
+      # (across several CI runs while building this harness) to intermittently
+      # refuse a *new* connection attempt from a freshly-spawned process even
+      # moments after a different process's connection to the exact same
+      # endpoint already succeeded -- not reproducible locally, likely a
+      # connection-establishment burst limit specific to this network path /
+      # compute size. A short retry absorbs it without masking a real,
+      # persistent failure (which would still fail after 3 attempts).
       - name: Bootstrap store schema on the isolated branch
-        run: npx tsx scripts/test-env-bootstrap-db.ts
+        run: |
+          for i in 1 2 3; do npx tsx scripts/test-env-bootstrap-db.ts && exit 0; echo "attempt $i failed, retrying..."; sleep 5; done
+          exit 1
 
       - name: Seed baseline settings
-        run: npm run db:seed
+        run: |
+          for i in 1 2 3; do npm run db:seed && exit 0; echo "attempt $i failed, retrying..."; sleep 5; done
+          exit 1
 
       - name: Build app against isolated databases
         run: npm run build
@@ -78,7 +90,9 @@ jobs:
           curl -sf http://localhost:3000/ > /dev/null || (cat /tmp/server.log && exit 1)
 
       - name: Seed disposable Playwright test admin
-        run: npx tsx scripts/test-env-seed-admin.ts
+        run: |
+          for i in 1 2 3; do npx tsx scripts/test-env-seed-admin.ts && exit 0; echo "attempt $i failed, retrying..."; sleep 5; done
+          exit 1
 
       - name: Install Playwright browsers
         run: npm run test:e2e:install
