@@ -94,10 +94,15 @@ async function create(projectKey: ProjectKey, name: string) {
   if (!existing) {
     // A freshly-provisioned endpoint can take a few seconds to actually
     // accept connections (cold start) -- a flat sleep here isn't reliable
-    // (confirmed: 5s was sometimes not enough in CI, causing a later step's
-    // connection to fail with ECONNREFUSED even though an earlier step's
-    // connection had, by luck, come in after the endpoint was ready). Poll
-    // with a real connection attempt instead of guessing a fixed delay.
+    // (confirmed: 5s wasn't always enough in CI). Confirmed via two failed CI
+    // runs that this isn't just about the endpoint being "up": a `pg.Client`
+    // probe succeeding is not proof `postgres-js` (the library the app and
+    // seed scripts actually use, via src/lib/db/drizzle/connection.ts and
+    // src/lib/cars/db.ts) can connect too -- the first run's "Bootstrap"
+    // step (pg.Client) succeeded while the very next step ("Seed", via
+    // postgres-js) got ECONNREFUSED against the same still-warming-up
+    // endpoint moments later. Probe with the SAME library the real consumers
+    // use, not just any Postgres client.
     await waitUntilConnectable(uri);
   }
 
@@ -106,16 +111,15 @@ async function create(projectKey: ProjectKey, name: string) {
 }
 
 async function waitUntilConnectable(connectionString: string, maxAttempts = 15) {
-  const { Client } = await import("pg");
+  const postgres = (await import("postgres")).default;
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
-    const client = new Client({ connectionString });
+    const sql = postgres(connectionString, { max: 1, prepare: false, connect_timeout: 5 });
     try {
-      await client.connect();
-      await client.query("SELECT 1");
-      await client.end();
+      await sql`SELECT 1`;
+      await sql.end();
       return;
     } catch {
-      await client.end().catch(() => {});
+      await sql.end({ timeout: 1 }).catch(() => {});
       if (attempt === maxAttempts) {
         throw new Error(`Endpoint did not become connectable after ${maxAttempts} attempts`);
       }
