@@ -42,4 +42,17 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+const { withSentryConfig } = require("@sentry/nextjs");
+
+// withSentryConfig is safe to wrap unconditionally: without NEXT_PUBLIC_SENTRY_DSN
+// set, Sentry.init() (in instrumentation.ts / instrumentation-client.ts) is a
+// documented no-op, and without SENTRY_AUTH_TOKEN the source-map upload step is
+// skipped with a warning, not an error -- never blocks a build either way.
+module.exports = withSentryConfig(nextConfig, {
+  org: process.env.SENTRY_ORG,
+  project: process.env.SENTRY_PROJECT,
+  silent: true,
+  webpack: {
+    treeshake: { removeDebugLogging: true },
+  },
+});

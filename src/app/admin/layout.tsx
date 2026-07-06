@@ -12,7 +12,6 @@ const NAV = [
   { href: "/admin/orders", label: "طلبات الحجز", icon: "🧾" },
   { href: "/admin/reviews", label: "التقييمات", icon: "⭐" },
   { href: "/admin/categories", label: "الأقسام", icon: "🏷️" },
-  { href: "/admin/shipping", label: "الشحن", icon: "🚚" },
   { href: "/admin/discounts", label: "الخصومات", icon: "🎁" },
   { href: "/admin/banners", label: "البانرات", icon: "🖼️" },
   { href: "/admin/financing-partners", label: "التمويل والتقسيط", icon: "💳" },

@@ -5,6 +5,5 @@
 // harmless bad input (found live: /api/search, /api/discounts/validate,
 // /api/orders/track, /api/new-cars/compare all 500'd on a NUL byte).
 export function stripControlChars(input: string): string {
-  // eslint-disable-next-line no-control-regex -- intentionally matching control chars to strip them
   return input.replace(/[\x00-\x1f\x7f]/g, "")
 }
