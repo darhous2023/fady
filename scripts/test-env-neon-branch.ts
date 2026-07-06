@@ -75,11 +75,6 @@ async function create(projectKey: ProjectKey, name: string) {
 
   const branch = (data as { branch: { id: string } }).branch;
 
-  if (!existing) {
-    // Wait for the new endpoint to become reachable (usually a few seconds).
-    await new Promise(r => setTimeout(r, 5000));
-  }
-
   // Fetch (or create) a role + the connection URI for the new branch.
   const rolesData = await neonFetch(`/projects/${projectId}/branches/${branch.id}/roles`);
   const roles = (rolesData as { roles: { name: string }[] }).roles ?? [];
@@ -96,8 +91,37 @@ async function create(projectKey: ProjectKey, name: string) {
   );
   const uri = (connData as { uri: string }).uri;
 
+  if (!existing) {
+    // A freshly-provisioned endpoint can take a few seconds to actually
+    // accept connections (cold start) -- a flat sleep here isn't reliable
+    // (confirmed: 5s was sometimes not enough in CI, causing a later step's
+    // connection to fail with ECONNREFUSED even though an earlier step's
+    // connection had, by luck, come in after the endpoint was ready). Poll
+    // with a real connection attempt instead of guessing a fixed delay.
+    await waitUntilConnectable(uri);
+  }
+
   console.log(`Neon test branch ready: ${name} (${branch.id})`);
   console.log(`${envVar}=${uri}`);
+}
+
+async function waitUntilConnectable(connectionString: string, maxAttempts = 15) {
+  const { Client } = await import("pg");
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    const client = new Client({ connectionString });
+    try {
+      await client.connect();
+      await client.query("SELECT 1");
+      await client.end();
+      return;
+    } catch {
+      await client.end().catch(() => {});
+      if (attempt === maxAttempts) {
+        throw new Error(`Endpoint did not become connectable after ${maxAttempts} attempts`);
+      }
+      await new Promise(r => setTimeout(r, 2000));
+    }
+  }
 }
 
 async function del(projectKey: ProjectKey, name: string) {
