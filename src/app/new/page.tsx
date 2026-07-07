@@ -1,4 +1,4 @@
-export const dynamic = "force-dynamic"
+﻿export const dynamic = "force-dynamic"
 import type { Metadata } from "next"
 import Link from "next/link"
 import StoreHeader from "@/components/store/StoreHeader"
@@ -10,9 +10,6 @@ import NewCarsHero from "@/components/store/NewCarsHero"
 import { getPublicBrands, getPortalStats, browseCars } from "@/lib/cars/repository"
 import { isCarsDbConfigured } from "@/lib/cars/db"
 import CarsCatalogUnavailable from "@/components/store/cars/CarsCatalogUnavailable"
-import { db } from "@/lib/db/drizzle/connection"
-import { settings } from "@/lib/db/drizzle/schema"
-import { inArray } from "drizzle-orm"
 
 export const metadata: Metadata = {
   title: "سيارات جديدة",
@@ -21,40 +18,25 @@ export const metadata: Metadata = {
 
 const WA = "201555557745"
 
-async function getNewHeroSettings(): Promise<Record<string, string>> {
-  try {
-    const rows = await db.select().from(settings).where(
-      inArray(settings.key, [
-        "new_hero_video_url", "new_hero_eyebrow_ar", "new_hero_headline_ar", "new_hero_subheadline_ar",
-        "whatsapp_number",
-      ])
-    )
-    return Object.fromEntries(rows.map(r => [r.key, r.value]))
-  } catch { return {} }
-}
-
 export default async function NewCarsPage() {
   if (!isCarsDbConfigured) return <CarsCatalogUnavailable />
 
-  const [brands, stats, featured, heroSettings] = await Promise.all([
+  const [brands, stats, featured] = await Promise.all([
     getPublicBrands(),
     getPortalStats(),
     browseCars({ page: 1, pageSize: 8, sort: "newest" }),
-    getNewHeroSettings(),
   ])
   const topBrands = brands.slice(0, 10)
-  const waNumber = heroSettings.whatsapp_number ? heroSettings.whatsapp_number.replace(/\D/g, "") : WA
 
   return (
     <>
       <StoreHeader />
       <style>{`body { margin: 0; background: #0A0A0A; } main { padding: 0 !important; min-height: unset !important; }`}</style>
       <NewCarsHero
-        videoUrl={heroSettings.new_hero_video_url || undefined}
-        eyebrow={heroSettings.new_hero_eyebrow_ar || "كتالوج السيارات الجديدة"}
-        headline={heroSettings.new_hero_headline_ar || "سيارات جديدة"}
-        subheadline={heroSettings.new_hero_subheadline_ar || "تصفّح كتالوج السيارات الجديدة الكامل — الماركات والموديلات والمواصفات الحقيقية"}
-        whatsapp={waNumber}
+        eyebrow="كتالوج السيارات الجديدة"
+        headline="سيارات جديدة"
+        subheadline="تصفح كتالوج السيارات الجديدة الكامل: الماركات والموديلات والمواصفات الحقيقية"
+        whatsapp={WA}
         makesCount={stats.publicBrandCount}
       />
       <div>

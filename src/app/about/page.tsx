@@ -89,7 +89,7 @@ export default function AboutPage() {
                 fontSize: "clamp(20px,2.5vw,26px)", color: "#9BA3AA",
                 opacity: 0.85, lineHeight: 1.7,
               }}>
-                "اللي هتشوفه في المعرض هو نفسه اللي هتاخده."
+                &quot;اللي هتشوفه في المعرض هو نفسه اللي هتاخده.&quot;
               </blockquote>
             </div>
 

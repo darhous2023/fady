@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
   const filename = `products/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
 
   const uploadRes = await fetch(
-    `${supabaseUrl}/storage/v1/object/product-images/${filename}`,
+    `${supabaseUrl}/storage/v1/object/products/${filename}`,
     {
       method: "POST",
       headers: {
@@ -63,6 +63,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: `فشل الرفع: ${err}` }, { status: 500 })
   }
 
-  const publicUrl = `${supabaseUrl}/storage/v1/object/public/product-images/${filename}`
+  const publicUrl = `${supabaseUrl}/storage/v1/object/public/products/${filename}`
   return NextResponse.json({ url: publicUrl })
 }

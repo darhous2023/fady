@@ -97,7 +97,7 @@ export default function HomeReviews() {
                 <div style={{
                   fontFamily: "Tajawal, sans-serif", fontSize: 28, color: "rgba(155,163,170,0.07)",
                   lineHeight: 1, marginTop: -4,
-                }}>"</div>
+                }}>&quot;</div>
               </div>
 
               {/* Comment */}

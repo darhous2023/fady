@@ -1,6 +1,8 @@
 import { ImageResponse } from "next/og"
+import { readFile } from "node:fs/promises"
+import path from "node:path"
 
-export const runtime = "edge"
+export const runtime = "nodejs"
 export const alt = "ELFADY — معرض سيارات"
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
@@ -10,9 +12,9 @@ export const contentType = "image/png"
 // buffer. Bundling Tajawal locally instead of fetching Google Fonts at request
 // time avoids relying on Satori's own fragile dynamic-font-fetch pathway.
 async function loadFont(weight: "Regular" | "Bold" | "Black") {
-  const url = new URL(`../assets/fonts/Tajawal-${weight}.ttf`, import.meta.url)
-  const res = await fetch(url)
-  return res.arrayBuffer()
+  const file = path.join(process.cwd(), "src", "assets", "fonts", `Tajawal-${weight}.ttf`)
+  const buffer = await readFile(file)
+  return buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength)
 }
 
 export default async function OGImage() {

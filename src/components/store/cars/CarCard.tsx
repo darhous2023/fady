@@ -3,8 +3,7 @@
 import Link from "next/link"
 import type { CarsBrowseItem, CarsSearchResultItem } from "@/lib/cars/types"
 import { useFavorites, useCompareSelection, MAX_COMPARE } from "@/lib/cars/useCarLists"
-
-const FALLBACK_IMAGE = "/logo-400.png"
+import CarImage from "./CarImage"
 
 export default function CarCard({ car }: { car: CarsBrowseItem | CarsSearchResultItem }) {
   const { has: isFavorite, toggle: toggleFavorite } = useFavorites()
@@ -39,12 +38,10 @@ export default function CarCard({ car }: { car: CarsBrowseItem | CarsSearchResul
 
       <Link href={`/new/car/${encodeURIComponent(car.normalizedKey)}`} style={{ display: "block", textDecoration: "none" }}>
         <div style={{ position: "relative", aspectRatio: "4/3", background: "#0A0A0A" }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={car.mainImageUrl ?? FALLBACK_IMAGE}
+          <CarImage
+            src={car.mainImageUrl}
             alt={car.displayName}
             loading="lazy"
-            style={{ width: "100%", height: "100%", objectFit: car.mainImageUrl ? "cover" : "contain", opacity: car.mainImageUrl ? 1 : 0.35, padding: car.mainImageUrl ? 0 : 24 }}
           />
         </div>
         <div style={{ padding: "14px 16px 16px", direction: "rtl" }}>

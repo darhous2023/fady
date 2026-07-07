@@ -3,6 +3,7 @@
 import { useState } from "react"
 import ImageLightbox from "@/components/store/ImageLightbox"
 import { useFavorites, useCompareSelection, MAX_COMPARE } from "@/lib/cars/useCarLists"
+import CarImage from "./CarImage"
 
 type Img = { url: string; isMain: boolean; altText: string | null }
 
@@ -61,8 +62,7 @@ export default function CarDetailGallery({
         style={{ aspectRatio: "4/3", borderRadius: 10, overflow: "hidden", background: "#111214", marginBottom: 10, cursor: main ? "zoom-in" : "default" }}
       >
         {main ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={main.url} alt={main.altText ?? displayName} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          <CarImage src={main.url} alt={main.altText ?? displayName} loading="eager" />
         ) : (
           <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", color: "rgba(242,240,236,0.3)", fontFamily: "Tajawal,sans-serif" }}>
             لا توجد صورة متاحة بعد
@@ -77,8 +77,7 @@ export default function CarDetailGallery({
             // lightbox -- not decorative/redundant, so it needs real alt text
             // (a screen-reader user stepping through the strip otherwise hears
             // "image" x8 with no way to tell them apart).
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <CarImage
               key={i}
               src={img.url}
               alt={img.altText || `${displayName} — صورة ${i + 1}`}
