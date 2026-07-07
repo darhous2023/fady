@@ -113,8 +113,8 @@ export default function StoreHeader() {
 
       {/* Desktop Nav */}
       <nav className="sh-desktop-nav" style={{ alignItems: "center", gap: 20 }}>
-        <a href="/#products" style={{ fontFamily: "Tajawal, sans-serif", fontSize: 13, color: "#F2F0EC", opacity: 0.6, textDecoration: "none", transition: "opacity 0.2s" }}
-          onMouseEnter={e => (e.currentTarget.style.opacity = "1")} onMouseLeave={e => (e.currentTarget.style.opacity = "0.6")}>المنتجات</a>
+        <Link href="/#products" style={{ fontFamily: "Tajawal, sans-serif", fontSize: 13, color: "#F2F0EC", opacity: 0.6, textDecoration: "none", transition: "opacity 0.2s" }}
+          onMouseEnter={e => (e.currentTarget.style.opacity = "1")} onMouseLeave={e => (e.currentTarget.style.opacity = "0.6")}>المنتجات</Link>
 
         <a href="/sale" style={{ fontFamily: "Tajawal, sans-serif", fontSize: 13, color: "#C97169", opacity: 0.85, textDecoration: "none", transition: "opacity 0.2s", fontWeight: 700 }}
           onMouseEnter={e => (e.currentTarget.style.opacity = "1")} onMouseLeave={e => (e.currentTarget.style.opacity = "0.85")}>العروض</a>

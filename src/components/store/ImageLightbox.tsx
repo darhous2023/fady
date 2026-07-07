@@ -142,6 +142,12 @@ export default function ImageLightbox({ images, startIndex, productName, onClose
             src={current.url}
             alt={current.alt_ar ?? productName}
             draggable={false}
+            onError={(e) => {
+              e.currentTarget.src = "/logo-400.png"
+              e.currentTarget.style.objectFit = "contain"
+              e.currentTarget.style.opacity = "0.35"
+              e.currentTarget.style.padding = "24px"
+            }}
             style={{
               width: "100%", height: "100%", objectFit: "contain",
               transform: zoom.active && !reducedMotion ? "scale(2)" : "scale(1)",
@@ -194,7 +200,17 @@ export default function ImageLightbox({ images, startIndex, productName, onClose
               opacity: i === index ? 1 : 0.55, transition: "all 0.2s ease",
             }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={img.url} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              <img
+                src={img.url}
+                alt=""
+                onError={(e) => {
+                  e.currentTarget.src = "/logo-400.png"
+                  e.currentTarget.style.objectFit = "contain"
+                  e.currentTarget.style.opacity = "0.35"
+                  e.currentTarget.style.padding = "8px"
+                }}
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              />
             </button>
           ))}
         </div>

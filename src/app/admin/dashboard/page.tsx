@@ -2,6 +2,7 @@ export const dynamic = "force-dynamic";
 import { db } from "@/lib/db/drizzle/connection";
 import { orders, products, customers, settings } from "@/lib/db/drizzle/schema";
 import { eq, count, sum, desc, sql, inArray } from "drizzle-orm";
+import Link from "next/link";
 import RevenueChart from "@/components/admin/RevenueChart";
 import { ORDER_STATUS_KEYS, ORDER_STATUS_SETTING_KEY, getOrderStatusLabels } from "@/lib/orderStatusLabels";
 
@@ -188,7 +189,7 @@ export default async function DashboardPage() {
       <div className="bg-[#0A0A0A] rounded-xl border border-[#9BA3AA]/10 overflow-hidden">
         <div className="flex items-center justify-between px-6 py-4 border-b border-[#9BA3AA]/10">
           <h2 className="font-semibold text-[#F2F0EC]">آخر الطلبات</h2>
-          <a href="/admin/orders" className="text-xs text-[#9BA3AA] hover:underline">عرض الكل ←</a>
+          <Link href="/admin/orders" className="text-xs text-[#9BA3AA] hover:underline">عرض الكل ←</Link>
         </div>
         <div className="divide-y divide-[#9BA3AA]/5">
           {stats.recentOrders.length === 0 ? (

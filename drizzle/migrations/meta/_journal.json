@@ -71,6 +71,13 @@
       "when": 1783268545380,
       "tag": "0009_charming_shriek",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1783456624239,
+      "tag": "0010_dizzy_excalibur",
+      "breakpoints": true
     }
   ]
 }

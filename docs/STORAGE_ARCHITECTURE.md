@@ -1,7 +1,7 @@
 # Storage Architecture
 
 Confirmed storage flows:
-- Product/admin uploads: `src/app/api/admin/upload/route.ts` uploads to Supabase Storage bucket `product-images`.
+- Product/admin uploads: `src/app/api/admin/upload/route.ts` uploads to Supabase Storage bucket `products`.
 - Account avatar uploads: `src/app/api/account/avatar/route.ts` uses server-side storage calls.
 
 Required variables:

@@ -63,6 +63,31 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(() => {}));
           }
         `}} />
+        {/* Belt-and-suspenders alongside the service-worker fix: a stale JS
+            chunk (from a page open across a redeploy) can fail to load as a
+            plain async event outside React's render cycle, which error.tsx's
+            boundary never sees. Catch it here, as early and globally as
+            possible, and force a full reload -- once per tab session, to
+            avoid a reload loop if a deploy is genuinely still in progress. */}
+        <script dangerouslySetInnerHTML={{ __html: `
+          (function () {
+            function isChunkError(msg) {
+              return typeof msg === 'string' && /ChunkLoadError|Loading chunk|Failed to load chunk|Loading CSS chunk/i.test(msg);
+            }
+            function handle(e) {
+              var msg = (e && e.message) || (e && e.reason && e.reason.message) || (e && e.reason) || '';
+              var name = (e && e.error && e.error.name) || (e && e.reason && e.reason.name) || '';
+              if (name === 'ChunkLoadError' || isChunkError(msg)) {
+                if (!sessionStorage.getItem('elfady-chunk-reload')) {
+                  sessionStorage.setItem('elfady-chunk-reload', '1');
+                  window.location.reload();
+                }
+              }
+            }
+            window.addEventListener('error', handle);
+            window.addEventListener('unhandledrejection', handle);
+          })();
+        `}} />
         {process.env.NEXT_PUBLIC_GA_ID && (
           <>
             <script async src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`} />
