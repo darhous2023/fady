@@ -236,3 +236,54 @@ Not performed:
 - No database migration was run because `partner_logos` already exists in Supabase Production.
 - No new-cars data was read from or written to Supabase.
 - No production data was deleted.
+
+## 11. GitHub, Merge, And Production Deployment
+
+### Commits And Pull Requests
+
+- Implementation branch pushed: `fix/stale-sw-chunk-error`
+- Implementation commit: `f215034729b413fefa98750474be4241354e47f2`
+- Pull request created for this work only: `https://github.com/darhous2023/fady/pull/4`
+- PR #4 checks:
+  - `Vercel`: pass
+  - `Vercel Preview Comments`: pass
+  - `smoke`: pass in 4m59s
+- PR #4 merged at `2026-07-07T23:33:52Z`.
+- Merge commit now on `main`: `1dc74227be249601c5461b7ca0c7343b0f94a5c9`
+
+### Production Deployment Evidence
+
+- GitHub Deployment API shows a Production deployment created at `2026-07-07T23:35:21Z`.
+- Production deployment SHA/ref: `1dc74227be249601c5461b7ca0c7343b0f94a5c9`.
+- GitHub commit status for `1dc74227be249601c5461b7ca0c7343b0f94a5c9`:
+  - Context: `Vercel`
+  - State: `success`
+  - Description: `Deployment has completed`
+  - Target URL: `https://vercel.com/fady-7caa1c41/fady/6PNjJkvNziobLPoHAqrsivJpMT9a`
+
+### Production Smoke Tests
+
+Target: `https://fady-delta.vercel.app`.
+
+| Check | Result |
+| --- | --- |
+| Home page | HTTP 200 |
+| `/opengraph-image` | HTTP 200, `Content-Type=image/png` |
+| `/sw.js` | HTTP 200; contains `CACHE = "elfady-v3"`, `STATIC = ["/sale", "/track", "/about"]`, and network-first navigation handling |
+| Production route health | 63/63 routes passed |
+| Unauthenticated `POST /api/admin/upload` | HTTP 401 |
+| Production desktop `/new/browse` | HTTP 200, 24 cards, 0 broken DOM images, 8 fallback images |
+| Production mobile `/new/browse` | HTTP 200, 24 cards, 0 broken DOM images, 8 fallback images |
+| Production home intro | Intro present initially and gone after 5.5 seconds |
+| Production ChunkLoadError synthetic event | Triggered an actual page reload; the evaluation context was destroyed, which is expected for the one-shot reload guard |
+
+Known remaining production network noise:
+- External hotlinked car images still fail at the request layer with `net::ERR_BLOCKED_BY_ORB` for some third-party hosts.
+- User-facing rendering now falls back, but the long-term fix remains owned image/object storage while keeping Neon as the source of car image records.
+
+## 12. Remaining Risks After Production Verification
+
+- Authenticated admin upload could not be proven end-to-end locally because the local Supabase env values available to the server are invalid by shape and Supabase rejected the service key as `Invalid Compact JWS`. Production unauthenticated protection is verified as HTTP 401, and the route code now points to the real `products` bucket.
+- Sentry is not fully active because required Sentry env names are still absent.
+- Upstash durable rate limiting remains inactive because required Upstash env names are absent; code degrades safely.
+- `npm audit --omit=dev` still reports 6 findings, with 0 critical and 1 high transitive `minimatch` finding. Unsafe broad overrides were removed after they produced an invalid npm dependency tree.
